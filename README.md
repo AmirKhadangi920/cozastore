@@ -1,0 +1,2 @@
+# cozastore
+An Store Template
