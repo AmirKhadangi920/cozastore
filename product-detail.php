@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Product Detail</title>
+	<title>اطلاعات محصول</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -80,11 +80,11 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="index.php">Home</a>
+								<a href="index.php">خانه</a>
 								<ul class="sub-menu">
-									<li><a href="index.php">Homepage 1</a></li>
-									<li><a href="home-02.php">Homepage 2</a></li>
-									<li><a href="home-03.php">Homepage 3</a></li>
+									<li><a href="index.php">صفحه شماره ی 1</a></li>
+									<li><a href="home-02.php">صفحه شماره ی 2</a></li>
+									<li><a href="home-03.php">صفحه شماره ی </a></li>
 								</ul>
 							</li>
 
