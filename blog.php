@@ -381,9 +381,15 @@
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+<<<<<<< HEAD
 										<i class="fa fa-long-arrow-left m-l-9"></i>
 										
 										ادامه خواندن
+=======
+										ادامه مطلب
+
+										<i class="fa fa-long-arrow-right m-l-9"></i>
+>>>>>>> 0117b499d179ea2e25400cf6a1e94905f39e72c7
 									</a>
 								</div>
 							</div>
@@ -434,9 +440,15 @@
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+<<<<<<< HEAD
 										<i class="fa fa-long-arrow-left m-l-9"></i>
 										
 										ادامه خواندن
+=======
+										ادامه مطلب
+
+										<i class="fa fa-long-arrow-right m-l-9"></i>
+>>>>>>> 0117b499d179ea2e25400cf6a1e94905f39e72c7
 									</a>
 								</div>
 							</div>
@@ -487,9 +499,15 @@
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+<<<<<<< HEAD
 										<i class="fa fa-long-arrow-left m-l-9"></i>
 										
 										ادامه خواندن
+=======
+										ادامه مطلب
+
+										<i class="fa fa-long-arrow-right m-l-9"></i>
+>>>>>>> 0117b499d179ea2e25400cf6a1e94905f39e72c7
 									</a>
 								</div>
 							</div>
