@@ -337,12 +337,20 @@
 			</a>
 
 			<a href="product.php" class="stext-109 cl8 hov-cl1 trans-04">
+<<<<<<< HEAD
 				آقایان
+=======
+				مردانه
+>>>>>>> db3d424568c29b040aeda75e90f2f5d1364c24aa
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
 			<span class="stext-109 cl4">
+<<<<<<< HEAD
 				گرم کن
+=======
+				 ژاکت
+>>>>>>> db3d424568c29b040aeda75e90f2f5d1364c24aa
 			</span>
 		</div>
 	</div>
@@ -396,6 +404,7 @@
 				<div class="col-md-6 col-lg-5 p-b-30">
 					<div class="p-r-50 p-t-5 p-lr-0-lg">
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+<<<<<<< HEAD
 							گرم کن
 						</h4>
 
@@ -405,6 +414,17 @@
 
 						<p class="stext-102 cl3 p-t-23">
 							لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. 
+=======
+							ژاکت
+						</h4>
+
+						<span class="mtext-106 cl2">
+							100000تومان
+						</span>
+
+						<p class="stext-102 cl3 p-t-23">
+							پارچه­‌های نخ و پنبه بسیار پرطرفدار و پرکاربرد هستند. این پارچه­‌ها به پوست آسیب نمی­‌رسانند و حساسیت ایجاد نمی­‌کنند.
+>>>>>>> db3d424568c29b040aeda75e90f2f5d1364c24aa
 						</p>
 						
 						<!--  -->
@@ -418,10 +438,17 @@
 									<div class="rs1-select2 bor8 bg0">
 										<select class="js-select2" name="time">
 											<option>یک گزینه را انتخاب کنید</option>
+<<<<<<< HEAD
 											<option>Size S</option>
 											<option>Size M</option>
 											<option>Size L</option>
 											<option>Size XL</option>
+=======
+											<option>S</option>
+											<option>M</option>
+											<option>L</option>
+											<option>XL</option>
+>>>>>>> db3d424568c29b040aeda75e90f2f5d1364c24aa
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
@@ -438,7 +465,11 @@
 										<select class="js-select2" name="time">
 											<option>یک گزینه را انتخاب کنید</option>
 											<option>قرمز</option>
+<<<<<<< HEAD
 											<option>آبی</option>
+=======
+											<option>ابی</option>
+>>>>>>> db3d424568c29b040aeda75e90f2f5d1364c24aa
 											<option>سفید</option>
 											<option>خاکستری</option>
 										</select>
@@ -462,7 +493,11 @@
 									</div>
 
 									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+<<<<<<< HEAD
 										اضافه کردن به سبد خرید
+=======
+										اضافه به سبد خرید
+>>>>>>> db3d424568c29b040aeda75e90f2f5d1364c24aa
 									</button>
 								</div>
 							</div>	
