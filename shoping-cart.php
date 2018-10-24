@@ -325,12 +325,12 @@
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
-				Home
+				صفحه اصلی
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
 			<span class="stext-109 cl4">
-				Shoping Cart
+				سبد خرید
 			</span>
 		</div>
 	</div>
@@ -345,11 +345,11 @@
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
-									<th class="column-1">Product</th>
+									<th class="column-1">محصولات</th>
 									<th class="column-2"></th>
-									<th class="column-3">Price</th>
-									<th class="column-4">Quantity</th>
-									<th class="column-5">Total</th>
+									<th class="column-3">قیمت</th>
+									<th class="column-4">تعداد</th>
+									<th class="column-5">قیمت</th>
 								</tr>
 
 								<tr class="table_row">
@@ -358,8 +358,8 @@
 											<img src="images/item-cart-04.jpg" alt="IMG">
 										</div>
 									</td>
-									<td class="column-2">Fresh Strawberries</td>
-									<td class="column-3">$ 36.00</td>
+									<td class="column-2">کاپشن</td>
+									<td class="column-3">400000تومان</td>
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -373,7 +373,7 @@
 											</div>
 										</div>
 									</td>
-									<td class="column-5">$ 36.00</td>
+									<td class="column-5">400000تومان</td>
 								</tr>
 
 								<tr class="table_row">
@@ -382,8 +382,8 @@
 											<img src="images/item-cart-05.jpg" alt="IMG">
 										</div>
 									</td>
-									<td class="column-2">Lightweight Jacket</td>
-									<td class="column-3">$ 16.00</td>
+									<td class="column-2">ژاکت</td>
+									<td class="column-3">50000تومان</td>
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -397,7 +397,7 @@
 											</div>
 										</div>
 									</td>
-									<td class="column-5">$ 16.00</td>
+									<td class="column-5">50000تومان</td>
 								</tr>
 							</table>
 						</div>
@@ -407,12 +407,12 @@
 								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
 									
 								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									Apply coupon
+									کد تخفیف
 								</div>
 							</div>
 
 							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-								Update Cart
+								افزودن به سبد خرید
 							</div>
 						</div>
 					</div>
@@ -421,19 +421,19 @@
 				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
 					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
 						<h4 class="mtext-109 cl2 p-b-30">
-							Cart Totals
+							سبد خرید
 						</h4>
 
 						<div class="flex-w flex-t bor12 p-b-13">
 							<div class="size-208">
 								<span class="stext-110 cl2">
-									Subtotal:
+									قیمت محصولات:
 								</span>
 							</div>
 
 							<div class="size-209">
 								<span class="mtext-110 cl2">
-									$79.65
+									1000000تومان
 								</span>
 							</div>
 						</div>
@@ -441,25 +441,25 @@
 						<div class="flex-w flex-t bor12 p-t-15 p-b-30">
 							<div class="size-208 w-full-ssm">
 								<span class="stext-110 cl2">
-									Shipping:
+									حمل و نقل:
 								</span>
 							</div>
 
 							<div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
 								<p class="stext-111 cl6 p-t-2">
-									There are no shipping methods available. Please double check your address, or contact us if you need any help.
+									هیچ روش حمل و نقل در دسترس نیست. لطفا آدرس خود را بررسی کنید، یا اگر به کمک نیاز دارید، با ما تماس بگیرید.
 								</p>
 								
 								<div class="p-t-15">
 									<span class="stext-112 cl8">
-										Calculate Shipping
+										هزینه حمل و نقل
 									</span>
 
 									<div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
 										<select class="js-select2" name="time">
-											<option>Select a country...</option>
-											<option>USA</option>
-											<option>UK</option>
+											<option>انتخاب کشور ....</option>
+											<option>ایران</option>
+											<option>انگلستان</option>
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
@@ -474,7 +474,7 @@
 									
 									<div class="flex-w">
 										<div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-											Update Totals
+											بروز رسانی
 										</div>
 									</div>
 										
@@ -485,19 +485,19 @@
 						<div class="flex-w flex-t p-t-27 p-b-33">
 							<div class="size-208">
 								<span class="mtext-101 cl2">
-									Total:
+									قیمت کل:
 								</span>
 							</div>
 
 							<div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-									$79.65
+									1000000تومان
 								</span>
 							</div>
 						</div>
 
 						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-							Proceed to Checkout
+							تایید 
 						</button>
 					</div>
 				</div>
