@@ -381,9 +381,9 @@
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+										<i class="fa fa-long-arrow-left m-l-9"></i>
+										
 										ادامه خواندن
-
-										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
 								</div>
 							</div>
@@ -434,9 +434,9 @@
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+										<i class="fa fa-long-arrow-left m-l-9"></i>
+										
 										ادامه خواندن
-
-										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
 								</div>
 							</div>
@@ -487,9 +487,9 @@
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+										<i class="fa fa-long-arrow-left m-l-9"></i>
+										
 										ادامه خواندن
-
-										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
 								</div>
 							</div>
@@ -563,7 +563,7 @@
 
 							<ul>
 								<li class="flex-w flex-t p-b-30">
-									<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+									<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-l-20">
 										<img src="images/product-min-01.jpg" alt="PRODUCT">
 									</a>
 
@@ -579,7 +579,7 @@
 								</li>
 
 								<li class="flex-w flex-t p-b-30">
-									<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+									<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-l-20">
 										<img src="images/product-min-02.jpg" alt="PRODUCT">
 									</a>
 
@@ -595,7 +595,7 @@
 								</li>
 
 								<li class="flex-w flex-t p-b-30">
-									<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-r-20">
+									<a href="#" class="wrao-pic-w size-214 hov-ovelay1 m-l-20">
 										<img src="images/product-min-03.jpg" alt="PRODUCT">
 									</a>
 
