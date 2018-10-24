@@ -337,19 +337,19 @@
 						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
 							<div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
 								<span class="ltext-101 cl2 respon2">
-									Women Collection 2018
+									مجموعه زنان 2018
 								</span>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
 								<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
-									NEW SEASON
+									فصل جدید
 								</h2>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
 								<a href="product.php" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-									Shop Now
+									خرید کن
 								</a>
 							</div>
 						</div>
@@ -361,19 +361,19 @@
 						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
 							<div class="layer-slick1 animated visible-false" data-appear="rollIn" data-delay="0">
 								<span class="ltext-101 cl2 respon2">
-									Men New-Season
+									فصل جدید برای آقایان
 								</span>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="lightSpeedIn" data-delay="800">
 								<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
-									Jackets & Coats
+									بلوز & ژاکت
 								</h2>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="slideInUp" data-delay="1600">
 								<a href="product.php" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-									Shop Now
+									خرید کن
 								</a>
 							</div>
 						</div>
@@ -385,19 +385,19 @@
 						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
 							<div class="layer-slick1 animated visible-false" data-appear="rotateInDownLeft" data-delay="0">
 								<span class="ltext-101 cl2 respon2">
-									Men Collection 2018
+									مجموعه آقایان 2018
 								</span>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="rotateInUpRight" data-delay="800">
 								<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
-									New arrivals
+									جدیدترین ها
 								</h2>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="rotateIn" data-delay="1600">
 								<a href="product.php" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-									Shop Now
+									خرید کن
 								</a>
 							</div>
 						</div>
@@ -420,17 +420,17 @@
 						<a href="product.php" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 							<div class="block1-txt-child1 flex-col-l">
 								<span class="block1-name ltext-102 trans-04 p-b-8">
-									Women
+									بانوان
 								</span>
 
 								<span class="block1-info stext-102 trans-04">
-									Spring 2018
+									بهار 2018
 								</span>
 							</div>
 
 							<div class="block1-txt-child2 p-b-4 trans-05">
 								<div class="block1-link stext-101 cl0 trans-09">
-									Shop Now
+									خرید کن
 								</div>
 							</div>
 						</a>
@@ -445,17 +445,17 @@
 						<a href="product.php" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 							<div class="block1-txt-child1 flex-col-l">
 								<span class="block1-name ltext-102 trans-04 p-b-8">
-									Men
+									آقایان
 								</span>
 
 								<span class="block1-info stext-102 trans-04">
-									Spring 2018
+									بهار 2018
 								</span>
 							</div>
 
 							<div class="block1-txt-child2 p-b-4 trans-05">
 								<div class="block1-link stext-101 cl0 trans-09">
-									Shop Now
+									خرید کن
 								</div>
 							</div>
 						</a>
@@ -470,17 +470,17 @@
 						<a href="product.php" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 							<div class="block1-txt-child1 flex-col-l">
 								<span class="block1-name ltext-102 trans-04 p-b-8">
-									Accessories
+									تجهیزات جانبی
 								</span>
 
 								<span class="block1-info stext-102 trans-04">
-									New Trend
+									روند جدید
 								</span>
 							</div>
 
 							<div class="block1-txt-child2 p-b-4 trans-05">
 								<div class="block1-link stext-101 cl0 trans-09">
-									Shop Now
+									خرید کن
 								</div>
 							</div>
 						</a>
@@ -496,34 +496,34 @@
 		<div class="container">
 			<div class="p-b-10">
 				<h3 class="ltext-103 cl5">
-					Product Overview
+					بررسی اجمالی محصولات
 				</h3>
 			</div>
 
 			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-						All Products
+						همه محصولات
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-						Women
+						بانوان
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-						Men
+						آقایان
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-						Bag
+						تیپ بگ
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-						Shoes
+						کفش 
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-						Watches
+						ساعت
 					</button>
 				</div>
 
@@ -531,7 +531,7 @@
 					<div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
 						<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
 						<i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						 Filter
+						 فیلتر کردن
 					</div>
 
 					<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
@@ -557,43 +557,43 @@
 					<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
 						<div class="filter-col1 p-r-15 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
-								Sort By
+								مرتب سازی بر اساس
 							</div>
 
 							<ul>
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Default
+										پیش فرض
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Popularity
+										محبوبیت
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Average rating
+										امتیاز متوسط
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-										Newness
+										نوازنده
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Price: Low to High
+										قیمت: کم به زیاد
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Price: High to Low
+										قیمت: زیاد به کم
 									</a>
 								</li>
 							</ul>
@@ -601,43 +601,43 @@
 
 						<div class="filter-col2 p-r-15 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
-								Price
+								قیمت
 							</div>
 
 							<ul>
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-										All
+										همه
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$0.00 - $50.00
+										0 تومان - 50هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$50.00 - $100.00
+										50 هزار تومان - 100 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$100.00 - $150.00
+										100 هزار تومان - 150 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$150.00 - $200.00
+										150 هزار تومان - 200 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$200.00+
+										بیشتر از 200 هزار تومان
 									</a>
 								</li>
 							</ul>
@@ -645,7 +645,7 @@
 
 						<div class="filter-col3 p-r-15 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
-								Color
+								رنگ
 							</div>
 
 							<ul>
