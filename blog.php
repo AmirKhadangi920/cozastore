@@ -381,7 +381,7 @@
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-										ادامه خواندن
+										ادامه مطلب
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
@@ -434,7 +434,7 @@
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-										ادامه خواندن
+										ادامه مطلب
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
@@ -487,7 +487,7 @@
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-										ادامه خواندن
+										ادامه مطلب
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
