@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
 	<title>صفحه اصلی 2</title>
 	<meta charset="UTF-8">

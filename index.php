@@ -1,6 +1,6 @@
 <!-- mr zarrabi-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
 	<title>صفحه اصلی</title>
 	<meta charset="UTF-8">
