@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>About</title>
+	<title>درباره</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -39,20 +39,20 @@
 			<div class="top-bar">
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">
-						Free shipping for standard order over $100
+						حمل و نقل رایگان برای سفارش استاندارد بیش از 100 دلار
 					</div>
 
 					<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Help & FAQs
+							پرس و پاسخ
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Account
+							اکانت من
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							EN
+							انگلیس
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
@@ -74,32 +74,32 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="index.php">Home</a>
+								<a href="index.php">صفحه اصلی</a>
 								<ul class="sub-menu">
-									<li><a href="index.php">Homepage 1</a></li>
-									<li><a href="home-02.php">Homepage 2</a></li>
-									<li><a href="home-03.php">Homepage 3</a></li>
+									<li><a href="index.php">صفحه اصلی 1</a></li>
+									<li><a href="home-02.php">صفحه اصلی 2</a></li>
+									<li><a href="home-03.php">صفحه اصلی 3</a></li>
 								</ul>
 							</li>
 
 							<li>
-								<a href="product.php">Shop</a>
+								<a href="product.php">فروشگاه</a>
 							</li>
 
 							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.php">Features</a>
+								<a href="shoping-cart.php">امکانات</a>
 							</li>
 
 							<li>
-								<a href="blog.php">Blog</a>
+								<a href="blog.php">وبلاگ</a>
 							</li>
 
 							<li class="active-menu">
-								<a href="about.php">About</a>
+								<a href="about.php">درباره==</a>
 							</li>
 
 							<li>
-								<a href="contact.php">Contact</a>
+								<a href="contact.php">ارتباط با ما</a>
 							</li>
 						</ul>
 					</div>	
@@ -158,18 +158,17 @@
 			<ul class="topbar-mobile">
 				<li>
 					<div class="left-top-bar">
-						Free shipping for standard order over $100
-					</div>
+						حمل و نقل رایگان برای سفارش استاندارد بیش از 100 دلار					</div>
 				</li>
 
 				<li>
 					<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Help & FAQs
+							پرسش و پاسخ
 						</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							My Account
+							اکانت من
 						</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
@@ -185,11 +184,11 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.php">Home</a>
+					<a href="index.php">صفحه اصلی</a>
 					<ul class="sub-menu-m">
-						<li><a href="index.php">Homepage 1</a></li>
-						<li><a href="home-02.php">Homepage 2</a></li>
-						<li><a href="home-03.php">Homepage 3</a></li>
+						<li><a href="index.php">صفحه اصلی 1</a></li>
+						<li><a href="home-02.php">صفحه اصلی 2</a></li>
+						<li><a href="home-03.php">صفحه اصلی 3</a></li>
 					</ul>
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -197,23 +196,23 @@
 				</li>
 
 				<li>
-					<a href="product.php">Shop</a>
+					<a href="product.php">فروشگاه</a>
 				</li>
 
 				<li>
-					<a href="shoping-cart.php" class="label1 rs1" data-label1="hot">Features</a>
+					<a href="shoping-cart.php" class="label1 rs1" data-label1="hot">امکانات</a>
 				</li>
 
 				<li>
-					<a href="blog.php">Blog</a>
+					<a href="blog.php">وبلاگ</a>
 				</li>
 
 				<li>
-					<a href="about.php">About</a>
+					<a href="about.php">درباره</a>
 				</li>
 
 				<li>
-					<a href="contact.php">Contact</a>
+					<a href="contact.php">ارتباط</a>
 				</li>
 			</ul>
 		</div>
@@ -242,7 +241,7 @@
 		<div class="header-cart flex-col-l p-l-65 p-r-25">
 			<div class="header-cart-title flex-w flex-sb-m p-b-8">
 				<span class="mtext-103 cl2">
-					Your Cart
+					سبد خرید شما
 				</span>
 
 				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
@@ -259,11 +258,11 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								White Shirt Pleat
+								پیراهن سفید پلات
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $19.00
+								1 * 19 هزار تومان
 							</span>
 						</div>
 					</li>
@@ -279,7 +278,7 @@
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $39.00
+								1 * 39 هزار تومان
 							</span>
 						</div>
 					</li>
@@ -295,7 +294,7 @@
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $17.00
+								1 * 17 هزار تومان
 							</span>
 						</div>
 					</li>
@@ -303,16 +302,16 @@
 				
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
+						مجموع 75 هزار تومان
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
 						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							View Cart
+							دیدن سبد خرید
 						</a>
 
 						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Check Out
+							بررسی
 						</a>
 					</div>
 				</div>
@@ -324,7 +323,7 @@
 	<!-- Title page -->
 	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-01.jpg');">
 		<h2 class="ltext-105 cl0 txt-center">
-			About
+			درباره
 		</h2>
 	</section>	
 
@@ -336,11 +335,11 @@
 				<div class="col-md-7 col-lg-8">
 					<div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
 						<h3 class="mtext-111 cl2 p-b-16">
-							Our Story
+							فروشگاه ما
 						</h3>
 
 						<p class="stext-113 cl6 p-b-26">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consequat consequat enim, non auctor massa ultrices non. Morbi sed odio massa. Quisque at vehicula tellus, sed tincidunt augue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas varius egestas diam, eu sodales metus scelerisque congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas gravida justo eu arcu egestas convallis. Nullam eu erat bibendum, tempus ipsum eget, dictum enim. Donec non neque ut enim dapibus tincidunt vitae nec augue. Suspendisse potenti. Proin ut est diam. Donec condimentum euismod tortor, eget facilisis diam faucibus et. Morbi a tempor elit.
+							لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
 						</p>
 
 						<p class="stext-113 cl6 p-b-26">
