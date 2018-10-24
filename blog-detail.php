@@ -27,6 +27,8 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!-- Adding Persian fonts to a website -->
+	<link rel="stylesheet" type="text/css" href="css/font.css">
 <!--===============================================================================================-->
 </head>
 <body class="animsition">
