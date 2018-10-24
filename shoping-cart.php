@@ -39,24 +39,24 @@
 			<div class="top-bar">
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">
-						حمل و نقل رایگان برای سفارشات بیش از 100000 تومان 
+						حمل و نقل رایگان برای سفارش استاندارد بیش از 100 دلار
 					</div>
 
 					<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							سوالات متداول و راهنما
+							پرس و پاسخ
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							حساب کاربری
+							اکانت من
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							فارسی
+							انگلیس
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							انگلیسی
+							ایران
 						</a>
 					</div>
 				</div>
@@ -76,9 +76,9 @@
 							<li>
 								<a href="index.php">صفحه اصلی</a>
 								<ul class="sub-menu">
-									<li><a href="index.php">صفحه اصلی</a></li>
-									<li><a href="home-02.php">صفحه 2</a></li>
-									<li><a href="home-03.php">صفحه 3</a></li>
+									<li><a href="index.php">صفحه اصلی 1</a></li>
+									<li><a href="home-02.php">صفحه اصلی 2</a></li>
+									<li><a href="home-03.php">صفحه اصلی 3</a></li>
 								</ul>
 							</li>
 
@@ -86,7 +86,7 @@
 								<a href="product.php">فروشگاه</a>
 							</li>
 
-							<li class="label1" data-label1="hot">
+							<li class="label1" data-label1="جدید">
 								<a href="shoping-cart.php">امکانات</a>
 							</li>
 
@@ -94,8 +94,8 @@
 								<a href="blog.php">وبلاگ</a>
 							</li>
 
-							<li>
-								<a href="about.php">درباره ما</a>
+							<li class="active-menu">
+								<a href="about.php">درباره</a>
 							</li>
 
 							<li>
@@ -158,26 +158,25 @@
 			<ul class="topbar-mobile">
 				<li>
 					<div class="left-top-bar">
-						حمل و نقل رایگان برای سفارشات بیش از 100000 تومان 
-					</div>
+						حمل و نقل رایگان برای سفارش استاندارد بیش از 100 دلار					</div>
 				</li>
 
 				<li>
 					<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							سوالات متداول و راهنما
+							پرسش و پاسخ
 						</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							حساب کاربری
+							اکانت من
 						</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							فارسی
+							EN
 						</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							انگلیسی
+							USD
 						</a>
 					</div>
 				</li>
@@ -187,9 +186,9 @@
 				<li>
 					<a href="index.php">صفحه اصلی</a>
 					<ul class="sub-menu-m">
-						<li><a href="index.php">صفحه اصلی</a></li>
-						<li><a href="home-02.php">صفحه 2</a></li>
-						<li><a href="home-03.php">صفحه 3</a></li>
+						<li><a href="index.php">صفحه اصلی 1</a></li>
+						<li><a href="home-02.php">صفحه اصلی 2</a></li>
+						<li><a href="home-03.php">صفحه اصلی 3</a></li>
 					</ul>
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -201,19 +200,19 @@
 				</li>
 
 				<li>
-					<a href="shoping-cart.php" class="label1 rs1" data-label1="hot">امکانات</a>
+					<a href="shoping-cart.php" class="label1 rs1" data-label1="جدید">امکانات</a>
 				</li>
 
 				<li>
-					<a href="blog.php">بلاگ</a>
+					<a href="blog.php">وبلاگ</a>
 				</li>
 
 				<li>
-					<a href="about.php">درباره ما</a>
+					<a href="about.php">درباره</a>
 				</li>
 
 				<li>
-					<a href="contact.php">ارتباط با ما</a>
+					<a href="contact.php">ارتباط</a>
 				</li>
 			</ul>
 		</div>
@@ -229,7 +228,7 @@
 					<button class="flex-c-m trans-04">
 						<i class="zmdi zmdi-search"></i>
 					</button>
-					<input class="plh3" type="text" name="search" placeholder="Search...">
+					<input class="plh3" type="text" name="search" placeholder="جستجو ...">
 				</form>
 			</div>
 		</div>
@@ -242,7 +241,11 @@
 		<div class="header-cart flex-col-l p-l-65 p-r-25">
 			<div class="header-cart-title flex-w flex-sb-m p-b-8">
 				<span class="mtext-103 cl2">
-					Your Cart
+<<<<<<< HEAD
+					سبد خرید
+=======
+					سبد خرید شما
+>>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 				</span>
 
 				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
@@ -259,11 +262,15 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								White Shirt Pleat
+								پیراهن سفید پلات
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $19.00
+<<<<<<< HEAD
+								1 x 54000تومان
+=======
+								1 * 19 هزار تومان
+>>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 							</span>
 						</div>
 					</li>
@@ -275,11 +282,19 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Converse All Star
+<<<<<<< HEAD
+							کفش 
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $39.00
+								1 x 50000تومان
+=======
+								کفش جدید اسپرت مردانه
+							</a>
+
+							<span class="header-cart-item-info">
+								1 * 39 هزار تومان
+>>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 							</span>
 						</div>
 					</li>
@@ -291,11 +306,19 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Nixon Porter Leather
+<<<<<<< HEAD
+								Nixon ساعت
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $17.00
+								1 x 50000تومان
+=======
+								ساعت بند چرمی
+							</a>
+
+							<span class="header-cart-item-info">
+								1 * 17 هزار تومان
+>>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 							</span>
 						</div>
 					</li>
@@ -303,16 +326,24 @@
 				
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
+<<<<<<< HEAD
+						قیمت کل :154000تومان
+=======
+						مجموع 75 هزار تومان
+>>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
 						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							View Cart
+<<<<<<< HEAD
+							بازبینی سبد خرید
+=======
+							دیدن سبد خرید
+>>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 						</a>
 
 						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Check Out
+							بررسی
 						</a>
 					</div>
 				</div>
@@ -325,12 +356,12 @@
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
-				Home
+				صفحه اصلی
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
 			<span class="stext-109 cl4">
-				Shoping Cart
+				سبد خرید
 			</span>
 		</div>
 	</div>
@@ -345,11 +376,11 @@
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
-									<th class="column-1">Product</th>
+									<th class="column-1">محصولات</th>
 									<th class="column-2"></th>
-									<th class="column-3">Price</th>
-									<th class="column-4">Quantity</th>
-									<th class="column-5">Total</th>
+									<th class="column-3">قیمت</th>
+									<th class="column-4">تعداد</th>
+									<th class="column-5">قیمت</th>
 								</tr>
 
 								<tr class="table_row">
@@ -358,8 +389,8 @@
 											<img src="images/item-cart-04.jpg" alt="IMG">
 										</div>
 									</td>
-									<td class="column-2">Fresh Strawberries</td>
-									<td class="column-3">$ 36.00</td>
+									<td class="column-2">کاپشن</td>
+									<td class="column-3">400000تومان</td>
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -373,7 +404,7 @@
 											</div>
 										</div>
 									</td>
-									<td class="column-5">$ 36.00</td>
+									<td class="column-5">400000تومان</td>
 								</tr>
 
 								<tr class="table_row">
@@ -382,8 +413,8 @@
 											<img src="images/item-cart-05.jpg" alt="IMG">
 										</div>
 									</td>
-									<td class="column-2">Lightweight Jacket</td>
-									<td class="column-3">$ 16.00</td>
+									<td class="column-2">ژاکت</td>
+									<td class="column-3">50000تومان</td>
 									<td class="column-4">
 										<div class="wrap-num-product flex-w m-l-auto m-r-0">
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -397,7 +428,7 @@
 											</div>
 										</div>
 									</td>
-									<td class="column-5">$ 16.00</td>
+									<td class="column-5">50000تومان</td>
 								</tr>
 							</table>
 						</div>
@@ -407,12 +438,12 @@
 								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
 									
 								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									Apply coupon
+									کد تخفیف
 								</div>
 							</div>
 
 							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-								Update Cart
+								افزودن به سبد خرید
 							</div>
 						</div>
 					</div>
@@ -421,19 +452,19 @@
 				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
 					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
 						<h4 class="mtext-109 cl2 p-b-30">
-							Cart Totals
+							سبد خرید
 						</h4>
 
 						<div class="flex-w flex-t bor12 p-b-13">
 							<div class="size-208">
 								<span class="stext-110 cl2">
-									Subtotal:
+									قیمت محصولات:
 								</span>
 							</div>
 
 							<div class="size-209">
 								<span class="mtext-110 cl2">
-									$79.65
+									1000000تومان
 								</span>
 							</div>
 						</div>
@@ -441,25 +472,25 @@
 						<div class="flex-w flex-t bor12 p-t-15 p-b-30">
 							<div class="size-208 w-full-ssm">
 								<span class="stext-110 cl2">
-									Shipping:
+									حمل و نقل:
 								</span>
 							</div>
 
 							<div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
 								<p class="stext-111 cl6 p-t-2">
-									There are no shipping methods available. Please double check your address, or contact us if you need any help.
+									هیچ روش حمل و نقل در دسترس نیست. لطفا آدرس خود را بررسی کنید، یا اگر به کمک نیاز دارید، با ما تماس بگیرید.
 								</p>
 								
 								<div class="p-t-15">
 									<span class="stext-112 cl8">
-										Calculate Shipping
+										هزینه حمل و نقل
 									</span>
 
 									<div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
 										<select class="js-select2" name="time">
-											<option>Select a country...</option>
-											<option>USA</option>
-											<option>UK</option>
+											<option>انتخاب کشور ....</option>
+											<option>ایران</option>
+											<option>انگلستان</option>
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
@@ -474,7 +505,7 @@
 									
 									<div class="flex-w">
 										<div class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-											Update Totals
+											بروز رسانی
 										</div>
 									</div>
 										
@@ -485,19 +516,19 @@
 						<div class="flex-w flex-t p-t-27 p-b-33">
 							<div class="size-208">
 								<span class="mtext-101 cl2">
-									Total:
+									قیمت کل:
 								</span>
 							</div>
 
 							<div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-									$79.65
+									1000000تومان
 								</span>
 							</div>
 						</div>
 
 						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-							Proceed to Checkout
+							تایید 
 						</button>
 					</div>
 				</div>
@@ -514,31 +545,31 @@
 			<div class="row">
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Categories
+						موضوعات
 					</h4>
 
 					<ul>
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
+								خانم ها
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Men
+								آقایان
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shoes
+								کفش ها
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Watches
+								ساعت ها
 							</a>
 						</li>
 					</ul>
@@ -546,31 +577,31 @@
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Help
+						خدمات مشتریان
 					</h4>
 
 					<ul>
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Track Order
+								پیگیری سفارش
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Returns 
+								مرجوع کردن 
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shipping
+								ارسال محصولات
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								FAQs
+								پرسش و پاسخ
 							</a>
 						</li>
 					</ul>
@@ -578,11 +609,11 @@
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						GET IN TOUCH
+						با کسب و کار ما آشنا شوید
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+					لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. 
 					</p>
 
 					<div class="p-t-27">
@@ -602,7 +633,7 @@
 
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">
-						Newsletter
+						خبرنامه
 					</h4>
 
 					<form>
@@ -613,7 +644,7 @@
 
 						<div class="p-t-18">
 							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-								Subscribe
+								عضویت
 							</button>
 						</div>
 					</form>
@@ -645,7 +676,7 @@
 
 				<p class="stext-107 cl6 txt-center">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> تمام حقوق این قالب محفوظ است | ترجمه شده <i class="fa fa-heart-o" aria-hidden="true"></i> توسط <a href="https://colorlib.com" target="_blank">SmaT Teamwork</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
 				</p>
