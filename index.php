@@ -1,6 +1,6 @@
 <!-- mr zarrabi-->
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="ltr">
 <head>
 	<title>صفحه اصلی</title>
 	<meta charset="UTF-8">
@@ -41,7 +41,7 @@
 <body class="animsition">
 	
 	<!-- Header -->
-	<header class="header-v4">
+	<header class="header-v4" dir="rtl">
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
 			<!-- Topbar -->
@@ -244,7 +244,7 @@
 	</header>
 
 	<!-- Cart -->
-	<div class="wrap-header-cart js-panel-cart">
+	<div class="wrap-header-cart js-panel-cart"  dir="rtl">
 		<div class="s-full js-hide-cart"></div>
 
 		<div class="header-cart flex-col-l p-l-65 p-r-25">
@@ -336,7 +336,7 @@
 			<div class="slick1">
 				<div class="item-slick1" style="background-image: url(images/slide-01.jpg);">
 					<div class="container h-full">
-						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5" dir="rtl">
 							<div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
 								<span class="ltext-101 cl2 respon2">
 									Women Collection 2018
@@ -360,7 +360,7 @@
 
 				<div class="item-slick1" style="background-image: url(images/slide-02.jpg);">
 					<div class="container h-full">
-						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5" dir="rtl">
 							<div class="layer-slick1 animated visible-false" data-appear="rollIn" data-delay="0">
 								<span class="ltext-101 cl2 respon2">
 									Men New-Season
@@ -384,7 +384,7 @@
 
 				<div class="item-slick1" style="background-image: url(images/slide-03.jpg);">
 					<div class="container h-full">
-						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5" dir="rtl">
 							<div class="layer-slick1 animated visible-false" data-appear="rotateInDownLeft" data-delay="0">
 								<span class="ltext-101 cl2 respon2">
 									Men Collection 2018
@@ -411,7 +411,7 @@
 
 
 	<!-- Banner -->
-	<div class="sec-banner bg0 p-t-80 p-b-50">
+	<div class="sec-banner bg0 p-t-80 p-b-50"  dir="rtl">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
@@ -494,7 +494,7 @@
 
 
 	<!-- Product -->
-	<section class="bg0 p-t-23 p-b-140">
+	<section class="bg0 p-t-23 p-b-140"  dir="rtl">
 		<div class="container">
 			<div class="p-b-10">
 				<h3 class="ltext-103 cl5">
@@ -1269,7 +1269,7 @@
 
 
 	<!-- Footer -->
-	<footer class="bg3 p-t-75 p-b-32">
+	<footer class="bg3 p-t-75 p-b-32"  dir="rtl">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-lg-3 p-b-50">
