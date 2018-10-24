@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <!-- Amir Khadangi -->
+=======
+<!-- mr zarrabi-->
+>>>>>>> edb2e5e605971c1df1769acc388561f0b9369b2a
 <!DOCTYPE html>
 <html lang="en">
 <head>
