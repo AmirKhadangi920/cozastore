@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
 	<title>بلاگ</title>
 	<meta charset="UTF-8">
@@ -27,6 +27,8 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!-- Adding Persian fonts to a website -->
+	<link rel="stylesheet" type="text/css" href="css/font.css">
 <!--===============================================================================================-->
 </head>
 <body class="animsition">
@@ -323,7 +325,7 @@
 	<!-- Title page -->
 	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-02.jpg');">
 		<h2 class="ltext-105 cl0 txt-center">
-			Blog
+			وبلاگ
 		</h2>
 	</section>	
 
@@ -345,7 +347,7 @@
 									</span>
 
 									<span class="stext-109 cl3 txt-center">
-										Jan 2018
+										مهر 1397
 									</span>
 								</div>
 							</a>
@@ -353,33 +355,33 @@
 							<div class="p-t-32">
 								<h4 class="p-b-15">
 									<a href="blog-detail.php" class="ltext-108 cl2 hov-cl1 trans-04">
-										8 Inspiring Ways to Wear Dresses in the Winter
+										8 راه های الهام بخش برای پوشیدن لباس در زمستان
 									</a>
 								</h4>
 
 								<p class="stext-117 cl6">
-									Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
+									لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. 
 								</p>
 
 								<div class="flex-w flex-sb-m p-t-18">
 									<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
 										<span>
-											<span class="cl4">By</span> Admin  
+											<span class="cl4">توسط</span> مدیر  
 											<span class="cl12 m-l-4 m-r-6">|</span>
 										</span>
 
 										<span>
-											StreetStyle, Fashion, Couple  
+											لورم ایپسوم  
 											<span class="cl12 m-l-4 m-r-6">|</span>
 										</span>
 
 										<span>
-											8 Comments
+											8 پیشنهاد
 										</span>
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-										Continue Reading
+										ادامه خواندن
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
@@ -398,7 +400,7 @@
 									</span>
 
 									<span class="stext-109 cl3 txt-center">
-										Jan 2018
+										مهر 1397
 									</span>
 								</div>
 							</a>
@@ -406,33 +408,33 @@
 							<div class="p-t-32">
 								<h4 class="p-b-15">
 									<a href="blog-detail.php" class="ltext-108 cl2 hov-cl1 trans-04">
-										The Great Big List of Men’s Gifts for the Holidays 
+										لیست بزرگ بزرگ هدایای مردانه برای تعطیلات
 									</a>
 								</h4>
 
 								<p class="stext-117 cl6">
-									Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
+									لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. 
 								</p>
 
 								<div class="flex-w flex-sb-m p-t-18">
 									<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
 										<span>
-											<span class="cl4">By</span> Admin  
+											<span class="cl4">توسط</span> مدیر  
 											<span class="cl12 m-l-4 m-r-6">|</span>
 										</span>
 
 										<span>
-											StreetStyle, Fashion, Couple  
+											لورم ایپسوم   
 											<span class="cl12 m-l-4 m-r-6">|</span>
 										</span>
 
 										<span>
-											8 Comments
+											8 پیشنهاد
 										</span>
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-										Continue Reading
+										ادامه خواندن
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
@@ -451,7 +453,7 @@
 									</span>
 
 									<span class="stext-109 cl3 txt-center">
-										Jan 2018
+										مهر 1397
 									</span>
 								</div>
 							</a>
@@ -459,33 +461,33 @@
 							<div class="p-t-32">
 								<h4 class="p-b-15">
 									<a href="blog-detail.php" class="ltext-108 cl2 hov-cl1 trans-04">
-										5 Winter-to-Spring Fashion Trends to Try Now
+										5 روند مدرن زمستان و بهار 
 									</a>
 								</h4>
 
 								<p class="stext-117 cl6">
-									Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
+									لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. 
 								</p>
 
 								<div class="flex-w flex-sb-m p-t-18">
 									<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
 										<span>
-											<span class="cl4">By</span> Admin  
+											<span class="cl4">توسط</span> مدیر 
 											<span class="cl12 m-l-4 m-r-6">|</span>
 										</span>
 
 										<span>
-											StreetStyle, Fashion, Couple  
+											لورم ایپسوم 
 											<span class="cl12 m-l-4 m-r-6">|</span>
 										</span>
 
 										<span>
-											8 Comments
+											8 پیشنهاد
 										</span>
 									</span>
 
 									<a href="blog-detail.php" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
-										Continue Reading
+										ادامه خواندن
 
 										<i class="fa fa-long-arrow-right m-l-9"></i>
 									</a>
@@ -509,7 +511,7 @@
 				<div class="col-md-4 col-lg-3 p-b-80">
 					<div class="side-menu">
 						<div class="bor17 of-hidden pos-relative">
-							<input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type="text" name="search" placeholder="Search">
+							<input class="stext-103 cl2 plh4 size-116 p-l-28 p-r-55" type="text" name="search" placeholder="جست و جو">
 
 							<button class="flex-c-m size-122 ab-t-r fs-18 cl4 hov-cl1 trans-04">
 								<i class="zmdi zmdi-search"></i>
@@ -518,37 +520,37 @@
 
 						<div class="p-t-55">
 							<h4 class="mtext-112 cl2 p-b-33">
-								Categories
+								دسته بندی ها
 							</h4>
 
 							<ul>
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Fashion
+										مد
 									</a>
 								</li>
 
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Beauty
+										زیبایی
 									</a>
 								</li>
 
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Street Style
+										سبک خیابانی
 									</a>
 								</li>
 
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Life Style
+										شیوه زندگی
 									</a>
 								</li>
 
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										DIY & Crafts
+										صنایع دستی
 									</a>
 								</li>
 							</ul>
@@ -556,7 +558,7 @@
 
 						<div class="p-t-65">
 							<h4 class="mtext-112 cl2 p-b-33">
-								Featured Products
+								محصولات ویژه
 							</h4>
 
 							<ul>
@@ -567,11 +569,11 @@
 
 									<div class="size-215 flex-col-t p-t-8">
 										<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-											White Shirt With Pleat Detail Back
+											پیراهن سفید با جزئیات کامل
 										</a>
 
 										<span class="stext-116 cl6 p-t-20">
-											$19.00
+											19 تومان
 										</span>
 									</div>
 								</li>
@@ -583,11 +585,11 @@
 
 									<div class="size-215 flex-col-t p-t-8">
 										<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-											Converse All Star Hi Black Canvas
+											لورم ایپسوم
 										</a>
 
 										<span class="stext-116 cl6 p-t-20">
-											$39.00
+											39 تومان
 										</span>
 									</div>
 								</li>
@@ -599,11 +601,11 @@
 
 									<div class="size-215 flex-col-t p-t-8">
 										<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-											Nixon Porter Leather Watch In Tan
+											لورم ایپسوم
 										</a>
 
 										<span class="stext-116 cl6 p-t-20">
-											$17.00
+											17 تومان
 										</span>
 									</div>
 								</li>
@@ -612,14 +614,14 @@
 
 						<div class="p-t-55">
 							<h4 class="mtext-112 cl2 p-b-20">
-								Archive
+								بایگانی
 							</h4>
 
 							<ul>
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											July 2018
+											فروردین 1397
 										</span>
 
 										<span>
@@ -631,7 +633,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											June 2018
+											اردیبهشت 1397
 										</span>
 
 										<span>
@@ -643,7 +645,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											May 2018
+											خرداد 1397
 										</span>
 
 										<span>
@@ -655,7 +657,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											April  2018
+											تیر 1397
 										</span>
 
 										<span>
@@ -667,7 +669,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											March 2018
+											مرداد 1397
 										</span>
 
 										<span>
@@ -679,7 +681,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											February 2018
+											شهریور 1397
 										</span>
 
 										<span>
@@ -691,7 +693,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											January 2018
+											مهر 1397
 										</span>
 
 										<span>
@@ -703,7 +705,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											December 2017
+											ابان 1397
 										</span>
 
 										<span>
@@ -716,28 +718,28 @@
 
 						<div class="p-t-50">
 							<h4 class="mtext-112 cl2 p-b-27">
-								Tags
+								برچسب ها
 							</h4>
 
 							<div class="flex-w m-r--5">
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Fashion
+									مد
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Lifestyle
+									شیوه زندگی
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Denim
+									جین
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Streetstyle
+									لورم ایپسوم
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Crafts
+									صنایع دستی
 								</a>
 							</div>
 						</div>

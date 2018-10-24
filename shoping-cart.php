@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
 	<title>Shoping Cart</title>
 	<meta charset="UTF-8">
@@ -27,6 +27,8 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<!-- Adding Persian fonts to a website -->
+	<link rel="stylesheet" type="text/css" href="css/font.css">
 <!--===============================================================================================-->
 </head>
 <body class="animsition">
@@ -241,11 +243,7 @@
 		<div class="header-cart flex-col-l p-l-65 p-r-25">
 			<div class="header-cart-title flex-w flex-sb-m p-b-8">
 				<span class="mtext-103 cl2">
-<<<<<<< HEAD
 					سبد خرید
-=======
-					سبد خرید شما
->>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 				</span>
 
 				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
@@ -266,11 +264,7 @@
 							</a>
 
 							<span class="header-cart-item-info">
-<<<<<<< HEAD
-								1 x 54000تومان
-=======
 								1 * 19 هزار تومان
->>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 							</span>
 						</div>
 					</li>
@@ -282,19 +276,11 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-<<<<<<< HEAD
-							کفش 
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x 50000تومان
-=======
 								کفش جدید اسپرت مردانه
 							</a>
 
 							<span class="header-cart-item-info">
 								1 * 39 هزار تومان
->>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 							</span>
 						</div>
 					</li>
@@ -306,19 +292,11 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-<<<<<<< HEAD
-								Nixon ساعت
-							</a>
-
-							<span class="header-cart-item-info">
-								1 x 50000تومان
-=======
 								ساعت بند چرمی
 							</a>
 
 							<span class="header-cart-item-info">
 								1 * 17 هزار تومان
->>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 							</span>
 						</div>
 					</li>
@@ -326,20 +304,12 @@
 				
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
-<<<<<<< HEAD
-						قیمت کل :154000تومان
-=======
 						مجموع 75 هزار تومان
->>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
 						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-<<<<<<< HEAD
-							بازبینی سبد خرید
-=======
 							دیدن سبد خرید
->>>>>>> eb62615c7f14a6cd6eb3ff204c672345a60a8eb5
 						</a>
 
 						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
