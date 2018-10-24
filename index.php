@@ -550,7 +550,7 @@
 							<i class="zmdi zmdi-search"></i>
 						</button>
 
-						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="جستجو">
 					</div>	
 				</div>
 
@@ -657,7 +657,7 @@
 									</span>
 
 									<a href="#" class="filter-link stext-106 trans-04">
-										Black
+										مشکی
 									</a>
 								</li>
 
@@ -667,7 +667,7 @@
 									</span>
 
 									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-										Blue
+										آبی
 									</a>
 								</li>
 
@@ -707,7 +707,7 @@
 									</span>
 
 									<a href="#" class="filter-link stext-106 trans-04">
-										White
+										سفید
 									</a>
 								</li>
 							</ul>
@@ -715,28 +715,28 @@
 
 						<div class="filter-col4 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
-								Tags
+								برچسپ ها
 							</div>
 
 							<div class="flex-w p-t-4 m-r--5">
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Fashion
+									مد
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Lifestyle
+									شیوه زندگی
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Denim
+									جین
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Streetstyle
+									لورم ایپسوم
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Crafts
+									صنایع دستی
 								</a>
 							</div>
 						</div>
@@ -752,18 +752,18 @@
 							<img src="images/product-01.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Esprit Ruffle Shirt
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$16.64
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -784,18 +784,18 @@
 							<img src="images/product-02.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Herschel supply
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$35.31
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -816,18 +816,18 @@
 							<img src="images/product-03.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Only Check Trouser
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$25.50
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -848,18 +848,18 @@
 							<img src="images/product-04.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Classic Trench Coat
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$75.00
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -880,18 +880,18 @@
 							<img src="images/product-05.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Front Pocket Jumper
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$34.75
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -912,18 +912,18 @@
 							<img src="images/product-06.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Vintage Inspired Classic 
+									لورم ایپسوم متن ساختگی با تولید. 
 								</a>
 
 								<span class="stext-105 cl3">
-									$93.20
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -944,18 +944,18 @@
 							<img src="images/product-07.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Shirt in Stretch Cotton
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$52.66
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -976,18 +976,18 @@
 							<img src="images/product-08.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Pieces Metallic Printed
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$18.96
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -1008,18 +1008,18 @@
 							<img src="images/product-09.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Converse All Star Hi Plimsolls
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$75.00
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -1040,18 +1040,18 @@
 							<img src="images/product-10.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Femme T-Shirt In Stripe
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$25.85
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -1072,18 +1072,18 @@
 							<img src="images/product-11.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Herschel supply 
+									لورم ایپسوم متن ساختگی با تولید. 
 								</a>
 
 								<span class="stext-105 cl3">
-									$63.16
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -1104,18 +1104,18 @@
 							<img src="images/product-12.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Herschel supply
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$63.15
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -1136,18 +1136,18 @@
 							<img src="images/product-13.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									T-Shirt with Sleeve
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$18.49
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -1168,18 +1168,18 @@
 							<img src="images/product-14.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Pretty Little Thing
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$54.79
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -1200,18 +1200,18 @@
 							<img src="images/product-15.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Mini Silver Mesh Watch
+									لورم ایپسوم متن ساختگی با تولید.
 								</a>
 
 								<span class="stext-105 cl3">
-									$86.85
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -1232,7 +1232,7 @@
 							<img src="images/product-16.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده سریع
 							</a>
 						</div>
 
@@ -1243,7 +1243,7 @@
 								</a>
 
 								<span class="stext-105 cl3">
-									$29.64
+									30 هزار تومان
 								</span>
 							</div>
 
@@ -1261,7 +1261,7 @@
 			<!-- Load more -->
 			<div class="flex-c-m flex-w w-full p-t-45">
 				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Load More
+					بیشتر
 				</a>
 			</div>
 		</div>
