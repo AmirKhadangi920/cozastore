@@ -334,27 +334,27 @@
 			<div class="flex-w flex-sb-m p-b-52">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-						All Products
+						همه محصولات
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-						Women
+						زنانه
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-						Men
+						مردانه
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-						Bag
+						کیف
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-						Shoes
+						کفش
 					</button>
 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-						Watches
+						ساعت
 					</button>
 				</div>
 
@@ -362,13 +362,13 @@
 					<div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
 						<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
 						<i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						 Filter
+						 فیلتر
 					</div>
 
 					<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
 						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
 						<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						Search
+						جست و جو
 					</div>
 				</div>
 				
@@ -388,43 +388,43 @@
 					<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
 						<div class="filter-col1 p-r-15 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
-								Sort By
+								مرتب سازی بر اساس
 							</div>
 
 							<ul>
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Default
+										پیش فرض
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Popularity
+										پر بازدید ترین ها
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Average rating
+										امتیاز
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-										Newness
+										نظرات
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Price: Low to High
+										قیمت :کم به زیاد
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										Price: High to Low
+										قیمت :زیاد به کم
 									</a>
 								</li>
 							</ul>
@@ -432,43 +432,43 @@
 
 						<div class="filter-col2 p-r-15 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
-								Price
+								قیمت 
 							</div>
 
 							<ul>
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-										All
+										همه
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$0.00 - $50.00
+										0 - 50000تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$50.00 - $100.00
+										50000تومان - 100000تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$100.00 - $150.00
+										100000تومان - 150000تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$150.00 - $200.00
+										150000تومان-200000تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
 									<a href="#" class="filter-link stext-106 trans-04">
-										$200.00+
+										+200000تومان
 									</a>
 								</li>
 							</ul>
@@ -476,7 +476,7 @@
 
 						<div class="filter-col3 p-r-15 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
-								Color
+								رنگ
 							</div>
 
 							<ul>
@@ -486,7 +486,7 @@
 									</span>
 
 									<a href="#" class="filter-link stext-106 trans-04">
-										Black
+										مشکی
 									</a>
 								</li>
 
@@ -496,7 +496,7 @@
 									</span>
 
 									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-										Blue
+										ابی
 									</a>
 								</li>
 
@@ -506,7 +506,7 @@
 									</span>
 
 									<a href="#" class="filter-link stext-106 trans-04">
-										Grey
+										خاکستری
 									</a>
 								</li>
 
@@ -516,7 +516,7 @@
 									</span>
 
 									<a href="#" class="filter-link stext-106 trans-04">
-										Green
+										سبز
 									</a>
 								</li>
 
@@ -526,7 +526,7 @@
 									</span>
 
 									<a href="#" class="filter-link stext-106 trans-04">
-										Red
+										قرمز
 									</a>
 								</li>
 
@@ -536,7 +536,7 @@
 									</span>
 
 									<a href="#" class="filter-link stext-106 trans-04">
-										White
+										سفید
 									</a>
 								</li>
 							</ul>
@@ -544,28 +544,28 @@
 
 						<div class="filter-col4 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
-								Tags
+								بر چسب ها
 							</div>
 
 							<div class="flex-w p-t-4 m-r--5">
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Fashion
+									مد
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Lifestyle
+									استایل روز
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Denim
+									جین
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Streetstyle
+									استایل خیابانی
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Crafts
+									صنایع دستی
 								</a>
 							</div>
 						</div>
@@ -581,18 +581,18 @@
 							<img src="images/product-01.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Esprit Ruffle Shirt
+									پیراهن
 								</a>
 
 								<span class="stext-105 cl3">
-									$16.64
+									100000تومان
 								</span>
 							</div>
 
@@ -613,18 +613,18 @@
 							<img src="images/product-02.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Herschel supply
+									ست لباس
 								</a>
 
 								<span class="stext-105 cl3">
-									$35.31
+									250000تومان
 								</span>
 							</div>
 
@@ -645,18 +645,18 @@
 							<img src="images/product-03.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Only Check Trouser
+									پیراهن
 								</a>
 
 								<span class="stext-105 cl3">
-									$25.50
+									100000تومان
 								</span>
 							</div>
 
@@ -677,18 +677,18 @@
 							<img src="images/product-04.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Classic Trench Coat
+									کت
 								</a>
 
 								<span class="stext-105 cl3">
-									$75.00
+									100000تومان
 								</span>
 							</div>
 
@@ -709,18 +709,18 @@
 							<img src="images/product-05.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Front Pocket Jumper
+									دامن
 								</a>
 
 								<span class="stext-105 cl3">
-									$34.75
+									150000تومان
 								</span>
 							</div>
 
@@ -741,18 +741,18 @@
 							<img src="images/product-06.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Vintage Inspired Classic 
+									ساعت 
 								</a>
 
 								<span class="stext-105 cl3">
-									$93.20
+									150000تومان
 								</span>
 							</div>
 
@@ -773,18 +773,18 @@
 							<img src="images/product-07.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Shirt in Stretch Cotton
+									پیراهن کتان
 								</a>
 
 								<span class="stext-105 cl3">
-									$52.66
+									150000تومان
 								</span>
 							</div>
 
@@ -805,18 +805,18 @@
 							<img src="images/product-08.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Pieces Metallic Printed
+									تیشرت 
 								</a>
 
 								<span class="stext-105 cl3">
-									$18.96
+									190000تومان
 								</span>
 							</div>
 
@@ -837,18 +837,18 @@
 							<img src="images/product-09.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Converse All Star Hi Plimsolls
+									کفش
 								</a>
 
 								<span class="stext-105 cl3">
-									$75.00
+									250000تومان
 								</span>
 							</div>
 
@@ -869,18 +869,18 @@
 							<img src="images/product-10.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Femme T-Shirt In Stripe
+									تیشرت
 								</a>
 
 								<span class="stext-105 cl3">
-									$25.85
+									150000تومان
 								</span>
 							</div>
 
@@ -901,18 +901,18 @@
 							<img src="images/product-11.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Herschel supply 
+									پیراهن
 								</a>
 
 								<span class="stext-105 cl3">
-									$63.16
+									120000تومان
 								</span>
 							</div>
 
@@ -933,18 +933,18 @@
 							<img src="images/product-12.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Herschel supply
+									کمربند
 								</a>
 
 								<span class="stext-105 cl3">
-									$63.15
+									150000تومان
 								</span>
 							</div>
 
@@ -965,18 +965,18 @@
 							<img src="images/product-13.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									T-Shirt with Sleeve
+									تیشرت
 								</a>
 
 								<span class="stext-105 cl3">
-									$18.49
+									170000تومان
 								</span>
 							</div>
 
@@ -997,18 +997,18 @@
 							<img src="images/product-14.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Pretty Little Thing
+									تیشرت
 								</a>
 
 								<span class="stext-105 cl3">
-									$54.79
+									150000تومان
 								</span>
 							</div>
 
@@ -1029,18 +1029,18 @@
 							<img src="images/product-15.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Mini Silver Mesh Watch
+									ساعت
 								</a>
 
 								<span class="stext-105 cl3">
-									$86.85
+									150000تومان
 								</span>
 							</div>
 
@@ -1061,18 +1061,18 @@
 							<img src="images/product-16.jpg" alt="IMG-PRODUCT">
 
 							<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-								Quick View
+								مشاهده
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Square Neck Back
+									ست لباس
 								</a>
 
 								<span class="stext-105 cl3">
-									$29.64
+									150000تومان
 								</span>
 							</div>
 
@@ -1090,7 +1090,7 @@
 			<!-- Load more -->
 			<div class="flex-c-m flex-w w-full p-t-45">
 				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Load More
+					بیش تر
 				</a>
 			</div>
 		</div>
@@ -1305,32 +1305,32 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> تم�
 					<div class="col-md-6 col-lg-5 p-b-30">
 						<div class="p-r-50 p-t-5 p-lr-0-lg">
 							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-								Lightweight Jacket
+								ژاکت
 							</h4>
 
 							<span class="mtext-106 cl2">
-								$58.79
+								100000تومان
 							</span>
 
 							<p class="stext-102 cl3 p-t-23">
-								Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
+								پارچه­‌های نخ و پنبه بسیار پرطرفدار و پرکاربرد هستند. این پارچه­‌ها به پوست آسیب نمی­‌رسانند و حساسیت ایجاد نمی­‌کنند.
 							</p>
 							
 							<!--  -->
 							<div class="p-t-33">
 								<div class="flex-w flex-r-m p-b-10">
 									<div class="size-203 flex-c-m respon6">
-										Size
+										سایز
 									</div>
 
 									<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
 											<select class="js-select2" name="time">
-												<option>Choose an option</option>
-												<option>Size S</option>
-												<option>Size M</option>
-												<option>Size L</option>
-												<option>Size XL</option>
+												<option>یک گزینه را انتخاب کنید</option>
+												<option>S</option>
+												<option>M</option>
+												<option>L</option>
+												<option>XL</option>
 											</select>
 											<div class="dropDownSelect2"></div>
 										</div>
@@ -1339,17 +1339,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> تم�
 
 								<div class="flex-w flex-r-m p-b-10">
 									<div class="size-203 flex-c-m respon6">
-										Color
+										رنگ
 									</div>
 
 									<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
 											<select class="js-select2" name="time">
-												<option>Choose an option</option>
-												<option>Red</option>
-												<option>Blue</option>
-												<option>White</option>
-												<option>Grey</option>
+												<option>یک گزینه را انتخاب کنید</option>
+												<option>قرمز</option>
+												<option>ابی</option>
+												<option>سفید</option>
+												<option>خاکستری</option>
 											</select>
 											<div class="dropDownSelect2"></div>
 										</div>
@@ -1371,7 +1371,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> تم�
 										</div>
 
 										<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-											Add to cart
+											اضافه کردن به سبد خرید
 										</button>
 									</div>
 								</div>	
