@@ -39,24 +39,24 @@
 			<div class="top-bar">
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">
-						Free shipping for standard order over $100
+						حمل و نقل رایگان برای سفارشات بیش از 100000 تومان 
 					</div>
 
 					<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Help & FAQs
+							سوالات متداول و راهنما
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Account
+							حساب کاربری
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							EN
+							فارسی
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							USD
+							انگلیسی
 						</a>
 					</div>
 				</div>
@@ -74,32 +74,32 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="index.php">Home</a>
+								<a href="index.php">صفحه اصلی</a>
 								<ul class="sub-menu">
-									<li><a href="index.php">Homepage 1</a></li>
-									<li><a href="home-02.php">Homepage 2</a></li>
-									<li><a href="home-03.php">Homepage 3</a></li>
+									<li><a href="index.php">صفحه اصلی</a></li>
+									<li><a href="home-02.php">صفحه 2</a></li>
+									<li><a href="home-03.php">صفحه 3</a></li>
 								</ul>
 							</li>
 
 							<li>
-								<a href="product.php">Shop</a>
+								<a href="product.php">فروشگاه</a>
 							</li>
 
 							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.php">Features</a>
+								<a href="shoping-cart.php">امکانات</a>
 							</li>
 
 							<li>
-								<a href="blog.php">Blog</a>
+								<a href="blog.php">وبلاگ</a>
 							</li>
 
 							<li>
-								<a href="about.php">About</a>
+								<a href="about.php">درباره ما</a>
 							</li>
 
 							<li>
-								<a href="contact.php">Contact</a>
+								<a href="contact.php">ارتباط با ما</a>
 							</li>
 						</ul>
 					</div>	
@@ -158,26 +158,26 @@
 			<ul class="topbar-mobile">
 				<li>
 					<div class="left-top-bar">
-						Free shipping for standard order over $100
+						حمل و نقل رایگان برای سفارشات بیش از 100000 تومان 
 					</div>
 				</li>
 
 				<li>
 					<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Help & FAQs
+							سوالات متداول و راهنما
 						</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							My Account
+							حساب کاربری
 						</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							EN
+							فارسی
 						</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							USD
+							انگلیسی
 						</a>
 					</div>
 				</li>
@@ -185,11 +185,11 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.php">Home</a>
+					<a href="index.php">صفحه اصلی</a>
 					<ul class="sub-menu-m">
-						<li><a href="index.php">Homepage 1</a></li>
-						<li><a href="home-02.php">Homepage 2</a></li>
-						<li><a href="home-03.php">Homepage 3</a></li>
+						<li><a href="index.php">صفحه اصلی</a></li>
+						<li><a href="home-02.php">صفحه 2</a></li>
+						<li><a href="home-03.php">صفحه 3</a></li>
 					</ul>
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -197,23 +197,23 @@
 				</li>
 
 				<li>
-					<a href="product.php">Shop</a>
+					<a href="product.php">فروشگاه</a>
 				</li>
 
 				<li>
-					<a href="shoping-cart.php" class="label1 rs1" data-label1="hot">Features</a>
+					<a href="shoping-cart.php" class="label1 rs1" data-label1="hot">امکانات</a>
 				</li>
 
 				<li>
-					<a href="blog.php">Blog</a>
+					<a href="blog.php">بلاگ</a>
 				</li>
 
 				<li>
-					<a href="about.php">About</a>
+					<a href="about.php">درباره ما</a>
 				</li>
 
 				<li>
-					<a href="contact.php">Contact</a>
+					<a href="contact.php">ارتباط با ما</a>
 				</li>
 			</ul>
 		</div>
