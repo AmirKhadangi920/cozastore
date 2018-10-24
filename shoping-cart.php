@@ -242,7 +242,7 @@
 		<div class="header-cart flex-col-l p-l-65 p-r-25">
 			<div class="header-cart-title flex-w flex-sb-m p-b-8">
 				<span class="mtext-103 cl2">
-					Your Cart
+					سبد خرید
 				</span>
 
 				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
@@ -259,11 +259,11 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								White Shirt Pleat
+								پیراهن سفید پلات
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $19.00
+								1 x 54000تومان
 							</span>
 						</div>
 					</li>
@@ -275,11 +275,11 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Converse All Star
+							کفش 
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $39.00
+								1 x 50000تومان
 							</span>
 						</div>
 					</li>
@@ -291,11 +291,11 @@
 
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								Nixon Porter Leather
+								Nixon ساعت
 							</a>
 
 							<span class="header-cart-item-info">
-								1 x $17.00
+								1 x 50000تومان
 							</span>
 						</div>
 					</li>
@@ -303,16 +303,16 @@
 				
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
-						Total: $75.00
+						قیمت کل :154000تومان
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
 						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							View Cart
+							بازبینی سبد خرید
 						</a>
 
 						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Check Out
+							بررسی
 						</a>
 					</div>
 				</div>
