@@ -324,17 +324,17 @@
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
-				Home
+				صفحه اصلی
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
 			<a href="blog.php" class="stext-109 cl8 hov-cl1 trans-04">
-				Blog
+				وبلاگ
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
 			<span class="stext-109 cl4">
-				8 Inspiring Ways to Wear Dresses in the Winter
+				8 راه های الهام بخش برای پوشیدن لباس در زمستان
 			</span>
 		</div>
 	</div>
@@ -356,7 +356,7 @@
 								</span>
 
 								<span class="stext-109 cl3 txt-center">
-									Jan 2018
+									مهر 1397
 								</span>
 							</div>
 						</div>
@@ -364,50 +364,50 @@
 						<div class="p-t-32">
 							<span class="flex-w flex-m stext-111 cl2 p-b-19">
 								<span>
-									<span class="cl4">By</span> Admin  
+									<span class="cl4">توسط</span>مدیر   
 									<span class="cl12 m-l-4 m-r-6">|</span>
 								</span>
 
 								<span>
-									22 Jan, 2018
+									مهر 1397
 									<span class="cl12 m-l-4 m-r-6">|</span>
 								</span>
 
 								<span>
-									StreetStyle, Fashion, Couple  
+									لورم ایپسوم 
 									<span class="cl12 m-l-4 m-r-6">|</span>
 								</span>
 
 								<span>
-									8 Comments
+									8 پیشنهاد
 								</span>
 							</span>
 
 							<h4 class="ltext-109 cl2 p-b-28">
-								8 Inspiring Ways to Wear Dresses in the Winter
+								8 راه های الهام بخش برای پوشیدن لباس در زمستان
 							</h4>
 
 							<p class="stext-117 cl6 p-b-26">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet est vel orci luctus sollicitudin. Duis eleifend vestibulum justo, varius semper lacus condimentum dictum. Donec pulvinar a magna ut malesuada. In posuere felis diam, vel sodales metus accumsan in. Duis viverra dui eu pharetra pellentesque. Donec a eros leo. Quisque sed ligula vitae lorem efficitur faucibus. Praesent sit amet imperdiet ante. Nulla id tellus auctor, dictum libero a, malesuada nisi. Nulla in porta nibh, id vestibulum ipsum. Praesent dapibus tempus erat quis aliquet. Donec ac purus id sapien condimentum feugiat.
+								لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. 
 							</p>
 
 							<p class="stext-117 cl6 p-b-26">
-								Praesent vel mi bibendum, finibus leo ac, condimentum arcu. Pellentesque sem ex, tristique sit amet suscipit in, mattis imperdiet enim. Integer tempus justo nec velit fringilla, eget eleifend neque blandit. Sed tempor magna sed congue auctor. Mauris eu turpis eget tortor ultricies elementum. Phasellus vel placerat orci, a venenatis justo. Phasellus faucibus venenatis nisl vitae vestibulum. Praesent id nibh arcu. Vivamus sagittis accumsan felis, quis vulputate
+								لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. 
 							</p>
 						</div>
 
 						<div class="flex-w flex-t p-t-16">
 							<span class="size-216 stext-116 cl8 p-t-4">
-								Tags
+								برچسپ ها
 							</span>
 
 							<div class="flex-w size-217">
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Streetstyle
+									لورم ایپسوم
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Crafts
+									صنایع دستی
 								</a>
 							</div>
 						</div>
@@ -415,32 +415,32 @@
 						<!--  -->
 						<div class="p-t-40">
 							<h5 class="mtext-113 cl2 p-b-12">
-								Leave a Comment
+								پیام بگذارید
 							</h5>
 
 							<p class="stext-107 cl6 p-b-40">
-								Your email address will not be published. Required fields are marked *
+								آدرس ایمیل شما منتشر نخواهد شد. زمینه های مورد نیاز علامت گذاری شده اند *
 							</p>
 
 							<form>
 								<div class="bor19 m-b-20">
-									<textarea class="stext-111 cl2 plh3 size-124 p-lr-18 p-tb-15" name="cmt" placeholder="Comment..."></textarea>
+									<textarea class="stext-111 cl2 plh3 size-124 p-lr-18 p-tb-15" name="cmt" placeholder="نظرات ..."></textarea>
 								</div>
 
 								<div class="bor19 size-218 m-b-20">
-									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="name" placeholder="Name *">
+									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="name" placeholder="نام *">
 								</div>
 
 								<div class="bor19 size-218 m-b-20">
-									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="email" placeholder="Email *">
+									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="email" placeholder="آدرس اینترنتی *">
 								</div>
 
 								<div class="bor19 size-218 m-b-30">
-									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="web" placeholder="Website">
+									<input class="stext-111 cl2 plh3 size-116 p-lr-18" type="text" name="web" placeholder="وب سایت">
 								</div>
 
 								<button class="flex-c-m stext-101 cl0 size-125 bg3 bor2 hov-btn3 p-lr-15 trans-04">
-									Post Comment
+									ارسال نظر
 								</button>
 							</form>
 						</div>
@@ -459,37 +459,37 @@
 
 						<div class="p-t-55">
 							<h4 class="mtext-112 cl2 p-b-33">
-								Categories
+								دسته بندی ها
 							</h4>
 
 							<ul>
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Fashion
+										مد
 									</a>
 								</li>
 
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Beauty
+										زیبایی
 									</a>
 								</li>
 
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Street Style
+										سبک خیابانی
 									</a>
 								</li>
 
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										Life Style
+										شیوه زندگی
 									</a>
 								</li>
 
 								<li class="bor18">
 									<a href="#" class="dis-block stext-115 cl6 hov-cl1 trans-04 p-tb-8 p-lr-4">
-										DIY & Crafts
+										صنایع دستی
 									</a>
 								</li>
 							</ul>
@@ -497,7 +497,7 @@
 
 						<div class="p-t-65">
 							<h4 class="mtext-112 cl2 p-b-33">
-								Featured Products
+								محصولات ویژه
 							</h4>
 
 							<ul>
@@ -508,11 +508,11 @@
 
 									<div class="size-215 flex-col-t p-t-8">
 										<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-											White Shirt With Pleat Detail Back
+											پیراهن سفید
 										</a>
 
 										<span class="stext-116 cl6 p-t-20">
-											$19.00
+											19 تومان
 										</span>
 									</div>
 								</li>
@@ -524,11 +524,11 @@
 
 									<div class="size-215 flex-col-t p-t-8">
 										<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-											Converse All Star Hi Black Canvas
+											لورم ایپسوم
 										</a>
 
 										<span class="stext-116 cl6 p-t-20">
-											$39.00
+											39 تومان
 										</span>
 									</div>
 								</li>
@@ -540,11 +540,11 @@
 
 									<div class="size-215 flex-col-t p-t-8">
 										<a href="#" class="stext-116 cl8 hov-cl1 trans-04">
-											Nixon Porter Leather Watch In Tan
+											لورم ایپسوم
 										</a>
 
 										<span class="stext-116 cl6 p-t-20">
-											$17.00
+											17 تومان
 										</span>
 									</div>
 								</li>
@@ -553,14 +553,14 @@
 
 						<div class="p-t-55">
 							<h4 class="mtext-112 cl2 p-b-20">
-								Archive
+								بایگانی
 							</h4>
 
 							<ul>
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											July 2018
+											فروردین 1397
 										</span>
 
 										<span>
@@ -572,7 +572,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											June 2018
+											اردیبهشت 1397
 										</span>
 
 										<span>
@@ -584,7 +584,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											May 2018
+											خرداد 1397
 										</span>
 
 										<span>
@@ -596,7 +596,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											April  2018
+											تیر 1397
 										</span>
 
 										<span>
@@ -608,7 +608,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											March 2018
+											مرداد 1397
 										</span>
 
 										<span>
@@ -620,7 +620,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											February 2018
+											شهریور 1397
 										</span>
 
 										<span>
@@ -632,7 +632,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											January 2018
+											مهر 1397
 										</span>
 
 										<span>
@@ -644,7 +644,7 @@
 								<li class="p-b-7">
 									<a href="#" class="flex-w flex-sb-m stext-115 cl6 hov-cl1 trans-04 p-tb-2">
 										<span>
-											December 2017
+											ابان 1397
 										</span>
 
 										<span>
@@ -655,30 +655,30 @@
 							</ul>
 						</div>
 
-						<div class="p-t-50">
+					<div class="p-t-50">
 							<h4 class="mtext-112 cl2 p-b-27">
-								Tags
+								برچسب ها
 							</h4>
 
 							<div class="flex-w m-r--5">
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Fashion
+									مد
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Lifestyle
+									شیوه زندگی
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Denim
+									جین
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Streetstyle
+									لورم ایپسوم
 								</a>
 
 								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Crafts
+									صنایع دستی
 								</a>
 							</div>
 						</div>
