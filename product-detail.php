@@ -332,17 +332,17 @@
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
-				Home
+				صفحه اصلی
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
 			<a href="product.php" class="stext-109 cl8 hov-cl1 trans-04">
-				Men
+				مردانه
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 
 			<span class="stext-109 cl4">
-				Lightweight Jacket
+				 ژاکت
 			</span>
 		</div>
 	</div>
@@ -396,32 +396,32 @@
 				<div class="col-md-6 col-lg-5 p-b-30">
 					<div class="p-r-50 p-t-5 p-lr-0-lg">
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-							Lightweight Jacket
+							ژاکت
 						</h4>
 
 						<span class="mtext-106 cl2">
-							$58.79
+							100000تومان
 						</span>
 
 						<p class="stext-102 cl3 p-t-23">
-							Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.
+							پارچه­‌های نخ و پنبه بسیار پرطرفدار و پرکاربرد هستند. این پارچه­‌ها به پوست آسیب نمی­‌رسانند و حساسیت ایجاد نمی­‌کنند.
 						</p>
 						
 						<!--  -->
 						<div class="p-t-33">
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-203 flex-c-m respon6">
-									Size
+									سایز
 								</div>
 
 								<div class="size-204 respon6-next">
 									<div class="rs1-select2 bor8 bg0">
 										<select class="js-select2" name="time">
-											<option>Choose an option</option>
-											<option>Size S</option>
-											<option>Size M</option>
-											<option>Size L</option>
-											<option>Size XL</option>
+											<option>یک گزینه را انتخاب کنید</option>
+											<option>S</option>
+											<option>M</option>
+											<option>L</option>
+											<option>XL</option>
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
@@ -430,17 +430,17 @@
 
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-203 flex-c-m respon6">
-									Color
+									رنگ
 								</div>
 
 								<div class="size-204 respon6-next">
 									<div class="rs1-select2 bor8 bg0">
 										<select class="js-select2" name="time">
-											<option>Choose an option</option>
-											<option>Red</option>
-											<option>Blue</option>
-											<option>White</option>
-											<option>Grey</option>
+											<option>یک گزینه را انتخاب کنید</option>
+											<option>قرمز</option>
+											<option>ابی</option>
+											<option>سفید</option>
+											<option>خاکستری</option>
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
@@ -462,7 +462,7 @@
 									</div>
 
 									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-										Add to cart
+										اضافه به سبد خرید
 									</button>
 								</div>
 							</div>	
