@@ -42,3 +42,11 @@ Route::get('/blog/{id}', function () {
 Route::get('/cart', function () {
     return view('store.shoping-cart');
 });
+
+Route::get('/panel', function () {
+    return view('panel.index');
+});
+
+Route::get('/panel/{id}', function () {
+    return view('panel/{id}');
+});
