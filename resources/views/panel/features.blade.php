@@ -3,14 +3,11 @@
 @section('styles')
 	<?php $styles = [
 		// select2 CSS
-		'vendors/bower_components/select2/dist/css/select2.min.css'
-		
+		'vendors/bower_components/select2/dist/css/select2.min.css',
 		// Bootstrap Dropify CSS
-		'vendors/bower_components/dropify/dist/css/dropify.min.css'
-						
+		'vendors/bower_components/dropify/dist/css/dropify.min.css',
 		//alerts CSS
-		'vendors/bower_components/sweetalert/dist/sweetalert.css'
-		
+		'vendors/bower_components/sweetalert/dist/sweetalert.css',
 		// Custom CSS
 		'dist/css/style.css'
 	]; ?>
@@ -18,6 +15,15 @@
 	@foreach ($styles as $style)
 	<link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
 	@endforeach
+	<style>
+		.feature-card {
+			height: 150px;
+			overflow: auto;
+		}
+		.col-md-3 {
+			float: right;
+		}
+	</style>
 @endsection
 
 @section('content')
@@ -27,13 +33,13 @@
 			<!-- Breadcrumb -->
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
-					<li class="active">افزودن ویژگی جدید</li>
+					<li class="active">@isset($edit) ویرایش ویژگی {{$title}} @else افزودن ویژگی جدید @endisset</li>
 					<li>فروشگاه</li>
 					<li>داشبورد</li>
 				</ol>
 			</div>
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h5 class="txt-dark">افزودن ویژگی جدید</h5>
+			<h5 class="txt-dark">@isset($edit) ویرایش ویژگی {{$title}} @else افزودن ویژگی جدید @endisset</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>
@@ -46,52 +52,51 @@
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
-								<form action="<?=WEBSITE?>panel/features/<?=(isset($data['edit'])) ? 'edit_feature' : 'add' ?>" method="POST">
+								<form action="@isset($edit) /panel/feature/edit @else /panel/feature/add @endisset" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>مشخصات ویژگی</h6>
 									<hr class="light-grey-hr"/>
-									<?php
-									if (isset($_SESSION['messages'])) {
+									
+									@foreach ($errors -> all() as $message)
+										<div class="alert alert-danger alert-dismissable">
+											<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+											{{ $message }} 
+										</div>
+									@endforeach
 
-										foreach ($_SESSION['messages'] as $message) { ?>
-											<div class="alert alert-<?=$message['type']?> alert-dismissable">
-												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-												<?=$message['text']?>
-											</div>
-										<?php
-										}
-
-										unset($_SESSION['messages']);
-									}
-									?>
+									@if(session()->has('message'))
+										<div class="alert alert-success alert-dismissable">
+											<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+											{{ session()->get('message') }}
+										</div>
+									@endif
 
 									<div class="row">	
 										<div class="col-md-6">
-											<?php if (!isset($data['edit'])) { ?>
+											@if(!isset($edit))
 											<div class="form-group">
 												<label class="control-label mb-10">دسته بندی ویژگی</label>
 												<div class="input-group">
 													<select name="title" class="form-control select2">
-														<option value="false">ثبت به عنوان دسته بندی جدید</option>
-														<?php 
-														foreach ($data['features'] as $feature) { ?>
-															<option value="<?=$feature['id']?>"><?=$feature['name']?></option>
-														<?php } ?>
+														<option value="">ثبت به عنوان دسته بندی جدید</option>
+														@foreach ($features as $feature)
+															<option value="{{$feature['id']}}">{{$feature['name']}}</option>
+														@endforeach
 													</select>
 													<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
 												</div>
 											</div>
-											<?php } ?>
+											@endif
 										</div>
-
+										
 										<!--/span-->
-										<div class="col-md-6">
+										<div class="@isset($edit) col-md-12 @else col-md-6 @endisset">
 											<div class="form-group">
 												<label class="control-label mb-10">عنوان وِیژگی</label>
 												<div class="input-group">
-													<input type="text" name="feature_name" value="<?=(isset($data['name'])) ? $data['name'] : '' ?>" id="firstName" class="form-control" placeholder="مثلا : سخت افزار">
-													<?php if (isset($data['edit'])) { ?>
-														<input type="hidden" name="id" value="<?=$data['id']?>">
-													<?php } ?>
+													<input type="text" name="name" value="@isset($edit) {{$title}} @endisset" id="firstName" class="form-control" placeholder="مثلا : سخت افزار">
+													@isset($edit)
+														<input type="hidden" name="id" value="{{$id}}">
+													@endisset
 													<div class="input-group-addon"><i class="ti-text"></i></div>
 												</div>
 											</div>
@@ -101,11 +106,12 @@
 									<hr class="light-grey-hr"/>
 									
 									<div class="form-actions">
-										<button class="btn btn-<?=(isset($data['edit'])) ? 'warning' : 'primary' ?> btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> 
-											<span><?=(isset($data['edit'])) ? 'ویرایش' : 'ثبت' ?></span>
+										<button class="btn @isset($edit) btn-warning @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> 
+											<span>@isset($edit) ویرایش @else ثبت @endisset</span>
 										</button>
 										<div class="clearfix"></div>
 									</div>
+									@csrf
 								</form>
 							</div>
 						</div>
@@ -130,85 +136,77 @@
 		
 		<!-- Row -->
 		<div class="row">
-			<?php
-			$colors = ['danger', 'warning', 'info', 'primary', 'success'];
-			$i = $x = 0;
+			<?php $colors = ['danger', 'warning', 'info', 'primary', 'success']; $i = $x = 0; ?>
 
-			if (count($data['features']) == 0) { ?>
+			@empty($features)
 				<div class="alert alert-warning alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 					تا کنون هیچ زیر مجموعه ای ثبت نشده است
 				</div>
-			<?php } else {
+			@else
 
-			foreach ($data['features'] as $feature) {
-				if ($i >= 5) { $i = 0; }
-			?>
+			@foreach ($features as $feature)
+				<?php if ($i >= 5) { $i = 0; } ?>
 
 			<div class="col-md-3">
-				<div class="panel panel-<?=$colors[$i]?> card-view panel-refresh">
+				<div class="panel panel-{{$colors[$i]}} card-view panel-refresh">
 					<div class="refresh-container">
 						<div class="la-anim-1"></div>
 					</div>
 					<div class="panel-heading">
 						<div class="pull-right">
-							<h6 class="panel-title txt-light"><?=$feature['name']?></h6>
+							<h6 class="panel-title txt-light">{{$feature['name']}}</h6>
 						</div>
 						<div class="pull-left">
-							<a class="pull-left inline-block mr-15" data-toggle="collapse" href="#collapse_1" aria-expanded="true">
+							<a class="pull-left inline-block mr-15" data-toggle="collapse" href="#collapse_{{$x}}" aria-expanded="true">
 								<i class="zmdi zmdi-chevron-down"></i>
 								<i class="zmdi zmdi-chevron-up"></i>
 							</a>
 
-							<a href="<?=WEBSITE.'panel/features/edit/'.$feature['id']?>" class="pull-left inline-block mr-15">
+							<a href="/panel/feature/edit/{{$feature['id']}}/{{$feature['name']}}" class="pull-left inline-block mr-15">
 								<i class="zmdi zmdi-edit"></i>
 							</a>
 
-							<span feature="<?=$feature['id']?>" class="delete-feature pull-left inline-block mr-15">
+							<span feature="{{$feature['id']}}" class="delete-feature pull-left inline-block mr-15">
 								<i class="zmdi zmdi-close"></i>
 							</span>
 						</div>
 						<div class="clearfix"></div>
 					</div>
-					<div  id="collapse_1" class="panel-wrapper collapse in">
+					<div  id="collapse_{{$x}}" class="panel-wrapper collapse in feature-card">
 						<div  class="panel-body">
 							<ul class="list-icons">
-								<?php
-								if (count($feature['subs']) == 0) { ?>
+								@empty ($feature['subs'][0])
 									<div class="alert alert-warning alert-dismissable">
 										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 										زیرمجموعه ای ثبت نشده است
 									</div>
-								<?php } else {
+								@else
 
-								foreach ($feature['subs'] as $sub) {
-								?>
+								@foreach ($feature['subs'] as $sub)
+								
 								<li class="mb-10">
 									<i class="fa fa-genderless text-success ml-5"></i>
-									<?=$sub['name']?>
+									{{$sub['name']}}
 
 									<div class="pull-left">
-										<a href="<?=WEBSITE.'panel/features/edit/'.$sub['id']?>"><i class="fa fa-pencil ml-5"></i></a>
-										<i feature="<?=$sub['id']?>" class="icon-trash txt-danger delete-feature"></i>
+										<a href="/panel/feature/edit/{{$sub['id']}}/{{$sub['name']}}"><i class="fa fa-pencil ml-5"></i></a>
+										<i feature="{{$sub['id']}}" class="icon-trash txt-danger delete-feature sub"></i>
 									</div>
 								</li>
-								<?php
-								}}
-								?>
+								@endforeach
+								@endempty
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<?php
-			++$i;
-			++$x;
-			}
-			?>	
+			<?php ++$i; ++$x; ?>
+			@endforeach
+			@endempty
 		</div>
 		<!-- /Row -->
-		<?php } ?>
 	</div>
 @endsection
 		
@@ -251,10 +249,16 @@
 	<script>
 		$('.delete-feature').on('click',function(){
 			var id = $(this).attr('feature');
+			if ($(this).hasClass('sub')) {
+				var title = $(this).parent().parent().text();
+				title = title.trim();
+			} else {
+				var title = $(this).parent().prev().find('h6').html();
+			}
 	
 			swal({   
 				title: "مطمین هستید ؟",   
-				text: "برای پاک کردن این ویژگی مطمین هستید ؟",   
+				text: "برای پاک کردن ویژگی " + title + " مطمین هستید ؟",   
 				type: "warning",   
 				showCancelButton: true,   
 				confirmButtonColor: "#f83f37",   
@@ -264,7 +268,7 @@
 				closeOnCancel: false 
 			}, function(isConfirm){   
 				if (isConfirm) {
-					window.location = WEBSITE + 'panel/features/delete/' + id; 
+					window.location = '/panel/feature/delete/' + id + '/' + title; 
 				} else {     
 					swal("لغو شد", "هیچ ویژگی ای حذف نشد :)", "error");   
 				} 

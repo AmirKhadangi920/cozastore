@@ -179,10 +179,10 @@
             <a class="active" href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><i class="ti-shopping-cart  mr-20"></i><span class="right-nav-text">فروشگاه</span></div><div class="pull-right"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="ecom_dr" class="collapse collapse-level-1">
                 <li>
-                    <a href="/panel/groups">گروه بندی محصولات</a>
+                    <a href="/panel/group">گروه بندی محصولات</a>
                 </li>
                 <li>
-                    <a href="/panel/features ">مدیریت ویژگی ها</a>
+                    <a href="/panel/feature">مدیریت ویژگی ها</a>
                 </li>
             </ul>
         </li>

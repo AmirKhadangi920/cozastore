@@ -58,8 +58,9 @@ Route::get('/panel/group/sub/{id}', 'GroupController@sub'); // Get sub group for
 Route::get('/panel/group/{id}/{title}', 'GroupController@get'); // get a sub goup in panel view
 
 // Features Route
-Route::get('/panel/features', 'FeaturesController@index'); // Main features page
+Route::get('/panel/feature', 'FeaturesController@index'); // Main features page
+Route::post('/panel/feature/add', 'FeaturesController@add'); // Send data for create new feature
+Route::get('/panel/feature/edit/{id}/{title}', 'FeaturesController@edit'); // Send Data for edit exiting Feature
+Route::post('/panel/feature/edit', 'FeaturesController@update'); // Send Data for edit exiting Feature
+Route::get('/panel/feature/delete/{id}/{title}', 'FeaturesController@delete'); // Send Data for edit exiting Feature
 
-Route::get('/panel/{id}', function () {
-    return view('panel/{id}');
-});
