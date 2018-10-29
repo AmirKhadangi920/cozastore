@@ -47,6 +47,19 @@ Route::get('/panel', function () {
     return view('panel.index');
 });
 
+
+// Groups Route
+Route::get('/panel/group', 'GroupController@index'); // Main group page
+Route::post('/panel/group/add', 'GroupController@add'); // Send Data for create new group
+Route::post('/panel/group/edit', 'GroupController@update'); // Send Data for edit exiting group
+Route::get('/panel/group/delete/{id}/{title}', 'GroupController@delete'); // Send Data for delete exiting group
+Route::get('/panel/group/edit/{id}/{title}', 'GroupController@edit'); // Send Data for create new group
+Route::get('/panel/group/sub/{id}', 'GroupController@sub'); // Get sub group for ajax request
+Route::get('/panel/group/{id}/{title}', 'GroupController@get'); // get a sub goup in panel view
+
+// Features Route
+Route::get('/panel/features', 'FeaturesController@index'); // Main features page
+
 Route::get('/panel/{id}', function () {
     return view('panel/{id}');
 });

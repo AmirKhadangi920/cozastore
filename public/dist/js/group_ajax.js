@@ -1,9 +1,15 @@
+// Change to select2 type
+$('select.select2').select2();
+
+// Create a change evnt on first select input
 $('select.select2').change(function () {
     
     var title = $(this).find('option[value="' + $(this).val() + '"]').html();
     get_sub_groups($(this).val(), title,  $(this).parent().parent());
 });
 
+// This function , get all the groups that is belong to a cerain group and
+// put it , under an other select2
 function get_sub_groups (parentValue, parentTitle, parentObj) {
     
     var select = [];
@@ -13,7 +19,7 @@ function get_sub_groups (parentValue, parentTitle, parentObj) {
     select[1] = '</select><div class="input-group-addon"><i class="ti-layout-grid2-alt">';
     select[1] += '</i></div></div></div>';
                 
-    $.get(WEBSITE + 'panel/groups/sub/' + parentValue, function(data, status){
+    $.get('/panel/group/sub/' + parentValue, function(data, status){
         if(status == 'success') {
             data = JSON.parse(data);
             

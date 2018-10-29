@@ -3,21 +3,31 @@
 @section('styles')
 	<?php $styles = [
 		// select2 CSS
-		'vendors/bower_components/select2/dist/css/select2.min.css'
+		'vendors/bower_components/select2/dist/css/select2.min.css',
 		
 		// Bootstrap Dropify CSS
-		'vendors/bower_components/dropify/dist/css/dropify.min.css'
+		'vendors/bower_components/dropify/dist/css/dropify.min.css',
 						
 		//alerts CSS
-		'vendors/bower_components/sweetalert/dist/sweetalert.css'
+		'vendors/bower_components/sweetalert/dist/sweetalert.css',
 		
 		// Custom CSS
-		'dist/css/style.css'
+		'dist/css/style.css',
 	]; ?>
 
 	@foreach ($styles as $style)
 	<link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
 	@endforeach
+
+	<style>
+	.group-card {
+		height: 100px;
+		overflow: hidden;
+	}
+	.col-md-3 {
+		float: right;
+	}
+	</style>
 @endsection
 	
 @section('content')
@@ -28,13 +38,17 @@
 			<!-- Breadcrumb -->
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
-					<li class="active"><span>ثبت گروه جدید</span></li>
+					<li class="active">
+						<span>@isset($edit) ویرایش گروه {{$title}} @else ثبت گروه جدید @endisset</span>
+					</li>
 					<li>فروشگاه</li>
 					<li>داشبورد</li>
 				</ol>
 			</div>
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h5 class="txt-dark">ثبت گروه جدید</h5>
+			<h5 class="txt-dark">
+				@isset($edit) ویرایش گروه {{$title}} @else ثبت گروه جدید @endisset
+			</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>
@@ -47,48 +61,54 @@
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
-								<form action="<?=WEBSITE?>panel/groups/<?=(isset($data['edit'])) ? 'edit_group' : 'add' ?>" method="POST">
+								<form action="@isset($edit) /panel/group/edit @else /panel/group/add @endisset" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>مشخصات گروه</h6>
 									<hr class="light-grey-hr"/>
 									
-									<?php
-									if (isset($_SESSION['messages'])) {
-
-										foreach ($_SESSION['messages'] as $message) { ?>
-											<div class="alert alert-<?=$message['type']?> alert-dismissable">
+									<div class="panel-body">
+										@foreach ($errors -> all() as $message)
+											<div class="alert alert-danger alert-dismissable">
 												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-												<?=$message['text']?>
+												{{ $message }} 
 											</div>
-										<?php
-										}
+										@endforeach
 
-										unset($_SESSION['messages']);
-									}
-									?>
-
+										@if(session()->has('message'))
+											<div class="alert alert-success alert-dismissable">
+												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+												{{ session()->get('message') }}
+											</div>
+										@endif
+									</div>
+									
 									<div class="row">
+										@if(!isset($edit))
 										<div class="col-md-6">
-											<?php if (!isset($data['edit'])) { ?>
 											<div class="form-group">
 												<label class="control-label mb-10">گروه مادر</label>
 												<div class="input-group">
 													<select name="parent" class="form-control select2">
-														<option value="false">ثبت به عنوان گروه اصلی</option>
-														<?php foreach ($data['groups'] as $group) { ?>
-															<option value="<?=$group['id']?>"><?=$group['title']?></option>
-														<?php } ?>
+														@if (isset($title))
+														<option value="">زیر مجموعه گروه {{ $title }}</option>
+														@else
+														<option value="">ثبت به عنوان گروه اصلی</option>
+														@endif
+
+														@foreach ($groups as $group)
+														<option value="{{ $group->id}}">{{$group->title}}</option>
+														@endforeach
 													</select>
 													<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
 												</div>
 											</div>
-											<?php } ?>
-										</div>
+										</div>						
+										@endif
 										<!--/span-->
-										<div class="col-md-6">
+										<div class="@isset($edit) col-md-12 @else col-md-6 @endisset">
 											<div class="form-group">
 												<label class="control-label mb-10">نام گروه</label>
 												<div class="input-group">
-													<input type="text" name="name" id="firstName" value="<?=(isset($data['title'])) ? $data['title'] : '' ?>" class="form-control" placeholder="مثلا : تلفن همراه">
+													<input type="text" name="title" id="firstName" value="@isset($selected) {{$selected[0] -> title}} @endisset" class="form-control" placeholder="مثلا : تلفن همراه">
 													<div class="input-group-addon"><i class="ti-text"></i></div>
 												</div>
 											</div>
@@ -98,11 +118,15 @@
 											<div class="form-group">
 												<label class="control-label mb-10">توضیح کوتاه</label>
 												<div class="input-group">
-													<input type="text" name="description" id="firstName" value="<?=(isset($data['description'])) ? $data['description'] : '' ?>" class="form-control" placeholder="یک توضیح یک خطی درباره گروه">
+													<input type="text" name="description" id="firstName" 
+															@isset($selected) value="{{$selected[0] -> description}}" @endisset class="form-control" 
+																@if(isset($edit) && empty($selected[0]->description))
+																placeholder="هیچ توضیحی برای گروه '{{$title}}' ثبت نشده است !"
+																@else 
+																placeholder="یک توضیح یک خطی درباره گروه"
+																@endif 
+															>
 													
-													<?php if (isset($data['edit'])) { ?>
-														<input type="hidden" name="id" value="<?=$data['id']?>">
-													<?php } ?>
 													<div class="input-group-addon"><i class="ti-comment-alt"></i></div>
 												</div>
 											</div>
@@ -112,11 +136,17 @@
 									<hr class="light-grey-hr"/>
 									
 									<div class="form-actions">
-										<button class="btn btn-<?=(!isset($data['edit'])) ? 'primary' : 'warning'?> btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
-											<span><?=(!isset($data['edit'])) ? 'ثبت گروه' : 'ویرایش گروه' ?></span>
+										<button class="btn @isset($edit) btn-warning {{$title}} @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
+											<span>@isset($edit) ویرایش گروه @else ثبت گروه @endisset</span>
 										</button>
 										<div class="clearfix"></div>
 									</div>
+
+									@isset($selected) 
+										<input type="hidden" value="{{ $selected[0] -> id}}" name="id" /> 
+									@endisset
+
+									@csrf
 								</form>
 							</div>
 						</div>
@@ -126,20 +156,21 @@
 		</div>
 		<!-- /Row -->
 
-		<?php if (!isset($data['edit'])) { ?>
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
-				<?php if (isset($data['bread_cump'])) {
-					foreach ($data['bread_cump'] as $bc) { ?>
-						<li><a href="<?=WEBSITE.'panel/groups/'.$bc['id']?>"><?=$bc['title']?></a></li>
-				<?php }
-				} ?>
-					<li><a href="<?=WEBSITE?>panel/groups/">دسته های اصلی</a></li>
-					<!-- <li class="active"><span>ثبت گروه جدید</span></li>
-					<li>فروشگاه</li> -->
+					@isset($breadcrumb)
+						<li class="active">{{ $title }}</li>
+						@if (!empty($breadcrumb[0]))
+							@foreach ($breadcrumb as $item)
+								<li><a href="/panel/group/{{ $item[0] -> id }}/{{ $item[0] -> title }}">
+									{{ $item[0] -> title }}</a></li>
+							@endforeach
+						@endif
+					@endisset
+					<li><a href="/panel/group/">دسته های اصلی</a></li>
 				</ol>
 			</div>
 			
@@ -151,63 +182,69 @@
 		<!-- /Title -->
 		<!-- Row -->
 		<div class="row">
-			<?php
-			$colors = ['danger', 'warning', 'info', 'primary', 'success'];
-			$i = $x = 0;
-
-			if (count($data['groups_info']) == 0) { ?>
+			@empty($groups->first())
 				<div class="alert alert-warning alert-dismissable">
+					<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
+					@if (isset($title))
+						<p class="pull-right">هیچ زیر مجموعه ای برای گروه "{{ $title }}" ثبت نشده است !</p>
+					@else
+						<p class="pull-right">هیچ گروهی تاکنون ثبت نشده است !</p>
+					@endif
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					این گروه شامل هیچ زیر مجموعه ای نمیباشد
+					<div class="clearfix"></div>
 				</div>
-			<?php } else {
+			@endempty
 
-			foreach ($data['groups_info'] as $group) {
-				if ($i >= 5) { $i = 0; }
-			?>
+			<?php $colors = ['danger', 'warning', 'info', 'primary', 'success']; $i = $x = 0; ?>
 
-			<div class="col-md-3">
-				<div class="panel panel-<?=$colors[$i]?> card-view panel-refresh">
-					<div class="refresh-container">
-						<div class="la-anim-1"></div>
-					</div>
-					<div class="panel-heading">
-						<div class="pull-right">
-							<a href="<?=WEBSITE . 'panel/groups/' . $group['id']?>">
-								<h6 class="panel-title txt-light"><?=$group['title']?></h6>
-							</a>
+			@foreach ($groups as $group)
+				<div class="col-md-3">
+					<?php if ($x == 5) { $x = 0; } ?>
+					<div class="panel panel-{{ $colors[$x] }} card-view panel-refresh">
+						<div class="refresh-container">
+							<div class="la-anim-1"></div>
 						</div>
-						<div class="pull-left">
-							<a class="pull-left inline-block mr-15" data-toggle="collapse" href="#collapse_<?=$x?>" aria-expanded="true">
-								<i class="zmdi zmdi-chevron-down"></i>
-								<i class="zmdi zmdi-chevron-up"></i>
-							</a>
+						<div class="panel-heading">
+							<div class="pull-right">
+								<a href="/panel/group/{{ $group->id }}/{{ $group->title }}">
+									<h6 class="panel-title txt-light">{{ $group->title }}</h6>
+								</a>
+							</div>
+							<div class="pull-left">
+								<a class="pull-left inline-block mr-15" data-toggle="collapse" href="#collapse_<?=$i?>" aria-expanded="true">
+									<i class="zmdi zmdi-chevron-down"></i>
+									<i class="zmdi zmdi-chevron-up"></i>
+								</a>
 
-							<a href="<?=WEBSITE . 'panel/groups/edit/' . $group['id']?>" class="pull-left inline-block mr-15">
-								<i class="zmdi zmdi-edit"></i>
-							</a>
+								<a href="/panel/group/edit/{{$group->id}}/{{$group->title}}" class="pull-left inline-block mr-15">
+									<i class="zmdi zmdi-edit"></i>
+								</a>
 
-							<span group="<?=$group['id']?>" class="delete-group pull-left inline-block mr-15">
-								<i class="zmdi zmdi-close"></i>
-							</span>
+								<span group="{{$group->id}}" class="delete-group pull-left inline-block mr-15">
+									<i class="zmdi zmdi-close"></i>
+								</span>
+							</div>
+							<div class="clearfix"></div>
 						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div  id="collapse_<?=$x?>" class="panel-wrapper collapse in">
-						<div  class="panel-body">
-							<p><?=$group['description']?></p>
+						<div  id="collapse_<?=$i?>" class="panel-wrapper collapse in group-card">
+							<div  class="panel-body">
+								@empty($group->description)
+									<div class="alert alert-warning alert-dismissable">
+										<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
+										<p class="pull-right">توضیحی ثبت نشده است !</p>
+										<div class="clearfix"></div>
+									</div>
+								@endempty
+								<p>{{ $group->description}}</p>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<?php
-			++$i;
-			++$x;
-			}
-			?>				
+				</div>				
+				<?php ++$i; ++$x ?>				
+			@endforeach
+
 		</div>
 		<!-- /Row -->
-		<?php } } ?>
 	</div>
 @endsection
 		
@@ -235,11 +272,11 @@
 		// Bootstrap Tagsinput JavaScript
 		'vendors/bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
 		// Sweet-Alert 
-		'vendors/bower_components/sweetalert/dist/sweetalert.min.js'
+		'vendors/bower_components/sweetalert/dist/sweetalert.min.js',
 		// Init JavaScript
 		'dist/js/init.js',
 		// Init Add Product Page JavaScript
-		'dist/js/init_add_product.js',
+		'dist/js/group_ajax.js',
 	]; ?>
 
 	@foreach ($scripts as $script)
@@ -263,7 +300,7 @@
 				closeOnCancel: false 
 			}, function(isConfirm){   
 				if (isConfirm) {
-					window.location = WEBSITE + 'panel/groups/delete/' + id; 
+					window.location =  '/panel/group/delete/' + id + '/' + title; 
 				} else {     
 					swal("لغو شد", "هیچ گروهی حذف نشد :)", "error");   
 				} 
