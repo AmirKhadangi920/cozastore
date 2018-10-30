@@ -68,3 +68,6 @@ Route::get('/panel/feature/delete/{id}/{title}', 'FeaturesController@delete'); /
 Route::get('/panel/products', 'ProductController@index');
 Route::get('/panel/products/add', 'ProductController@add');
 Route::post('/panel/products/new', 'ProductController@create');
+Route::get('/panel/products/edit/{id}', 'ProductController@edit');
+Route::post('/panel/products/update', 'ProductController@update');
+Route::get('/panel/products/search/{query}', 'ProductController@search');

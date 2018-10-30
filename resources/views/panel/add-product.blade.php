@@ -22,13 +22,13 @@
 			<!-- Breadcrumb -->
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
-					<li class="active"><span>افزودن محصول</span></li>
+					<li class="active"><span>@isset($edit) ویرایش محصول @else ثبت محصول @endisset</span></li>
 					<li>فروشگاه</li>
 					<li>داشبورد</li>
 				</ol>
 			</div>
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">افزودن محصول</h5>
+				<h5 class="txt-dark">@isset($edit) ویرایش محصول @else ثبت محصول @endisset</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>
@@ -40,7 +40,7 @@
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
-								<form action="/panel/products/new" enctype="multipart/form-data" method="POST">
+								<form action="@isset($edit) /panel/products/update @else /panel/products/new @endisset" enctype="multipart/form-data" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>درباره محصول</h6>
 									<hr class="light-grey-hr"/>
 
@@ -65,7 +65,7 @@
 										<div class="col-md-6">
 											<label class="control-label mb-10">شناسه محصول</label>
 											<div class="input-group">
-												<input type="text" name="code" id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
+												<input type="text" name="code" @isset($edit) value="{{$product->code}}" @endisset id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
 												<div class="input-group-addon"><i class="ti-id-badge"></i></div>
 											</div>
 										</div>
@@ -74,7 +74,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">نام محصول</label>
 												<div class="input-group">
-													<input type="text" name="name" id="firstName" class="form-control" placeholder="مثلا : 'گوشی موبایل سامسونگGalaxy S7'">
+													<input type="text" name="name" @isset($edit) value="{{$product->name}}" @endisset id="firstName" class="form-control" placeholder="مثلا : 'گوشی موبایل سامسونگGalaxy S7'">
 													<div class="input-group-addon"><i class="ti-text"></i></div>
 												</div>
 											</div>
@@ -83,7 +83,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">توضیح کوتاه</label>
 												<div class="input-group">
-													<input type="text" name="short_description" id="firstName" class="form-control" placeholder="یک توضیح یک خطی درباره محصول">
+													<input type="text" name="short_description" @isset($edit) value="{{$product->short_description}}" @endisset id="firstName" class="form-control" placeholder="یک توضیح یک خطی درباره محصول">
 													<div class="input-group-addon"><i class="ti-comment-alt"></i></div>
 												</div>
 											</div>
@@ -96,7 +96,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">ویدیوی آپارات</label>
 												<div class="input-group">
-													<input type="text" name="aparat_video" id="firstName" class="form-control" placeholder="اسکریپت ویدیوی خود در سایت آپارات را در این قسمت وارد کنید">
+													<input type="text" name="aparat_video" @isset($edit) value="{{$product->aparat_video}}" @endisset id="firstName" class="form-control" placeholder="اسکریپت ویدیوی خود در سایت آپارات را در این قسمت وارد کنید">
 													<div class="input-group-addon"><i class="ti-video-clapper"></i></div>
 												</div>
 											</div>
@@ -108,6 +108,9 @@
 												<div class="input-group">
 													<select name="parent" class="form-control select2">
 														<option value="">دسته بندی نشده</option>
+														@if(isset($edit) && !empty($product->category))
+															<option value="{{$product->category}}" selected>گروه سابق : "{{$product->title}}"</option>
+														@endif
 														@foreach ($groups as $group) { ?>
 														<option value="{{$group['id']}}">{{$group['title']}}</option>
 														@endforeach
@@ -125,7 +128,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">تخفیف</label>
 												<div class="input-group">
-													<input type="number" name="offer" class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
+													<input type="number" name="offer" @isset($edit) value="{{$product->offer}}" @endisset class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
 													<div class="input-group-addon"><i class="ti-cut"></i></div>
 												</div>
 											</div>
@@ -137,13 +140,13 @@
 												<div class="radio-list">
 													<div class="radio-inline">
 														<div class="radio radio-info">
-															<input type="radio" name="unit" id="unit_rl" value="0">
+															<input type="radio" @if(isset($edit) && $product->unit == 0) checked  @endif name="unit" id="unit_rl" value="0">
 															<label for="unit_rl">ریال</label>
 														</div>
 													</div>
 													<div class="radio-inline pl-0">
 														<div class="radio radio-info">
-															<input type="radio" name="unit" checked="checked" id="unit_dl" value="1">
+															<input type="radio" @if(isset($edit) && $product->unit == 1) checked  @endif name="unit" checked="checked" id="unit_dl" value="1">
 															<label for="unit_dl">دلار</label>
 														</div>
 													</div>
@@ -155,7 +158,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">قیمت</label>
 												<div class="input-group">
-													<input type="number" name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
+													<input type="number" @isset($edit) value="{{$product->price}}"  @endisset name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
 													<div class="input-group-addon"><i class="ti-money"></i></div>
 												</div>
 											</div>
@@ -171,13 +174,13 @@
 												<div class="radio-list">
 													<div class="radio-inline">
 														<div class="radio radio-info">
-															<input type="radio" name="status" id="radio2" value="0">
+															<input type="radio" @if(isset($edit) && $product->status == 0) checked  @endif name="status" id="radio2" value="0">
 															<label for="radio2">پیش نویس</label>
 														</div>
 													</div>
 													<div class="radio-inline pl-0">
 														<div class="radio radio-info">
-															<input type="radio" name="status" checked="checked" id="radio1" value="1">
+															<input type="radio" @if(isset($edit) && $product->status == 0) checked  @endif name="status" checked="checked" id="radio1" value="1">
 															<label for="radio1">ثبت محصول</label>
 														</div>
 													</div>
@@ -187,18 +190,33 @@
 										<div class="col-sm-6">
 											<label class="control-label mb-10">رنگ های محصول</label>
 											<div class="form-group mb-0">
-												<select class="select2 select2-multiple color-value" multiple="multiple" data-placeholder="رنگ هارا انتخاب کنید">
-													<option value="blue" style="background: blue">آبی</option>
-													<option value="green">سبز</option>
-													<option value="yellow">زرد</option>
-													<option value="brown">قهوه ای</option>
-													<option value="violet">بنفش</option>
-													<option value="orange">نارنجی</option>
-													<option value="red">قرمز</option>
-													<option value="black">مشکی</option>
-													<option value="white">سفید</option>																
+												<select class="select2 select2-multiple color-value" @isset($edit) value="{{$product->colors}}"  @endisset multiple="multiple" data-placeholder="رنگ هارا انتخاب کنید">
+												<?php $colors = [
+													['blue', 'آبی'],
+													['green', 'سبز'],
+													['yellow', 'زرد'],
+													['brown', 'قهوه ای'],
+													['violet', 'بنفش'],
+													['orange', 'نارنجی'],
+													['red', 'قرمز'],
+													['black', 'مشکی'],
+													['white', 'سفید'],
+												]; 
+												
+												if (isset($edit)) {
+													$product->colors = explode(',', $product->colors);
+													$i = 0;
+												}
+												?>
+												
+												@foreach ($colors as $color)
+													<option value="{{$color[0]}}" 
+														<?php if(isset($edit) && isset($product->colors[$i]) && $color[0] == $product->colors[$i]) {
+															echo 'selected'; ++$i;
+														}?>>{{$color[1]}}</option>
+												@endforeach																
 												</select>
-												<input type="hidden" name="colors" class="color-value" onchange="alert(this.value)" />
+												<input type="hidden" name="colors" class="color-value" />
 											</div>	
 										</div>
 										<!--/span-->
@@ -209,7 +227,7 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<textarea name="full_description" class="tinymce form-control"></textarea>
+												<textarea name="full_description" class="tinymce form-control">@isset($edit) {{$product->full_description}} @endisset</textarea>
 											</div>
 										</div>
 									</div>
@@ -218,19 +236,29 @@
 										<div class="col-md-12">
 											<div class="form-group" class="remove-outline">
 												<label class="control-label mb-10">کلمات کلیدی</label>
-												<input type="text" name="keywords" data-role="tagsinput" placeholder="افزودن کلمه کلیدی"/>
+												<input type="text" @isset($edit) value="{{$product->keywords}}"  @endisset name="keywords" data-role="tagsinput" placeholder="افزودن کلمه کلیدی"/>
 											</div>
 										</div>
 									</div>
 									<div class="seprator-block"></div>
-									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-collection-image ml-10"></i>تصاویر محصول</h6>
+									<h6 class="txt-dark flex flex-middle capitalize-font"><i class="font-20 txt-grey zmdi zmdi-collection-image ml-10"></i>تصاویر محصول</h6>
 									<hr class="light-grey-hr"/>
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="row" id="picture-files">
+												@if(isset($edit) && !empty($product->gallery))
+												<?php $photos = explode(',', $product->gallery); ?>
+													@foreach ($photos as $photo)
+													<div class="col-md-2 col-xs-4">
+														<div class="img-upload-wrap">
+															<input type="file" data-default-file="{{asset('uploads/products/'.$photo)}}" name="images[]" class="dropify file" />
+														</div>
+													</div>
+													@endforeach
+												@endif
 												<div class="col-md-2 col-xs-4">
 													<div class="img-upload-wrap">
-														<input type="file" name="images[]" multiple="multiple" id="input-file-now" class="dropify" />
+														<input type="file" name="images[]" class="dropify file" />
 													</div>
 												</div>
 											</div>
@@ -244,12 +272,12 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group disadvantages">
-												<input type="text" name="disadvantages" data-role="tagsinput" class="form-control" placeholder="عیب محصول">
+												<input type="text" name="disadvantages" @isset($edit) value="{{$product->disadvantages}}"  @endisset data-role="tagsinput" class="form-control" placeholder="عیب محصول">
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group advantages">
-												<input type="text" name="advantages" data-role="tagsinput" class="form-control" placeholder="مزیت محصول">
+												<input type="text" name="advantages" @isset($edit) value="{{$product->advantages}}"  @endisset data-role="tagsinput" class="form-control" placeholder="مزیت محصول">
 											</div>
 										</div>
 									</div>
@@ -258,15 +286,47 @@
 									<hr class="light-grey-hr"/>
 									
 									<div class="row features-values">
+										@if(isset($edit) && !empty($product_features[0]))
+											<?php $i = 0; ?>
+											@foreach ($product_features as $item)
+											<div class="features-row">
+												<div class="col-sm-6">
+													<div class="form-group features">
+														<input type="text" value="{{$item['value']}}" name="features[{{$i}}][value]" class="form-control" placeholder="مقدار ویژگی را وارد کنید">
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<select name="features[{{$i}}][name]" class="form-control select2">
+															<option value="false">یک ویژگی را انتخاب کنید</option>
+															@foreach ($features as $feature) {
+																@if (count($feature['subs']) != 0)
+																	<optgroup label="{{$feature['name']}}">
+																		@foreach ($feature['subs'] as $sub)
+																			<option value="{{$sub['id']}}" 
+																				<?php if($sub['id'] == $item['feature']) {
+																					echo 'selected'; ++$i;
+																				}?>>{{$feature['name'].' > '.$sub['name']}}</option>
+																		@endforeach
+																	</optgroup>
+																@endif
+															@endforeach
+														</select>
+													</div>
+												</div>
+											</div>
+											<?php ++$i; ?>
+											@endforeach
+										@endif
 										<div class="features-row">
 											<div class="col-sm-6">
 												<div class="form-group features">
-													<input type="text" name="features[0][value]" class="form-control" placeholder="مقدار ویژگی را وارد کنید">
+													<input type="text" name="features[{{$i}}][value]" class="form-control" placeholder="مقدار ویژگی را وارد کنید">
 												</div>
 											</div>
 											<div class="col-sm-6">
 												<div class="form-group">
-													<select name="features[0][name]" class="form-control select2">
+													<select name="features[{{$i}}][name]" class="form-control select2">
 														<option value="false">یک ویژگی را انتخاب کنید</option>
 														@foreach ($features as $feature) {
 															@if (count($feature['subs']) != 0)
@@ -288,6 +348,9 @@
 										<button type="button" class="btn btn-default pull-left">لغو</button>
 										<div class="clearfix"></div>
 									</div>
+									@isset($edit)
+									<input type="hidden" name="id" value="{{$product->pro_id}}" />
+									@endisset
 									@csrf
 								</form>
 							</div>
@@ -359,4 +422,19 @@
 	@foreach ($scripts as $script)
 	<script src="{{ asset($script) }}"></script>
 	@endforeach
+
+	@isset($edit)
+	<script>
+	$(window).load(function () {
+		var color = $('select.color-value').val();
+		$('input.color-value').val(color);
+		
+		var li = $('li.select2-selection__choice').first();
+		for (var i = 0; i < color.length; ++i) {
+			li.css({background: color[i]});
+			li = li.next();
+		}
+	});
+	</script>
+	@endisset
 @endsection

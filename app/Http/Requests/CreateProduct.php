@@ -33,7 +33,7 @@ class CreateProduct extends FormRequest
             'unit' => 'required|integer',
             'offer' => 'nullable|integer',
             'colors' => 'nullable',
-            "images"    => "required|array:min:1",
+            "images"    => "array|min:1",
             "images.*"  => "image|mimes:jpeg,png,jpg|max:512",
             "features" => 'nullable',
             "featuers.*.name" => 'nullable|integer',

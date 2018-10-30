@@ -4,7 +4,7 @@ $(document).ready(function(){
     $('select.select2').select2();
     
     // dropable picture upload
-	$('#input-file-now').dropify();
+	$('.dropify.file').dropify();
     
     // add new dropabe picture section
     $('#add-new-picture').click(function () {
