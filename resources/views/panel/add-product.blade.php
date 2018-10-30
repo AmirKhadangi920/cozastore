@@ -22,9 +22,9 @@
 			<!-- Breadcrumb -->
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
-					<li><a href="index.html">داشبورد</a></li>
-					<li><a href="#"><span>فروشگاه</span></a></li>
 					<li class="active"><span>افزودن محصول</span></li>
+					<li>فروشگاه</li>
+					<li>داشبورد</li>
 				</ol>
 			</div>
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -33,7 +33,6 @@
 			<!-- /Breadcrumb -->
 		</div>
 		<!-- /Title -->
-		
 		<!-- Row -->
 		<div class="row">
 			<div class="col-sm-12">
@@ -41,14 +40,32 @@
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
-								<form action="<?=WEBSITE.'panel/products/addproduct'?>" method="POST">
+								<form action="/panel/products/new" enctype="multipart/form-data" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>درباره محصول</h6>
 									<hr class="light-grey-hr"/>
+
+									
+									<div class="panel-body">
+										@foreach ($errors -> all() as $message)
+											<div class="alert alert-danger alert-dismissable">
+												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+												{{ $message }} 
+											</div>
+										@endforeach
+							
+										@if(session()->has('message'))
+											<div class="alert alert-success alert-dismissable">
+												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+												{{ session()->get('message') }}
+											</div>
+										@endif
+									</div>
+										
 									<div class="row">
 										<div class="col-md-6">
 											<label class="control-label mb-10">شناسه محصول</label>
 											<div class="input-group">
-												<input type="text" name="product_code" id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
+												<input type="text" name="code" id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
 												<div class="input-group-addon"><i class="ti-id-badge"></i></div>
 											</div>
 										</div>
@@ -57,7 +74,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">نام محصول</label>
 												<div class="input-group">
-													<input type="text" name="product_name" id="firstName" class="form-control" placeholder="مثلا : 'گوشی موبایل سامسونگGalaxy S7'">
+													<input type="text" name="name" id="firstName" class="form-control" placeholder="مثلا : 'گوشی موبایل سامسونگGalaxy S7'">
 													<div class="input-group-addon"><i class="ti-text"></i></div>
 												</div>
 											</div>
@@ -90,10 +107,10 @@
 												<label class="control-label mb-10">گروه</label>
 												<div class="input-group">
 													<select name="parent" class="form-control select2">
-														<option value="false">دسته بندی نشده</option>
-														<?php foreach ($data['groups'] as $group) { ?>
-														<option value="<?=$group['id']?>"><?=$group['title']?></option>
-														<?php } ?>
+														<option value="">دسته بندی نشده</option>
+														@foreach ($groups as $group) { ?>
+														<option value="{{$group['id']}}">{{$group['title']}}</option>
+														@endforeach
 													</select>
 													<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
 												</div>
@@ -170,7 +187,7 @@
 										<div class="col-sm-6">
 											<label class="control-label mb-10">رنگ های محصول</label>
 											<div class="form-group mb-0">
-												<select name="colors" class="select2 select2-multiple color-value" multiple="multiple" data-placeholder="رنگ هارا انتخاب کنید">
+												<select class="select2 select2-multiple color-value" multiple="multiple" data-placeholder="رنگ هارا انتخاب کنید">
 													<option value="blue" style="background: blue">آبی</option>
 													<option value="green">سبز</option>
 													<option value="yellow">زرد</option>
@@ -181,6 +198,7 @@
 													<option value="black">مشکی</option>
 													<option value="white">سفید</option>																
 												</select>
+												<input type="hidden" name="colors" class="color-value" onchange="alert(this.value)" />
 											</div>	
 										</div>
 										<!--/span-->
@@ -243,22 +261,22 @@
 										<div class="features-row">
 											<div class="col-sm-6">
 												<div class="form-group features">
-													<input type="text" name="features[0]['value']" class="form-control" placeholder="مقدار ویژگی را وارد کنید">
+													<input type="text" name="features[0][value]" class="form-control" placeholder="مقدار ویژگی را وارد کنید">
 												</div>
 											</div>
 											<div class="col-sm-6">
 												<div class="form-group">
-													<select name="features[0]['name']" class="form-control select2">
+													<select name="features[0][name]" class="form-control select2">
 														<option value="false">یک ویژگی را انتخاب کنید</option>
-														<?php foreach ($data['features'] as $feature) {
-															if (count($feature['subs']) != 0) { ?>
-																<optgroup label="<?=$feature['name']?>">
-																	<?php foreach ($feature['subs'] as $sub) { ?>
-																		<option value="<?=$sub['id']?>"><?=$feature['name'].' > '.$sub['name']?></option>
-																	<?php } ?>
+														@foreach ($features as $feature) {
+															@if (count($feature['subs']) != 0)
+																<optgroup label="{{$feature['name']}}">
+																	@foreach ($feature['subs'] as $sub)
+																		<option value="{{$sub['id']}}">{{$feature['name'].' > '.$sub['name']}}</option>
+																	@endforeach
 																</optgroup>
-														<?php }
-														} ?>
+															@endif
+														@endforeach
 													</select>
 												</div>
 											</div>
@@ -270,6 +288,7 @@
 										<button type="button" class="btn btn-default pull-left">لغو</button>
 										<div class="clearfix"></div>
 									</div>
+									@csrf
 								</form>
 							</div>
 						</div>
@@ -314,31 +333,30 @@
 		'dist/js/group_ajax.js'
 	]; ?>
 
-	@foreach ($scripts as $script)
-	<script src="{{ asset($script) }}"></script>
-	@endforeach
 	
-	<script>var WEBSITE = '<?=WEBSITE?>';</script>
-
 	<script>
 		var s2 = [];
 		s2[0] = '<div class="features-row"><div class="col-sm-6"><div class="form-group features">';
-		s2[0] += '<input type="text" name="features['
-		s2[1] = '][\'value\']" data-role="tagsinput" class="form-control" placeholder="مقدار ویژگی را وارد کنید">';
+		s2[0] += '<input type="text" name="features[';
+		s2[1] = '][value]" data-role="tagsinput" class="form-control" placeholder="مقدار ویژگی را وارد کنید">';
 		s2[1] += '</div></div><div class="col-sm-6"><div class="form-group">';
 		s2[1] += '<select name="features[';
-		s2[2] += '][\'name\']" class="form-control select2">';
+		s2[2] = '][name]" class="form-control select2">';
 		s2[2] += '<option value="false">یک ویژگی را انتخاب کنید</option>';
-		<?php 
-		foreach ($data['features'] as $feature) {
-			if (count($feature['subs']) != 0) { ?>
-				s2[2] += '<optgroup label="<?=$feature['name']?>">';
-				<?php foreach ($feature['subs'] as $sub) { ?>
-					s2[2] += '<option value="<?=$sub['id']?>"><?=$feature['name'].' > '.$sub['name']?></option>';
-				<?php } ?>
-		s2[2] += '</optgroup>'
-		<?php }
-		} ?>
+		
+		@foreach ($features as $feature)
+			@if (count($feature['subs']) != 0)
+				s2[2] += '<optgroup label="{{$feature['name']}}">';
+				@foreach ($feature['subs'] as $sub)
+					s2[2] += '<option value="{{$sub['id']}}">{{$feature['name'].' > '.$sub['name']}}</option>';
+				@endforeach
+			s2[2] += '</optgroup>'
+			@endif
+		@endforeach
 		s2[2] += '</select></div></div></div>';
 	</script>
+
+	@foreach ($scripts as $script)
+	<script src="{{ asset($script) }}"></script>
+	@endforeach
 @endsection

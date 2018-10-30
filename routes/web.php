@@ -64,3 +64,7 @@ Route::get('/panel/feature/edit/{id}/{title}', 'FeaturesController@edit'); // Se
 Route::post('/panel/feature/edit', 'FeaturesController@update'); // Send Data for edit exiting Feature
 Route::get('/panel/feature/delete/{id}/{title}', 'FeaturesController@delete'); // Send Data for edit exiting Feature
 
+// Products Route
+Route::get('/panel/products', 'ProductController@index');
+Route::get('/panel/products/add', 'ProductController@add');
+Route::post('/panel/products/new', 'ProductController@create');

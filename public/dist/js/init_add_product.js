@@ -21,9 +21,9 @@ $(document).ready(function(){
     });
 
     // Change color of color section labels
-    $('.color-value').on('change', function () {
-        
-        var color = $('.color-value').val();
+    $('.color-value').on('change', function () { 
+        var color = $('select.color-value').val();
+        $('input.color-value').val(color);
         
         var li = $('li.select2-selection__choice').first();
         for (var i = 0; i < color.length; ++i) {
@@ -32,19 +32,11 @@ $(document).ready(function(){
         }
     });
 
-	$('.color-value').on('itemAdded', function(event) {
-        // Chagen the color of color picker label
-        alert('asdf');
-        // var label = $('.colorpicker').find('.label.label-info').last();
-		// label.css({background: label.text()});
-	});
-
     var i = 1;
     // add new features section
 	$('.create-new-feautre').click(function () {
-        
-		var featuresRow = s2[0] + i + s2[1] + (i++) + s2[2];
-		$('.features-values').append(featuresRow);
+        var featuresRow = s2[0] + i + s2[1] + (i++) + s2[2];
+        $('.features-values').append(featuresRow);
         $('.features-values').children('.features-row').last().find('.select2').select2();
         $('.features-values').children('.features-row').last().css({display: 'none'});
         $('.features-values').children('.features-row').last().slideDown();
