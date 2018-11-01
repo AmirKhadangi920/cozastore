@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateProduct;
+use App\Http\Requests\AddReview;
 use Illuminate\Support\Facades\DB;
 use App\Group;
 use App\Feature;
 use App\Product;
 use App\ProductFeatures;
+use App\Review;
 
 class ProductController extends Controller
 {
@@ -93,7 +95,7 @@ class ProductController extends Controller
 
     public function edit ($id)
     {
-        return $product = DB::select("SELECT `pro_id`, `category`, `categories`.`title`, `products`.`name`, `code`,
+        $product = DB::select("SELECT `pro_id`, `category`, `categories`.`title`, `products`.`name`, `code`,
             `short_description`, `aparat_video`, `price`, `unit`, `offer`, `colors`, `status`,
             `full_description`, `keywords`, `gallery`, `advantages`, `disadvantages` 
             FROM `products`
@@ -167,5 +169,79 @@ class ProductController extends Controller
             ->orderBy('created_at', 'DESC')->where('name', 'like', '%'.$query.'%')->get();
 
         return view('panel.products', compact('products'))->with('query', $query);
+    }
+
+    public function store ()
+    {
+        $products = Product::select('pro_id', 'name', 'price', 'unit',  'offer', 'photo')
+        ->where('status', 1)->orderBy('created_at', 'DESC')->get();
+
+        return view('store.product  ', compact('products'))->with('dollar_cost', 14540);
+    }
+
+    public function store_product ($id)
+    {
+        $product = DB::select("SELECT `pro_id`, `code`, `category`, `categories`.`title`, `products`.`name`,
+            `short_description`, `aparat_video`, `price`, `unit`, `offer`, `colors`,
+            `full_description`, `keywords`, `gallery`, `advantages`, `disadvantages` 
+            FROM `products`
+            LEFT JOIN `categories` ON `products`.`category` = `categories`.`id`
+            WHERE `pro_id` = ? AND `status`=1", [$id]);
+
+        $product_feature = DB::select("SELECT `title_table`.`name` as 'title', `features`.`name`, `value`
+            FROM `product_features`
+            INNER JOIN `features` ON `product_features`.`feature` = `features`.`id`
+            INNER JOIN `features` AS `title_table` ON `features`.`title` = `title_table`.`id`
+            WHERE `product` = ? ORDER BY `title` ASC", [$id]);
+
+        $reviews = Review::select('fullname', 'email', 'avatar', 'rating', 'review')->where('product', $id)->get();
+
+        $breadcrumb = $this -> breadcrumb($product[0]->category);
+        $breadcrumb[] = (object) [
+            'parent' => null,
+            'id' => $product[0] -> category,
+            'title' => $product[0] -> title,
+        ];
+        $breadcrumb[0] = $breadcrumb[0][0];
+
+        return view('store.product-detail', [
+            'product' => $product[0],
+            'product_features' => $product_feature,
+            'breadcrumb' => $breadcrumb,
+            'reviews' => $reviews,
+            'dollar_cost' => 14540
+        ]);
+    }
+
+    public function add_review (AddReview $req)
+    {
+        $review = new Review();
+        $review->product = $req -> product;
+        $review->fullname = $req -> fullname;
+        $review->email = $req -> email;
+        $review->rating = $req -> rating;
+        $review->review = $req -> review;
+
+        $review -> save();
+
+        return redirect()->back()->with('message', 'نظر شما با موفقیت ثبت شد .');
+    }
+
+    public function breadcrumb ($id)
+    {
+        function get_parents (&$output, $p, $i = 0) {
+            $sql = "SELECT `cat1`.`parent`, `cat1`.`id`, `cat1`.`title` FROM `categories` as `cat1`
+                INNER JOIN `categories` as `cat2` ON `cat1`.`id` = `cat2`.`parent` WHERE `cat2`.`id` = ?";
+            
+            $output[$i] = DB::select($sql, [$p]);
+
+            if (!empty($output[$i][0]->parent)) {
+                get_parents($output, $output[$i][0]->id, ++$i);
+            }
+        }
+
+        $results = [];
+        get_parents($results, $id);
+        return $results;
     }
 }

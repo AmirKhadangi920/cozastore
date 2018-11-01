@@ -22,68 +22,91 @@
 	@foreach ($styles as $style)
 		<link rel="stylesheet" type="text/css" href="{{ asset($style) }}">
 	@endforeach
+
+	<style>
+	#information ul h3 {
+		margin-top: 30px;
+		font-weight: bold;
+	}
+	
+	#information ul li:first-of-type h3 {
+		margin-top: 0px;
+	}
+	</style>
 @endsection
 
 @section('article')
 	<!-- breadcrumb -->
 	<div class="container" dir="rtl">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
-				صفحه اصلی
+			<a href="/products" class="stext-109 cl8 hov-cl1 trans-04">
+				فروشگاه
 				<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
-
-			<a href="product.php" class="stext-109 cl8 hov-cl1 trans-04">
-				مردانه
+			@foreach ($breadcrumb as $item)
+			<a href="/products/category/{{$item->id}}" class="stext-109 cl8 hov-cl1 trans-04">
+				{{$item->title}}
 				<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
+			@endforeach
 
 			<span class="stext-109 cl4">
-				ژاکت
+				{{$product->name}}
 			</span>
 		</div>
 	</div>
 		
 
 	<!-- Product Detail -->
-	<section class="sec-product-detail bg0 p-t-65 p-b-60">
+	<section class="sec-product-detail bg0 p-t-30 {{--p-b-60--}}p-b-0">
 		<div class="container">
 			<div class="row">		
+				<div class="col-md-12 p-b-30" dir="rtl">
+					<div class="panel-body">
+						@foreach ($errors -> all() as $message)
+							<div class="alert alert-danger alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								{{ $message }} 
+							</div>
+						@endforeach
+	
+						@if(session()->has('message'))
+							<div class="alert alert-success alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								{{ session()->get('message') }}
+							</div>
+						@endif
+					</div>
+				</div>
+					
 				<div class="col-md-6 col-lg-5 p-b-30" dir="rtl">
 					<div class="p-r-0 p-t-5 p-lr-0-lg">
 						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-							ژاکت
+							{{$product->name}}
 						</h4>
 
+						<?php if ($product->unit) {
+							$product->price = $product->price * $dollar_cost;
+						} ?>
+						@empty ($product->offer)
 						<span class="mtext-106 cl2">
-							100000تومان
+							{{$product->price}} تومان
 						</span>
+						@else
+						<?php $product->offer = $product->price - ($product->offer * $product->price) / 100; ?>
+						<span class="mtext-106 cl2">
+							<del>{{$product->price}} تومان</del>
+							{{$product->offer}} تومان
+						</span>
+						@endempty
 
 						<p class="stext-102 cl3 p-t-23">
-							پارچه­‌های نخ و پنبه بسیار پرطرفدار و پرکاربرد هستند. این پارچه­‌ها به پوست آسیب نمی­‌رسانند و حساسیت ایجاد نمی­‌کنند.
+							{{$product->short_description}}
 						</p>
 						
 						<!--  -->
 						<div class="p-t-33">
-							<div class="flex-w flex-r-m p-b-10">
-								<div class="size-203 flex-c-m respon6">
-									سایز
-								</div>
-
-								<div class="size-204 respon6-next">
-									<div class="rs1-select2 bor8 bg0">
-										<select class="js-select2" name="time">
-											<option>یک گزینه را انتخاب کنید</option>
-											<option>S</option>
-											<option>M</option>
-											<option>L</option>
-											<option>XL</option>
-										</select>
-										<div class="dropDownSelect2"></div>
-									</div>
-								</div>
-							</div>
-
+							@if(!empty($product->colors))
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-203 flex-c-m respon6">
 									رنگ
@@ -92,17 +115,29 @@
 								<div class="size-204 respon6-next">
 									<div class="rs1-select2 bor8 bg0">
 										<select class="js-select2" name="time">
-											<option>یک گزینه را انتخاب کنید</option>
-											<option>قرمز</option>
-											<option>آبی</option>
-											<option>سفید</option>
-											<option>خاکستری</option>
+											<option value="">یک رنگ را انتخاب کنید</option>
+											<?php $product->colors = explode(',', $product->colors) ?>
+											@foreach ($product->colors as $color)
+												<?php switch($color) {
+													case 'blue': $color = 'آبی'; break;
+													case 'green': $color = 'سبز'; break;
+													case 'yellow': $color = 'زرد'; break;
+													case 'brown': $color = 'قهوه ای'; break;
+													case 'violet': $color = 'بنفش'; break;
+													case 'orange': $color = 'نارنجی'; break;
+													case 'orange': $color = 'قرمز'; break;
+													case 'black': $color = 'مشکی'; break;
+													case 'white': $color = 'سفید'; break;
+												} ?>
+												<option style="background:red;" value="{{$color}}">{{$color}}</option>
+											@endforeach
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
 								</div>
 							</div>
-
+							@endif
+								
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-204 flex-w flex-m respon6-next">
 									<div class="wrap-num-product flex-w m-l-20 m-tb-10">
@@ -125,7 +160,7 @@
 						</div>
 
 						<!--  -->
-						<div class="flex-w flex-m p-l-100 p-t-40 respon7">
+						{{-- <div class="flex-w flex-m p-l-100 p-t-40 respon7">
 							<div class="flex-m bor9 p-r-10 m-r-11">
 								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
 									<i class="zmdi zmdi-favorite"></i>
@@ -143,7 +178,7 @@
 							<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
 								<i class="fa fa-google-plus"></i>
 							</a>
-						</div>
+						</div> --}}
 					</div>
 				</div>
 
@@ -154,56 +189,42 @@
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
 							<div class="slick3 gallery-lb">
-								<div class="item-slick3" data-thumb="{{ asset('images/product-detail-01.jpg') }}">
-									<div class="wrap-pic-w pos-relative">
-										<img src="{{ asset('images/product-detail-01.jpg') }}" alt="IMG-PRODUCT">
-
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('images/product-detail-01.jpg') }}">
-											<i class="fa fa-expand"></i>
-										</a>
+								@if(!empty($product->gallery))
+									<?php $product->gallery = explode(',', $product->gallery); ?>
+									@foreach ($product->gallery as $photo)
+									<div class="item-slick3" data-thumb="{{ asset('uploads/products/'.$photo) }}">
+										<div class="wrap-pic-w pos-relative">
+											<img src="{{ asset('uploads/products/'.$photo) }}" alt="IMG-PRODUCT">
+	
+											<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('uploads/products/'.$photo) }}">
+												<i class="fa fa-expand"></i>
+											</a>
+										</div>
 									</div>
-								</div>
-
-								<div class="item-slick3" data-thumb="{{ asset('images/product-detail-02.jpg') }}">
-									<div class="wrap-pic-w pos-relative">
-										<img src="{{ asset('images/product-detail-02.jpg') }}" alt="IMG-PRODUCT">
-
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('images/product-detail-02.jpg') }}">
-											<i class="fa fa-expand"></i>
-										</a>
-									</div>
-								</div>
-
-								<div class="item-slick3" data-thumb="{{ asset('images/product-detail-03.jpg') }}">
-									<div class="wrap-pic-w pos-relative">
-										<img src="{{ asset('images/product-detail-03.jpg') }}" alt="IMG-PRODUCT">
-
-										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('images/product-detail-03.jpg') }}">
-											<i class="fa fa-expand"></i>
-										</a>
-									</div>
-								</div>
+									@endforeach
+								@endif
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="bor10 m-t-50 p-t-43 p-b-40" dir="rtl">
+			<div class="bor10 {{--m-t-50--}} p-t-43 p-b-40" dir="rtl">
 				<!-- Tab01 -->
 				<div class="tab01">
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item p-b-10">
-							<a class="nav-link active" data-toggle="tab" href="#description" role="tab">توضیح</a>
+							<a class="nav-link active" data-toggle="tab" href="#description" role="tab">توضیحات</a>
 						</li>
+						@if(!empty($product_features[0]))
+						<li class="nav-item p-b-10">
+							<a class="nav-link" data-toggle="tab" href="#information" role="tab">مشخصات</a>
+						</li>
+						@endif
 
 						<li class="nav-item p-b-10">
-							<a class="nav-link" data-toggle="tab" href="#information" role="tab">اطلاعات اضافی</a>
-						</li>
-
-						<li class="nav-item p-b-10">
-							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab"> نظرات  (1)</a>
+							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">نظرات</a>
 						</li>
 					</ul>
 
@@ -213,105 +234,128 @@
 						<div class="tab-pane fade show active" id="description" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
 								<p class="stext-102 cl6">
-									لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. 
+									{{$product->full_description}}
 								</p>
+								<hr/>
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<ul>
+											@empty ($product->advantages)
+											<li>هیچ مزیتی برای این محصول ثبت نشده است .</li>
+											@else
+												<?php $product->advantages = explode(',', $product->advantages); ?>
+												@foreach ($product->advantages as $advantage)
+												<li>
+													<div class="alert alert-success" role="alert">
+														{{$advantage}}
+													</div>
+												</li>
+												@endforeach
+											@endempty
+										</ul>
+									</div>
+									<div class="col-md-6 col-sm-12">
+										<ul>
+											@empty ($product->disadvantages)
+											<li>هیچ عیبی برای این محصول ثبت نشده است .</li>
+											@else
+												<?php $product->disadvantages = explode(',', $product->disadvantages); ?>
+												@foreach ($product->disadvantages as $disadvantage)
+												<li>
+													<div class="alert alert-danger" role="alert">
+														{{$disadvantage}}
+													</div>
+												</li>
+												@endforeach
+											@endempty
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 
+						@if(!empty($product_features[0]))
 						<!-- - -->
 						<div class="tab-pane fade" id="information" role="tabpanel">
 							<div class="row">
 								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
 									<ul class="p-lr-28 p-lr-15-sm">
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												وزن
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												0.79 کیلو گرم
-											</span>
+										<?php $feature_title = $product_features[0]->title; ?>
+										<li>	
+											<h3>{{$feature_title}}</h3>
+											<hr/>
 										</li>
+										@foreach ($product_features as $feature)
+											@if ($feature_title != $feature->title)
+												<?php $feature_title = $feature->title; ?>
+												<li>	
+													<h3>{{$feature_title}}</h3>
+													<hr/>
+												</li>
+											@endif
+											<li class="flex-w flex-t p-b-7">
+												<span class="stext-102 cl3 size-205">
+													{{$feature->name}}
+												</span>
 
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												ابعاد
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												110 x 33 x 100 سانتی متر
-											</span>
-										</li>
-
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												نوع جنس
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												60% کتون
-											</span>
-										</li>
-
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												رنگ
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												Black, Blue, Grey, Green, Red, White
-												مشکی , آبی , خاکستری , سبز , قرمز , سفید
-											</span>
-										</li>
-
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												اندازه
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												XL, L, M, S
-											</span>
-										</li>
+												<span class="stext-102 cl6 size-206">
+													{{$feature->value}}
+												</span>
+											</li>
+										@endforeach
 									</ul>
 								</div>
 							</div>
 						</div>
-
+						@endif
 						<!-- - -->
 						<div class="tab-pane fade" id="reviews" role="tabpanel">
 							<div class="row">
 								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
 									<div class="p-b-30 m-lr-15-sm">
 										<!-- Review -->
-										<div class="flex-w flex-t p-b-68">
-											<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-												<img src="{{ asset('images/avatar-01.jpg') }}" alt="AVATAR">
-											</div>
+										@empty($reviews[0])
 
-											<div class="size-207">
-												<div class="flex-w flex-sb-m p-b-17">
-													<span class="mtext-107 cl2 p-r-20">
-														Ariana Grande
-													</span>
-
-													<span class="fs-18 cl11">
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star-half"></i>
-													</span>
+										@else
+											@foreach ($reviews as $review)
+											<div class="flex-w flex-t p-b-68">
+												<div class="wrap-pic-s size-109 bor0 of-hidden m-l-18 m-t-6">
+													@empty($review->avatar)
+													<img src="{{ asset('images/user_avatar.jpg') }}" alt="AVATAR">
+													@else
+													<img src="{{ asset('uploads/avatars/'.$review->avatar) }}" alt="AVATAR">
+													@endempty
 												</div>
-
-												<p class="stext-102 cl6">
-													لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. 
-												</p>
+	
+												<div class="size-207">
+													<div class="flex-w flex-sb-m p-b-17">
+														<span class="mtext-107 cl2 p-l-20">
+															{{$review->fullname}}<br/>
+															<span class="stext-102 cl16">{{$review->email}}</span>
+														</span>
+	
+														<span class="fs-18 cl11">
+															@for ($i = 0; $i < 5; ++$i)
+																@if ($review->rating > 0)
+																<i class="zmdi zmdi-star"></i>
+																@else
+																<i class="zmdi zmdi-star-outline"></i>
+																@endif
+																<?php --$review->rating ?>
+															@endfor
+														</span>
+													</div>
+	
+													<p class="stext-102 cl6">
+														{{$review->review}} 
+													</p>
+												</div>
 											</div>
-										</div>
+											@endforeach
+										@endempty
 										
 										<!-- Add review -->
-										<form class="w-full">
+										<form action="/products/review" method="post" class="w-full">
 											<h5 class="mtext-108 cl2 p-b-7">
 												بررسی بیشتر
 											</h5>
@@ -321,7 +365,7 @@
 											</p>
 
 											<div class="flex-w flex-m p-t-50 p-b-23">
-												<span class="stext-102 cl3 m-r-16">
+												<span class="stext-102 cl3 m-l-16">
 													امتیاز شما
 												</span>
 
@@ -337,24 +381,27 @@
 
 											<div class="row p-b-25">
 												<div class="col-12 p-b-5">
-													<label class="stext-102 cl3" for="review">پیشنهاد شما</label>
+													<label class="stext-102 cl3" for="review">نظر شما</label>
 													<textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
 												</div>
 
 												<div class="col-sm-6 p-b-5">
-													<label class="stext-102 cl3" for="name">نام </label>
-													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name">
+													<label class="stext-102 cl3" for="name">نام و نام خانوادگی</label>
+													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="fullname">
 												</div>
 
 												<div class="col-sm-6 p-b-5">
-													<label class="stext-102 cl3" for="email">آدرس اینترنتی</label>
+													<label class="stext-102 cl3" for="email">آدرس ایمیل</label>
 													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email">
 												</div>
 											</div>
-
+											
 											<button class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
 												ارسال
 											</button>
+											
+											<input type="hidden" name="product" value="{{$product->pro_id}}">
+											@csrf
 										</form>
 									</div>
 								</div>
@@ -366,18 +413,27 @@
 		</div>
 
 		<div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15" dir="rtl">
+			@if(!empty($product->code))
 			<span class="stext-107 cl6 p-lr-25">
-				کد کالا : 01
+				<b>کد کالا :</b>
+				{{$product->code}}
 			</span>
+			@endif
 
 			<span class="stext-107 cl6 p-lr-25">
-				دسته بندی ها: آقایان , ژاکت
+				<b>گروه محصول : &nbsp</b>
+
+				@foreach ($breadcrumb as $item)
+					{{$item->title}}
+					<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
+				@endforeach
+				{{$product->name}}
 			</span>
 		</div>
 	</section>
 
-
-	<!-- Related Products -->
+	
+	{{-- <!-- Related Products -->
 	<section class="sec-relate-product bg0 p-t-45 p-b-105">
 		<div class="container">
 			<div class="p-b-45">
@@ -647,7 +703,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> --}}
 @endsection
 
 @section('scripts')

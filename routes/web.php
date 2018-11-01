@@ -15,14 +15,6 @@ Route::get('/', function () {
     return view('store.index');
 });
 
-Route::get('/products', function () {
-    return view('store.product');
-});
-
-Route::get('/products/{id}', function () {
-    return view('store.product-detail');
-});
-
 Route::get('/contact', function () {
     return view('store.contact');
 });
@@ -64,10 +56,14 @@ Route::get('/panel/feature/edit/{id}/{title}', 'FeaturesController@edit'); // Se
 Route::post('/panel/feature/edit', 'FeaturesController@update'); // Send Data for edit exiting Feature
 Route::get('/panel/feature/delete/{id}/{title}', 'FeaturesController@delete'); // Send Data for edit exiting Feature
 
-// Products Route
+// Panel Products Route
 Route::get('/panel/products', 'ProductController@index');
 Route::get('/panel/products/add', 'ProductController@add');
 Route::post('/panel/products/new', 'ProductController@create');
 Route::get('/panel/products/edit/{id}', 'ProductController@edit');
 Route::post('/panel/products/update', 'ProductController@update');
 Route::get('/panel/products/search/{query}', 'ProductController@search');
+// Store Products Route
+Route::get('/products', 'ProductController@store');
+Route::get('/products/{id}', 'ProductController@store_product');
+Route::post('/products/review', 'ProductController@add_review');
