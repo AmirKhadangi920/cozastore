@@ -2,6 +2,8 @@
 
 @section('styles')
 	<?php $styles = [
+        //alerts CSS
+		'vendors/bower_components/sweetalert/dist/sweetalert.css',
         // Bootstrap Dropify CSS
 		'vendors/bower_components/dropify/dist/css/dropify.min.css',
 		// Custom CSS
@@ -25,6 +27,26 @@
         -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
         -moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
     }
+    .photo-actions {
+        width: 60px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+    .photo-actions a, .photo-actions span {
+        width: 20px;
+        height: 20px;
+        margin: 0px !important;
+        padding: 4px;
+        box-shadow: 0px 0px 0px 0px #000;
+        transition: box-shadow 300ms;
+    }
+
+    .photo-actions a:hover, .photo-actions span:hover {
+        box-shadow: 0px 0px 15px -5px #000;
+    }
+    
+    
     </style>
 @endsection
 
@@ -52,40 +74,61 @@
                 <div class="panel panel-default border-panel card-view">
                     <div class="panel-heading">
                         <div class="pull-right">
-                            <h6 class="panel-title txt-dark">آپلود تصویر جدید</h6>
+                            <h6 class="panel-title txt-dark">@isset($edit) ویرایش اطلاعات تصویر @else آپلود تصویر جدید @endisset</h6>
                         </div>
                         <div class="clearfix"></div>
                     </div>
+
                     <div class="panel-body">
-                        <div class="col-md-8">
-                            <div class="form-wrap">
-                                <form>
+                        @foreach ($errors -> all() as $message)
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ $message }} 
+                            </div>
+                        @endforeach
+
+                        @if(session()->has('message'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ session()->get('message') }}
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="panel-body">
+                        <form action="@isset($edit) /panel/gallery/update @else /panel/gallery/upload @endisset" method="POST" enctype="multipart/form-data">
+                            <div class="col-md-8">
+                                <div class="form-wrap">
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="exampleInputuname_2">نام تصویر</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
+                                            <input type="text" @isset($edit) value="{{$selected->name}}" @endisset name="name" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
                                             <div class="input-group-addon"><i class="icon-picture"></i></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="exampleInputEmail_2">توضیح کوتاه</label>
                                         <div class="input-group">
-                                            <input type="email" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+                                            <input type="text" @isset($edit) value="{{$selected->description}}" @endisset name="description" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
                                             <div class="input-group-addon"><i class="icon-speech"></i></div>
                                         </div>
                                     </div>
                                     <div class="form-group mb-0">
-                                        <button type="submit" class="btn btn-success pull-left mr-10">آپلود تصویر</button>
+                                        <button type="submit" class="btn @isset($edit) btn-warning @else btn-success @endisset pull-left mr-10">@isset($edit) ویرایش اطلاعات @else آپلود تصویر @endisset</button>
                                     </div>
-                                </form>
+                                    @isset($edit)
+                                    <input type="hidden" name="id" value="{{$selected->id}}" />
+                                    @endisset
+                                    @csrf
+                                </div>
                             </div>
-                        </div>
-            
-                        <div class="col-md-4">
-                            <div class="mt-10 mb-10">
-                                <input type="file" id="input-file-now" class="dropify" />
-                            </div>	
-                        </div>
+                            
+                            <div class="col-md-4">
+                                <div class="mt-10 mb-10">
+                                    <input type="file" @isset($edit) data-default-file="/uploads/{{$selected->photo}}" disabled @endisset name="photo" id="input-file-now" class="dropify" />
+                                </div>	
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -99,23 +142,36 @@
                 <div class="panel panel-default card-view">
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body">
-                            <?php
-                            $path = $_SERVER['DOCUMENT_ROOT'] . '/uploads/products';
-                            $files = scandir($path);
-
-                            $files = array_diff(scandir($path), array('.', '..'));
-                            ?>
                             <div class="gallery-wrap">
                                 <div class="portfolio-wrap project-gallery">
                                     <ul id="portfolio_1" class="portf auto-construct  project-gallery" data-col="4">
-                                        @foreach ($files as $file)
-                                            <li  class="item tall"  data-src="{{ asset('uploads/products/'.$file) }}" data-sub-html="<p>این عکس متعلق به گالری عکس های فروشگاه شما میباشد</p>" >
-                                                <a href="">
-                                                <img class="img-responsive" src="{{ asset('uploads/products/'.$file) }}"  alt="Image description" />
-                                                <span class="hover-cap">{{$file}}</span>
-                                                </a>
-                                            </li>
-                                        @endforeach
+                                        @empty ($photos[0])
+                                            <div class="alert alert-danger alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                هیچ تصویری تا کنون آپلود نشده است
+                                            </div>
+                                        @else
+                                            @foreach ($photos as $photo)
+                                                <li  class="item tall"  data-src="{{ asset('uploads/'.$photo->photo) }}" data-sub-html="{{$photo->description}}" >
+                                                    <a href="">
+                                                        <img class="img-responsive" src="{{ asset('uploads/'.$photo->photo) }}"  alt="توضیحی برای تصویر ثبت نشده است" />
+                                                        <span class="hover-cap">
+                                                            @if($photo->name) {{$photo->name}} @else {{$photo->photo}} @endif
+                                                        </span>
+                                                        <div class="photo-actions">
+                                                            <span href="/panel/gallery/edit/{{$photo->id}}" class="edit-photo badge badge-warning inline-block mb-10">
+                                                                <i class="zmdi zmdi-edit"></i>
+                                                            </span>
+                            
+                                                            <span photo="{{$photo->id}}" filename="{{$photo->photo}}" class="delete-photo badge badge-danger inline-block">
+                                                                <i class="zmdi zmdi-close"></i>
+                                                            </span>
+                                                        </div>
+                                                    </a>
+
+                                                </li>
+                                            @endforeach
+                                        @endempty
                                     </ul>
                                 </div>
                             </div>
@@ -143,6 +199,8 @@
         'dist/js/jquery.slimscroll.js',
         // Fancy Dropdown JS
         'dist/js/dropdown-bootstrap-extended.js',
+        // Sweet-Alert 
+		'vendors/bower_components/sweetalert/dist/sweetalert.min.js',
         // Bootstrap Daterangepicker JavaScript
 		'vendors/bower_components/dropify/dist/js/dropify.min.js',
         // Owl JavaScript
@@ -151,6 +209,7 @@
         'vendors/bower_components/switchery/dist/switchery.min.js',
         // Init JavaScript
         'dist/js/init.js',
+        'dist/js/gallery_data.js'
 	]; ?>
 
 	@foreach ($scripts as $script)

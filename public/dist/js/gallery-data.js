@@ -30,7 +30,6 @@ var masonryPortfolio = function() {
 			/*Filter*/
 			
 			$(window).on( 'resize', function () {
-				
 				$body.find('.portf').each(function () { 
 					var winWidth = window.innerWidth;
 					var container_mock = $('.gallery-wrap').width();
@@ -293,13 +292,25 @@ $(window).on("load",function(){
 	masonryPortfolio();
 });
 
-var click = false;
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-	if((e.target.hash == '#photos_8')&&(click == false)){
+$('.model-test').click(function () {
+	setTimeout(function() {
 		masonryPortfolio();
-		//click = true;
-	}
+	}, 300);
 });
-/***** LightGallery init start*****/	
-$('.portf').lightGallery({  showThumbByDefault: false,hash: false});
-/***** LightGallery init end*****/
+
+$('.photo-gallery').click(function (event) {
+	event.preventDefault();
+	$(this).toggleClass('selected');
+}); 
+
+// var click = false;
+// $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+// 	if((e.target.hash == '#photos_8')&&(click == false)){
+// 		masonryPortfolio();
+// 		//click = true;
+// 	}
+// });
+// /***** LightGallery init start*****/	
+// $('.portf').lightGallery({  showThumbByDefault: false,hash: false});
+// /***** LightGallery init end*****/
+

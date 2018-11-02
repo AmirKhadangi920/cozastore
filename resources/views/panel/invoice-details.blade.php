@@ -9,6 +9,12 @@
 	@foreach ($styles as $style)
 		<link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
 	@endforeach
+
+	<style>
+	.timeline > li > .timeline-panel {
+		text-align: right;
+	}
+	</style>
 @endsection
 
 @section('content')
@@ -165,6 +171,99 @@
 								<div class="clearfix"></div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Row -->
+
+		<div class="row" dir="ltr">
+			<div class="col-lg-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-body">
+						<ul class="timeline">
+							<li>
+								<div class="timeline-badge bg-grad-primary">
+									<i class="icon-layers" ></i>
+								</div>
+								<div class="timeline-panel pa-15" dir="rtl">
+									<div class="timeline-heading">
+										<h6 class="mb-5">1 september 15</h6>
+									</div>
+									<div class="timeline-body">
+										<h4 class="mb-5">pogody</h4>
+										<p class="lead head-font mb-10">Responsive html5 template</p>
+										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
+									</div>
+								</div>
+							</li>
+							
+							<li class="timeline-inverted">
+								<div class="timeline-badge bg-grad-success">
+									<i class="icon-magnifier-add" ></i>
+								</div>
+								<div class="timeline-panel pa-15">
+									<div class="timeline-heading">
+										<h6 class="mb-5">23 March 16</h6>
+									</div>
+									<div class="timeline-body">
+										<h4 class=" mb-5">Beavis</h4>
+										<p class="lead  mb-20">HTML5 Coming Soon Template</p>
+										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
+									</div>
+								</div>
+							</li>
+							
+							<li>
+								<div class="timeline-badge bg-grad-warning">
+									<i class="icon-briefcase" ></i>
+								</div>
+								<div class="timeline-panel pa-15">
+									<div class="timeline-heading">
+										<h6 class="mb-5">23 March 16</h6>
+									</div>
+									<div class="timeline-body">
+										<h4 class=" mb-5">Felix</h4>
+										<p class="lead  mb-20">Personal Blogging PSD Template</p>
+										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
+									</div>
+								</div>
+							</li>
+							
+							<li class="timeline-inverted">
+								<div class="timeline-badge bg-grad-info">
+									<i class="icon-social-stumbleupon" ></i>
+								</div>
+								<div class="timeline-panel pa-15">
+									<div class="timeline-heading">
+										<h6 class="mb-5">11 August 16</h6>
+									</div>
+									<div class="timeline-body">
+										<h4 class=" mb-5">Beryl</h4>
+										<p class="lead  mb-20">Responsive HTML5 Coming Soon</p>
+										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
+									</div>
+								</div>
+							</li>
+							
+							<li>
+								<div class="timeline-badge bg-grad-danger">
+									<i class="icon-flag" ></i>
+								</div>
+								<div class="timeline-panel pa-15">
+									<div class="timeline-heading">
+										<h6 class="mb-5">11 August 16</h6>
+									</div>
+									<div class="timeline-body">
+										<h4 class=" mb-5">Cinnabar</h4>
+										<p class="lead  mb-20">Multipurpose PSD Template</p>
+										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
+									</div>
+								</div>
+							</li>
+							
+							<li class="clearfix no-float"></li>
+						</ul>
 					</div>
 				</div>
 			</div>

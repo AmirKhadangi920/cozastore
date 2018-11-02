@@ -119,7 +119,7 @@
 										
 										<a href="javascript:void(0);">
 											<div class="product-pic img-responsive"
-												style="background: url('{{ asset('uploads/products/'.$product->photo) }}') center center;
+												style="background: url('{{ asset('uploads/'.$product->photo) }}') center center;
 													background-size: cover;">
 												@if($product->status)
 													<span class="label label-success capitalize-font inline-block ml-10">انتشار یافته</span>

@@ -44,8 +44,8 @@
 				<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 			@foreach ($breadcrumb as $item)
-			<a href="/products/category/{{$item->id}}" class="stext-109 cl8 hov-cl1 trans-04">
-				{{$item->title}}
+			<a href="/products/category/{{$item[0]->id}}" class="stext-109 cl8 hov-cl1 trans-04">
+				{{$item[0]->title}}
 				<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 			@endforeach
@@ -192,11 +192,11 @@
 								@if(!empty($product->gallery))
 									<?php $product->gallery = explode(',', $product->gallery); ?>
 									@foreach ($product->gallery as $photo)
-									<div class="item-slick3" data-thumb="{{ asset('uploads/products/'.$photo) }}">
+									<div class="item-slick3" data-thumb="{{ asset('uploads/'.$photo) }}">
 										<div class="wrap-pic-w pos-relative">
-											<img src="{{ asset('uploads/products/'.$photo) }}" alt="IMG-PRODUCT">
+											<img src="{{ asset('uploads/'.$photo) }}" alt="IMG-PRODUCT">
 	
-											<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('uploads/products/'.$photo) }}">
+											<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ asset('uploads/'.$photo) }}">
 												<i class="fa fa-expand"></i>
 											</a>
 										</div>
@@ -214,9 +214,14 @@
 				<div class="tab01">
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
+						
+						@if (empty($product->aparat_video) && empty($product->full_description) && empty($product->advantages) && empty($product->disadvantages))
+						@else 
 						<li class="nav-item p-b-10">
-							<a class="nav-link active" data-toggle="tab" href="#description" role="tab">توضیحات</a>
+							<a class="nav-link" data-toggle="tab" href="#description" role="tab">توضیحات</a>
 						</li>
+						@endif
+
 						@if(!empty($product_features[0]))
 						<li class="nav-item p-b-10">
 							<a class="nav-link" data-toggle="tab" href="#information" role="tab">مشخصات</a>
@@ -224,28 +229,33 @@
 						@endif
 
 						<li class="nav-item p-b-10">
-							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">نظرات</a>
+							<a class="nav-link active" data-toggle="tab" href="#reviews" role="tab">نظرات</a>
 						</li>
 					</ul>
 
 					<!-- Tab panes -->
 					<div class="tab-content p-t-43">
 						<!-- - -->
-						<div class="tab-pane fade show active" id="description" role="tabpanel">
+						<div class="tab-pane fade" id="description" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
 								
+
 								@if (!empty($product->aparat_video))
-									<?php $video = explode('|', $product->aparat_video) ?>
-									
-									<div id="{{$video[0]}}" class="m-b-30">
-										<script type="text/JavaScript" src="https://www.aparat.com/embed/{{$video[1]}}?data[rnddiv]={{$video[0]}}&data[responsive]=yes"></script>
-									</div>
+								<div id="aparat_video" class="m-b-30">
+									<script type="text/JavaScript" src="https://www.aparat.com/embed/{{$product->aparat_video}}?data[rnddiv]=aparat_video&data[responsive]=yes"></script>
+								</div>
+								
+								<hr/>	
 								@endif
 
+								@if (!empty($product->full_description))
 								<p class="stext-102 cl6">
-									{{$product->full_description}}
+									<?=$product->full_description?>
 								</p>
 								<hr/>
+								@endif
+
+								@if (!empty($product->advantages) || !empty($product->disadvantages))
 								<div class="row">
 									<div class="col-md-6 col-sm-12">
 										<ul>
@@ -280,6 +290,7 @@
 										</ul>
 									</div>
 								</div>
+								@endif
 							</div>
 						</div>
 
@@ -324,7 +335,7 @@
 						</div>
 						@endif
 						<!-- - -->
-						<div class="tab-pane fade" id="reviews" role="tabpanel">
+						<div class="tab-pane fade show active" id="reviews" role="tabpanel">
 							<div class="row">
 								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
 									<div class="p-b-30 m-lr-15-sm">
@@ -431,7 +442,7 @@
 				<b>گروه محصول : &nbsp</b>
 
 				@foreach ($breadcrumb as $item)
-					{{$item->title}}
+					{{$item[0]->title}}
 					<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
 				@endforeach
 				{{$product->name}}

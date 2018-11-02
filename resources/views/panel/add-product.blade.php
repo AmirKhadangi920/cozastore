@@ -13,6 +13,48 @@
 	@foreach ($styles as $style)
 		<link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
 	@endforeach
+
+	<style>
+    .project-gallery a {
+		filter: grayscale(80%);
+        box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.2);
+        -webkit-box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0px 0px 20px -5px rgba(0, 0, 0, 0.2);
+        transition: box-shadow 300ms, filter 300ms, border 300ms;
+    }
+
+    .project-gallery a.selected {
+		filter: grayscale(0%);
+		border: 1px solid #f83f36;
+		box-shadow: 0px 0px 20px -5px #f83f36 !important;
+	}
+    
+    .project-gallery a:hover {
+        box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+        -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+    }
+    .photo-actions {
+        width: 60px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+    .photo-actions a, .photo-actions span {
+        width: 20px;
+        height: 20px;
+        margin: 0px !important;
+        padding: 4px;
+        box-shadow: 0px 0px 0px 0px #000;
+        transition: box-shadow 300ms;
+    }
+
+    .photo-actions a:hover, .photo-actions span:hover {
+        box-shadow: 0px 0px 15px -5px #000;
+    }
+    
+    
+    </style>
 @endsection
 
 @section('content')
@@ -96,7 +138,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">ویدیوی آپارات</label>
 												<div class="input-group">
-													<input type="text" name="aparat_video" @isset($edit) value="{{$product->aparat_video}}" @endisset id="firstName" class="form-control" placeholder="اسکریپت ویدیوی خود در سایت آپارات را در این قسمت وارد کنید">
+													<input type="text" name="aparat_video" @isset($edit) value="https://www.aparat.com/v/{{$product->aparat_video}}" @endisset id="firstName" class="form-control" placeholder="اسکریپت ویدیوی خود در سایت آپارات را در این قسمت وارد کنید">
 													<div class="input-group-addon"><i class="ti-video-clapper"></i></div>
 												</div>
 											</div>
@@ -247,23 +289,102 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="row" id="picture-files">
+												<div class="col-md-12">
+													<div style="display: none;" class="alert alert-warning alert-dismissable">
+														<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+														هیج تصویری برای محصول انتخاب نشده است ! 
+													</div>
+												</div>
 												@if(isset($edit) && !empty($product->gallery))
-												<?php $photos = explode(',', $product->gallery); ?>
-													@foreach ($photos as $photo)
-													<div class="col-md-2 col-xs-4">
+												<div class="preview-gallery">
+													@foreach (explode(',', $product->gallery) as $photo)
+													<div class="col-md-2 col-xs-4 mb-30">
 														<div class="img-upload-wrap">
-															<input type="file" data-default-file="{{asset('uploads/products/'.$photo)}}" name="images[]" class="dropify file" />
+															<input type="file" disabled data-show-remove="false" 
+																data-default-file="{{ asset('uploads/'.$photo)}}" class="dropify file" />
 														</div>
 													</div>
 													@endforeach
+												</div>	
+												@else
+												<div class="preview-gallery">
+												</div>
 												@endif
-												<div class="col-md-2 col-xs-4">
-													<div class="img-upload-wrap">
-														<input type="file" name="images[]" class="dropify file" />
+
+												<input type="hidden" @isset($edit) value="{{$product->photo}}" @endisset id="single_photo" name="photo" />
+												<input type="hidden" @isset($edit) value="{{$product->gallery}}" @endisset id="gallery" name="gallery" />
+											</div>
+
+											<div class="col-md-12 text-center">
+												<div  class="panel-body">
+													<!-- sample modal content -->
+													<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+														<div class="modal-dialog modal-lg">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+																	<h5 class="modal-title mr-20" id="myLargeModalLabel">عکس های مورد نظر خود را انتخاب کنید</h5>
+																</div>
+																<div class="modal-body">
+																	<div class="gallery-wrap">
+																		<div class="portfolio-wrap project-gallery">
+																			<ul id="portfolio_1" class="portf auto-construct  project-gallery" data-col="4">
+																				@empty ($photos[0])
+																					<div class="alert alert-danger alert-dismissable">
+																						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+																						هیچ تصویری تا کنون آپلود نشده است
+																					</div>
+																				@endempty
+																				
+																				@if(!empty($product->gallery))
+																					@foreach (explode(',', $product->gallery) as $photo)
+																						<li class="item tall" photo="{{$photo}}" data-src="{{ asset('uploads/'.$photo) }}" >
+																							<a href="" class="photo-gallery selected">
+																								<img class="img-responsive" src="{{ asset('uploads/'.$photo) }}"  alt="توضیحی برای تصویر ثبت نشده است" />
+																								<span class="hover-cap">
+																									تصویر محصول
+																								</span>
+																							</a>
+																						</li>
+																					@endforeach
+																				@endif
+
+																				@if(!empty($photos[0]))
+																					@foreach ($photos as $photo)
+																						<li class="item tall" photo="{{$photo->photo}}" data-src="{{ asset('uploads/'.$photo->photo) }}" data-sub-html="{{$photo->description}}" >
+																							<a href="" class="photo-gallery">
+																								<img class="img-responsive" src="{{ asset('uploads/'.$photo->photo) }}"  alt="توضیحی برای تصویر ثبت نشده است" />
+																								<span class="hover-cap">
+																									@if($photo->name) {{$photo->name}} @else {{$photo->photo}} @endif
+																								</span>
+																							</a>
+																						</li>
+																					@endforeach
+																				@endif
+
+																			</ul>
+																		</div>
+																	</div>
+																</div>
+																<div class="modal-footer">
+																	<div class="pull-left">
+																		<button type="button" class="btn btn-danger text-left ml-20" data-dismiss="modal">بستن</button>
+																		<button type="button" class="add-pics btn btn-primary text-left" data-dismiss="modal">انتخاب تصاویر</button>
+																	</div>
+																</div>
+															</div>
+															<!-- /.modal-content -->
+														</div>
+														<!-- /.modal-dialog -->
+													</div>
+													<!-- /.modal -->
+													<!-- Button trigger modal -->
+													<div class="pull-center fileupload btn @if(isset($edit) && !empty($product->gallery)) btn-warning @else btn-default @endif btn-outline btn-sm btn-anim model-test" data-toggle="modal" data-target=".bs-example-modal-lg" id="add-new-picture">
+														<i class="fa @if(isset($edit) && !empty($product->gallery)) fa-edit @else fa-plus @endif"></i>
+														<span class="btn-text">@if(isset($edit) && !empty($product->gallery)) ویرایش تصاویر @else افزودن تصویر جدید @endif</span>
 													</div>
 												</div>
 											</div>
-											<div class="fileupload btn btn-default btn-outline btn-sm btn-anim" id="add-new-picture"><i class="fa fa-plus"></i><span class="btn-text">افزودن تصویر جدید</span></div>
 										</div>
 									</div>
 									<div class="seprator-block"></div>
@@ -377,6 +498,13 @@
 		'vendors/bower_components/tinymce/tinymce.min.js',
 		// Tinymce Wysuhtml5 Init JavaScript
 		'dist/js/tinymce-data.js',
+		// Gallery JavaScript
+        'dist/js/isotope.js',
+        'dist/js/lightgallery-all.js',
+        'dist/js/froogaloop2.min.js',
+		'dist/js/gallery-data.js',
+		// Slimscroll JavaScript
+        'dist/js/jquery.slimscroll.js',
 		// Bootstrap Daterangepicker JavaScript
 		'vendors/bower_components/dropify/dist/js/dropify.min.js',
 		// Fancy Dropdown JS

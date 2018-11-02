@@ -23,9 +23,9 @@ function quickview (id) {
             gallery += '<div class="slick3 gallery-lb">';
 									
             for (var i = 0; i < photos.length; ++i) {
-                gallery += '<div class="item-slick3" data-thumb="uploads/products/' + photos[i] + '">';
+                gallery += '<div class="item-slick3" data-thumb="uploads/' + photos[i] + '">';
                 gallery += '<div class="wrap-pic-w pos-relative">';
-                gallery += '<img src="uploads/products/' + photos[i] + '" alt="IMG-PRODUCT">';
+                gallery += '<img src="uploads/' + photos[i] + '" alt="IMG-PRODUCT">';
                 gallery += '<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" ';
                 gallery += 'href="uploads/products/' + photos[i] + '">';
                 gallery += '<i class="fa fa-expand"></i></a></div></div>';
@@ -33,9 +33,8 @@ function quickview (id) {
             gallery += '</div>';
 
             if (data.aparat_video) {
-                data.aparat_video = data.aparat_video.split('|');
-                var video = '<div id="' + data.aparat_video[0] + '" class="m-b-30">';
-                video += '<script type="text/JavaScript" src="https://www.aparat.com/embed/' + data.aparat_video[1] + '?data[rnddiv]=' + data.aparat_video[0] + '&data[responsive]=yes"></script>';
+                var video = '<div id="aparat_video" class="m-b-30">';
+                video += '<script type="text/JavaScript" src="https://www.aparat.com/embed/' + data.aparat_video + '?data[rnddiv]=aparat_video&data[responsive]=yes"></script>';
                 video += '</div>';
 
                 $('.js-modal1 .video').html(video);

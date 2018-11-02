@@ -36,9 +36,12 @@ Route::get('/panel/invoice/{id}', function () {
     return view('panel.invoice-details')->with('page_name', 'invoices');
 });
 
-Route::get('/panel/gallery', function () {
-    return view('panel.gallery')->with('page_name', 'gallery');
-});
+// Gallery Route
+Route::get('/panel/gallery', 'GalleryController@index');
+Route::post('/panel/gallery/upload', 'GalleryController@upload');
+Route::get('/panel/gallery/edit/{id}', 'GalleryController@edit');
+Route::post('/panel/gallery/update', 'GalleryController@update');
+Route::get('/panel/gallery/delete/{id}/{title}/{filename}', 'GalleryController@delete');
 
 
 // Groups Route

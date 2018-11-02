@@ -6,20 +6,6 @@ $(document).ready(function(){
     // dropable picture upload
 	$('.dropify.file').dropify();
     
-    // add new dropabe picture section
-    $('#add-new-picture').click(function () {
-        var newPic = '<div class="col-md-2 col-xs-4"><div class="img-upload-wrap">'
-        newPic += '<input type="file" name="images[]" class="dropify" /></div></div>';
-
-        var temp = $('#picture-files') 
-        temp.append(newPic);
-
-        temp = $('#picture-files').children().last();
-        temp.find('input').dropify();
-        temp.css({display: 'none'});
-        temp.fadeIn();
-    });
-
     // Change color of color section labels
     $('.color-value').on('change', function () { 
         var color = $('select.color-value').val();
@@ -40,5 +26,51 @@ $(document).ready(function(){
         $('.features-values').children('.features-row').last().find('.select2').select2();
         $('.features-values').children('.features-row').last().css({display: 'none'});
         $('.features-values').children('.features-row').last().slideDown();
-	});
+    });
+    
+    $('.add-pics').click(function () { 
+        var photo = $(this).parent().parent().prev().find('li').first();
+        var photos = '';
+
+        do {
+            if (photo.find('a').hasClass('selected')) {
+                photos += photo.attr('photo') + ',';
+            }
+            photo = photo.next();
+        } while (photo.html() != undefined);
+
+        photos = photos.substring(0, photos.length-1);
+        photo = photos.substring(0, photos.indexOf(','));
+        $('#single_photo').val(photo);
+        $('#gallery').val(photos);
+
+        var temp = '';
+        if (photos != '') {
+            photos = photos.split(',');
+
+            for (value in photos) {
+                temp += '<div class="col-md-2 col-xs-4 mb-30"><div class="img-upload-wrap">';
+                temp += '<input type="file" disabled data-show-remove="false" data-default-file="/uploads/'+photos[value]+'" class="dropify file" /></div></div>';
+            }
+        } else {
+            photos = [];
+        }
+
+
+        $('.preview-gallery').html(temp);
+        $('.preview-gallery .dropify').dropify();
+
+        if (photos.length != 0) {
+            $('.fileupload').removeClass('btn-default').addClass('btn-warning');
+            $('.fileupload i').removeClass('fa-plus').addClass('fa-edit');
+            $('.fileupload .btn-text').text('ویرایش تصاویر');
+            $('#picture-files .alert').fadeOut();
+        } else {
+            $('.fileupload').removeClass('btn-warning').addClass('btn-default');
+            $('.fileupload i').removeClass('fa-edit').addClass('fa-plus');
+            $('.fileupload .btn-text').text('افزودن تصویر جدید');
+            $('#picture-files .alert').fadeIn();
+        }
+
+    });
 });

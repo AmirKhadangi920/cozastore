@@ -11,6 +11,7 @@ use App\Feature;
 use App\Product;
 use App\ProductFeatures;
 use App\Review;
+use App\Gallery;
 
 class ProductController extends Controller
 {
@@ -31,31 +32,21 @@ class ProductController extends Controller
             $feature->subs = Feature::select('id', 'name')->where('title', $feature->id)->get();
         }
 
+        $photos = Gallery::select('id', 'name', 'description', 'photo')->skip(0)->take(30)->get();
+
         return view('panel.add-product', [
             'groups' => $groups,
             'features' => $features,
+            'photos' => $photos,
             'page_name' => 'add_product'
         ]);
     }
 
     public function create (CreateProduct $req)
     {
+        $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
         // Get a random 8 chars name for this product
         $pro_id = substr(md5(time()), 0, 8);
-
-        // Upload product photo and hold its photo names
-        $photo = ''; $gallery = '';
-        if (!empty($req -> images)) {
-            $res = [];
-            foreach ($req -> images as $image) {
-                $name = substr(md5(time() . rand()), 0, 8);
-                $imageName = $name . '.' . $image->getClientOriginalExtension();
-                if (empty($photo)) { $photo = $imageName; }
-                $gallery .= $imageName . ',';
-                $image->move(public_path('uploads/products'), $imageName);
-            }
-            $gallery = rtrim($gallery, ',');
-        }
 
         // Insert product details to database
         $product = new Product();
@@ -72,8 +63,8 @@ class ProductController extends Controller
         $product->status = $req -> status;
         $product->full_description = $req -> full_description;
         $product->keywords = $req -> keywords;
-        $product->photo = $photo;
-        $product->gallery = $gallery;
+        $product->photo = $req -> photo;
+        $product->gallery = $req -> gallery;
         $product->advantages = $req -> advantages;
         $product->disadvantages = $req -> disadvantages;
 
@@ -98,11 +89,13 @@ class ProductController extends Controller
     {
         $product = DB::select("SELECT `pro_id`, `category`, `categories`.`title`, `products`.`name`, `code`,
             `short_description`, `aparat_video`, `price`, `unit`, `offer`, `colors`, `status`,
-            `full_description`, `keywords`, `gallery`, `advantages`, `disadvantages` 
+            `full_description`, `keywords`, `photo`, `gallery`, `advantages`, `disadvantages` 
             FROM `products`
             LEFT JOIN `categories` ON `products`.`category` = `categories`.`id` WHERE `pro_id` = ?", [$id]);
 
-
+        $photos = Gallery::select('id', 'name', 'description', 'photo')
+                ->whereNotIn('photo', explode(',', $product[0]->gallery))->skip(0)->take(30)->get();
+            
         $product_feature = ProductFeatures::select('feature', 'value')->where('product', $id)->get();
         
         $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
@@ -116,6 +109,7 @@ class ProductController extends Controller
             'groups' => $groups,
             'features' => $features,
             'product' => $product[0],
+            'photos' => $photos,
             'product_features' => $product_feature,
             'edit' => true,
             'page_name' => 'products'
@@ -124,9 +118,21 @@ class ProductController extends Controller
 
     public function update (CreateProduct $req)
     {
+        $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
+
         // Insert product details to database
         $product = Product::find($req -> id);
         $product->pro_id = $req -> id;
+        if ($req -> parent) {
+            $temp = Group::select('parent')->where('id', $req->parent)->get();
+            while (!empty($temp[0])) {
+                $temp = Group::select('parent')->where('id', $temp[0]->parent)->get();
+                if (isset($temp[0]) && $temp[0]->parent !== null) {
+                    $parent_category = $temp[0]->parent;
+                }
+            }   
+        }
+        $product->parent_category = $parent_category; 
         $product->category = $req -> parent;
         $product->name = $req -> name;
         $product->code = $req -> code;
@@ -139,8 +145,8 @@ class ProductController extends Controller
         $product->status = $req -> status;
         $product->full_description = $req -> full_description;
         $product->keywords = $req -> keywords;
-        // $product->photo = $photo;
-        // $product->gallery = $gallery;
+        $product->photo = $req -> photo;
+        $product->gallery = $req -> gallery;
         $product->advantages = $req -> advantages;
         $product->disadvantages = $req -> disadvantages;
 
@@ -286,18 +292,18 @@ class ProductController extends Controller
         $reviews = Review::select('fullname', 'email', 'avatar', 'rating', 'review')->where('product', $id)->get();
 
         $breadcrumb = $this -> breadcrumb($product[0]->category);
-        $breadcrumb[] = (object) [
+        $breadcrumb[] = [(object) [
             'parent' => null,
             'id' => $product[0] -> category,
             'title' => $product[0] -> title,
-        ];
-        $breadcrumb[0] = $breadcrumb[0][0];
+        ]];
 
         return view('store.product-detail', [
             'product' => $product[0],
             'product_features' => $product_feature,
             'breadcrumb' => $breadcrumb,
             'reviews' => $reviews,
+            'page_name'=> 'products',
             'dollar_cost' => 14540
         ]);
     }
