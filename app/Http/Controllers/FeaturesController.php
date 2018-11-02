@@ -16,7 +16,7 @@ class FeaturesController extends Controller
             $feature->subs = Feature::select('id', 'name')->where('title', $feature->id)->get();
         }
 
-        return view('panel.features', compact('features'));
+        return view('panel.features', compact('features'))->with('page_name', 'feature');
     }
 
     public function add (CreateFeature $req)
@@ -37,7 +37,8 @@ class FeaturesController extends Controller
             'features' => $features,
             'title' => $title,
             'id' => $id,
-            'edit' => true
+            'edit' => true,
+            'page_name' => 'feature'
         ]);
     }
 

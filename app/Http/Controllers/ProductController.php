@@ -19,7 +19,7 @@ class ProductController extends Controller
         $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
             ->orderBy('created_at', 'DESC')->get();
 
-        return view('panel.products', compact('products'));
+        return view('panel.products', compact('products'))->with('page_name', 'products');
     }
     
     public function add ()
@@ -33,7 +33,8 @@ class ProductController extends Controller
 
         return view('panel.add-product', [
             'groups' => $groups,
-            'features' => $features
+            'features' => $features,
+            'page_name' => 'add_product'
         ]);
     }
 
@@ -116,7 +117,8 @@ class ProductController extends Controller
             'features' => $features,
             'product' => $product[0],
             'product_features' => $product_feature,
-            'edit' => true
+            'edit' => true,
+            'page_name' => 'products'
         ]);
     }
 
@@ -168,17 +170,104 @@ class ProductController extends Controller
         $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
             ->orderBy('created_at', 'DESC')->where('name', 'like', '%'.$query.'%')->get();
 
-        return view('panel.products', compact('products'))->with('query', $query);
+        return view('panel.products', compact('products'))->with('query', $query)->with('page_name', 'products');
     }
 
-    public function store ()
+    public function main ()
     {
-        $products = Product::select('pro_id', 'name', 'price', 'unit',  'offer', 'photo')
-        ->where('status', 1)->orderBy('created_at', 'DESC')->get();
+        $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
+                `offer`, `photo` FROM `products`
+                LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id`
+                WHERE `status` = 1 LIMIT 30;";
 
-        return view('store.product  ', compact('products'))->with('dollar_cost', 14540);
+        $products = DB::select($sql);
+        
+        return view('store.index  ', [
+            'products' => $products,
+            'dollar_cost' => 14540,
+            'page_name' => 'main'
+        ]);
     }
 
+    public function store ($page = 1, $order = 'newest', $price = 'all', $color = 'all', $keyword = 'all', $query = null)
+    {
+        $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
+                `offer`, `photo` FROM `products`
+                LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id` ";
+     
+        $count_sql = "SELECT count(`pro_id`) as 'count' FROM `products` ";
+     
+        $sql .= " WHERE `status` = 1 ";
+        $count_sql .= " WHERE `status` = 1 ";
+        
+        if ($color && $color != 'all') { 
+            $sql .= "AND `colors` LIKE '%$color%' "; 
+            $count_sql .= "AND `colors` LIKE '%$color%' "; 
+        }
+
+        if ($query) {
+            $sql .= "AND `name` LIKE '%$query%' "; 
+            $count_sql .= "AND `name` LIKE '%$query%' "; 
+        }
+        
+        if ($keyword && $keyword != 'all') {
+            $sql .= "AND `keywords` LIKE '%$keyword%' ";
+            $count_sql .= "AND `keywords` LIKE '%$keyword%' ";
+        }
+
+        switch ($price) {
+            case '0to500':
+                $sql .= "AND `price` < 500000 ";
+                $count_sql .= "AND `price` < 500000 ";
+                break;
+            case '500to1000': 
+                $sql .= "AND `price` BETWEEN 500000 AND 1000000 ";
+                $count_sql .= "AND `price` BETWEEN 500000 AND 1000000 ";
+                break;
+            case '1000to2000': 
+                $sql .= "AND `price` BETWEEN 1000000 AND 2000000 ";
+                $count_sql .= "AND `price` BETWEEN 1000000 AND 2000000 ";
+                break;
+            case '2000toend': 
+                $sql .= "AND `price` > 2000000 ";
+                $count_sql .= "AND `price` > 2000000 ";
+                break;
+        }
+
+        switch ($order) {
+            case 'expensivest': $sql .= "ORDER BY `products`.`price` DESC"; break;
+
+            case 'cheapest': $sql .= "ORDER BY `products`.`price` ASC"; break;
+
+            case 'newest': $sql .= "ORDER BY `products`.`created_at` DESC"; break;
+
+            case 'oldest': $sql .= "ORDER BY `products`.`created_at` ASC"; break;
+
+            default: $sql .= "ORDER BY `products`.`created_at` DESC";
+        }
+
+        $sql .= ' LIMIT 10 OFFSET ' . ($page - 1) * 10 . ';';
+
+        $product_count = DB::SELECT($count_sql);
+
+        $products = DB::select($sql);
+        
+        return view('store.product  ', [
+            'products' => $products,
+            'dollar_cost' => 14540,
+            'product_count' => $product_count[0]->count,
+            'page' => $page,
+            'page_name'=> 'products',
+            'filter' => [
+                'color' => $color,
+                'order' => $order,
+                'price' => $price,
+                'keyword' => $keyword,
+                'query' => $query
+            ]
+        ]);
+    }
+    
     public function store_product ($id)
     {
         $product = DB::select("SELECT `pro_id`, `code`, `category`, `categories`.`title`, `products`.`name`,
@@ -225,6 +314,14 @@ class ProductController extends Controller
         $review -> save();
 
         return redirect()->back()->with('message', 'نظر شما با موفقیت ثبت شد .');
+    }
+
+    public function quickview ($id)
+    {
+        $data = Product::select('name', 'short_description', 'aparat_video', 'price', 'unit',
+            'offer', 'colors', 'gallery')->where('pro_id', $id)->get();
+
+        return json_encode($data[0]);
     }
 
     public function breadcrumb ($id)

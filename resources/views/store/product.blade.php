@@ -35,6 +35,13 @@
 	.product-card {
 		float: right !important;
 	}
+	.badge {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		padding: 6px 8px 4px;
+		box-shadow: 0px 0px 20px -5px #000;
+	}
 	</style>
 @endsection
 
@@ -48,25 +55,15 @@
 						همه محصولات
 					</button>
 
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-						زنانه
-					</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-						مردانه
-					</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-						کیف
-					</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-						کفش
-					</button>
-
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-						ساعت
-					</button>
+					<?php $group_temp = ''; $groups = []; ?>
+					@foreach ($products as $product)
+						@if(!in_array($product->id, $groups) && $product->id)
+							<?php $group_temp = $product->title; $groups[] = $product->id ?>
+							<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{'group'.$product->id}}">
+								{{$product->title}}
+							</button>
+						@endif
+					@endforeach
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
@@ -86,11 +83,12 @@
 				<!-- Search product -->
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
 					<div class="bor8 dis-flex p-l-15">
-						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+						<input onkeyup="this.nextElementSibling.href = '/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/'+this.value" class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" value="{{$filter['query']}}" placeholder="جستجو ...">
+						
+						
+						<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
-						</button>
-
-						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="جستجو ...">
+						</a>
 					</div>	
 				</div>
 
@@ -104,38 +102,28 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										پیش فرض
+									<a href="/products/1/expensivest/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='expensivest') filter-link-active @endif">
+										گرانترین
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										پر بازدید ترین ها
+									<a href="/products/1/cheapest/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='cheapest') filter-link-active @endif">
+										ارزانترین
 									</a>
 								</li>
 
+								
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										امتیاز
+									<a href="/products/1/newest/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='newest') filter-link-active @endif">
+										جدید ترین
 									</a>
 								</li>
 
+								
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-										نظرات
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										قیمت :کم به زیاد
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										قیمت :زیاد به کم
+									<a href="/products/1/oldest/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='oldest') filter-link-active @endif">
+										قدیمی ترین
 									</a>
 								</li>
 							</ul>
@@ -148,38 +136,32 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
+									<a href="/products/1/{{$filter['order']}}/all/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='all') filter-link-active @endif">
 										همه
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										0 - 50000تومان
+									<a href="/products/1/{{$filter['order']}}/0to500/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='0to500') filter-link-active @endif">
+										0 - 500 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										50000تومان - 100000تومان
+									<a href="/products/1/{{$filter['order']}}/500to1000/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='500to1000') filter-link-active @endif">
+										500 - 1000 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										100000تومان - 150000تومان
+									<a href="/products/1/{{$filter['order']}}/1000to2000/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='1000to2000') filter-link-active @endif">
+										1000 - 2000 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										150000تومان-200000تومان
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<a href="#" class="filter-link stext-106 trans-04">
-										+200000تومان
+									<a href="/products/1/{{$filter['order']}}/2000toend/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='2000toend') filter-link-active @endif">
+										2000 هزار تومان به بالا
 									</a>
 								</li>
 							</ul>
@@ -191,65 +173,37 @@
 							</div>
 
 							<ul>
+								<?php $colors = [
+									['blue', 'آبی'],
+									['green', 'سبز'],
+									['yellow', 'زرد'],
+									['brown', 'قهوه ای'],
+									['violet', 'بنفش'],
+									['orange', 'نارنجی'],
+									['red', 'قرمز'],
+									['black', 'مشکی'],
+									['white', 'سفید'],
+								]; ?>
 								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #222;">
+									<span class="fs-15 lh-12 m-r-6" style="color: transparent;">
 										<i class="zmdi zmdi-circle"></i>
 									</span>
 
-									<a href="#" class="filter-link stext-106 trans-04">
-										مشکی
+									<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/all/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['color']=='all') filter-link-active @endif">
+										همه
 									</a>
 								</li>
-
+								@foreach ($colors as $color)
 								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #4272d7;">
+									<span class="fs-15 lh-12 m-r-6" style="color: {{$color[0]}};">
 										<i class="zmdi zmdi-circle"></i>
 									</span>
 
-									<a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-										ابی
+									<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$color[0]}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['color']==$color[0]) filter-link-active @endif">
+										{{$color[1]}}
 									</a>
 								</li>
-
-								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #b3b3b3;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-									<a href="#" class="filter-link stext-106 trans-04">
-										خاکستری
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #00ad5f;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-									<a href="#" class="filter-link stext-106 trans-04">
-										سبز
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #fa4251;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-									<a href="#" class="filter-link stext-106 trans-04">
-										قرمز
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: #aaa;">
-										<i class="zmdi zmdi-circle-o"></i>
-									</span>
-
-									<a href="#" class="filter-link stext-106 trans-04">
-										سفید
-									</a>
-								</li>
+								@endforeach
 							</ul>
 						</div>
 
@@ -259,54 +213,55 @@
 							</div>
 
 							<div class="flex-w p-t-4 m-r--5">
-								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									مد
+								<?php $keywords = [
+									'گوشی هوشمند',
+									'ساعت هوشمند',
+									'برچسب',
+									'گلس'
+								]; ?>
+								<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['query']}}" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5 @if($filter['keyword']=='all') filter-link-active @endif">
+									همه
 								</a>
-
-								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									استایل روز
+								@foreach ($keywords as $keyword)
+								<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$keyword}}/{{$filter['query']}}" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5 @if($filter['keyword']==$keyword) filter-link-active @endif">
+									{{$keyword}}
 								</a>
-
-								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									جین
-								</a>
-
-								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									استایل خیابانی
-								</a>
-
-								<a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									صنایع دستی
-								</a>
+								@endforeach
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
 
 			<div class="row isotope-grid">
 				@empty ($products[0])
-				<div class="alert alert-warning alert-dismissable">
-					<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-					<p class="pull-right">متاسفانه هیچ محصولی یافت نشد !</p>
-					<div class="clearfix"></div>
+				<div class="col-sm-12 col-md-12 col-lg-12 p-b-35 mb-35">
+					<div class="alert alert-warning alert-dismissable">
+						<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
+						<p class="pull-right">متاسفانه هیچ محصولی یافت نشد !</p>
+						<div class="clearfix"></div>
+					</div>
 				</div>
 				@else
 					@foreach ($products as $product)
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 product-card isotope-item women">
+					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 product-card isotope-item {{'group'.$product->id}}">
 						<!-- Block2 -->
 						<div class="block2">
 							<div class="block2-pic hov-img0">
+								
 								<img src="{{asset('/uploads/products/'.$product->photo)}}" alt="IMG-PRODUCT">
 
-								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									مشاهده
+								<a href="{{$product->pro_id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+									مشاهده سریع
 								</a>
+
+								<span class="badge badge-dark">{{$product->title}}</span>
 							</div>
 
 							<div class="block2-txt flex-w flex-t p-t-14">
 								<div class="block2-txt-child1 flex-col-l">
-									<a href="/products/{{$product->pro_id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									<a href="/product/{{$product->pro_id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 										<b>{{$product->name}}</b>
 									</a>
 
@@ -328,9 +283,11 @@
 
 								<div class="block2-txt-child2 flex-r p-t-3">
 									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
+										<img class="icon-heart1 dis-block trans-04" src="{{ asset('images/icons/icon-heart-01.png') }}" alt="ICON">
+										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{ asset('images/icons/icon-heart-02.png') }}" alt="ICON">
 									</a>
+
+									
 								</div>
 							</div>
 						</div>
@@ -340,12 +297,25 @@
 				@endempty
 			</div>
 
-			<!-- Load more -->
-			<div class="flex-c-m flex-w w-full p-t-45" dir="rtl">
-				<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					بیشتر
-				</a>
-			</div>
+			@if (!empty($products[0]) && $product_count > 10)
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+					<li class="page-item @if($page == 1) disabled @endif">
+						<a class="page-link" href="/products/{{$page - 1}}/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}" tabindex="-1">قبلی</a>
+					</li>
+					@for ($i = 1; $i <= ceil($product_count / 10); $i++)
+					<li class="page-item @if($page == $i) active @endif">
+						<a class="page-link" href="/products/{{$i}}/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}">
+							{{$i}}
+						</a>
+					</li>
+					@endfor
+					<li class="page-item @if($page == $i - 1) disabled @endif">
+						<a class="page-link" href="/products/{{$page + 1}}/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}">بعدی</a>
+					</li>
+				</ul>
+			</nav>
+			@endif
 		</div>
 	</div>
 @endsection
@@ -452,4 +422,6 @@
 		</script>
 	<!--===============================================================================================-->
 		<script src="{{ asset('js/main.js') }}"></script>
+
+		<script src="{{ asset('dist/js/quickview.js') }}"></script>
 @endsection

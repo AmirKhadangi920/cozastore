@@ -125,7 +125,7 @@
 													case 'brown': $color = 'قهوه ای'; break;
 													case 'violet': $color = 'بنفش'; break;
 													case 'orange': $color = 'نارنجی'; break;
-													case 'orange': $color = 'قرمز'; break;
+													case 'red': $color = 'قرمز'; break;
 													case 'black': $color = 'مشکی'; break;
 													case 'white': $color = 'سفید'; break;
 												} ?>
@@ -233,6 +233,15 @@
 						<!-- - -->
 						<div class="tab-pane fade show active" id="description" role="tabpanel">
 							<div class="how-pos2 p-lr-15-md">
+								
+								@if (!empty($product->aparat_video))
+									<?php $video = explode('|', $product->aparat_video) ?>
+									
+									<div id="{{$video[0]}}" class="m-b-30">
+										<script type="text/JavaScript" src="https://www.aparat.com/embed/{{$video[1]}}?data[rnddiv]={{$video[0]}}&data[responsive]=yes"></script>
+									</div>
+								@endif
+
 								<p class="stext-102 cl6">
 									{{$product->full_description}}
 								</p>
@@ -281,21 +290,27 @@
 								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
 									<ul class="p-lr-28 p-lr-15-sm">
 										<?php $feature_title = $product_features[0]->title; ?>
-										<li>	
-											<h3>{{$feature_title}}</h3>
+										<li>
+											<h3>
+												<i class="fa fa-angle-left m-l-9 m-r-10 text-primary" aria-hidden="true"></i>
+												{{$feature_title}}
+											</h3>
 											<hr/>
 										</li>
 										@foreach ($product_features as $feature)
 											@if ($feature_title != $feature->title)
-												<?php $feature_title = $feature->title; ?>
-												<li>	
-													<h3>{{$feature_title}}</h3>
+											<?php $feature_title = $feature->title; ?>
+												<li>
+													<h3>
+														<i class="fa fa-angle-left m-l-9 m-r-10 text-primary" aria-hidden="true"></i>
+														{{$feature_title}}
+													</h3>
 													<hr/>
 												</li>
 											@endif
-											<li class="flex-w flex-t p-b-7">
+											<li class="flex-w flex-t p-b-7 alert alert-secondary">
 												<span class="stext-102 cl3 size-205">
-													{{$feature->name}}
+													<b>{{$feature->name}}</b>
 												</span>
 
 												<span class="stext-102 cl6 size-206">
@@ -356,14 +371,6 @@
 										
 										<!-- Add review -->
 										<form action="/products/review" method="post" class="w-full">
-											<h5 class="mtext-108 cl2 p-b-7">
-												بررسی بیشتر
-											</h5>
-
-											<p class="stext-102 cl6">
-												آدرس ایمیل شما منتشر نخواهد شد. فیلدهای اجباری مشخص شده اند *
-											</p>
-
 											<div class="flex-w flex-m p-t-50 p-b-23">
 												<span class="stext-102 cl3 m-l-16">
 													امتیاز شما

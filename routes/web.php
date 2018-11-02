@@ -11,24 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('store.index');
-});
 
 Route::get('/contact', function () {
-    return view('store.contact');
+    return view('store.contact')->with('page_name', 'contact');
 });
 
 Route::get('/about', function () {
-    return view('store.about');
-});
-
-Route::get('/blog', function () {
-    return view('store.blog');
-});
-
-Route::get('/blog/{id}', function () {
-    return view('store.blog-detail');
+    return view('store.about')->with('page_name', 'about');
 });
 
 Route::get('/cart', function () {
@@ -36,7 +25,19 @@ Route::get('/cart', function () {
 });
 
 Route::get('/panel', function () {
-    return view('panel.index');
+    return view('panel.index')->with('page_name', 'main');
+});
+
+Route::get('/panel/invoices', function () {
+    return view('panel.invoice-archive')->with('page_name', 'invoices');
+});
+
+Route::get('/panel/invoice/{id}', function () {
+    return view('panel.invoice-details')->with('page_name', 'invoices');
+});
+
+Route::get('/panel/gallery', function () {
+    return view('panel.gallery')->with('page_name', 'gallery');
 });
 
 
@@ -64,6 +65,9 @@ Route::get('/panel/products/edit/{id}', 'ProductController@edit');
 Route::post('/panel/products/update', 'ProductController@update');
 Route::get('/panel/products/search/{query}', 'ProductController@search');
 // Store Products Route
+Route::get('/', 'ProductController@main');
 Route::get('/products', 'ProductController@store');
-Route::get('/products/{id}', 'ProductController@store_product');
 Route::post('/products/review', 'ProductController@add_review');
+Route::get('/products/{page?}/{order?}/{price?}/{color?}/{keyword?}/{query?}', 'ProductController@store');
+Route::get('/product/{id}', 'ProductController@store_product');
+Route::get('/product/quickview/{id}', 'ProductController@quickview');

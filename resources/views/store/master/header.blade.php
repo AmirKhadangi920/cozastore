@@ -32,23 +32,23 @@
                 <!-- Menu desktop -->
                 <div class="menu-desktop">
                     <ul class="main-menu">
-                        <li>
+                        <li @if($page_name == 'main') class="active-menu" @endif>
                             <a href="/">صفحه اصلی</a>
                         </li>
 
-                        <li>
+                        <li @if($page_name == 'products') class="active-menu" @endif>
                             <a href="/products">فروشگاه</a>
                         </li>
 
-                        <li>
+                        {{-- <li>
                             <a href="/blog">وبلاگ</a>
-                        </li>
+                        </li> --}}
 
-                        <li>
+                        <li @if($page_name == 'contact') class="active-menu" @endif>
                             <a href="/contact">ارتباط با ما</a>
                         </li>
                         
-                        <li class="active-menu">
+                        <li @if($page_name == 'about') class="active-menu" @endif>
                             <a href="/about">درباره ما</a>
                         </li>
                     </ul>

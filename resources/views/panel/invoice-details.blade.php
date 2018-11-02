@@ -97,21 +97,21 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td><img src="<?=IMG?>products/V9 4GB 64GB Black - Vivo.jpg" /></td>
+												<td><img src="{{ asset('images/products/V9 4GB 64GB Black - Vivo.jpg') }}" /></td>
 												<td>اپل iPhone X</td>
 												<td>10.99</td>
 												<td>1</td>
 												<td>10.99</td>
 											</tr>
 											<tr>
-												<td><img src="<?=IMG?>products/V9 4GB 64GB Black - Vivo.jpg" /></td>
+												<td><img src="{{ asset('images/products/V9 4GB 64GB Black - Vivo.jpg') }}" /></td>
 												<td>اپل iPhone X</td>
 												<td>20.00</td>
 												<td>3</td>
 												<td>60.00</td>
 											</tr>
 											<tr>
-												<td><img src="<?=IMG?>products/V9 4GB 64GB Black - Vivo.jpg" /></td>
+												<td><img src="{{ asset('images/products/V9 4GB 64GB Black - Vivo.jpg') }}" /></td>
 												<td>اپل iPhone X</td>
 												<td>600.00</td>
 												<td>1</td>

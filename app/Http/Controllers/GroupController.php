@@ -13,7 +13,7 @@ class GroupController extends Controller
     {
         $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
 
-        return view('panel.groups', compact('groups'));
+        return view('panel.groups', compact('groups'))->with('page_name', 'group');
     }
 
     public function get ($id, $title)
@@ -23,7 +23,9 @@ class GroupController extends Controller
         return view('panel.groups', [
             'groups' => $groups,
             'title' => $title,
-            'breadcrumb' => $this -> breadcrumb($id)
+            'id' => $id,
+            'breadcrumb' => $this -> breadcrumb($id),
+            'page_name' => 'group'
         ]);
     }
 
@@ -48,7 +50,8 @@ class GroupController extends Controller
             'selected' => $selected,
             'title' => $title,
             'breadcrumb' => $this -> breadcrumb($id),
-            'edit' => true
+            'edit' => true,
+            'page_name' => 'group'
         ]);
     }
 

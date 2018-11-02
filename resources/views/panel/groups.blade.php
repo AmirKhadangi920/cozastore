@@ -89,7 +89,7 @@
 												<div class="input-group">
 													<select name="parent" class="form-control select2">
 														@if (isset($title))
-														<option value="">زیر مجموعه گروه {{ $title }}</option>
+														<option value="{{$id}}">زیر مجموعه گروه {{ $title }}</option>
 														@else
 														<option value="">ثبت به عنوان گروه اصلی</option>
 														@endif

@@ -3106,7 +3106,7 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 /*---------------------------------------------*/
-.hov-tag1:hover {
+.hov-tag1:hover, .hov-tag1.filter-link-active {
   color: #717fe0;
   border-color: #717fe0;
 }

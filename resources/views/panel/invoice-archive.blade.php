@@ -73,7 +73,7 @@
 												<td>2011/04/25</td>
 												<td>-</td>
 												<td>
-													<a href="<?=WEBSITE?>panel/invoice-details">
+													<a href="/panel/invoice/23">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>
@@ -89,7 +89,7 @@
 												<td>2011/07/25</td>
 												<td>2012/12/02</td>
 												<td>
-													<a href="<?=WEBSITE?>panel/invoice-details">
+													<a href="/panel/invoice/23">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>
@@ -105,7 +105,7 @@
 												<td>2009/01/12</td>
 												<td>2012/12/02</td>
 												<td>
-													<a href="<?=WEBSITE?>panel/invoice-details">
+													<a href="/panel/invoice/23">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>
@@ -121,7 +121,7 @@
 												<td>2012/03/29</td>
 												<td>2012/12/02</td>
 												<td>
-													<a href="<?=WEBSITE?>panel/invoice-details">
+													<a href="/panel/invoice/23">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>
@@ -137,7 +137,7 @@
 												<td>2008/11/28</td>
 												<td>2012/12/02</td>
 												<td>
-													<a href="<?=WEBSITE?>panel/invoice-details">
+													<a href="/panel/invoice/23">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>
@@ -153,7 +153,7 @@
 												<td>2012/12/02</td>
 												<td>2016/12/02</td>
 												<td>
-													<a href="<?=WEBSITE?>panel/invoice-details">
+													<a href="/panel/invoice/23">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>
@@ -169,7 +169,7 @@
 												<td>2012/08/06</td>
 												<td>2013/09/15</td>
 												<td>
-													<a href="<?=WEBSITE?>panel/invoice-details">
+													<a href="/panel/invoice/23">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>
@@ -185,7 +185,7 @@
 												<td>2010/10/14</td>
 												<td>2014/09/15</td>
 												<td>
-													<a href="<?=WEBSITE?>panel/invoice-details">
+													<a href="/panel/invoice/23">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>
@@ -201,7 +201,7 @@
 												<td>2009/09/15</td>
 												<td>2013/09/15</td>
 												<td>
-													<a href="<?=WEBSITE?>panel/invoice-details">
+													<a href="/panel/invoice/23">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>

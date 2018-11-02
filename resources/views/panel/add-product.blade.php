@@ -203,9 +203,10 @@
 													['white', 'سفید'],
 												]; 
 												
+												$i = 0;
+												
 												if (isset($edit)) {
 													$product->colors = explode(',', $product->colors);
-													$i = 0;
 												}
 												?>
 												
