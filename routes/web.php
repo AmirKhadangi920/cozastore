@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/test', function () {
+    return strlen('dEWQR3NKNQ5iBGxvlJVbHvJAncxvJa8w5aXXrQM4zlStohopAMh82f7Db5QJ ');
+});
+
 // Admin panel Routes
 Route::group(['middleware' => ['web', 'admin']], function () {
     

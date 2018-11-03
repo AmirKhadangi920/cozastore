@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id', 'first_name', 'last_name', 'phone', 'email', 'state', 'city', 'address', 'postal_code', 'type'
+        'id', 'first_name', 'last_name', 'phone', 'email', 'password', 'state', 'city', 'address', 'postal_code', 'type'
     ];
 
     public $incrementing = false;
@@ -31,4 +31,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function is_admin ($user_id)
+    {
+        return ($this->type == 1) ? true : false;   
+    }
 }

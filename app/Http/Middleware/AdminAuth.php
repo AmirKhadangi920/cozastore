@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class AdminAuth
 {
@@ -15,10 +16,11 @@ class AdminAuth
      */
     public function handle($request, Closure $next)
     {
-        // echo '<pre>';
-        // var_dump($request->all());
-        // echo '</pre>';
-        // die();exit();
-        return $next($request);
+        if (Auth::check() && Auth::user()->type == 1)
+        {
+            return $next($request);
+        }
+
+        return redirect('/');
     }
 }

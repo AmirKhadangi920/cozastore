@@ -35,14 +35,42 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('نام :') }}</label>
+                            <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('نام :') }}</label>
 
                             <div class="col-md-8">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="first_name" type="text" class="form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" name="first_name" value="{{ old('first_name') }}" required autofocus>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('first_name'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('first_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('نام خانوادگی :') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="last_name" type="text" class="form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" name="last_name" value="{{ old('last_name') }}" required autofocus>
+
+                                @if ($errors->has('last_name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('شماره تلفن :') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="phone" type="text" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required>
+
+                                @if ($errors->has('phone'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('phone') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -81,6 +109,62 @@
 
                             <div class="col-md-8">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="state" class="col-md-4 col-form-label text-md-right">{{ __('استان :') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="state" type="text" class="form-control{{ $errors->has('state') ? ' is-invalid' : '' }}" name="state" value="{{ old('state') }}" required>
+
+                                @if ($errors->has('state'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('state') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('شهر :') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="city" type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}" required>
+
+                                @if ($errors->has('city'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('آدرس :') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required>
+
+                                @if ($errors->has('address'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('address') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="postal_code" class="col-md-4 col-form-label text-md-right">{{ __('کد پستی :') }}</label>
+
+                            <div class="col-md-8">
+                                <input id="postal_code" type="text" class="form-control{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" name="postal_code" value="{{ old('postal_code') }}" required>
+
+                                @if ($errors->has('postal_code'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('postal_code') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
