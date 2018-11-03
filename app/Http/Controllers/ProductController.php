@@ -292,11 +292,15 @@ class ProductController extends Controller
         $reviews = Review::select('fullname', 'email', 'avatar', 'rating', 'review')->where('product', $id)->get();
 
         $breadcrumb = $this -> breadcrumb($product[0]->category);
-        $breadcrumb[] = [(object) [
+        $index = count($breadcrumb);
+        if (empty($breadcrumb[0])) { $index = 0; }
+        $breadcrumb[$index] = [(object) [
             'parent' => null,
             'id' => $product[0] -> category,
             'title' => $product[0] -> title,
         ]];
+
+        // return $breadcrumb;
 
         return view('store.product-detail', [
             'product' => $product[0],

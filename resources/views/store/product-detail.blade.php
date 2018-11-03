@@ -43,6 +43,7 @@
 				فروشگاه
 				<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
+		
 			@foreach ($breadcrumb as $item)
 			<a href="/products/category/{{$item[0]->id}}" class="stext-109 cl8 hov-cl1 trans-04">
 				{{$item[0]->title}}
@@ -90,13 +91,13 @@
 						} ?>
 						@empty ($product->offer)
 						<span class="mtext-106 cl2">
-							{{$product->price}} تومان
+							<span class="num-comma">{{$product->price}}</span> تومان
 						</span>
 						@else
 						<?php $product->offer = $product->price - ($product->offer * $product->price) / 100; ?>
 						<span class="mtext-106 cl2">
-							<del>{{$product->price}} تومان</del>
-							{{$product->offer}} تومان
+							<del><span class="num-comma">{{$product->price}}</span> تومان</del>
+							<span class="num-comma">{{$product->offer}}</span> تومان
 						</span>
 						@endempty
 
@@ -808,6 +809,15 @@
 		
 		</script>
 	<!--===============================================================================================-->
+		<script src="{{ asset('js/numeral.min.js') }}"></script>
+		<script>
+			var nums = document.getElementsByClassName('num-comma');
+
+			for (num in nums) {
+				nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
+			}
+		</script>
+	
 		<script src="{{ asset('vendor/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 		<script>
 			$('.js-pscroll').each(function(){

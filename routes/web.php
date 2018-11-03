@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/test', function () {
-    return strlen('dEWQR3NKNQ5iBGxvlJVbHvJAncxvJa8w5aXXrQM4zlStohopAMh82f7Db5QJ ');
-});
-
 // Admin panel Routes
 Route::group(['middleware' => ['web', 'admin']], function () {
     
@@ -69,10 +65,10 @@ Route::post('/products/review', 'ProductController@add_review');
 Route::get('/products/{page?}/{order?}/{price?}/{color?}/{keyword?}/{query?}', 'ProductController@store');
 Route::get('/product/{id}', 'ProductController@store_product');
 Route::get('/product/quickview/{id}', 'ProductController@quickview');
+Route::get('/cart', 'CartController@index');
 
 Route::get('/contact', function(){return view('store.contact')->with('page_name', 'contact'); });
 Route::get('/about', function(){ return view('store.about')->with('page_name', 'about'); });
-Route::get('/cart', function(){ return view('store.shoping-cart'); });
 
 Auth::routes();
 

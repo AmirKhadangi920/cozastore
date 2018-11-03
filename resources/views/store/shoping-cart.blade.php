@@ -19,11 +19,20 @@
 	@foreach ($styles as $style)
 		<link rel="stylesheet" type="text/css" href="{{ asset($style) }}">
 	@endforeach
+
+	<style>
+	table {
+		text-align: center;
+	}
+	th {
+		text-align: center !important;
+	}
+	</style>
 @endsection
 	
 @section('article')
 	<!-- breadcrumb -->
-	<div class="container">
+	<div class="container" dir="rtl">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
 				صفحه اصلی
@@ -38,7 +47,7 @@
 		
 
 	<!-- Shoping Cart -->
-	<form class="bg0 p-t-75 p-b-85">
+	<form class="bg0 p-t-75 p-b-85" dir="rtl">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -46,60 +55,52 @@
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
 								<tr class="table_head">
-									<th class="column-1">محصولات</th>
-									<th class="column-2"></th>
+									<th class="column-1">تصویر</th>
+									<th class="column-2">نام</th>
 									<th class="column-3">قیمت</th>
 									<th class="column-4">تعداد</th>
-									<th class="column-5">قیمت</th>
+									<th class="column-5">مجموع</th>
 								</tr>
 
-								<tr class="table_row">
-									<td class="column-1">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-04.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2">کاپشن</td>
-									<td class="column-3">400000تومان</td>
-									<td class="column-4">
-										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
+								@empty($products[0])
+								
+								@else
+									<?php $i = 0; $total = 0; ?>
+									@foreach ($products as $product)
+									<tr class="table_row">
+										<td class="column-1">
+											<div class="how-itemcart1">
+												<img src="{{ asset('uploads/'.$product->photo) }}" alt="Product Image">
 											</div>
+										</td>
+										<td class="column-2">{{$product->name}}</td>
+										<?php if ($product->unit)
+											$product->price = $product->price * $dollar_cost;
 
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="1">
-
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
+										if ($product -> offer != 0)
+											$product->price = $product->price - ($product->offer * $product->price) / 100;  ?>
+										<td class="column-3"><span class="num-comma">{{$product->price}}</span> تومان</td>
+										<td class="column-4">
+											<div class="wrap-num-product flex-w m-l-auto m-r-0">
+												<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+													<i class="fs-16 zmdi zmdi-minus"></i>
+												</div>
+	
+												<?php foreach (session()->get('cart') as $cart)
+												{
+													if ($cart['id'] == $product->pro_id) { $count = $cart['count']; }
+												} ?>
+												<input class="mtext-104 cl3 txt-center num-product" type="text" name="num-product1" value="{{$count}}">
+	
+												<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+													<i class="fs-16 zmdi zmdi-plus"></i>
+												</div>
 											</div>
-										</div>
-									</td>
-									<td class="column-5">400000تومان</td>
-								</tr>
-
-								<tr class="table_row">
-									<td class="column-1">
-										<div class="how-itemcart1">
-											<img src="images/item-cart-05.jpg" alt="IMG">
-										</div>
-									</td>
-									<td class="column-2">ژاکت</td>
-									<td class="column-3">50000تومان</td>
-									<td class="column-4">
-										<div class="wrap-num-product flex-w m-l-auto m-r-0">
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-minus"></i>
-											</div>
-
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product2" value="1">
-
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<i class="fs-16 zmdi zmdi-plus"></i>
-											</div>
-										</div>
-									</td>
-									<td class="column-5">50000تومان</td>
-								</tr>
+										</td>
+										<td class="column-5"><span class="price num-comma">{{$total += $product->price * $count}}</span> تومان</td>
+									</tr>
+									@endforeach
+								@endempty
 							</table>
 						</div>
 
@@ -134,7 +135,7 @@
 
 							<div class="size-209">
 								<span class="mtext-110 cl2">
-									1000000تومان
+									<span class="total num-comma">{{$total}}</span> تومان
 								</span>
 							</div>
 						</div>
@@ -192,7 +193,7 @@
 
 							<div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-									1000000تومان
+									<span class="total num-comma">{{$total}}</span> تومان
 								</span>
 							</div>
 						</div>
@@ -245,5 +246,14 @@
 			});
 		</script>
 	<!--===============================================================================================-->
+		<script src="{{ asset('js/numeral.min.js') }}"></script>
+		<script>
+			var nums = document.getElementsByClassName('num-comma');
+
+			for (num in nums) {
+				nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
+			}
+		</script>
+		
 		<script src="{{ asset('js/main.js') }}"></script>
 @endsection
