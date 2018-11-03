@@ -1,3 +1,4 @@
+<?php if (!isset($page_name)) { $page_name = null; } ?>
 <!-- Header -->
 <header class="header-v4" dir="rtl">
     <!-- Header desktop -->
@@ -10,13 +11,30 @@
                 </div>
 
                 <div class="right-top-bar flex-w h-full">
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
-                        پرس و پاسخ
-                    </a>
 
-                    <a href="#" class="flex-c-m trans-04 p-lr-25">
-                        حساب من
-                    </a>
+                    <!-- Authentication Links -->
+                    @guest
+                        <a class="nav-link" href="{{ route('login') }}"><i class="fa fa-user m-l-5"></i>{{ __('ورود') }}</a>
+                        @if (Route::has('register'))
+                            <a class="nav-link" href="{{ route('register') }}"><i class="fa fa-edit m-l-5"></i>{{ __('ثبت نام') }}</a>
+                        @endif
+                    @else
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                {{ __('خروج') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    @endguest
                 </div>
             </div>
         </div>

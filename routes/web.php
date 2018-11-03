@@ -11,24 +11,7 @@
 |
 */
 
-
-Route::get('/login', ['as' => 'login', 'uses' => function () {
-    return view('login');
-}]);
-
-Route::get('/contact', function () {
-    return view('store.contact')->with('page_name', 'contact');
-});
-
-Route::get('/about', function () {
-    return view('store.about')->with('page_name', 'about');
-});
-
-Route::get('/cart', function () {
-    return view('store.shoping-cart');
-});
-
-
+// Admin panel Routes
 Route::group(['middleware' => ['web', 'admin']], function () {
     
     Route::get('/panel', function () {
@@ -75,11 +58,18 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/panel/products/search/{query}', 'ProductController@search');
 });
 
-
-// Store Products Route
+// Store Products Routes
 Route::get('/', 'ProductController@main');
 Route::get('/products', 'ProductController@store');
 Route::post('/products/review', 'ProductController@add_review');
 Route::get('/products/{page?}/{order?}/{price?}/{color?}/{keyword?}/{query?}', 'ProductController@store');
 Route::get('/product/{id}', 'ProductController@store_product');
 Route::get('/product/quickview/{id}', 'ProductController@quickview');
+
+Route::get('/contact', function(){return view('store.contact')->with('page_name', 'contact'); });
+Route::get('/about', function(){ return view('store.about')->with('page_name', 'about'); });
+Route::get('/cart', function(){ return view('store.shoping-cart'); });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
