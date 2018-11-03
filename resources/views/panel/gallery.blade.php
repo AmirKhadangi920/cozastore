@@ -102,14 +102,14 @@
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="exampleInputuname_2">نام تصویر</label>
                                         <div class="input-group">
-                                            <input type="text" @isset($edit) value="{{$selected->name}}" @endisset name="name" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
+                                            <input type="text" @isset($edit) value="{{$selected->name}}" @else value="{{old('name')}}" @endisset name="name" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
                                             <div class="input-group-addon"><i class="icon-picture"></i></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label mb-10" for="exampleInputEmail_2">توضیح کوتاه</label>
                                         <div class="input-group">
-                                            <input type="text" @isset($edit) value="{{$selected->description}}" @endisset name="description" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+                                            <input type="text" @isset($edit) value="{{$selected->description}}" @else value="{{old('description')}}" @endisset name="description" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
                                             <div class="input-group-addon"><i class="icon-speech"></i></div>
                                         </div>
                                     </div>

@@ -93,7 +93,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">عنوان وِیژگی</label>
 												<div class="input-group">
-													<input type="text" name="name" value="@isset($edit) {{$title}} @endisset" id="firstName" class="form-control" placeholder="مثلا : سخت افزار">
+													<input type="text" name="name" @isset($edit) value="{{$title}}" @else value="{{old('name')}}" @endisset id="firstName" class="form-control" placeholder="مثلا : سخت افزار">
 													@isset($edit)
 														<input type="hidden" name="id" value="{{$id}}">
 													@endisset

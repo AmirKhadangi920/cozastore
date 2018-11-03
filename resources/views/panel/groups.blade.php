@@ -108,7 +108,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">نام گروه</label>
 												<div class="input-group">
-													<input type="text" name="title" id="firstName" value="@isset($selected) {{$selected[0] -> title}} @endisset" class="form-control" placeholder="مثلا : تلفن همراه">
+													<input type="text" name="title" id="firstName" @isset($selected) value="{{$selected[0] -> title}}" @else value="{{old('title')}}" @endisset class="form-control" placeholder="مثلا : تلفن همراه">
 													<div class="input-group-addon"><i class="ti-text"></i></div>
 												</div>
 											</div>
@@ -119,7 +119,7 @@
 												<label class="control-label mb-10">توضیح کوتاه</label>
 												<div class="input-group">
 													<input type="text" name="description" id="firstName" 
-															@isset($selected) value="{{$selected[0] -> description}}" @endisset class="form-control" 
+														@isset($selected) value="{{$selected[0] -> description}}" @else value="{{old('description')}}" @endisset class="form-control" 
 																@if(isset($edit) && empty($selected[0]->description))
 																placeholder="هیچ توضیحی برای گروه '{{$title}}' ثبت نشده است !"
 																@else 

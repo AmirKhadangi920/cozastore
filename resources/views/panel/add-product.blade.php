@@ -107,7 +107,7 @@
 										<div class="col-md-6">
 											<label class="control-label mb-10">شناسه محصول</label>
 											<div class="input-group">
-												<input type="text" name="code" @isset($edit) value="{{$product->code}}" @endisset id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
+												<input type="text" name="code" @isset($edit) value="{{$product->code}}" @else value="{{old('code')}}" @endisset id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
 												<div class="input-group-addon"><i class="ti-id-badge"></i></div>
 											</div>
 										</div>
@@ -116,7 +116,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">نام محصول</label>
 												<div class="input-group">
-													<input type="text" name="name" @isset($edit) value="{{$product->name}}" @endisset id="firstName" class="form-control" placeholder="مثلا : 'گوشی موبایل سامسونگGalaxy S7'">
+													<input type="text" name="name" @isset($edit) value="{{$product->name}}" @else value="{{old('name')}}" @endisset id="firstName" class="form-control" placeholder="مثلا : 'گوشی موبایل سامسونگGalaxy S7'">
 													<div class="input-group-addon"><i class="ti-text"></i></div>
 												</div>
 											</div>
@@ -125,7 +125,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">توضیح کوتاه</label>
 												<div class="input-group">
-													<input type="text" name="short_description" @isset($edit) value="{{$product->short_description}}" @endisset id="firstName" class="form-control" placeholder="یک توضیح یک خطی درباره محصول">
+													<input type="text" name="short_description" @isset($edit) value="{{$product->short_description}}" @else value="{{old('short_description')}}" @endisset id="firstName" class="form-control" placeholder="یک توضیح یک خطی درباره محصول">
 													<div class="input-group-addon"><i class="ti-comment-alt"></i></div>
 												</div>
 											</div>
@@ -138,7 +138,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">ویدیوی آپارات</label>
 												<div class="input-group">
-													<input type="text" name="aparat_video" @isset($edit) value="https://www.aparat.com/v/{{$product->aparat_video}}" @endisset id="firstName" class="form-control" placeholder="اسکریپت ویدیوی خود در سایت آپارات را در این قسمت وارد کنید">
+													<input type="text" name="aparat_video" @isset($edit) value="https://www.aparat.com/v/{{$product->aparat_video}}" @else value="{{old('aparat_video')}}" @endisset id="firstName" class="form-control" placeholder="اسکریپت ویدیوی خود در سایت آپارات را در این قسمت وارد کنید">
 													<div class="input-group-addon"><i class="ti-video-clapper"></i></div>
 												</div>
 											</div>
@@ -170,7 +170,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">تخفیف</label>
 												<div class="input-group">
-													<input type="number" name="offer" @isset($edit) value="{{$product->offer}}" @endisset class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
+													<input type="number" name="offer" @isset($edit) value="{{$product->offer}}" @else value="{{old('offer')}}" @endisset class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
 													<div class="input-group-addon"><i class="ti-cut"></i></div>
 												</div>
 											</div>
@@ -182,13 +182,13 @@
 												<div class="radio-list">
 													<div class="radio-inline">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->unit == 0) checked  @endif name="unit" id="unit_rl" value="0">
+															<input type="radio" @if(isset($edit) && $product->unit == 0) checked @elseif(old('unit') == 0) checked  @endif name="unit" id="unit_rl" value="0">
 															<label for="unit_rl">ریال</label>
 														</div>
 													</div>
 													<div class="radio-inline pl-0">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->unit == 1) checked  @endif name="unit" checked="checked" id="unit_dl" value="1">
+															<input type="radio" @if(isset($edit) && $product->unit == 1) checked @elseif(old('unit') == 1) checked  @endif name="unit" checked="checked" id="unit_dl" value="1">
 															<label for="unit_dl">دلار</label>
 														</div>
 													</div>
@@ -200,7 +200,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">قیمت</label>
 												<div class="input-group">
-													<input type="number" @isset($edit) value="{{$product->price}}"  @endisset name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
+													<input type="number" @isset($edit) value="{{$product->price}}" @else value="{{old('price')}}"  @endisset name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
 													<div class="input-group-addon"><i class="ti-money"></i></div>
 												</div>
 											</div>
@@ -216,13 +216,13 @@
 												<div class="radio-list">
 													<div class="radio-inline">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->status == 0) checked  @endif name="status" id="radio2" value="0">
+															<input type="radio" @if(isset($edit) && $product->status == 0) checked @elseif(old('status') == 0) checked @endif name="status" id="radio2" value="0">
 															<label for="radio2">پیش نویس</label>
 														</div>
 													</div>
 													<div class="radio-inline pl-0">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->status == 0) checked  @endif name="status" checked="checked" id="radio1" value="1">
+															<input type="radio" @if(isset($edit) && $product->status == 0) checked @elseif(old('status') == 1) checked @endif name="status" checked="checked" id="radio1" value="1">
 															<label for="radio1">ثبت محصول</label>
 														</div>
 													</div>
@@ -232,7 +232,7 @@
 										<div class="col-sm-6">
 											<label class="control-label mb-10">رنگ های محصول</label>
 											<div class="form-group mb-0">
-												<select class="select2 select2-multiple color-value" @isset($edit) value="{{$product->colors}}"  @endisset multiple="multiple" data-placeholder="رنگ هارا انتخاب کنید">
+												<select class="select2 select2-multiple color-value" @isset($edit) value="{{$product->colors}}" @else value="{{old('color')}}" @endisset multiple="multiple" data-placeholder="رنگ هارا انتخاب کنید">
 												<?php $colors = [
 													['blue', 'آبی'],
 													['green', 'سبز'],
@@ -270,7 +270,7 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<textarea name="full_description" class="tinymce form-control">@isset($edit) {{$product->full_description}} @endisset</textarea>
+												<textarea name="full_description" class="tinymce form-control">@isset($edit) {{$product->full_description}} @else {{old('full_description')}} @endisset</textarea>
 											</div>
 										</div>
 									</div>
@@ -279,7 +279,7 @@
 										<div class="col-md-12">
 											<div class="form-group" class="remove-outline">
 												<label class="control-label mb-10">کلمات کلیدی</label>
-												<input type="text" @isset($edit) value="{{$product->keywords}}"  @endisset name="keywords" data-role="tagsinput" placeholder="افزودن کلمه کلیدی"/>
+												<input type="text" @isset($edit) value="{{$product->keywords}}" @else value="{{old('keywords')}}" @endisset name="keywords" data-role="tagsinput" placeholder="افزودن کلمه کلیدی"/>
 											</div>
 										</div>
 									</div>
@@ -394,12 +394,12 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="form-group disadvantages">
-												<input type="text" name="disadvantages" @isset($edit) value="{{$product->disadvantages}}"  @endisset data-role="tagsinput" class="form-control" placeholder="عیب محصول">
+												<input type="text" name="disadvantages" @isset($edit) value="{{$product->disadvantages}}" @else value="{{old('disadvantages')}}"  @endisset data-role="tagsinput" class="form-control" placeholder="عیب محصول">
 											</div>
 										</div>
 										<div class="col-sm-6">
 											<div class="form-group advantages">
-												<input type="text" name="advantages" @isset($edit) value="{{$product->advantages}}"  @endisset data-role="tagsinput" class="form-control" placeholder="مزیت محصول">
+												<input type="text" name="advantages" @isset($edit) value="{{$product->advantages}}" @else value="{{old('advantages')}}" @endisset data-role="tagsinput" class="form-control" placeholder="مزیت محصول">
 											</div>
 										</div>
 									</div>

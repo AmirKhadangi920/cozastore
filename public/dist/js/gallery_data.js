@@ -1,4 +1,5 @@
 $('.edit-photo').click(function () {
+    alert($(this).attr('href'));
     window.location = $(this).attr('href');
 });
 
