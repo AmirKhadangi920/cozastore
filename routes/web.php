@@ -65,7 +65,11 @@ Route::post('/products/review', 'ProductController@add_review');
 Route::get('/products/{page?}/{order?}/{price?}/{color?}/{keyword?}/{query?}', 'ProductController@store');
 Route::get('/product/{id}', 'ProductController@store_product');
 Route::get('/product/quickview/{id}', 'ProductController@quickview');
+
+// Cart Rotes
 Route::get('/cart', 'CartController@index');
+Route::get('/cart/remove/{id}/{title}', 'CartController@remove');
+Route::get('/cart/add/{id}/{title}/{count}/{color?}', 'CartController@add');
 
 Route::get('/contact', function(){return view('store.contact')->with('page_name', 'contact'); });
 Route::get('/about', function(){ return view('store.about')->with('page_name', 'about'); });

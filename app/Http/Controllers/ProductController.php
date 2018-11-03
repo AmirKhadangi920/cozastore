@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateProduct;
 use App\Http\Requests\AddReview;
 use Illuminate\Support\Facades\DB;
+use Cookie;
 use App\Group;
 use App\Feature;
 use App\Product;
@@ -187,10 +188,24 @@ class ProductController extends Controller
                 WHERE `status` = 1 LIMIT 30;";
 
         $products = DB::select($sql);
+
+        $cart_products = [];
+        $cart =  json_decode(Cookie::get('cart'), true);
+        if ($cart)
+        {
+            foreach ($cart as $key => $item)
+            {
+                $id[] = $item['id'];
+            }
+            
+            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
+                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
+        }
         
         return view('store.index  ', [
             'products' => $products,
             'dollar_cost' => 14540,
+            'cart_products' => $cart_products,
             'page_name' => 'main'
         ]);
     }
@@ -257,12 +272,26 @@ class ProductController extends Controller
         $product_count = DB::SELECT($count_sql);
 
         $products = DB::select($sql);
+
+        $cart_products = [];
+        $cart =  json_decode(Cookie::get('cart'), true);
+        if ($cart)
+        {
+            foreach ($cart as $key => $item)
+            {
+                $id[] = $item['id'];
+            }
+            
+            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
+                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
+        }
         
         return view('store.product  ', [
             'products' => $products,
             'dollar_cost' => 14540,
             'product_count' => $product_count[0]->count,
             'page' => $page,
+            'cart_products' => $cart_products,
             'page_name'=> 'products',
             'filter' => [
                 'color' => $color,
@@ -300,13 +329,26 @@ class ProductController extends Controller
             'title' => $product[0] -> title,
         ]];
 
-        // return $breadcrumb;
+        $cart_products = [];
+        $cart =  json_decode(Cookie::get('cart'), true);
+        if ($cart)
+        {
+            $id = [];
+            foreach ($cart as $key => $item)
+            {
+                $id[] = $item['id'];
+            }
+            
+            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
+                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
+        }
 
         return view('store.product-detail', [
             'product' => $product[0],
             'product_features' => $product_feature,
             'breadcrumb' => $breadcrumb,
             'reviews' => $reviews,
+            'cart_products' => $cart_products,
             'page_name'=> 'products',
             'dollar_cost' => 14540
         ]);

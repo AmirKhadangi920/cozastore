@@ -1,3 +1,5 @@
+<?php if (!isset($cart_products)) { $cart_products = []; } ?>
+
 <!DOCTYPE html>
 <html lang="fa" dir="ltr">
 <head>
@@ -10,6 +12,7 @@
 <body class="animsition">
 	
 	@include('store.master.header')
+
 
 	<!-- Cart -->
 	<div class="wrap-header-cart js-panel-cart"  dir="rtl">
@@ -28,62 +31,56 @@
 			
 			<div class="header-cart-content flex-w js-pscroll">
 				<ul class="header-cart-wrapitem w-full">
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="{{ asset('images/item-cart-01.jpg') }}" alt="IMG">
-						</div>
+					<?php $total_cart = 0; ?>
+					@empty($cart_products[0])
+					@else
+						@foreach ($cart_products as $product)
+						<li class="header-cart-item flex-w flex-t m-b-12">
+							<div class="header-cart-item-img" onclick="window.location = '/cart/remove/{{$product->pro_id}}/{{$product->name}}'">
+								<img src="{{ asset('uploads/'.$product->photo) }}" alt="IMG">
+							</div>
 
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								پیراهن سفید پلات
-							</a>
+							<div class="header-cart-item-txt p-t-8">
+								<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+									{{$product->name}}
+								</a>
 
-							<span class="header-cart-item-info">
-								1 * 19 هزار تومان
-							</span>
-						</div>
-					</li>
+								<?php
+								$cart =  json_decode(Cookie::get('cart'), true);
+								if ($cart)
+								{
+									foreach ($cart as $key => $item)
+									{
+										if ($item['id'] == $product->pro_id) { $count = $item['count']; }
+									}
 
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="{{ asset('images/item-cart-02.jpg') }}" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								کفش جدید اسپرت مردانه
-							</a>
-
-							<span class="header-cart-item-info">
-								1 * 39 هزار تومان
-							</span>
-						</div>
-					</li>
-
-					<li class="header-cart-item flex-w flex-t m-b-12">
-						<div class="header-cart-item-img">
-							<img src="{{ asset('images/item-cart-03.jpg') }}" alt="IMG">
-						</div>
-
-						<div class="header-cart-item-txt p-t-8">
-							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-								ساعت بند چرمی
-							</a>
-
-							<span class="header-cart-item-info">
-								1 * 17 هزار تومان
-							</span>
-						</div>
-					</li>
+									$price = $product->price;
+									if ($product->unit)
+										$price = $price * $dollar_cost;
+		
+									if ($product -> offer != 0)
+										$price = $price - ($product->offer * $price) / 100;
+									
+									$total_cart += $price * $count;
+								}
+								?>
+								<span class="header-cart-item-info">
+									{{$count}} * <span class="num-comma">{{ceil($price / 1000)}}</span> هزار تومان
+								</span>
+							</div>
+						</li>
+						<hr/>
+						@endforeach
+					@endif
 				</ul>
 				
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
-						مجموع 75 هزار تومان
+						مجموع <span class="num-comma">{{ceil($total_cart / 1000)}}</span> هزار تومان
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">
+						<a href="/cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">
 							دیدن سبد خرید
 						</a>
 
@@ -137,11 +134,7 @@
 									<div class="size-204 respon6-next">
 										<div class="rs1-select2 bor8 bg0">
 											<select class="js-select2" name="time">
-												<option>یک رنگ انتخاب کنید</option>
-												<option>قرمز</option>
-												<option>آبی</option>
-												<option>سفید</option>
-												<option>خاکستری</option>
+												
 											</select>
 											<div class="dropDownSelect2"></div>
 										</div>

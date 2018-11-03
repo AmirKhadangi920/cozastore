@@ -211,6 +211,24 @@
 	<!-- Product -->
 	<div class="bg0 m-t-23 p-b-140" dir="rtl">
 		<div class="container">
+			<div class="col-md-12 p-b-30" dir="rtl">
+				<div class="panel-body">
+					@foreach ($errors -> all() as $message)
+						<div class="alert alert-danger alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							{{ $message }} 
+						</div>
+					@endforeach
+
+					@if(session()->has('message'))
+						<div class="alert alert-success alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							{{ session()->get('message') }}
+						</div>
+					@endif
+				</div>
+			</div>
+			
 			<div class="flex-w flex-sb-m p-b-52" dir="rtl">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">

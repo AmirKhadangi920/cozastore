@@ -16,8 +16,21 @@ function quickview (id) {
             $('.js-modal1 .price').text(data.price + ' تومان');
             $('.js-modal1 .short-description').text(data['short_description']);
 
-            var photos = data.gallery.split(",");
+
+            if (data.colors)
+            {
+                colors = data.colors.split(',');
+                var color_options = '<option value="">یک رنگ انتخاب کنید</option>';
+                for (var i = 0; i < colors.length; ++i) {
+                    color_options += '<option value="' + colors[i] + '">'+ colors[i] +'</option>';
+                }
+                $('.js-select2').parent().parent().parent().show();
+                $('.js-select2').html(color_options);
+            } else {
+                $('.js-select2').parent().parent().parent().hide();
+            }
             
+            var photos = data.gallery.split(",");            
             var gallery = '<div class="wrap-slick3-dots"></div>';
             gallery += '<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>';
             gallery += '<div class="slick3 gallery-lb">';
@@ -43,6 +56,14 @@ function quickview (id) {
             }
             
             $('.js-modal1 .product-gallery').html(gallery);
+            $('.js-modal1 .js-addcart-detail').click(function () 
+            {
+                var url = '/cart/add/'+id+'/'+data.name+'/'+$('.js-modal1 .num-product').val();
+                if ($('.js-select2').val()) {
+                    url += '/' + $('.js-select2').val();
+                }
+                window.location = url;
+            });
 
             $('.wrap-slick3').each(function(){
                 $(this).find('.slick3').slick({

@@ -153,7 +153,7 @@
 										</div>
 									</div>
 
-									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+									<button onclick="window.location = '/cart/add/{{$product->pro_id}}/{{$product->name}}/'+this.previousElementSibling.childNodes[3].value" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
 										اضافه به سبد خرید
 									</button>
 								</div>

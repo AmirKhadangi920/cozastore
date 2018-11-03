@@ -12,17 +12,21 @@
 
                 <div class="right-top-bar flex-w h-full">
 
+                    
                     <!-- Authentication Links -->
                     @guest
+                        <a class="nav-link" href="/cart"><i class="fa fa-shopping-cart m-l-5"></i>سبد خرید</a>
                         <a class="nav-link" href="{{ route('login') }}"><i class="fa fa-user m-l-5"></i>{{ __('ورود') }}</a>
                         @if (Route::has('register'))
                             <a class="nav-link" href="{{ route('register') }}"><i class="fa fa-edit m-l-5"></i>{{ __('ثبت نام') }}</a>
                         @endif
                     @else
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        <a class="nav-link" href="/cart"><i class="fa fa-shopping-cart m-l-5"></i>سبد خرید</a>
+
+                        <a class="nav-link" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
-                            {{ __('خروج') }}
+                            <i class="fa fa-sign-out m-l-5"></i>{{ __('خروج') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -72,7 +76,7 @@
                         <i class="zmdi zmdi-search"></i>
                     </div>
 
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{{count($cart_products)}}">
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
 

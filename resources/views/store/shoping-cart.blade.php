@@ -43,17 +43,35 @@
 				سبد خرید
 			</span>
 		</div>
-	</div>
 		
-
+	</div>
+	
 	<!-- Shoping Cart -->
 	<form class="bg0 p-t-75 p-b-85" dir="rtl">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+				<div class="col-md-12" dir="rtl">
+					<div class="panel-body">
+						@foreach ($errors -> all() as $message)
+							<div class="alert alert-danger alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								{{ $message }} 
+							</div>
+						@endforeach
+			
+						@if(session()->has('message'))
+							<div class="alert alert-success alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								{{ session()->get('message') }}
+							</div>
+						@endif
+					</div>
+				</div>
+				<div class="col-md-9 col-lg-10 col-xl-8 m-lr-auto m-b-50">
 					<div class="m-r-10 m-lr-0-xl">
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
+								@if(!empty($cart_products[0]))
 								<tr class="table_head">
 									<th class="column-1">تصویر</th>
 									<th class="column-2">نام</th>
@@ -61,35 +79,49 @@
 									<th class="column-4">تعداد</th>
 									<th class="column-5">مجموع</th>
 								</tr>
-
-								@empty($products[0])
-								
+								@endif
+								<?php $total = 0; ?>
+								@empty($cart_products[0])
+									<div class="alert alert-warning alert-dismissable">
+										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+										هیچ محصولی در سبد خرید موجود نیست !
+									</div>
 								@else
-									<?php $i = 0; $total = 0; ?>
-									@foreach ($products as $product)
+								
+								<?php $i = 0; ?>
+								@foreach ($cart_products as $product)
 									<tr class="table_row">
 										<td class="column-1">
-											<div class="how-itemcart1">
+											<div class="how-itemcart1" onclick="window.location = '/cart/remove/{{$product->pro_id}}/{{$product->name}}'">
 												<img src="{{ asset('uploads/'.$product->photo) }}" alt="Product Image">
 											</div>
 										</td>
-										<td class="column-2">{{$product->name}}</td>
-										<?php if ($product->unit)
-											$product->price = $product->price * $dollar_cost;
+										<td class="column-2"><a href="/product/{{$product->pro_id}}"><b>{{$product->name}}</b></a></td>
+										<?php
+										$price = $product->price;
+										if ($product->unit)
+											$price = $price * $dollar_cost;
 
 										if ($product -> offer != 0)
-											$product->price = $product->price - ($product->offer * $product->price) / 100;  ?>
-										<td class="column-3"><span class="num-comma">{{$product->price}}</span> تومان</td>
+											$price = $price - ($product->offer * $price) / 100;  
+										?>
+										<td class="column-3"><span class="num-comma">{{$price}}</span> تومان</td>
 										<td class="column-4">
 											<div class="wrap-num-product flex-w m-l-auto m-r-0">
 												<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
 													<i class="fs-16 zmdi zmdi-minus"></i>
 												</div>
-	
-												<?php foreach (session()->get('cart') as $cart)
+												
+												<?php
+												$cart =  json_decode(Cookie::get('cart'), true);
+												if ($cart)
 												{
-													if ($cart['id'] == $product->pro_id) { $count = $cart['count']; }
-												} ?>
+													foreach ($cart as $key => $item)
+													{
+														if ($item['id'] == $product->pro_id) { $count = $item['count']; }
+													} 
+												}
+												?>
 												<input class="mtext-104 cl3 txt-center num-product" type="text" name="num-product1" value="{{$count}}">
 	
 												<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
@@ -97,7 +129,8 @@
 												</div>
 											</div>
 										</td>
-										<td class="column-5"><span class="price num-comma">{{$total += $product->price * $count}}</span> تومان</td>
+										<?php $total += $price * $count; ?>
+										<td class="column-5"><span class="price num-comma">{{$price * $count}}</span> تومان</td>
 									</tr>
 									@endforeach
 								@endempty
@@ -120,7 +153,7 @@
 					</div>
 				</div>
 
-				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+				<div class="col-md-3 col-sm-10 col-lg-7 col-xl-4 m-lr-auto m-b-50">
 					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-10 m-lr-0-xl p-lr-15-sm">
 						<h4 class="mtext-109 cl2 p-b-30">
 							سبد خرید
