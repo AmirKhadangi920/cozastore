@@ -182,6 +182,8 @@ class ProductController extends Controller
 
     public function main ()
     {
+        
+
         $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
                 `offer`, `photo` FROM `products`
                 LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id`
