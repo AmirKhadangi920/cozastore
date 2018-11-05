@@ -3612,7 +3612,8 @@ a#toggle_mobile_nav {
       overflow: hidden; }
       .navbar.navbar-inverse.navbar-fixed-top .nav-header .logo-wrap {
         width: 250px;
-        padding-top: 26.5px; }
+        height: 100%;
+        padding-top: 20px; }
         .navbar.navbar-inverse.navbar-fixed-top .nav-header .logo-wrap .brand-img {
           margin-right: 4px;
           position: relative;
@@ -3621,6 +3622,7 @@ a#toggle_mobile_nav {
         .navbar.navbar-inverse.navbar-fixed-top .nav-header .logo-wrap .brand-text {
           display: inline-block;
           color: #324148;
+          height: 100%;
           font-weight: 700;
           font-size: 24px;
           text-transform: uppercase;
@@ -8205,6 +8207,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
       visibility: visible; }
     .horizontal-nav .navbar.navbar-inverse.navbar-fixed-top .nav-header .logo-wrap img {
       width: auto;
+      height: 80%;
       top: 3px; }
   .horizontal-nav .fixed-sidebar-left {
     width: 100%;

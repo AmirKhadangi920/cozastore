@@ -45,7 +45,7 @@
                 
                 <!-- Logo desktop -->		
                 <a href="#" class="logo">
-                    <img src="{{ asset('images/icons/logo-01.png') }}" alt="IMG-LOGO">
+                    <img src="{{ asset('logo/'.$site_logo) }}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->

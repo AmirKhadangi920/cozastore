@@ -304,7 +304,7 @@
 							</div>
 
 							<div class="form-wrap">
-								<form action="/panel/setting/info" enctype="multipart/form-data" method="POST">
+								<form action="/panel/setting/social_link" enctype="multipart/form-data" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-link font-20 txt-grey ml-10" aria-hidden="true"></i>لینک شبکه های اجتماعی</h6>
 									<hr class="light-grey-hr"/>
 
@@ -315,14 +315,14 @@
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_5">اینستاگرام</label>
 													<div class="input-group">
-														<input type="text" value="{{$social_link['instagram']}}" name="instagram" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی اینستاگرام">
+														<input type="text" dir="ltr" value="{{$social_link['instagram']}}" name="instagram" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی اینستاگرام">
 														<div class="input-group-addon"><i class="fa fa-instagram" aria-hidden="true"></i></div>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_4">تلگرام</label>
 													<div class="input-group">
-														<input type="text" value="{{$social_link['telegram']}}" name="telegram" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی تلگرام">
+														<input type="text" dir="ltr" value="{{$social_link['telegram']}}" name="telegram" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی تلگرام">
 														<div class="input-group-addon"><i class="fa fa-telegram" aria-hidden="true"></i></div>
 													</div>
 												</div>
@@ -332,14 +332,14 @@
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_5">توییتر</label>
 													<div class="input-group">
-														<input type="text" value="{{$social_link['twitter']}}" name="twitter" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی توییتر">
+														<input type="text" dir="ltr" value="{{$social_link['twitter']}}" name="twitter" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی توییتر">
 														<div class="input-group-addon"><i class="fa fa-twitter" aria-hidden="true"></i></div>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_4">فیسبوک</label>
 													<div class="input-group">
-														<input type="text" value="{{$social_link['facebook']}}" name="facebook" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی فیسبوک">
+														<input type="text" dir="ltr" value="{{$social_link['facebook']}}" name="facebook" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی فیسبوک">
 														<div class="input-group-addon"><i class="fa fa-facebook" aria-hidden="true"></i></div>
 													</div>
 												</div>

@@ -24,6 +24,10 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     
     // Setting Route
     Route::get('/panel/setting', 'PanelController@setting');
+    Route::post('/panel/setting/slider', 'PanelController@slider');
+    Route::post('/panel/setting/posters', 'PanelController@poster');
+    Route::post('/panel/setting/info', 'PanelController@info');
+    Route::post('/panel/setting/social_link', 'PanelController@social_link');
 
     // Gallery Route
     Route::get('/panel/gallery', 'GalleryController@index');
