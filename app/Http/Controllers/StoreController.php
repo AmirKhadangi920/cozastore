@@ -35,11 +35,6 @@ class StoreController extends Controller
             }
         }
 
-        $slider = Option::select('value')->where('name', 'slider')->get();
-        $slider = json_decode($slider[0]['value'], true);
-        $posters = Option::select('value')->where('name', 'posters')->get();
-        $posters = json_decode($posters[0]['value'], true);
-
         $cart_products = [];
         $cart =  json_decode(Cookie::get('cart'), true);
         if ($cart)

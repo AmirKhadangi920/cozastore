@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use App\Option;
+use App\Product;
+use Cookie;
 class RegisterController extends Controller
 {
     /*
@@ -103,9 +105,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // echo '<pre>';
-        // print_r($data);
-        // die();
         return User::create([
             'id' => substr(md5(time()), 0, 8),
             'first_name' => $data['first_name'],
@@ -117,6 +116,43 @@ class RegisterController extends Controller
             'city' => $data['city'],
             'address' => $data['address'],
             'postal_code' => $data['postal_code'],
+        ]);
+    }
+
+    public function showRegistrationForm()
+    {
+        $options = Option::select('name', 'value')->whereIn('name',
+            ['site_name', 'site_logo', 'site_description', 'social_link'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+                case 'site_description': $site_description = $option['value']; break;
+                case 'social_link': $social_link = json_decode($option['value'], true); break;
+            }
+        }
+        
+        $cart_products = [];
+        $cart =  json_decode(Cookie::get('cart'), true);
+        if ($cart)
+        {
+            foreach ($cart as $key => $item)
+            {
+                $id[] = $item['id'];
+            }
+            
+            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
+                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
+        }
+
+        return view('auth.register', [
+            'page_title' => 'ثبت نام',
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo,
+            'site_description'=> $site_description,
+            'social_link'=> $social_link,
+            'cart_products' => $cart_products,
+            'dollar_cost' => 14500,
         ]);
     }
 }
