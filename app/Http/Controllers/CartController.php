@@ -60,9 +60,9 @@ class CartController extends Controller
                 $order = new Order();
                 $order -> id = substr(md5(time()), 0, 8);
                 $order -> buyer = Auth::user()->id;
-                $order -> code = substr(md5(time() + rand()), 0, 8);
                 $order -> destination = Auth::user()->state.' ، '.Auth::user()->city.' ، '.Auth::user()->address;
                 $order -> postal_code = Auth::user()->postal_code;
+                $order -> datetimes = '{"refund":null,"Pending":null,"packing":null,"sending":null,"sended":null}';
                 $order -> save();
 
                 return redirect()->back()->with('message', $title.' با موفقیت به سبد خرید شما اضافه شد .');

@@ -18,14 +18,15 @@ Route::group(['middleware' => ['web', 'admin']], function () {
         return view('panel.index')->with('page_name', 'main');
     });
     
-    Route::get('/panel/invoices', function () {
-        return view('panel.invoice-archive')->with('page_name', 'invoices');
-    });
+    // Invoices Routes
+    Route::get('/panel/invoices', 'InvoiceController@index');
+    Route::get('/panel/invoice/{id}', 'InvoiceController@get');
+    Route::get('/panel/invoice/{id}/description/{description}', 'InvoiceController@description');
+    Route::get('/panel/invoice/{id}/status/{status}', 'InvoiceController@status');
     
-    Route::get('/panel/invoice/{id}', function () {
-        return view('panel.invoice-details')->with('page_name', 'invoices');
-    });
-    
+    // Setting Route
+    Route::get('/panel/setting', 'PanelController@setting');
+
     // Gallery Route
     Route::get('/panel/gallery', 'GalleryController@index');
     Route::post('/panel/gallery/upload', 'GalleryController@upload');
@@ -75,5 +76,3 @@ Route::get('/contact', function(){return view('store.contact')->with('page_name'
 Route::get('/about', function(){ return view('store.about')->with('page_name', 'about'); });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

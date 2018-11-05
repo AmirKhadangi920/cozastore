@@ -2,6 +2,8 @@
 
 @section('styles')
 	<?php $styles = [
+		//alerts CSS
+		'vendors/bower_components/sweetalert/dist/sweetalert.css',
 		// Custom CSS
 		'dist/css/style.css'
 	]; ?>
@@ -14,6 +16,49 @@
 	.timeline > li > .timeline-panel {
 		text-align: right;
 	}
+	thead tr {
+		background: #848484;
+	}
+	thead tr th {
+		color: #fff !important;
+		font-size: 14px !important;
+	}
+	.address-head {
+		font-size: 16px;
+		margin-bottom: 20px !important;
+		/* display: inline-block; */
+	}
+	.address-head i {
+		margin-left: 5px;
+	}
+	blockquote {
+		border-left: none;
+		border-right: 4px solid #f83f37;
+		font-size: 13px;
+	}
+	.btn-info.fancy-button:hover {
+		background: #ed1b60 !important;
+	}
+	.btn-warning.fancy-button:hover {
+		background: #ffbf36 !important;
+	}
+	.btn-dark.fancy-button:hover {
+		background: #324148 !important;
+		color: #fff !important;
+	}
+	.btn-orange.fancy-button:hover {
+		background: #ff9528 !important;
+		color: #fff !important;
+	}
+	.btn-primary.fancy-button:hover {
+		background: #0092ee !important;
+	}
+	.btn-success.fancy-button:hover {
+		background: #22af47 !important;
+	}
+	.btn-danger.fancy-button:hover {
+		background: #f83f37 !important;
+	}
 	</style>
 @endsection
 
@@ -24,9 +69,8 @@
 			<!-- Breadcrumb -->
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
-					<li><a href="index.html">داشبورد</a></li>
-					<li><a href="#"><span>صفحات خاص</span></a></li>
 					<li class="active"><span>جزئیات سفارش</span></li>
+					<li>داشبورد</li>
 				</ol>
 			</div>
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -41,32 +85,66 @@
 				<div class="panel panel-default border-panel card-view">
 					<div class="panel-heading">
 						<div class="pull-right">
-							<h6 class="panel-title txt-dark">مشخصات فاکتور</h6>
+							<h3 class="panel-title txt-dark mt-10">مشخصات فاکتور #{{$invoice->id}}</h3>
 						</div>
 						<div class="pull-left">
-							<h6 class="txt-dark">فاکتور #12345</h6>
+							<?php
+							switch ($invoice->status) {
+								case 0: $status = ['پرداخت نشده', 'info']; break;
+								case 1: $status = ['در انتظار پرداخت', 'warning']; break; 
+								case 2: $status = ['پرداخت شده', 'dark']; break;
+								case 3: $status = ['در حال بررسی', 'orange']; break;
+								case 4: $status = ['در حال بسته بندی', 'warning']; break;
+								case 5: $status = ['در حال ارسال', 'primary']; break;
+								case 6: $status = ['ارسال شده', 'success']; break;
+								case 7: $status = ['لغو شده', 'danger']; break;
+								default: $status = ['پرداخت نشده', 'info'];
+							}
+							?>
+							<div class="button-list pull-left">
+								<button type="button" class="btn btn-default btn-outline btn-icon left-icon mt-0" onclick="javascript:window.print();"> 
+									<i class="fa fa-print"></i><span> چاپ</span> 
+								</button>
+								<span class="btn btn-{{$status[1]}} mr-10 mt-0">وضعیت : {{$status[0]}}</span>
+							</div>
 						</div>
 						<div class="clearfix"></div>
 					</div>
 					<div class="panel-wrapper collapse in">
+						@foreach ($errors -> all() as $message)
+							<div class="alert alert-danger alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								{{ $message }} 
+							</div>
+						@endforeach
+
+						@if(session()->has('message'))
+							<div class="alert alert-success alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								{{ session()->get('message') }}
+							</div>
+						@endif
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-xs-6 text-right">
-									<span class="txt-dark head-font inline-block capitalize-font mb-5">آدرس خریدار:</span>
+									<span class="txt-dark head-font inline-block capitalize-font mb-5 address-head">
+										<i class="fa fa-map-marker" aria-hidden="true"></i>
+										<b>آدرس خریدار:</b>
+									</span>
 									<address class="mb-15">
-										<span class="address-head mb-5">خراسان رضوی ، مشهد</span>
-										بین وکیل آباد 80 و 82<br>
-										پلاک 13 ، واحد 1<br>
-										<b>شماره تلفن : </b>09154321254
+										<span class="mb-5">{{$invoice->state}} ، {{$invoice->city}}</span><br/>
+										{{$invoice->address}}<br>
+										<b>کد پستی : </b>{{$invoice->user_postal_code}}
 									</address>
 								</div>
 								<div class="col-xs-6">
-									<span class="txt-dark head-font inline-block capitalize-font mb-5">آدرس مقصد ارسال سفارش:</span>
+									<span class="txt-dark head-font inline-block capitalize-font mb-5 address-head">
+										<i class="fa fa-plane" aria-hidden="true"></i>
+										آدرس مقصد ارسال سفارش:
+									</span>
 									<address class="mb-15">
-										<span class="address-head mb-5">مشهد ، خراسان رضوی</span>
-										بین دستغیب ، 15 و 17<br>
-										واحد 1<br>
-										<b>شماره تلفن : </b>09105009868
+										{{$invoice->destination}}<br>
+										<b>کد پستی : </b>{{$invoice->postal_code}}
 									</address>
 								</div>
 							</div>
@@ -74,16 +152,51 @@
 							<div class="row">
 								<div class="col-xs-6">
 									<address>
-										<span class="txt-dark head-font capitalize-font mb-5">روش پرداخت:</span>
-										<br>
-										درگاه پرداخت زرین پال<br>
+										<span class="txt-dark head-font capitalize-font mb-5 address-head">
+											<i class="fa fa-user" aria-hidden="true"></i>
+											خریدار :
+										</span>
+										{{$invoice->first_name.' '.$invoice->last_name}}<br>
+										<b>شماره تلفن : </b>{{$invoice->phone}}
 									</address>
 								</div>
 								<div class="col-xs-6 text-right">
 									<address>
-										<span class="txt-dark head-font capitalize-font mb-5">تاریخ سفارش:</span><br>
-										1397/08/20<br>13:43<br>
+										<span class="txt-dark head-font capitalize-font mb-5 address-head">
+											<i class="fa fa-calendar" aria-hidden="true"></i>
+											تاریخ ثبت سفارش:
+										</span>
+										{{$invoice->created_at}}
 									</address>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<span class="txt-dark head-font inline-block capitalize-font mb-5 address-head">
+										<i class="fa fa-commenting-o" aria-hidden="true"></i>
+										<b>توضیحات مشتری :</b>
+									</span>
+									<span class="mb-15">
+										<blockquote><pre>{{$invoice->buyer_description}}</pre></blockquote>
+									</span>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<span class="txt-dark head-font inline-block capitalize-font mb-5 address-head">
+										<i class="fa fa-commenting" aria-hidden="true"></i>
+										<b>توضیحات فروشنده :</b>
+									</span>
+									<span class="mb-15">
+										<div class="input-group mb-15">
+											<input type="text" id="example-input2-group2" @if ($invoice->admin_description) value="{{$invoice->admin_description}}" @endif name="example-input2-group2" class="form-control" placeholder="توضیح خود درباره این سفارش را وارد کنید">
+											<span class="input-group-btn">
+												<button type="button" onclick="window.location = '/panel/invoice/{{$invoice->id}}/description/' + this.parentNode.previousElementSibling.value" class="btn btn-orange btn-anim"><i class="icon-rocket"></i><span class="btn-text">ثبت</span></button>
+											</span> 
+										</div>
+									</span>
 								</div>
 							</div>
 							
@@ -93,183 +206,91 @@
 								<div class="table-responsive">
 									<table class="table table-hover" id="invoice-table">
 										<thead>
-											<tr class="btn-success">
-												<th>تصویر محصول</th>
-												<th>نام محصول</th>
-												<th>قیمت</th>
-												<th>تعداد</th>
-												<th>جمع</th>
+											<tr class="btn-dark">
+												<th><b>تصویر محصول</b></th>
+												<th><b>نام محصول</b></th>
+												<th><b>قیمت</b></th>
+												<th><b>تعداد</b></th>
+												<th><b>رنگ</b></th>
+												<th><b>جمع</b></th>
 											</tr>
 										</thead>
 										<tbody>
+											@foreach ($order_products as $item)
+											<?php
+											$price = $item->price;
+											if ($item->unit)
+												$price = $price * $dollar_cost;
+	
+											if ($item -> offer != 0)
+												$price = $price - ($item->offer * $price) / 100;  
+											?>
 											<tr>
-												<td><img src="{{ asset('images/products/V9 4GB 64GB Black - Vivo.jpg') }}" /></td>
-												<td>اپل iPhone X</td>
-												<td>10.99</td>
-												<td>1</td>
-												<td>10.99</td>
+												<td><img src="/uploads/{{$item->photo}}" /></td>
+												<td>{{$item->name}}</td>
+												<td>{{$price}}</td>
+												<td>{{$item->count}}</td>
+												<td>{{($item->color) ? $item->color : 'رنگی انتخاب نشده است'}}</td>
+												<td>{{$price * $item->count}}</td>
 											</tr>
-											<tr>
-												<td><img src="{{ asset('images/products/V9 4GB 64GB Black - Vivo.jpg') }}" /></td>
-												<td>اپل iPhone X</td>
-												<td>20.00</td>
-												<td>3</td>
-												<td>60.00</td>
-											</tr>
-											<tr>
-												<td><img src="{{ asset('images/products/V9 4GB 64GB Black - Vivo.jpg') }}" /></td>
-												<td>اپل iPhone X</td>
-												<td>600.00</td>
-												<td>1</td>
-												<td>600.00</td>
-											</tr>
+											@endforeach
 											<tr class="txt-dark">
+												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>
 												<td>جمع فاکتور</td>
-												<td>670.99 تومان</td>
+												<td>{{$invoice->total}} تومان</td>
 											</tr>
 											<tr class="txt-dark">
+												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>
 												<td>هزینه ارسال</td>
-												<td>15 تومان</td>
+												<td>{{$invoice->shipping_cost}} تومان</td>
 											</tr>
 											<tr class="txt-dark">
+												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>
 												<td>تخفیف سفارش</td>
-												<td>50 تومان</td>
+												<td>{{$invoice->offer}}  تومان</td>
 											</tr>
 											<tr class="txt-dark">
 												<td></td>
 												<td></td>
 												<td></td>
+												<td></td>
 												<td>جمع کلی</td>
-												<td>635.99 تومان</td>
+												<td>{{$invoice->total + $invoice->shipping_cost}}  تومان</td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
-								<div class="button-list pull-right">
-									<a class="btn btn-danger mr-10">مستردد شده</a>
-									<a class="btn btn-orange mr-10">در حال بررسی</a>
-									<a class="btn btn-warning mr-10">در حال بسته بندی</a>
-									<a class="btn btn-primary mr-10">در حال ارسال</a>
-									<a class="btn btn-success mr-10">ارسال شده</a>
+								
+								<div class="row">
+									<div class="button-list pull-right status-buttons d-flex justify-content-center">
+										<button status="0" class="p-2 btn btn-info @if($invoice->status!=0) btn-outline fancy-button @endif btn-0 mr-10">پرداخت نشده</button>
+										<button status="1" class="p-2 btn btn-warning @if($invoice->status!=1) btn-outline fancy-button @endif btn-0 mr-10 mr-10">در انتظار پرداخت</button>
+										<button status="2" class="p-2 btn btn-dark @if($invoice->status!=2) btn-outline fancy-button @endif btn-0 mr-10 mr-10">پرداخت شده</button>
+										<button status="3" class="p-2 btn btn-orange @if($invoice->status!=3) btn-outline fancy-button @endif btn-0 mr-10 mr-10">در حال بررسی</button>
+										<button status="4" class="p-2 btn btn-warning @if($invoice->status!=4) btn-outline fancy-button @endif btn-0 mr-10 mr-10">در حال بسته بندی</button>
+										<button status="5" class="p-2 btn btn-primary @if($invoice->status!=5) btn-outline fancy-button @endif btn-0 mr-10 mr-10">در حال ارسال</button>
+										<button status="6" class="p-2 btn btn-success @if($invoice->status!=6) btn-outline fancy-button @endif btn-0 mr-10 mr-10">ارسال شده</button>
+										<button status="7" class="p-2 btn btn-danger @if($invoice->status!=7) btn-outline fancy-button @endif btn-0 mr-10 mr-10">لغو شده</button>
+									</div>
 								</div>
-
-								<div class="button-list pull-left">
-									<button type="button" class="btn btn-default btn-outline btn-icon left-icon" onclick="javascript:window.print();"> 
-										<i class="fa fa-print"></i><span> چاپ</span> 
-									</button>
-									<span class="btn btn-primary mr-10">وضعیت : در حال ارسال</span>
-								</div>
-								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- /Row -->
 
-		<div class="row" dir="ltr">
-			<div class="col-lg-12">
-				<div class="panel panel-default card-view">
-					<div class="panel-body">
-						<ul class="timeline">
-							<li>
-								<div class="timeline-badge bg-grad-primary">
-									<i class="icon-layers" ></i>
-								</div>
-								<div class="timeline-panel pa-15" dir="rtl">
-									<div class="timeline-heading">
-										<h6 class="mb-5">1 september 15</h6>
-									</div>
-									<div class="timeline-body">
-										<h4 class="mb-5">pogody</h4>
-										<p class="lead head-font mb-10">Responsive html5 template</p>
-										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
-									</div>
-								</div>
-							</li>
-							
-							<li class="timeline-inverted">
-								<div class="timeline-badge bg-grad-success">
-									<i class="icon-magnifier-add" ></i>
-								</div>
-								<div class="timeline-panel pa-15">
-									<div class="timeline-heading">
-										<h6 class="mb-5">23 March 16</h6>
-									</div>
-									<div class="timeline-body">
-										<h4 class=" mb-5">Beavis</h4>
-										<p class="lead  mb-20">HTML5 Coming Soon Template</p>
-										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
-									</div>
-								</div>
-							</li>
-							
-							<li>
-								<div class="timeline-badge bg-grad-warning">
-									<i class="icon-briefcase" ></i>
-								</div>
-								<div class="timeline-panel pa-15">
-									<div class="timeline-heading">
-										<h6 class="mb-5">23 March 16</h6>
-									</div>
-									<div class="timeline-body">
-										<h4 class=" mb-5">Felix</h4>
-										<p class="lead  mb-20">Personal Blogging PSD Template</p>
-										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
-									</div>
-								</div>
-							</li>
-							
-							<li class="timeline-inverted">
-								<div class="timeline-badge bg-grad-info">
-									<i class="icon-social-stumbleupon" ></i>
-								</div>
-								<div class="timeline-panel pa-15">
-									<div class="timeline-heading">
-										<h6 class="mb-5">11 August 16</h6>
-									</div>
-									<div class="timeline-body">
-										<h4 class=" mb-5">Beryl</h4>
-										<p class="lead  mb-20">Responsive HTML5 Coming Soon</p>
-										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
-									</div>
-								</div>
-							</li>
-							
-							<li>
-								<div class="timeline-badge bg-grad-danger">
-									<i class="icon-flag" ></i>
-								</div>
-								<div class="timeline-panel pa-15">
-									<div class="timeline-heading">
-										<h6 class="mb-5">11 August 16</h6>
-									</div>
-									<div class="timeline-body">
-										<h4 class=" mb-5">Cinnabar</h4>
-										<p class="lead  mb-20">Multipurpose PSD Template</p>
-										<p>Invitamus me testatur sed quod non dum animae tuae lacrimis ut libertatem deum rogus aegritudinis causet. Dicens hoc contra serpentibus isto.</p>
-									</div>
-								</div>
-							</li>
-							
-							<li class="clearfix no-float"></li>
-						</ul>
-					</div>
-				</div>
-			</div>
 		</div>
 		<!-- /Row -->
-		
+			
 	</div>
 @endsection
 		
@@ -284,6 +305,8 @@
 		'dist/js/jquery.slimscroll.js',
 		// Fancy Dropdown JS
 		'dist/js/dropdown-bootstrap-extended.js',
+		// Sweet-Alert 
+		'vendors/bower_components/sweetalert/dist/sweetalert.min.js',
 		// Owl JavaScript
 		'vendors/bower_components/owl.carousel/dist/owl.carousel.min.js',
 		// Switchery JavaScript
@@ -295,4 +318,32 @@
 	@foreach ($scripts as $script)
 		<script src="{{ asset($script) }}"></script>
 	@endforeach
+
+	<script>
+		$('.status-buttons .fancy-button').on('click',function(){
+			var id = '{{$invoice->id}}';
+			var type = $(this).text();
+			var status = $(this).attr('status');
+
+			swal({   
+				title: "مطمین هستید ؟",   
+				text: "برای تغییر وضعیت فاکتور به \"" + type + "\" مطمین هستید ؟",   
+				type: "warning",   
+				showCancelButton: true,   
+				confirmButtonColor: "#f83f37",   
+				confirmButtonText: "بله",   
+				cancelButtonText: "خیر",   
+				closeOnConfirm: false,   
+				closeOnCancel: false 
+			}, function(isConfirm){   
+				if (isConfirm) {
+					window.location = '/panel/invoice/' + id + '/status/' + status; 
+				} else {     
+					swal("لغو شد", "وضعیت فاکتور تغییری نکرد", "error");   
+				} 
+			});
+			return false;
+		});
+	</script>
+
 @endsection		

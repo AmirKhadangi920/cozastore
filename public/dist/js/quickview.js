@@ -36,9 +36,9 @@ function quickview (id) {
             gallery += '<div class="slick3 gallery-lb">';
 									
             for (var i = 0; i < photos.length; ++i) {
-                gallery += '<div class="item-slick3" data-thumb="uploads/' + photos[i] + '">';
+                gallery += '<div class="item-slick3" data-thumb="/uploads/' + photos[i] + '">';
                 gallery += '<div class="wrap-pic-w pos-relative">';
-                gallery += '<img src="uploads/' + photos[i] + '" alt="IMG-PRODUCT">';
+                gallery += '<img src="/uploads/' + photos[i] + '" alt="IMG-PRODUCT">';
                 gallery += '<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" ';
                 gallery += 'href="uploads/products/' + photos[i] + '">';
                 gallery += '<i class="fa fa-expand"></i></a></div></div>';

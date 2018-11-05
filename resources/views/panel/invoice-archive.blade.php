@@ -22,7 +22,6 @@
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					<li class="active">لیست سفارشات</li>
-					<li>صفحات خاص</li>
 					<li>داشبورد</li>
 				</ol>
 			</div>
@@ -38,7 +37,7 @@
 			<div class="col-sm-12">
 				<div class="panel panel-default border-panel card-view">
 					<div class="panel-heading">
-						<div class="pull-left">
+						<div class="pull-right">
 							<h6 class="panel-title txt-dark">سفارشات</h6>
 						</div>
 						<div class="clearfix"></div>
@@ -62,151 +61,37 @@
 										</thead>
 
 										<tbody>
+											@foreach ($orders as $order)
 											<tr>
-												<td>#5012</td>
-												<td>احمد حسینی</td>
-												<td>لورم ایپسوم متن ساختگی با تولید</td>
-												<td>205,500 </td>
+												<td>#{{$order->id}}</td>
+												<td>{{$order->first_name.' '.$order->last_name}}</td>
+												<td>{{$order->admin_description}}</td>
+												<td>{{$order->total}}</td>
 												<td>
-													<span class="label label-danger">پرداخت نشده</span>
+													<?php
+													switch ($order->status) {
+														case 0: $status = ['پرداخت نشده', 'info']; break;
+														case 1: $status = ['در انتظار پرداخت', 'warning']; break; 
+														case 2: $status = ['پرداخت شده', 'dark']; break;
+														case 3: $status = ['در حال بررسی', 'orange']; break;
+														case 4: $status = ['در حال بسته بندی', 'warning']; break;
+														case 5: $status = ['در حال ارسال', 'primary']; break;
+														case 6: $status = ['ارسال شده', 'success']; break;
+														case 7: $status = ['لغو شده', 'danger']; break;
+														default: $status = ['پرداخت نشده', 'info'];
+													}
+													?>
+													<span class="label label-{{$status[1]}}">{{$status[0]}}</span>
 												</td>
-												<td>2011/04/25</td>
-												<td>-</td>
+												<td>{{$order->created_at}}</td>
+												<td>{{$order->payment}}</td>
 												<td>
-													<a href="/panel/invoice/23">
+													<a href="/panel/invoice/{{$order->id}}">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>
 													</a>	
 												</td>
 											</tr>
-											<tr>
-												<td>#5013</td>
-												<td>علی کمالی</td>
-												<td>سادگی نامفهوم از صنعت </td>
-												<td>205,500</td>
-												<td>
-													<span class="label label-success">پرداخت شده</span>
-												</td>
-												<td>2011/07/25</td>
-												<td>2012/12/02</td>
-												<td>
-													<a href="/panel/invoice/23">
-														<i class="fa fa-file-text-o" aria-hidden="true"></i>
-													</a>	
-												</td>
-											</tr>
-											<tr>
-												<td>#5014</td>
-												<td>حسین موسوی</td>
-												<td>چاپ و با استفاده از طراحان گرافیک است</td>
-												<td>205,500</td>
-												<td>
-													<span class="label label-warning">در انتظار</span>
-												</td>
-												<td>2009/01/12</td>
-												<td>2012/12/02</td>
-												<td>
-													<a href="/panel/invoice/23">
-														<i class="fa fa-file-text-o" aria-hidden="true"></i>
-													</a>	
-												</td>
-											</tr>
-											<tr>
-												<td>#5015</td>
-												<td>اکبر یزدی</td>
-												<td>چاپگرها و متون بلکه روزنامه و مجله در ستون</td>
-												<td>205,500 </td>
-												<td>
-													<span class="label label-success">پرداخت شده</span>
-												</td>
-												<td>2012/03/29</td>
-												<td>2012/12/02</td>
-												<td>
-													<a href="/panel/invoice/23">
-														<i class="fa fa-file-text-o" aria-hidden="true"></i>
-													</a>	
-												</td>
-											</tr>
-											<tr>
-												<td>#5016</td>
-												<td>رضا اولیا</td>
-												<td>تکنولوژی مورد نیاز و کاربردهای </td>
-												<td>205,500</td>
-												<td>
-													<span class="label label-success">پرداخت شده</span>
-												</td>
-												<td>2008/11/28</td>
-												<td>2012/12/02</td>
-												<td>
-													<a href="/panel/invoice/23">
-														<i class="fa fa-file-text-o" aria-hidden="true"></i>
-													</a>	
-												</td>
-											</tr>
-											<tr>
-												<td>#5017</td>
-												<td>فاطمه مددی</td>
-												<td>آینده شناخت فراوان جامعه و متخصصان </td>
-												<td>205,500</td>
-												<td>
-													<span class="label label-success">پرداخت شده</span>
-												</td>
-												<td>2012/12/02</td>
-												<td>2016/12/02</td>
-												<td>
-													<a href="/panel/invoice/23">
-														<i class="fa fa-file-text-o" aria-hidden="true"></i>
-													</a>	
-												</td>
-											</tr>
-											<tr>
-												<td>#5017</td>
-												<td>حسن ایرانی</td>
-												<td>طراحان خلاقی و فرهنگ </td>
-												<td>205,500</td>
-												<td>
-													<span class="label label-success">پرداخت شده</span>
-												</td>
-												<td>2012/08/06</td>
-												<td>2013/09/15</td>
-												<td>
-													<a href="/panel/invoice/23">
-														<i class="fa fa-file-text-o" aria-hidden="true"></i>
-													</a>	
-												</td>
-											</tr>
-											<tr>
-												<td>#5010</td>
-												<td>ستاره ملکی</td>
-												<td>تکنولوژی مورد نیاز و کاربردهای</td>
-												<td>205,500</td>
-												<td>
-													<span class="label label-success">پرداخت شده</span>
-												</td>
-												<td>2010/10/14</td>
-												<td>2014/09/15</td>
-												<td>
-													<a href="/panel/invoice/23">
-														<i class="fa fa-file-text-o" aria-hidden="true"></i>
-													</a>	
-												</td>
-											</tr>
-											<tr>
-												<td>#5011</td>
-												<td>رضا نجفی</td>
-												<td>ارائه راهکارها و شرایط سخت </td>
-												<td>205,500</td>
-												<td>
-													<span class="label label-success">پرداخت شده</span>
-												</td>
-												<td>2009/09/15</td>
-												<td>2013/09/15</td>
-												<td>
-													<a href="/panel/invoice/23">
-														<i class="fa fa-file-text-o" aria-hidden="true"></i>
-													</a>	
-												</td>
-											</tr>
-
+											@endforeach
 										</tbody>
 									</table>
 								</div>
@@ -217,7 +102,6 @@
 			</div>
 		</div>
 		<!-- /Row -->
-
 	</div>
 @endsection		
 		
@@ -227,9 +111,6 @@
 		'vendors/bower_components/jquery/dist/jquery.min.js',
 		// Bootstrap Core JavaScript
 		'vendors/bower_components/bootstrap/dist/js/bootstrap.min.js',
-		// Data table JavaScript
-		'vendors/bower_components/datatables/media/js/jquery.dataTables.min.js',
-		'dist/js/dataTables-data.js',
 		// Slimscroll JavaScript
 		'dist/js/jquery.slimscroll.js',
 		// Owl JavaScript

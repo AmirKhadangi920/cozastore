@@ -10,4 +10,11 @@ class PanelController extends Controller
     {
         return view('panel.index');
     }
+
+    public function setting ()
+    {
+        return view('panel.setting', [
+            'page_name' => 'setting',
+        ]);
+    }
 }

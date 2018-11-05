@@ -201,7 +201,10 @@
             <a @if($page_name == 'gallery') class="active" @endif href="/panel/gallery"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text">گالری</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'setting') class="active" @endif href="/panel/gallery"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text">تنظیمات</span></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'setting') class="active" @endif href="/panel/setting"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text">تنظیمات</span></div><div class="clearfix"></div></a>
+        </li>
+        <li>
+            <a href="/"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text">فروشگاه</span></div><div class="clearfix"></div></a>
         </li>
         <li class="navigation-header mt-20">
             <span>featured</span> 

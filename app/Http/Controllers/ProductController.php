@@ -52,6 +52,16 @@ class ProductController extends Controller
         // Insert product details to database
         $product = new Product();
         $product->pro_id = $pro_id;
+        if ($req -> parent) {
+            $temp = Group::select('parent')->where('id', $req->parent)->get();
+            while (!empty($temp[0])) {
+                $temp = Group::select('parent')->where('id', $temp[0]->parent)->get();
+                if (isset($temp[0]) && $temp[0]->parent !== null) {
+                    $parent_category = $temp[0]->parent;
+                }
+            }   
+            $product->parent_category = $parent_category; 
+        }
         $product->category = $req -> parent;
         $product->name = $req -> name;
         $product->code = $req -> code;
@@ -123,7 +133,6 @@ class ProductController extends Controller
 
         // Insert product details to database
         $product = Product::find($req -> id);
-        $product->pro_id = $req -> id;
         if ($req -> parent) {
             $temp = Group::select('parent')->where('id', $req->parent)->get();
             while (!empty($temp[0])) {
@@ -132,8 +141,8 @@ class ProductController extends Controller
                     $parent_category = $temp[0]->parent;
                 }
             }   
+            $product->parent_category = $parent_category; 
         }
-        $product->parent_category = $parent_category; 
         $product->category = $req -> parent;
         $product->name = $req -> name;
         $product->code = $req -> code;

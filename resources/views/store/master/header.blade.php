@@ -21,6 +21,9 @@
                             <a class="nav-link" href="{{ route('register') }}"><i class="fa fa-edit m-l-5"></i>{{ __('ثبت نام') }}</a>
                         @endif
                     @else
+                        @if (\Auth::user()->type == 1)
+                        <a class="nav-link" href="/panel"><i class="fa fa-bars m-l-5" aria-hidden="true"></i>پنل مدیریت</a>
+                        @endif
                         <a class="nav-link" href="/cart"><i class="fa fa-shopping-cart m-l-5"></i>سبد خرید</a>
 
                         <a class="nav-link" href="{{ route('logout') }}"
