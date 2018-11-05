@@ -467,7 +467,7 @@
 									<div class="form-actions">
 										<button type="button" class="btn btn-primary pull-right create-new-feautre"> <i class="fa fa-plus"></i> <span>افزودن ویژگی جدید</span></button>
 										<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
-										<button type="button" class="btn btn-default pull-left">لغو</button>
+										<a href="/panel/products" class="btn btn-default pull-left">لغو</a>
 										<div class="clearfix"></div>
 									</div>
 									@isset($edit)

@@ -89,8 +89,25 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="panel-body">
+						@foreach ($errors -> all() as $message)
+							<div class="alert alert-danger alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								{{ $message }} 
+							</div>
+						@endforeach
+		
+						@if(session()->has('message'))
+							<div class="alert alert-success alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								{{ session()->get('message') }}
+							</div>
+						@endif
+					</div>
 				</div>
 			</div>
+
 		</div>
 		<!-- Group Row -->
 
@@ -114,7 +131,7 @@
 									<div class="photo">
 										<div class="options">
 											<a href="/panel/products/edit/{{$product->pro_id}}" class="font-18 txt-grey mr-10 pull-left"><i class="zmdi zmdi-edit"></i></a>
-											<a href="javascript:void(0);" class="font-18 txt-grey pull-left sa-warning"><i class="zmdi zmdi-close"></i></a>
+											<span product="{{$product->pro_id}}" class="font-18 txt-grey pull-left delete-product"><i class="zmdi zmdi-close"></i></span>
 										</div>
 										
 										<a href="javascript:void(0);">
@@ -186,4 +203,30 @@
 	@foreach ($scripts as $script)
 		<script src="{{ asset($script) }}"></script>
 	@endforeach
+
+	<script>
+		$('.delete-product').on('click',function(){
+			var title = $(this).parent().parent().next().find('h5').text();
+			var id = $(this).attr('product');
+
+			swal({   
+				title: "مطمین هستید ؟",   
+				text: "برای پاک کردن محصول " + title + " مطمین هستید ؟",   
+				type: "warning",   
+				showCancelButton: true,   
+				confirmButtonColor: "#f83f37",   
+				confirmButtonText: "بله",   
+				cancelButtonText: "خیر",   
+				closeOnConfirm: false,   
+				closeOnCancel: false 
+			}, function(isConfirm){   
+				if (isConfirm) {
+					window.location =  '/panel/products/delete/' + id + '/' + title; 
+				} else {     
+					swal("لغو شد", "هیچ محصولی حذف نشد :)", "error");   
+				} 
+			});
+			return false;
+		});
+	</script>
 @endsection

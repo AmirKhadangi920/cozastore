@@ -218,6 +218,12 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'محصول '.$req->name.' با موفقیت بروزرسانی شد .');
     }
 
+    public function delete ($id, $title)
+    {
+        Product::destroy($id);
+        return redirect()->back()->with('message', 'محصول '.$title.' با موفقیت حذف شد .');
+    }
+
     public function search ($query)
     {
         $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
