@@ -192,7 +192,7 @@
 .icon-social-stumbleupon,
 .icon-social-youtube,
 .icon-social-dropbox {
-  font-family: 'simple-line-icons';
+  font-family: 'simple-line-icons' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;

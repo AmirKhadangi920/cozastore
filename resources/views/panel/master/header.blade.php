@@ -162,49 +162,41 @@
 <div class="fixed-sidebar-left">
     <ul class="nav navbar-nav side-nav nicescroll-bar">
         <li>
-            <a @if($page_name == 'main') class="active" @endif href="/panel"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text">داشبورد</span></div><div class="clearfix"></div></a>
-        </li>
-        <li class="navigation-header">
-            <span>اصلی</span> 
-            <hr/>
+            <a @if($page_name == 'main') class="active" @endif href="/panel"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-bars ml-5" aria-hidden="true"></i>داشبورد</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'group' || $page_name == 'feature') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><i class="ti-shopping-cart  mr-20"></i><span class="right-nav-text">فروشگاه</span></div><div class="pull-right"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'group' || $page_name == 'feature') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><i class="ti-shopping-cart  mr-20"></i><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-right"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="ecom_dr" class="collapse collapse-level-1">
                 <li>
-                    <a @if($page_name == 'group') class="active-page" @endif href="/panel/group">گروه بندی محصولات</a>
+                    <a @if($page_name == 'group') class="active-page" @endif href="/panel/group"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گروه بندی محصولات</a>
                 </li>
                 <li>
-                    <a @if($page_name == 'feature') class="active-page" @endif href="/panel/feature">مدیریت ویژگی ها</a>
+                    <a @if($page_name == 'feature') class="active-page" @endif href="/panel/feature"><i class="fa fa-object-group ml-5" aria-hidden="true"></i>مدیریت ویژگی ها</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a @if($page_name == 'add_product' || $page_name == 'products') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#gp_dr"><div class="pull-left"><i class="ti-shopping-cart  mr-20"></i><span class="right-nav-text">محصولات</span></div><div class="pull-right"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'add_product' || $page_name == 'products') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#gp_dr"><div class="pull-left"><i class="ti-shopping-cart  mr-20"></i><span class="right-nav-text"><i class="fa fa-cart-arrow-down ml-5" aria-hidden="true"></i>محصولات</span></div><div class="pull-right"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="gp_dr" class="collapse collapse-level-1">
                 <li>
-                    <a @if($page_name == 'add_product') class="active-page" @endif href="/panel/products/add">افزودن محصول</a>
+                    <a @if($page_name == 'add_product') class="active-page" @endif href="/panel/products/add"><i class="fa fa-cart-plus ml-5" aria-hidden="true"></i>افزودن محصول</a>
                 </li>
                 <li>
-                    <a @if($page_name == 'products') class="active-page" @endif href="/panel/products">لیست محصولات</a>
+                    <a @if($page_name == 'products') class="active-page" @endif href="/panel/products"><i class="fa fa-shopping-cart ml-5" aria-hidden="true"></i>لیست محصولات</a>
                 </li>
             </ul>
         </li>
-        <li class="navigation-header mt-20">
-            <span>اجزاء</span> 
-            <hr/>
+        <li>
+            <a @if($page_name == 'invoices') class="active" @endif href="/panel/invoices"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-files-o ml-5" aria-hidden="true"></i>سفارشات</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'invoices') class="active" @endif href="/panel/invoices"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text">سفارشات</span></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'gallery') class="active" @endif href="/panel/gallery"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-picture-o ml-5" aria-hidden="true"></i>گالری</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'gallery') class="active" @endif href="/panel/gallery"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text">گالری</span></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'setting') class="active" @endif href="/panel/setting"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-sliders ml-5" aria-hidden="true"></i>تنظیمات</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'setting') class="active" @endif href="/panel/setting"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text">تنظیمات</span></div><div class="clearfix"></div></a>
-        </li>
-        <li>
-            <a href="/"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text">فروشگاه</span></div><div class="clearfix"></div></a>
+            <a href="/"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-eye ml-5" aria-hidden="true"></i>مشاهده وبسایت</span></div><div class="clearfix"></div></a>
         </li>
         <li class="navigation-header mt-20">
             <span>featured</span> 

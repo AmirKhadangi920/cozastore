@@ -10,7 +10,7 @@
 }
 
 [class^="pe-7s-"], [class*=" pe-7s-"] {
-	font-family: 'Pe-icon-7-stroke';
+	font-family: 'Pe-icon-7-stroke' !important;
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
