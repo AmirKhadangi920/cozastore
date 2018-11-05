@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Cookie;
 use App\Group;
 use App\Feature;
+use App\Option;
 use App\Product;
 use App\ProductFeatures;
 use App\Review;
@@ -21,8 +22,21 @@ class ProductController extends Controller
         $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
             ->orderBy('created_at', 'DESC')->get();
 
-        return view('panel.products', compact('products'))->with('page_name', 'products')
-            ->with('page_title', 'محصولات');
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+
+        return view('panel.products', [
+            'products' => $products,
+            'page_name' => 'products',
+            'page_title' => 'محصولات',
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
+        ]);
     }
     
     public function add ()
@@ -36,12 +50,22 @@ class ProductController extends Controller
 
         $photos = Gallery::select('id', 'name', 'description', 'photo')->skip(0)->take(30)->get();
 
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+
         return view('panel.add-product', [
             'groups' => $groups,
             'features' => $features,
             'photos' => $photos,
             'page_name' => 'add_product',
-            'page_title' => 'ثبت محصول'
+            'page_title' => 'ثبت محصول',
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
         ]);
     }
 
@@ -118,6 +142,14 @@ class ProductController extends Controller
             $feature->subs = Feature::select('id', 'name')->where('title', $feature->id)->get();
         }
 
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+
         return view('panel.add-product', [
             'groups' => $groups,
             'features' => $features,
@@ -126,7 +158,9 @@ class ProductController extends Controller
             'product_features' => $product_feature,
             'edit' => true,
             'page_name' => 'products',
-            'page_title' => 'ویرایش محصول ' . $product[0]->name
+            'page_title' => 'ویرایش محصول ' . $product[0]->name,
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
         ]);
     }
 
@@ -189,208 +223,22 @@ class ProductController extends Controller
         $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
             ->orderBy('created_at', 'DESC')->where('name', 'like', '%'.$query.'%')->get();
 
-        return view('panel.products', compact('products'))->with('query', $query)->with('page_name', 'products')
-            ->with('page_title', 'جستجوی محصولات برای "' . $query . '"');
-    }
-
-    public function main ()
-    {
-        
-
-        $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
-                `offer`, `photo` FROM `products`
-                LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id`
-                WHERE `status` = 1 LIMIT 30;";
-
-        $products = DB::select($sql);
-
-        $cart_products = [];
-        $cart =  json_decode(Cookie::get('cart'), true);
-        if ($cart)
-        {
-            foreach ($cart as $key => $item)
-            {
-                $id[] = $item['id'];
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
             }
-            
-            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
-                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
         }
-        
-        return view('store.index  ', [
-            'products' => $products,
-            'dollar_cost' => 14540,
-            'cart_products' => $cart_products,
-            'page_name' => 'main'
+
+        return view('panel.products', [
+            'products', $products,
+            'query' => $query,
+            'page_name' => 'products',
+            'page_title' => 'جستجوی محصولات برای "' . $query . '"',
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
         ]);
-    }
-
-    public function store ($page = 1, $order = 'newest', $price = 'all', $color = 'all', $keyword = 'all', $query = null)
-    {
-        $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
-                `offer`, `photo` FROM `products`
-                LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id` ";
-     
-        $count_sql = "SELECT count(`pro_id`) as 'count' FROM `products` ";
-     
-        $sql .= " WHERE `status` = 1 ";
-        $count_sql .= " WHERE `status` = 1 ";
-        
-        if ($color && $color != 'all') { 
-            $sql .= "AND `colors` LIKE '%$color%' "; 
-            $count_sql .= "AND `colors` LIKE '%$color%' "; 
-        }
-
-        if ($query) {
-            $sql .= "AND `name` LIKE '%$query%' "; 
-            $count_sql .= "AND `name` LIKE '%$query%' "; 
-        }
-        
-        if ($keyword && $keyword != 'all') {
-            $sql .= "AND `keywords` LIKE '%$keyword%' ";
-            $count_sql .= "AND `keywords` LIKE '%$keyword%' ";
-        }
-
-        switch ($price) {
-            case '0to500':
-                $sql .= "AND `price` < 500000 ";
-                $count_sql .= "AND `price` < 500000 ";
-                break;
-            case '500to1000': 
-                $sql .= "AND `price` BETWEEN 500000 AND 1000000 ";
-                $count_sql .= "AND `price` BETWEEN 500000 AND 1000000 ";
-                break;
-            case '1000to2000': 
-                $sql .= "AND `price` BETWEEN 1000000 AND 2000000 ";
-                $count_sql .= "AND `price` BETWEEN 1000000 AND 2000000 ";
-                break;
-            case '2000toend': 
-                $sql .= "AND `price` > 2000000 ";
-                $count_sql .= "AND `price` > 2000000 ";
-                break;
-        }
-
-        switch ($order) {
-            case 'expensivest': $sql .= "ORDER BY `products`.`price` DESC"; break;
-
-            case 'cheapest': $sql .= "ORDER BY `products`.`price` ASC"; break;
-
-            case 'newest': $sql .= "ORDER BY `products`.`created_at` DESC"; break;
-
-            case 'oldest': $sql .= "ORDER BY `products`.`created_at` ASC"; break;
-
-            default: $sql .= "ORDER BY `products`.`created_at` DESC";
-        }
-
-        $sql .= ' LIMIT 10 OFFSET ' . ($page - 1) * 10 . ';';
-
-        $product_count = DB::SELECT($count_sql);
-
-        $products = DB::select($sql);
-
-        $cart_products = [];
-        $cart =  json_decode(Cookie::get('cart'), true);
-        if ($cart)
-        {
-            foreach ($cart as $key => $item)
-            {
-                $id[] = $item['id'];
-            }
-            
-            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
-                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
-        }
-        
-        return view('store.product  ', [
-            'products' => $products,
-            'dollar_cost' => 14540,
-            'product_count' => $product_count[0]->count,
-            'page' => $page,
-            'cart_products' => $cart_products,
-            'page_name'=> 'products',
-            'page_title'=> 'محصولات',
-            'filter' => [
-                'color' => $color,
-                'order' => $order,
-                'price' => $price,
-                'keyword' => $keyword,
-                'query' => $query
-            ]
-        ]);
-    }
-    
-    public function store_product ($id)
-    {
-        $product = DB::select("SELECT `pro_id`, `code`, `category`, `categories`.`title`, `products`.`name`,
-            `short_description`, `aparat_video`, `price`, `unit`, `offer`, `colors`,
-            `full_description`, `keywords`, `gallery`, `advantages`, `disadvantages` 
-            FROM `products`
-            LEFT JOIN `categories` ON `products`.`category` = `categories`.`id`
-            WHERE `pro_id` = ? AND `status`=1", [$id]);
-
-        $product_feature = DB::select("SELECT `title_table`.`name` as 'title', `features`.`name`, `value`
-            FROM `product_features`
-            INNER JOIN `features` ON `product_features`.`feature` = `features`.`id`
-            INNER JOIN `features` AS `title_table` ON `features`.`title` = `title_table`.`id`
-            WHERE `product` = ? ORDER BY `title` ASC", [$id]);
-
-        $reviews = Review::select('fullname', 'email', 'avatar', 'rating', 'review')->where('product', $id)->get();
-
-        $breadcrumb = $this -> breadcrumb($product[0]->category);
-        $index = count($breadcrumb);
-        if (empty($breadcrumb[0])) { $index = 0; }
-        $breadcrumb[$index] = [(object) [
-            'parent' => null,
-            'id' => $product[0] -> category,
-            'title' => $product[0] -> title,
-        ]];
-
-        $cart_products = [];
-        $cart =  json_decode(Cookie::get('cart'), true);
-        if ($cart)
-        {
-            $id = [];
-            foreach ($cart as $key => $item)
-            {
-                $id[] = $item['id'];
-            }
-            
-            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
-                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
-        }
-
-        return view('store.product-detail', [
-            'product' => $product[0],
-            'product_features' => $product_feature,
-            'breadcrumb' => $breadcrumb,
-            'reviews' => $reviews,
-            'cart_products' => $cart_products,
-            'page_name'=> 'products',
-            'dollar_cost' => 14540,
-            'page_title' => $product[0]->name
-        ]);
-    }
-
-    public function add_review (AddReview $req)
-    {
-        $review = new Review();
-        $review->product = $req -> product;
-        $review->fullname = $req -> fullname;
-        $review->email = $req -> email;
-        $review->rating = $req -> rating;
-        $review->review = $req -> review;
-
-        $review -> save();
-
-        return redirect()->back()->with('message', 'نظر شما با موفقیت ثبت شد .');
-    }
-
-    public function quickview ($id)
-    {
-        $data = Product::select('name', 'short_description', 'aparat_video', 'price', 'unit',
-            'offer', 'colors', 'gallery')->where('pro_id', $id)->get();
-
-        return json_encode($data[0]);
     }
 
     public function breadcrumb ($id)

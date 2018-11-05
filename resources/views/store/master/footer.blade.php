@@ -71,22 +71,32 @@
                     با کسب و کار ما آشنا شوید
                 </h4>
 
-                <p class="stext-107 cl7 size-201">
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. 
-                </p>
+                <p class="stext-107 cl7 size-201">{{$site_description}}</p>
 
                 <div class="p-t-27">
-                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                    @if ($social_link['facebook'])
+                    <a href="{{$social_link['facebook']}}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                         <i class="fa fa-facebook"></i>
                     </a>
-
-                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                    @endif
+                    
+                    @if ($social_link['instagram'])
+                    <a href="{{$social_link['instagram']}}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                         <i class="fa fa-instagram"></i>
                     </a>
-
-                    <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
-                        <i class="fa fa-pinterest-p"></i>
+                    @endif
+                    
+                    @if ($social_link['twitter'])
+                    <a href="{{$social_link['twitter']}}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                        <i class="fa fa-twitter"></i>
                     </a>
+                    @endif
+                    
+                    @if ($social_link['telegram'])
+                    <a href="{{$social_link['telegram']}}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                        <i class="fa fa-telegram"></i>
+                    </a>
+                    @endif
                 </div>
             </div>
 
@@ -110,29 +120,7 @@
             </div>
         </div>
 
-        <div class="p-t-40">
-            <div class="flex-c-m flex-w p-b-18">
-                <a href="#" class="m-all-1">
-                    <img src="{{ asset('images/icons/icon-pay-01.png') }}" alt="ICON-PAY">
-                </a>
-
-                <a href="#" class="m-all-1">
-                    <img src="{{ asset('images/icons/icon-pay-02.png') }}" alt="ICON-PAY">
-                </a>
-
-                <a href="#" class="m-all-1">
-                    <img src="{{ asset('images/icons/icon-pay-03.png') }}" alt="ICON-PAY">
-                </a>
-
-                <a href="#" class="m-all-1">
-                    <img src="{{ asset('images/icons/icon-pay-04.png') }}" alt="ICON-PAY">
-                </a>
-
-                <a href="#" class="m-all-1">
-                    <img src="{{ asset('images/icons/icon-pay-05.png') }}" alt="ICON-PAY">
-                </a>
-            </div>
-
+        <div class="p-t-0">
             <p class="stext-107 cl6 txt-center">
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> تمام حقوق این قالب محفوظ است | ترجمه شده <i class="fa fa-heart-o" aria-hidden="true"></i> توسط <a href="https://colorlib.com" target="_blank">SmaT Teamwork</a>

@@ -56,6 +56,9 @@
     .vertical-pills .tab-content {
 		padding-right: 15px;
 	}
+	.fa {
+		color: #737373;
+	}
     </style>
 @endsection
 
@@ -110,36 +113,37 @@
 												<li role="presentation"><a aria-expanded="false" data-toggle="tab" role="tab" href="#slide3">اسلاید 3</a></li>
 											</ul>
 											<div class="tab-content" id="myTabContent_10">
-												<div id="slide1" class="tab-pane fade active in row" role="tabpanel">
+												@for ($i = 0; $i < count($slider); $i++)
+												<div id="slide{{$i + 1}}" class="tab-pane fade @if($i == 0) active @endif in row" role="tabpanel">
 													<div class="col-md-8">
 														<div class="form-wrap">
 															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputuname_2">عنوان اسلاید 1</label>
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان اسلاید {{$i + 1}}</label>
 																<div class="input-group">
-																	<input type="text" value="{{old('slides[0][title]')}}" name="slides[0][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
-																	<div class="input-group-addon"><i class="icon-picture"></i></div>
+																	<input type="text" value="{{$slider[$i]['title']}}" name="slides[{{$i}}][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
+																	<div class="input-group-addon"><i class="fa fa-header" aria-hidden="true"></i></div>
 																</div>
 															</div>
 															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح اسلاید 1</label>
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح اسلاید {{$i + 1}}</label>
 																<div class="input-group">
-																	<input type="text" value="{{old('slides[0][description]')}}" name="slides[0][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																	<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	<input type="text" value="{{$slider[$i]['description']}}" name="slides[{{$i}}][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																	<div class="input-group-addon"><i class="fa fa-align-right" aria-hidden="true"></i></div>
 																</div>
 															</div>
 															<div class="row">
 																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید 1</label>
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید {{$i + 1}}</label>
 																	<div class="input-group">
-																		<input type="text" value="{{old('slides[0][button]')}}" name="slides[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																		<input type="text" dir="ltr" value="{{$slider[$i]['link']}}" name="slides[{{$i}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<div class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i></div>
 																	</div>
 																</div>
 																<div class="col-md-4">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید 1</label>
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید {{$i + 1}}</label>
 																	<div class="input-group">
-																		<input type="text" value="{{old('slides[0][link]')}}" name="slides[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																		<input type="text" value="{{$slider[$i]['button']}}" name="slides[{{$i}}][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<div class="input-group-addon"><i class="fa fa-square-o" aria-hidden="true"></i></div>
 																	</div>
 																</div>
 															</div>
@@ -147,100 +151,13 @@
 													</div>
 													
 													<div class="col-md-4">
-														<label class="control-label mb-10">تصویر اسلاید 1</label>
+														<label class="control-label mb-10">تصویر اسلاید {{$i + 1}}</label>
 														<div class="mt-10 mb-10">
-															<input type="file" @isset($edit) data-default-file="/uploads/{{$selected->photo}}" disabled @endisset name="slides[1][photo]" id="input-file-now" class="dropify" />
+															<input type="file" data-default-file="/slider/{{$slider[$i]['photo']}}" name="slides[{{$i}}][photo]" id="input-file-now" class="dropify" />
 														</div>	
 													</div>
 												</div>
-
-												<div id="slide2" class="tab-pane fade in row" role="tabpanel">
-													<div class="col-md-8">
-														<div class="form-wrap">
-															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputuname_2">عنوان اسلاید 2</label>
-																<div class="input-group">
-																	<input type="text" value="{{old('slides[1][title]')}}" name="slides[1][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
-																	<div class="input-group-addon"><i class="icon-picture"></i></div>
-																</div>
-															</div>
-															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح اسلاید 2</label>
-																<div class="input-group">
-																	<input type="text" value="{{old('slides[1][description]')}}" name="slides[1][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																	<div class="input-group-addon"><i class="icon-speech"></i></div>
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید 2</label>
-																	<div class="input-group">
-																		<input type="text" value="{{old('slides[1][button]')}}" name="slides[1][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید 2</label>
-																	<div class="input-group">
-																		<input type="text" value="{{old('slides[1][link]')}}" name="slides[1][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													
-													<div class="col-md-4">
-														<label class="control-label mb-10">تصویر اسلاید 2</label>
-														<div class="mt-10 mb-10">
-															<input type="file" @isset($edit) data-default-file="/uploads/{{$selected->photo}}" disabled @endisset name="slides[1][link]" id="input-file-now" class="dropify" />
-														</div>	
-													</div>
-												</div>
-
-												<div id="slide3" class="tab-pane fade in row" role="tabpanel">
-													<div class="col-md-8">
-														<div class="form-wrap">
-															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputuname_2">عنوان اسلاید 3</label>
-																<div class="input-group">
-																	<input type="text" value="{{old('slides[2][title]')}}" name="slides[2][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
-																	<div class="input-group-addon"><i class="icon-picture"></i></div>
-																</div>
-															</div>
-															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح اسلاید 3</label>
-																<div class="input-group">
-																	<input type="text" value="{{old('slides[2][description]')}}" name="slides[2][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																	<div class="input-group-addon"><i class="icon-speech"></i></div>
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید 3</label>
-																	<div class="input-group">
-																		<input type="text" value="{{old('slides[2][button]')}}" name="slides[2][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید 3</label>
-																	<div class="input-group">
-																		<input type="text" value="{{old('slides[2][link]')}}" name="slides[2][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													
-													<div class="col-md-4">
-														<label class="control-label mb-10">تصویر اسلاید 3</label>
-														<div class="mt-10 mb-10">
-															<input type="file" @isset($edit) data-default-file="/uploads/{{$selected->photo}}" disabled @endisset name="slides[2][photo]" id="input-file-now" class="dropify" />
-														</div>	
-													</div>
-												</div>
+												@endfor
 											</div>
 										</div>
 									</div>
@@ -267,36 +184,37 @@
 												<li role="presentation"><a aria-expanded="false" data-toggle="tab" role="tab" href="#poster3">پوستر 3</a></li>
 											</ul>
 											<div class="tab-content" id="myTabContent_10">
-												<div id="poster1" class="tab-pane fade active in row" role="tabpanel">
+												@for ($i = 0; $i < count($posters); $i++)
+												<div id="poster{{$i + 1}}" class="tab-pane fade @if($i == 0) active @endif in row" role="tabpanel">
 													<div class="col-md-8">
 														<div class="form-wrap">
 															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputuname_2">عنوان پوستر 1</label>
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان پوستر {{$i + 1}}</label>
 																<div class="input-group">
-																	<input type="text" value="{{old('posters[0][title]')}}" name="posters[0][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : تخفیف ویژه محصولات !">
-																	<div class="input-group-addon"><i class="icon-picture"></i></div>
+																	<input type="text" value="{{$posters[$i]['title']}}" name="posters[{{$i}}][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : تخفیف ویژه محصولات !">
+																	<div class="input-group-addon"><i class="fa fa-header" aria-hidden="true"></i></div>
 																</div>
 															</div>
 															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح پوستر 1</label>
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح پوستر {{$i + 1}}</label>
 																<div class="input-group">
-																	<input type="text" value="{{old('posters[0][description]')}}" name="posters[0][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه نیم خطی برای این پوستر">
-																	<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	<input type="text" value="{{$posters[$i]['description']}}" name="posters[{{$i}}][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه نیم خطی برای این پوستر">
+																	<div class="input-group-addon"><i class="fa fa-align-right" aria-hidden="true"></i></div>
 																</div>
 															</div>
 															<div class="row">
 																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر 1</label>
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر {{$i + 1}}</label>
 																	<div class="input-group">
-																		<input type="text" value="{{old('posters[0][link]')}}" name="posters[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																		<input type="text" dir="ltr" value="{{$posters[$i]['link']}}" name="posters[{{$i}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
+																		<div class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i></div>
 																	</div>
 																</div>
 																<div class="col-md-4">
-																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر 1</label>
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر {{$i + 1}}</label>
 																	<div class="input-group">
-																		<input type="text" value="{{old('posters[0][button]')}}" name="posters[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																		<input type="text" value="{{$posters[$i]['button']}}" name="posters[{{$i}}][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
+																		<div class="input-group-addon"><i class="fa fa-square-o" aria-hidden="true"></i></div>
 																	</div>
 																</div>
 															</div>
@@ -304,100 +222,13 @@
 													</div>
 													
 													<div class="col-md-4">
-														<label class="control-label mb-10">تصویر پوستر 1</label>
+														<label class="control-label mb-10">تصویر پوستر {{$i + 1}}</label>
 														<div class="mt-10 mb-10">
-															<input type="file" name="posters[1][photo]" id="input-file-now" class="dropify" />
+															<input type="file" data-default-file="/poster/{{$posters[$i]['photo']}}" name="posters[{{$i}}][photo]" id="input-file-now" class="dropify" />
 														</div>	
 													</div>
 												</div>
-
-												<div id="poster2" class="tab-pane fade in row" role="tabpanel">
-													<div class="col-md-8">
-														<div class="form-wrap">
-															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputuname_2">عنوان پوستر 2</label>
-																<div class="input-group">
-																	<input type="text" value="{{old('posters[1][title]')}}" name="posters[1][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : تخفیف ویژه محصولات !">
-																	<div class="input-group-addon"><i class="icon-picture"></i></div>
-																</div>
-															</div>
-															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح پوستر 2</label>
-																<div class="input-group">
-																	<input type="text" value="{{old('posters[1][description]')}}" name="posters[1][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه نیم خطی برای این پوستر">
-																	<div class="input-group-addon"><i class="icon-speech"></i></div>
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر 2</label>
-																	<div class="input-group">
-																		<input type="text" value="{{old('posters[1][link]')}}" name="posters[1][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر 2</label>
-																	<div class="input-group">
-																		<input type="text" value="{{old('posters[1][button]')}}" name="posters[1][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													
-													<div class="col-md-4">
-														<label class="control-label mb-10">تصویر پوستر 2</label>
-														<div class="mt-10 mb-10">
-															<input type="file" name="posters[1][photo]" id="input-file-now" class="dropify" />
-														</div>	
-													</div>
-												</div>
-
-												<div id="poster3" class="tab-pane fade in row" role="tabpanel">
-													<div class="col-md-8">
-														<div class="form-wrap">
-															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputuname_2">عنوان پوستر 3</label>
-																<div class="input-group">
-																	<input type="text" value="{{old('posters[2][title]')}}" name="posters[2][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : تخفیف ویژه محصولات !">
-																	<div class="input-group-addon"><i class="icon-picture"></i></div>
-																</div>
-															</div>
-															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح پوستر 3</label>
-																<div class="input-group">
-																	<input type="text" value="{{old('posters[2][description]')}}" name="posters[2][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه نیم خطی برای این پوستر">
-																	<div class="input-group-addon"><i class="icon-speech"></i></div>
-																</div>
-															</div>
-															<div class="row">
-																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر 3</label>
-																	<div class="input-group">
-																		<input type="text" value="{{old('posters[2][link]')}}" name="posters[2][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر 3</label>
-																	<div class="input-group">
-																		<input type="text" value="{{old('posters[2][button]')}}" name="posters[2][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
-																		<div class="input-group-addon"><i class="icon-speech"></i></div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													
-													<div class="col-md-4">
-														<label class="control-label mb-10">تصویر پوستر 3</label>
-														<div class="mt-10 mb-10">
-															<input type="file" name="posters[2][photo]" id="input-file-now" class="dropify" />
-														</div>	
-													</div>
-												</div>
+												@endfor
 											</div>
 										</div>
 									</div>
@@ -426,30 +257,30 @@
 														<div class="col-md-4">
 															<label class="control-label mb-10" for="exampleInputEmail_5">شماره تلفن</label>
 															<div class="input-group">
-																<input type="text" value="{{old('slides[0][link]')}}" name="slides[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="برای مثال : 09123456789">
-																<div class="input-group-addon"><i class="icon-speech"></i></div>
+																<input type="text" value="{{$shop_phone}}" name="phone" class="form-control" id="exampleInputEmail_5" placeholder="برای مثال : 09123456789">
+																<div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></div>
 															</div>
 														</div>
 														<div class="col-md-8">
 															<label class="control-label mb-10" for="exampleInputEmail_4">عنوان فروشگاه</label>
 															<div class="input-group">
-																<input type="text" value="{{old('slides[0][button]')}}" name="slides[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="نام فروشگاه شما">
-																<div class="input-group-addon"><i class="icon-speech"></i></div>
+																<input type="text" value="{{$site_name}}" name="site_name" class="form-control" id="exampleInputEmail_4" placeholder="نام فروشگاه شما">
+																<div class="input-group-addon"><i class="fa fa-header" aria-hidden="true"></i></div>
 															</div>
 														</div>
 													</div>
 													<div class="form-group">
 														<label class="control-label mb-10" for="exampleInputuname_2">درباره فروشگاه</label>
 														<div class="input-group">
-															<input type="text" value="{{old('slides[0][title]')}}" name="slides[0][title]" class="form-control" id="exampleInputuname_2" placeholder="یک توضیح یک خطی کوتاه درباره فروشگاه و کسب و کار شما">
-															<div class="input-group-addon"><i class="icon-picture"></i></div>
+															<input type="text" value="{{$site_description}}" name="description" class="form-control" id="exampleInputuname_2" placeholder="یک توضیح یک خطی کوتاه درباره فروشگاه و کسب و کار شما">
+															<div class="input-group-addon"><i class="fa fa-align-right" aria-hidden="true"></i></div>
 														</div>
 													</div>
 													<div class="form-group">
 														<label class="control-label mb-10" for="exampleInputEmail_2">آدرس فروشگاه شما</label>
 														<div class="input-group">
-															<input type="text" value="{{old('slides[0][description]')}}" name="slides[0][description]" class="form-control" id="exampleInputEmail_2" placeholder="آدرس فروشگاه شما که به مشتریان و کاربران نمایش داده میشود">
-															<div class="input-group-addon"><i class="icon-speech"></i></div>
+															<input type="text" value="{{$shop_address}}" name="address" class="form-control" id="exampleInputEmail_2" placeholder="آدرس فروشگاه شما که به مشتریان و کاربران نمایش داده میشود">
+															<div class="input-group-addon"><i class="fa fa-location-arrow" aria-hidden="true"></i></div>
 														</div>
 													</div>
 												</div>
@@ -458,7 +289,7 @@
 											<div class="col-md-3">
 												<label class="control-label mb-10">لوگوی فروشگاه</label>
 												<div class="mt-10 mb-10">
-													<input type="file" @isset($edit) data-default-file="/uploads/{{$selected->photo}}" disabled @endisset name="slides[1][photo]" id="input-file-now" class="dropify" />
+													<input type="file" data-default-file="/logo/{{$site_logo}}" name="logo" id="input-file-now" class="dropify" />
 												</div>	
 											</div>
 										</div>
@@ -484,14 +315,14 @@
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_5">اینستاگرام</label>
 													<div class="input-group">
-														<input type="text" value="{{old('slides[0][link]')}}" name="slides[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی اینستاگرام">
+														<input type="text" value="{{$social_link['instagram']}}" name="instagram" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی اینستاگرام">
 														<div class="input-group-addon"><i class="fa fa-instagram" aria-hidden="true"></i></div>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_4">تلگرام</label>
 													<div class="input-group">
-														<input type="text" value="{{old('slides[0][button]')}}" name="slides[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی تلگرام">
+														<input type="text" value="{{$social_link['telegram']}}" name="telegram" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی تلگرام">
 														<div class="input-group-addon"><i class="fa fa-telegram" aria-hidden="true"></i></div>
 													</div>
 												</div>
@@ -501,14 +332,14 @@
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_5">توییتر</label>
 													<div class="input-group">
-														<input type="text" value="{{old('slides[0][link]')}}" name="slides[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی توییتر">
+														<input type="text" value="{{$social_link['twitter']}}" name="twitter" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی توییتر">
 														<div class="input-group-addon"><i class="fa fa-twitter" aria-hidden="true"></i></div>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_4">فیسبوک</label>
 													<div class="input-group">
-														<input type="text" value="{{old('slides[0][button]')}}" name="slides[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی فیسبوک">
+														<input type="text" value="{{$social_link['facebook']}}" name="facebook" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی فیسبوک">
 														<div class="input-group-addon"><i class="fa fa-facebook" aria-hidden="true"></i></div>
 													</div>
 												</div>

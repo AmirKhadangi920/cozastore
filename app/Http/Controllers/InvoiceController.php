@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Order;
 use App\OrderProduct;
+use App\Option;
 
 class InvoiceController extends Controller
 {
@@ -15,10 +16,20 @@ class InvoiceController extends Controller
                 ((`shipping_cost` + `total`) - `offer`) as 'total', `status`, `orders`.`created_at`, `payment`
                 FROM `orders` INNER JOIN `users` ON `orders`.`buyer` = `users`.`id`");
 
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+
         return view('panel.invoice-archive', [
             'orders' => $orders,
             'page_name' => 'invoices',
-            'page_title' => 'سفارشات'
+            'page_title' => 'سفارشات',
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
         ]);
     }
 
@@ -37,12 +48,22 @@ class InvoiceController extends Controller
                 INNER JOIN `products` ON `order_products`.`product` = `products`.`pro_id`
                 WHERE `order_products`.`order` = ?', [$id]);
 
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+
         return view('panel.invoice-details', [
             'invoice' => $invoice[0],
             'order_products' => $order_products,
             'page_name' => 'invoices',
             'dollar_cost' => 14500,
-            'page_title' => 'فاکتور #' . $invoice[0] -> id
+            'page_title' => 'فاکتور #' . $invoice[0] -> id,
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
         ]);
     }
 

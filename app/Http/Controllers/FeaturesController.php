@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateFeature;
 use App\Feature;
+use App\Option;
 
 class FeaturesController extends Controller
 {
@@ -16,8 +17,21 @@ class FeaturesController extends Controller
             $feature->subs = Feature::select('id', 'name')->where('title', $feature->id)->get();
         }
 
-        return view('panel.features', compact('features'))->with('page_name', 'feature')
-            ->with('page_title', 'مدیریت ویژگی ها');
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+            
+        return view('panel.features', [
+            'features' => $features,
+            'page_name' => 'feature',
+            'page_title' => 'مدیریت ویژگی ها',
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
+        ]);
     }
 
     public function add (CreateFeature $req)
@@ -34,13 +48,23 @@ class FeaturesController extends Controller
             $feature->subs = Feature::select('id', 'name')->where('title', $feature->id)->get();
         }
 
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+
         return view('panel.features', [
             'features' => $features,
             'title' => $title,
             'id' => $id,
             'edit' => true,
             'page_name' => 'feature',
-            'page_title' => 'ویرایش ویژگی ' . $title
+            'page_title' => 'ویرایش ویژگی ' . $title,
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
         ]);
     }
 

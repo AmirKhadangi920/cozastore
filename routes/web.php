@@ -13,10 +13,8 @@
 
 // Admin panel Routes
 Route::group(['middleware' => ['web', 'admin']], function () {
-    
-    Route::get('/panel', function () {
-        return view('panel.index')->with('page_name', 'main');
-    });
+    // Dashboard Route
+    Route::get('/panel', 'PanelController@index');
     
     // Invoices Routes
     Route::get('/panel/invoices', 'InvoiceController@index');
@@ -60,12 +58,12 @@ Route::group(['middleware' => ['web', 'admin']], function () {
 });
 
 // Store Products Routes
-Route::get('/', 'ProductController@main');
-Route::get('/products', 'ProductController@store');
-Route::post('/products/review', 'ProductController@add_review');
-Route::get('/products/{page?}/{order?}/{price?}/{color?}/{keyword?}/{query?}', 'ProductController@store');
-Route::get('/product/{id}', 'ProductController@store_product');
-Route::get('/product/quickview/{id}', 'ProductController@quickview');
+Route::get('/', 'StoreController@index');
+Route::get('/products', 'StoreController@store');
+Route::post('/products/review', 'StoreController@add_review');
+Route::get('/products/{page?}/{order?}/{price?}/{color?}/{keyword?}/{query?}', 'StoreController@store');
+Route::get('/product/{id}', 'StoreController@product');
+Route::get('/product/quickview/{id}', 'StoreController@quickview');
 
 // Cart Rotes
 Route::get('/cart', 'CartController@index');

@@ -6,20 +6,41 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateGroup;
 use Illuminate\Support\Facades\DB;
 use App\Group;
-
+use App\Option;
 class GroupController extends Controller
 {
     public function index ()
     {
         $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
 
-        return view('panel.groups', compact('groups'))->with('page_name', 'group')
-            ->with('page_title', 'گروه بندی محصولات');
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+
+        return view('panel.groups', [
+            'groups' => $groups,
+            'page_name' => 'group',
+            'page_title' => 'گروه بندی محصولات',
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
+        ]);
     }
 
     public function get ($id, $title)
     {
         $groups = Group::select('id', 'title', 'description')->where('parent', $id)->get();
+
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
 
         return view('panel.groups', [
             'groups' => $groups,
@@ -27,7 +48,9 @@ class GroupController extends Controller
             'id' => $id,
             'breadcrumb' => $this -> breadcrumb($id),
             'page_name' => 'group',
-            'page_title' => 'گروه های زیرمجموعه ' . $title
+            'page_title' => 'گروه های زیرمجموعه ' . $title,
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
         ]);
     }
 
@@ -47,6 +70,14 @@ class GroupController extends Controller
         $selected = Group::select('id', 'title', 'description')->where('id', $id)->get();
         $groups = Group::select('id', 'title', 'description')->where('parent', $id)->get();
 
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+        
         return view('panel.groups', [
             'groups' => $groups,
             'selected' => $selected,
@@ -54,7 +85,9 @@ class GroupController extends Controller
             'breadcrumb' => $this -> breadcrumb($id),
             'edit' => true,
             'page_name' => 'group',
-            'page_title' => 'ویرایش گروه ' . $title
+            'page_title' => 'ویرایش گروه ' . $title,
+            'site_name'=> $site_name,
+            'site_logo'=> $site_
         ]);
     }
 

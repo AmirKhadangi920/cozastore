@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UploadPhoto;
 use App\Gallery;
+use App\Option;
 
 class GalleryController extends Controller
 {
@@ -13,10 +14,20 @@ class GalleryController extends Controller
     {
         $photos = Gallery::select('id', 'name', 'description', 'photo')->skip(0)->take(30)->get();
 
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+
         return view('panel.gallery', [
             'photos' => $photos,
             'page_name' => 'gallery',
-            'page_title' => 'گالری'
+            'page_title' => 'گالری',
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
         ]);
     }
 
@@ -32,7 +43,7 @@ class GalleryController extends Controller
         $gallery -> description = $req -> description;
         $gallery -> photo = $imageName;
         $gallery -> save();
-
+        
         return redirect()->back()->with('message', 'تصویر '.$req->name.' با موفقیت آپلود شد .');
     }
 
@@ -41,12 +52,22 @@ class GalleryController extends Controller
         $selected = Gallery::select('id', 'name', 'description', 'photo')->where('id', $id)->get();
         $photos = Gallery::select('id', 'name', 'description', 'photo')->skip(0)->take(30)->get();
 
+        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+            }
+        }
+
         return view('panel.gallery', [
             'photos' => $photos,
             'selected' => $selected[0],
             'edit' => true,
             'page_name' => 'gallery',
-            'page_title' => 'ویرایش مشخصات تصویر'
+            'page_title' => 'ویرایش مشخصات تصویر',
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo
         ]);
     }
 
