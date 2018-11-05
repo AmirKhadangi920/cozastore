@@ -15,7 +15,8 @@ class GalleryController extends Controller
 
         return view('panel.gallery', [
             'photos' => $photos,
-            'page_name' => 'gallery'
+            'page_name' => 'gallery',
+            'page_title' => 'گالری'
         ]);
     }
 
@@ -44,7 +45,8 @@ class GalleryController extends Controller
             'photos' => $photos,
             'selected' => $selected[0],
             'edit' => true,
-            'page_name' => 'gallery'
+            'page_name' => 'gallery',
+            'page_title' => 'ویرایش مشخصات تصویر'
         ]);
     }
 

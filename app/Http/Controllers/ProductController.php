@@ -21,7 +21,8 @@ class ProductController extends Controller
         $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
             ->orderBy('created_at', 'DESC')->get();
 
-        return view('panel.products', compact('products'))->with('page_name', 'products');
+        return view('panel.products', compact('products'))->with('page_name', 'products')
+            ->with('page_title', 'محصولات');
     }
     
     public function add ()
@@ -39,7 +40,8 @@ class ProductController extends Controller
             'groups' => $groups,
             'features' => $features,
             'photos' => $photos,
-            'page_name' => 'add_product'
+            'page_name' => 'add_product',
+            'page_title' => 'ثبت محصول'
         ]);
     }
 
@@ -123,7 +125,8 @@ class ProductController extends Controller
             'photos' => $photos,
             'product_features' => $product_feature,
             'edit' => true,
-            'page_name' => 'products'
+            'page_name' => 'products',
+            'page_title' => 'ویرایش محصول ' . $product[0]->name
         ]);
     }
 
@@ -186,7 +189,8 @@ class ProductController extends Controller
         $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
             ->orderBy('created_at', 'DESC')->where('name', 'like', '%'.$query.'%')->get();
 
-        return view('panel.products', compact('products'))->with('query', $query)->with('page_name', 'products');
+        return view('panel.products', compact('products'))->with('query', $query)->with('page_name', 'products')
+            ->with('page_title', 'جستجوی محصولات برای "' . $query . '"');
     }
 
     public function main ()
@@ -304,6 +308,7 @@ class ProductController extends Controller
             'page' => $page,
             'cart_products' => $cart_products,
             'page_name'=> 'products',
+            'page_title'=> 'محصولات',
             'filter' => [
                 'color' => $color,
                 'order' => $order,
@@ -361,7 +366,8 @@ class ProductController extends Controller
             'reviews' => $reviews,
             'cart_products' => $cart_products,
             'page_name'=> 'products',
-            'dollar_cost' => 14540
+            'dollar_cost' => 14540,
+            'page_title' => $product[0]->name
         ]);
     }
 

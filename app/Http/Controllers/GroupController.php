@@ -13,7 +13,8 @@ class GroupController extends Controller
     {
         $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
 
-        return view('panel.groups', compact('groups'))->with('page_name', 'group');
+        return view('panel.groups', compact('groups'))->with('page_name', 'group')
+            ->with('page_title', 'گروه بندی محصولات');
     }
 
     public function get ($id, $title)
@@ -25,7 +26,8 @@ class GroupController extends Controller
             'title' => $title,
             'id' => $id,
             'breadcrumb' => $this -> breadcrumb($id),
-            'page_name' => 'group'
+            'page_name' => 'group',
+            'page_title' => 'گروه های زیرمجموعه ' . $title
         ]);
     }
 
@@ -51,7 +53,8 @@ class GroupController extends Controller
             'title' => $title,
             'breadcrumb' => $this -> breadcrumb($id),
             'edit' => true,
-            'page_name' => 'group'
+            'page_name' => 'group',
+            'page_title' => 'ویرایش گروه ' . $title
         ]);
     }
 

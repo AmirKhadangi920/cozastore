@@ -17,7 +17,8 @@ class InvoiceController extends Controller
 
         return view('panel.invoice-archive', [
             'orders' => $orders,
-            'page_name' => 'invoices'
+            'page_name' => 'invoices',
+            'page_title' => 'سفارشات'
         ]);
     }
 
@@ -40,7 +41,8 @@ class InvoiceController extends Controller
             'invoice' => $invoice[0],
             'order_products' => $order_products,
             'page_name' => 'invoices',
-            'dollar_cost' => 14500
+            'dollar_cost' => 14500,
+            'page_title' => 'فاکتور #' . $invoice[0] -> id
         ]);
     }
 

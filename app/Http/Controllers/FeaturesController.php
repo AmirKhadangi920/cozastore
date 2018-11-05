@@ -16,7 +16,8 @@ class FeaturesController extends Controller
             $feature->subs = Feature::select('id', 'name')->where('title', $feature->id)->get();
         }
 
-        return view('panel.features', compact('features'))->with('page_name', 'feature');
+        return view('panel.features', compact('features'))->with('page_name', 'feature')
+            ->with('page_title', 'مدیریت ویژگی ها');
     }
 
     public function add (CreateFeature $req)
@@ -38,7 +39,8 @@ class FeaturesController extends Controller
             'title' => $title,
             'id' => $id,
             'edit' => true,
-            'page_name' => 'feature'
+            'page_name' => 'feature',
+            'page_title' => 'ویرایش ویژگی ' . $title
         ]);
     }
 

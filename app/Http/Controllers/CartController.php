@@ -29,6 +29,7 @@ class CartController extends Controller
         return view('store.shoping-cart', [
             'cart_products' => $cart_products,
             'dollar_cost' => 14500,
+            'page_title' => 'سبد خرید'
         ]);
     }
 

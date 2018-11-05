@@ -15,6 +15,7 @@ class PanelController extends Controller
     {
         return view('panel.setting', [
             'page_name' => 'setting',
+            'page_title' => 'تنظیمات'
         ]);
     }
 }
