@@ -53,7 +53,9 @@
         box-shadow: 0px 0px 15px -5px #000;
     }
     
-    
+    .vertical-pills .tab-content {
+		padding-right: 15px;
+	}
     </style>
 @endsection
 
@@ -64,13 +66,12 @@
 			<!-- Breadcrumb -->
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
-					<li class="active"><span>@isset($edit) ویرایش محصول @else ثبت محصول @endisset</span></li>
-					<li>فروشگاه</li>
+					<li class="active"><span>تنظیمات</span></li>
 					<li>داشبورد</li>
 				</ol>
 			</div>
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">@isset($edit) ویرایش محصول @else ثبت محصول @endisset</h5>
+				<h5 class="txt-dark">تنظیمات</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>
@@ -82,8 +83,8 @@
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
-								<form action="@isset($edit) /panel/products/update @else /panel/products/new @endisset" enctype="multipart/form-data" method="POST">
-									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>درباره محصول</h6>
+								<form action="/panel/setting/slider" enctype="multipart/form-data" method="POST">
+									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-desktop font-20 txt-grey ml-10" aria-hidden="true"></i>ویرایش اسلایدر</h6>
 									<hr class="light-grey-hr"/>
 
 									
@@ -102,302 +103,423 @@
 											</div>
 										@endif
 										
-										<div class="tab-struct custom-tab-1 mt-40">
-											<ul role="tablist" class="nav nav-tabs" id="myTabs_7">
-												<li class="active" role="presentation"><a aria-expanded="true"  data-toggle="tab" role="tab" id="home_tab_7" href="#home_7">active</a></li>
-												<li role="presentation" class=""><a  data-toggle="tab" id="profile_tab_7" role="tab" href="#profile_7" aria-expanded="false">inactive</a></li>
+										<div  class="pills-struct vertical-pills">
+											<ul role="tablist" class="nav nav-pills ver-nav-pills pull-right" id="myTabs_10">
+												<li class="active" role="presentation"><a aria-expanded="true"  data-toggle="tab" role="tab" href="#slide1">اسلاید 1</a></li>
+												<li role="presentation"><a aria-expanded="false" data-toggle="tab" role="tab" href="#slide2">اسلاید 2</a></li>
+												<li role="presentation"><a aria-expanded="false" data-toggle="tab" role="tab" href="#slide3">اسلاید 3</a></li>
 											</ul>
-											<div class="tab-content" id="myTabContent_7">
-												<div  id="home_7" class="tab-pane fade active in" role="tabpanel">
-													<p>Lorem ipsum dolor sit amet, et pertinax ocurreret scribentur sit, eum euripidis assentior ei. In qui quodsi maiorum, dicta clita duo ut. Fugit sonet quo te. Ad vel quando causae signiferumque. Aperiam luptatum senserit eu vis, eu ius purto torquatos vituperatoribus.An nec fastidii eligendi molestiae.</p>
-												</div>
-												<div  id="profile_7" class="tab-pane fade" role="tabpanel">
-													<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.</p>
-												</div>
-											</div>
-										</div>
-									</div>
-									
-										
-									{{-- <div class="panel-body">
-									</div> --}}
-						
-									<!-- Row -->
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label mb-10">ویدیوی آپارات</label>
-												<div class="input-group">
-													<input type="text" name="aparat_video" @isset($edit) value="https://www.aparat.com/v/{{$product->aparat_video}}" @else value="{{old('aparat_video')}}" @endisset id="firstName" class="form-control" placeholder="اسکریپت ویدیوی خود در سایت آپارات را در این قسمت وارد کنید">
-													<div class="input-group-addon"><i class="ti-video-clapper"></i></div>
-												</div>
-											</div>
-										</div>
-										<!--/span-->
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label mb-10">گروه</label>
-												<div class="input-group">
-													
-													<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
-												</div>
-												
-											</div>
-										</div>
-										<!--/span-->
-									</div>
-									<!--/row-->
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label mb-10">تخفیف</label>
-												<div class="input-group">
-													<input type="number" name="offer" @isset($edit) value="{{$product->offer}}" @else value="{{old('offer')}}" @endisset class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
-													<div class="input-group-addon"><i class="ti-cut"></i></div>
-												</div>
-											</div>
-										</div>
-										<!--/span-->
-										<div class="col-md-2">
-											<div class="form-group">
-												<label class="control-label mb-10">واحد پولی</label>
-												<div class="radio-list">
-													<div class="radio-inline">
-														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->unit == 0) checked @elseif(old('unit') == 0) checked  @endif name="unit" id="unit_rl" value="0">
-															<label for="unit_rl">ریال</label>
-														</div>
-													</div>
-													<div class="radio-inline pl-0">
-														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->unit == 1) checked @elseif(old('unit') == 1) checked  @endif name="unit" checked="checked" id="unit_dl" value="1">
-															<label for="unit_dl">دلار</label>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label mb-10">قیمت</label>
-												<div class="input-group">
-													<input type="number" @isset($edit) value="{{$product->price}}" @else value="{{old('price')}}"  @endisset name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
-													<div class="input-group-addon"><i class="ti-money"></i></div>
-												</div>
-											</div>
-										</div>
-										
-										<!--/span-->
-									</div>
-
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label mb-10">وضعیت</label>
-												<div class="radio-list">
-													<div class="radio-inline">
-														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->status == 0) checked @elseif(old('status') == 0) checked @endif name="status" id="radio2" value="0">
-															<label for="radio2">پیش نویس</label>
-														</div>
-													</div>
-													<div class="radio-inline pl-0">
-														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->status == 0) checked @elseif(old('status') == 1) checked @endif name="status" checked="checked" id="radio1" value="1">
-															<label for="radio1">ثبت محصول</label>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<label class="control-label mb-10">رنگ های محصول</label>
-											<div class="form-group mb-0">
-												<select class="select2 select2-multiple color-value" @isset($edit) value="{{$product->colors}}" @else value="{{old('color')}}" @endisset multiple="multiple" data-placeholder="رنگ هارا انتخاب کنید">
-												<?php $colors = [
-													['blue', 'آبی'],
-													['green', 'سبز'],
-													['yellow', 'زرد'],
-													['brown', 'قهوه ای'],
-													['violet', 'بنفش'],
-													['orange', 'نارنجی'],
-													['red', 'قرمز'],
-													['black', 'مشکی'],
-													['white', 'سفید'],
-												]; 
-												
-												$i = 0;
-												
-												if (isset($edit)) {
-													$product->colors = explode(',', $product->colors);
-												}
-												?>
-												
-												@foreach ($colors as $color)
-													<option value="{{$color[0]}}" 
-														<?php if(isset($edit) && isset($product->colors[$i]) && $color[0] == $product->colors[$i]) {
-															echo 'selected'; ++$i;
-														}?>>{{$color[1]}}</option>
-												@endforeach																
-												</select>
-												<input type="hidden" name="colors" class="color-value" />
-											</div>	
-										</div>
-										<!--/span-->
-									</div>
-									<div class="seprator-block"></div>
-									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-comment-text ml-10"></i>توضیح محصول</h6>
-									<hr class="light-grey-hr"/>
-									<div class="row">
-										<div class="col-md-12">
-											<div class="form-group">
-												<textarea name="full_description" class="tinymce form-control">@isset($edit) {{$product->full_description}} @else {{old('full_description')}} @endisset</textarea>
-											</div>
-										</div>
-									</div>
-									<!--/row-->
-									<div class="row">
-										<div class="col-md-12">
-											<div class="form-group" class="remove-outline">
-												<label class="control-label mb-10">کلمات کلیدی</label>
-												<input type="text" @isset($edit) value="{{$product->keywords}}" @else value="{{old('keywords')}}" @endisset name="keywords" data-role="tagsinput" placeholder="افزودن کلمه کلیدی"/>
-											</div>
-										</div>
-									</div>
-									<div class="seprator-block"></div>
-									<h6 class="txt-dark flex flex-middle capitalize-font"><i class="font-20 txt-grey zmdi zmdi-collection-image ml-10"></i>تصاویر محصول</h6>
-									<hr class="light-grey-hr"/>
-									<div class="row">
-										<div class="col-lg-12">
-											<div class="row" id="picture-files">
-												<div class="col-md-12">
-													<div style="display: none;" class="alert alert-warning alert-dismissable">
-														<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-														هیج تصویری برای محصول انتخاب نشده است ! 
-													</div>
-												</div>
-												@if(isset($edit) && !empty($product->gallery))
-												<div class="preview-gallery">
-													@foreach (explode(',', $product->gallery) as $photo)
-													<div class="col-md-2 col-xs-4 mb-30">
-														<div class="img-upload-wrap">
-															<input type="file" disabled data-show-remove="false" 
-																data-default-file="{{ asset('uploads/'.$photo)}}" class="dropify file" />
-														</div>
-													</div>
-													@endforeach
-												</div>	
-												@else
-												<div class="preview-gallery">
-												</div>
-												@endif
-
-												<input type="hidden" @isset($edit) value="{{$product->photo}}" @endisset id="single_photo" name="photo" />
-												<input type="hidden" @isset($edit) value="{{$product->gallery}}" @endisset id="gallery" name="gallery" />
-											</div>
-
-											<div class="col-md-12 text-center">
-												<div  class="panel-body">
-													<!-- sample modal content -->
-													<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-														<div class="modal-dialog modal-lg">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-																	<h5 class="modal-title mr-20" id="myLargeModalLabel">عکس های مورد نظر خود را انتخاب کنید</h5>
+											<div class="tab-content" id="myTabContent_10">
+												<div id="slide1" class="tab-pane fade active in row" role="tabpanel">
+													<div class="col-md-8">
+														<div class="form-wrap">
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان اسلاید 1</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('slides[0][title]')}}" name="slides[0][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
+																	<div class="input-group-addon"><i class="icon-picture"></i></div>
 																</div>
-																<div class="modal-body">
-																	<div class="gallery-wrap">
-																		<div class="portfolio-wrap project-gallery">
-																			<ul id="portfolio_1" class="portf auto-construct  project-gallery" data-col="4">
-																				@empty ($photos[0])
-																					<div class="alert alert-danger alert-dismissable">
-																						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-																						هیچ تصویری تا کنون آپلود نشده است
-																					</div>
-																				@endempty
-																				
-																				@if(!empty($product->gallery))
-																					@foreach (explode(',', $product->gallery) as $photo)
-																						<li class="item tall" photo="{{$photo}}" data-src="{{ asset('uploads/'.$photo) }}" >
-																							<a href="" class="photo-gallery selected">
-																								<img class="img-responsive" src="{{ asset('uploads/'.$photo) }}"  alt="توضیحی برای تصویر ثبت نشده است" />
-																								<span class="hover-cap">
-																									تصویر محصول
-																								</span>
-																							</a>
-																						</li>
-																					@endforeach
-																				@endif
-
-																				@if(!empty($photos[0]))
-																					@foreach ($photos as $photo)
-																						<li class="item tall" photo="{{$photo->photo}}" data-src="{{ asset('uploads/'.$photo->photo) }}" data-sub-html="{{$photo->description}}" >
-																							<a href="" class="photo-gallery">
-																								<img class="img-responsive" src="{{ asset('uploads/'.$photo->photo) }}"  alt="توضیحی برای تصویر ثبت نشده است" />
-																								<span class="hover-cap">
-																									@if($photo->name) {{$photo->name}} @else {{$photo->photo}} @endif
-																								</span>
-																							</a>
-																						</li>
-																					@endforeach
-																				@endif
-
-																			</ul>
-																		</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح اسلاید 1</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('slides[0][description]')}}" name="slides[0][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																	<div class="input-group-addon"><i class="icon-speech"></i></div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-8">
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید 1</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('slides[0][button]')}}" name="slides[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
 																	</div>
 																</div>
-																<div class="modal-footer">
-																	<div class="pull-left">
-																		<button type="button" class="btn btn-danger text-left ml-20" data-dismiss="modal">بستن</button>
-																		<button type="button" class="add-pics btn btn-primary text-left" data-dismiss="modal">انتخاب تصاویر</button>
+																<div class="col-md-4">
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید 1</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('slides[0][link]')}}" name="slides[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
 																	</div>
 																</div>
 															</div>
-															<!-- /.modal-content -->
 														</div>
-														<!-- /.modal-dialog -->
 													</div>
-													<!-- /.modal -->
-													<!-- Button trigger modal -->
-													<div class="pull-center fileupload btn @if(isset($edit) && !empty($product->gallery)) btn-warning @else btn-default @endif btn-outline btn-sm btn-anim model-test" data-toggle="modal" data-target=".bs-example-modal-lg" id="add-new-picture">
-														<i class="fa @if(isset($edit) && !empty($product->gallery)) fa-edit @else fa-plus @endif"></i>
-														<span class="btn-text">@if(isset($edit) && !empty($product->gallery)) ویرایش تصاویر @else افزودن تصویر جدید @endif</span>
+													
+													<div class="col-md-4">
+														<label class="control-label mb-10">تصویر اسلاید 1</label>
+														<div class="mt-10 mb-10">
+															<input type="file" @isset($edit) data-default-file="/uploads/{{$selected->photo}}" disabled @endisset name="slides[1][photo]" id="input-file-now" class="dropify" />
+														</div>	
+													</div>
+												</div>
+
+												<div id="slide2" class="tab-pane fade in row" role="tabpanel">
+													<div class="col-md-8">
+														<div class="form-wrap">
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان اسلاید 2</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('slides[1][title]')}}" name="slides[1][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
+																	<div class="input-group-addon"><i class="icon-picture"></i></div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح اسلاید 2</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('slides[1][description]')}}" name="slides[1][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																	<div class="input-group-addon"><i class="icon-speech"></i></div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-8">
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید 2</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('slides[1][button]')}}" name="slides[1][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید 2</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('slides[1][link]')}}" name="slides[1][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													
+													<div class="col-md-4">
+														<label class="control-label mb-10">تصویر اسلاید 2</label>
+														<div class="mt-10 mb-10">
+															<input type="file" @isset($edit) data-default-file="/uploads/{{$selected->photo}}" disabled @endisset name="slides[1][link]" id="input-file-now" class="dropify" />
+														</div>	
+													</div>
+												</div>
+
+												<div id="slide3" class="tab-pane fade in row" role="tabpanel">
+													<div class="col-md-8">
+														<div class="form-wrap">
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان اسلاید 3</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('slides[2][title]')}}" name="slides[2][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
+																	<div class="input-group-addon"><i class="icon-picture"></i></div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح اسلاید 3</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('slides[2][description]')}}" name="slides[2][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																	<div class="input-group-addon"><i class="icon-speech"></i></div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-8">
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید 3</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('slides[2][button]')}}" name="slides[2][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید 3</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('slides[2][link]')}}" name="slides[2][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													
+													<div class="col-md-4">
+														<label class="control-label mb-10">تصویر اسلاید 3</label>
+														<div class="mt-10 mb-10">
+															<input type="file" @isset($edit) data-default-file="/uploads/{{$selected->photo}}" disabled @endisset name="slides[2][photo]" id="input-file-now" class="dropify" />
+														</div>	
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="seprator-block"></div>
-									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-swap ml-10"></i>معایب و مزایا</h6>
-									<hr class="light-grey-hr"/>
-									
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group disadvantages">
-												<input type="text" name="disadvantages" @isset($edit) value="{{$product->disadvantages}}" @else value="{{old('disadvantages')}}"  @endisset data-role="tagsinput" class="form-control" placeholder="عیب محصول">
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<div class="form-group advantages">
-												<input type="text" name="advantages" @isset($edit) value="{{$product->advantages}}" @else value="{{old('advantages')}}" @endisset data-role="tagsinput" class="form-control" placeholder="مزیت محصول">
-											</div>
-										</div>
-									</div>
-									<div class="seprator-block"></div>
-									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-calendar-note ml-10"></i>اطلاعات فنی</h6>
-									<hr class="light-grey-hr"/>
-									
+
 									<div class="form-actions">
-										<button type="button" class="btn btn-primary pull-right create-new-feautre"> <i class="fa fa-plus"></i> <span>افزودن ویژگی جدید</span></button>
-										<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
-										<button type="button" class="btn btn-default pull-left">لغو</button>
+										<button class="btn btn-info btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره پوسترها</span></button>
 										<div class="clearfix"></div>
 									</div>
-									@isset($edit)
-									<input type="hidden" name="id" value="{{$product->pro_id}}" />
-									@endisset
+									@csrf
+								</form>
+							</div>
+
+							<div class="form-wrap">
+								<form action="/panel/setting/posters" enctype="multipart/form-data" method="POST">
+									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-picture-o font-20 txt-grey ml-10" aria-hidden="true"></i>ویرایش پوستر ها</h6>
+									<hr class="light-grey-hr"/>
+
+									
+									<div class="panel-body">
+										<div  class="pills-struct vertical-pills">
+											<ul role="tablist" class="nav nav-pills ver-nav-pills pull-right" id="myTabs_10">
+												<li class="active" role="presentation"><a aria-expanded="true"  data-toggle="tab" role="tab" href="#poster1">پوستر 1</a></li>
+												<li role="presentation"><a aria-expanded="false" data-toggle="tab" role="tab" href="#poster2">پوستر 2</a></li>
+												<li role="presentation"><a aria-expanded="false" data-toggle="tab" role="tab" href="#poster3">پوستر 3</a></li>
+											</ul>
+											<div class="tab-content" id="myTabContent_10">
+												<div id="poster1" class="tab-pane fade active in row" role="tabpanel">
+													<div class="col-md-8">
+														<div class="form-wrap">
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان پوستر 1</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('posters[0][title]')}}" name="posters[0][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : تخفیف ویژه محصولات !">
+																	<div class="input-group-addon"><i class="icon-picture"></i></div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح پوستر 1</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('posters[0][description]')}}" name="posters[0][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه نیم خطی برای این پوستر">
+																	<div class="input-group-addon"><i class="icon-speech"></i></div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-8">
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر 1</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('posters[0][link]')}}" name="posters[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر 1</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('posters[0][button]')}}" name="posters[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													
+													<div class="col-md-4">
+														<label class="control-label mb-10">تصویر پوستر 1</label>
+														<div class="mt-10 mb-10">
+															<input type="file" name="posters[1][photo]" id="input-file-now" class="dropify" />
+														</div>	
+													</div>
+												</div>
+
+												<div id="poster2" class="tab-pane fade in row" role="tabpanel">
+													<div class="col-md-8">
+														<div class="form-wrap">
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان پوستر 2</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('posters[1][title]')}}" name="posters[1][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : تخفیف ویژه محصولات !">
+																	<div class="input-group-addon"><i class="icon-picture"></i></div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح پوستر 2</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('posters[1][description]')}}" name="posters[1][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه نیم خطی برای این پوستر">
+																	<div class="input-group-addon"><i class="icon-speech"></i></div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-8">
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر 2</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('posters[1][link]')}}" name="posters[1][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر 2</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('posters[1][button]')}}" name="posters[1][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													
+													<div class="col-md-4">
+														<label class="control-label mb-10">تصویر پوستر 2</label>
+														<div class="mt-10 mb-10">
+															<input type="file" name="posters[1][photo]" id="input-file-now" class="dropify" />
+														</div>	
+													</div>
+												</div>
+
+												<div id="poster3" class="tab-pane fade in row" role="tabpanel">
+													<div class="col-md-8">
+														<div class="form-wrap">
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان پوستر 3</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('posters[2][title]')}}" name="posters[2][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : تخفیف ویژه محصولات !">
+																	<div class="input-group-addon"><i class="icon-picture"></i></div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح پوستر 3</label>
+																<div class="input-group">
+																	<input type="text" value="{{old('posters[2][description]')}}" name="posters[2][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه نیم خطی برای این پوستر">
+																	<div class="input-group-addon"><i class="icon-speech"></i></div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-8">
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر 3</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('posters[2][link]')}}" name="posters[2][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر 3</label>
+																	<div class="input-group">
+																		<input type="text" value="{{old('posters[2][button]')}}" name="posters[2][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
+																		<div class="input-group-addon"><i class="icon-speech"></i></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													
+													<div class="col-md-4">
+														<label class="control-label mb-10">تصویر پوستر 3</label>
+														<div class="mt-10 mb-10">
+															<input type="file" name="posters[2][photo]" id="input-file-now" class="dropify" />
+														</div>	
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<hr class="light-grey-hr"/>
+
+									<div class="form-actions">
+										<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره اسلایدر</span></button>
+										<div class="clearfix"></div>
+									</div>
+									@csrf
+								</form>
+							</div>
+
+							<div class="form-wrap">
+								<form action="/panel/setting/info" enctype="multipart/form-data" method="POST">
+									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-info font-20 txt-grey ml-10" aria-hidden="true"></i>تغییر اطلاعات کلی</h6>
+									<hr class="light-grey-hr"/>
+
+									
+									<div class="panel-body">										
+										<div class="row">
+											<div class="col-md-9">
+												<div class="form-wrap">
+													<div class="row mb-10">
+														<div class="col-md-4">
+															<label class="control-label mb-10" for="exampleInputEmail_5">شماره تلفن</label>
+															<div class="input-group">
+																<input type="text" value="{{old('slides[0][link]')}}" name="slides[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="برای مثال : 09123456789">
+																<div class="input-group-addon"><i class="icon-speech"></i></div>
+															</div>
+														</div>
+														<div class="col-md-8">
+															<label class="control-label mb-10" for="exampleInputEmail_4">عنوان فروشگاه</label>
+															<div class="input-group">
+																<input type="text" value="{{old('slides[0][button]')}}" name="slides[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="نام فروشگاه شما">
+																<div class="input-group-addon"><i class="icon-speech"></i></div>
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label mb-10" for="exampleInputuname_2">درباره فروشگاه</label>
+														<div class="input-group">
+															<input type="text" value="{{old('slides[0][title]')}}" name="slides[0][title]" class="form-control" id="exampleInputuname_2" placeholder="یک توضیح یک خطی کوتاه درباره فروشگاه و کسب و کار شما">
+															<div class="input-group-addon"><i class="icon-picture"></i></div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label mb-10" for="exampleInputEmail_2">آدرس فروشگاه شما</label>
+														<div class="input-group">
+															<input type="text" value="{{old('slides[0][description]')}}" name="slides[0][description]" class="form-control" id="exampleInputEmail_2" placeholder="آدرس فروشگاه شما که به مشتریان و کاربران نمایش داده میشود">
+															<div class="input-group-addon"><i class="icon-speech"></i></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="col-md-3">
+												<label class="control-label mb-10">لوگوی فروشگاه</label>
+												<div class="mt-10 mb-10">
+													<input type="file" @isset($edit) data-default-file="/uploads/{{$selected->photo}}" disabled @endisset name="slides[1][photo]" id="input-file-now" class="dropify" />
+												</div>	
+											</div>
+										</div>
+									</div>
+
+									<div class="form-actions">
+										<button class="btn btn-primary btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره اطلاعات کلی</span></button>
+										<div class="clearfix"></div>
+									</div>
+									@csrf
+								</form>
+							</div>
+
+							<div class="form-wrap">
+								<form action="/panel/setting/info" enctype="multipart/form-data" method="POST">
+									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-link font-20 txt-grey ml-10" aria-hidden="true"></i>لینک شبکه های اجتماعی</h6>
+									<hr class="light-grey-hr"/>
+
+									
+									<div class="panel-body">										
+										<div class="form-wrap">
+											<div class="row mb-10">
+												<div class="col-md-6">
+													<label class="control-label mb-10" for="exampleInputEmail_5">اینستاگرام</label>
+													<div class="input-group">
+														<input type="text" value="{{old('slides[0][link]')}}" name="slides[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی اینستاگرام">
+														<div class="input-group-addon"><i class="fa fa-instagram" aria-hidden="true"></i></div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<label class="control-label mb-10" for="exampleInputEmail_4">تلگرام</label>
+													<div class="input-group">
+														<input type="text" value="{{old('slides[0][button]')}}" name="slides[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی تلگرام">
+														<div class="input-group-addon"><i class="fa fa-telegram" aria-hidden="true"></i></div>
+													</div>
+												</div>
+											</div>
+
+											<div class="row mb-10">
+												<div class="col-md-6">
+													<label class="control-label mb-10" for="exampleInputEmail_5">توییتر</label>
+													<div class="input-group">
+														<input type="text" value="{{old('slides[0][link]')}}" name="slides[0][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی توییتر">
+														<div class="input-group-addon"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<label class="control-label mb-10" for="exampleInputEmail_4">فیسبوک</label>
+													<div class="input-group">
+														<input type="text" value="{{old('slides[0][button]')}}" name="slides[0][button]" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی فیسبوک">
+														<div class="input-group-addon"><i class="fa fa-facebook" aria-hidden="true"></i></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-actions">
+										<button class="btn btn-succuess btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره لینک ها</span></button>
+										<div class="clearfix"></div>
+									</div>
 									@csrf
 								</form>
 							</div>
@@ -444,15 +566,15 @@
 		'vendors/bower_components/switchery/dist/switchery.min.js',
 		// Init JavaScript
 		'dist/js/init.js',
-		// Init Add Product Page JavaScript
-		'dist/js/init_add_product.js',
-		// Get Groups by Ajax
-		'dist/js/group_ajax.js'
+		// Setting page
+		'dist/js/setting.js'
 	]; ?>
 
 	@foreach ($scripts as $script)
 	<script src="{{ asset($script) }}"></script>
 	@endforeach
+
+	<script> $('.dropify').dropify(); </script>
 
 	@isset($edit)
 	<script>
