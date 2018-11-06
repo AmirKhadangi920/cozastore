@@ -52,6 +52,8 @@ class GalleryController extends Controller
         $selected = Gallery::select('id', 'name', 'description', 'photo')->where('id', $id)->get();
         $photos = Gallery::select('id', 'name', 'description', 'photo')->skip(0)->take(30)->get();
 
+        if ($selected == []) { return abort(404); }
+
         $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
         foreach ($options as $option) {
             switch ($option['name']) {

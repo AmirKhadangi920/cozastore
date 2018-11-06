@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Order;
 use App\OrderProducts;
+use App\Option;
 use Cookie;
 use Auth;
 
@@ -13,6 +14,19 @@ class CartController extends Controller
 {
     public function index (Request $request)
     {
+        $options = Option::select('name', 'value')->whereIn('name', 
+            ['site_name', 'site_description', 'site_logo', 'social_link'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'slider': $slider = json_decode($option['value'], true); break;
+                case 'posters': $posters = json_decode($option['value'], true); break;
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_description': $site_description = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+                case 'social_link': $social_link = json_decode($option['value'], true); break;
+            }
+        }
+
         $cart_products = [];
         $cart =  json_decode(Cookie::get('cart'), true);
         if ($cart)
@@ -29,7 +43,11 @@ class CartController extends Controller
         return view('store.shoping-cart', [
             'cart_products' => $cart_products,
             'dollar_cost' => 14500,
-            'page_title' => 'سبد خرید'
+            'page_title' => 'سبد خرید',
+            'site_name' => $site_name,
+            'site_description' => $site_description,
+            'site_logo' => $site_logo,
+            'social_link' => $social_link,
         ]);
     }
 

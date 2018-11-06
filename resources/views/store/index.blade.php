@@ -142,11 +142,11 @@
 					</button>
 
 					<?php $group_temp = ''; $groups = []; ?>
-					@foreach ($products as $product)
-						@if(!in_array($product->id, $groups) && $product->id)
-							<?php $group_temp = $product->title; $groups[] = $product->id ?>
-							<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{'group'.$product->id}}">
-								{{$product->title}}
+					@foreach ($products as $item)
+						@if(!in_array($item->id, $groups) && $item->id)
+							<?php $group_temp = $item->title; $groups[] = $item->id ?>
+							<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".{{'group'.$item->id}}">
+								{{$item->title}}
 							</button>
 						@endif
 					@endforeach
@@ -330,39 +330,39 @@
 					</div>
 				</div>
 				@else
-					@foreach ($products as $product)
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 product-card isotope-item {{'group'.$product->id}}">
+					@foreach ($products as $item)
+					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 product-card isotope-item {{'group'.$item->id}}">
 						<!-- Block2 -->
 						<div class="block2">
 							<div class="block2-pic hov-img0">
 								
-								<img src="{{asset('/uploads/'.$product->photo)}}" alt="IMG-PRODUCT">
+								<img src="{{asset('/uploads/'.$item->photo)}}" alt="IMG-PRODUCT">
 
-								<a href="{{$product->pro_id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								<a href="{{$item->pro_id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
 									مشاهده سریع
 								</a>
 
-								<span class="badge badge-dark">{{$product->title}}</span>
+								<span class="badge badge-dark">{{$item->title}}</span>
 							</div>
 
 							<div class="block2-txt flex-w flex-t p-t-14">
 								<div class="block2-txt-child1 flex-col-l">
-									<a href="/product/{{$product->pro_id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										<b>{{$product->name}}</b>
+									<a href="/product/{{$item->pro_id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										<b>{{$item->name}}</b>
 									</a>
 
-									<?php if ($product->unit) {
-										$product->price = $product->price * $dollar_cost;
+									<?php if ($item->unit) {
+										$item->price = $item->price * $dollar_cost;
 									} ?>
-									@empty ($product->offer)
+									@empty ($item->offer)
 									<span class="stext-105 cl3">
-										<span class="num-comma">{{$product->price}}</span> تومان
+										<span class="num-comma">{{$item->price}}</span> تومان
 									</span>
 									@else
-									<?php $product->offer = $product->price - ($product->offer * $product->price) / 100; ?>
+									<?php $item->offer = $item->price - ($item->offer * $item->price) / 100; ?>
 									<span class="stext-105 cl3">
-										<del><span class="num-comma">{{$product->price}}</span> تومان</del>
-										<span class="num-comma">{{$product->offer}}</span> تومان
+										<del><span class="num-comma">{{$item->price}}</span> تومان</del>
+										<span class="num-comma">{{$item->offer}}</span> تومان
 									</span>
 									@endempty
 								</div>
@@ -377,7 +377,7 @@
 								</div>
 							</div>
 						</div>
-						<input type="hidden" id="pro_id" value="{{$product->pro_id}}}" />
+						<input type="hidden" id="pro_id" value="{{$item->pro_id}}}" />
 					</div>
 					@endforeach
 				@endempty

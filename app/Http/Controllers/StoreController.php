@@ -180,6 +180,8 @@ class StoreController extends Controller
             LEFT JOIN `categories` ON `products`.`category` = `categories`.`id`
             WHERE `pro_id` = ? AND `status`=1", [$id]);
 
+        if ($product == []) { return abort(404); }
+
         $product_feature = DB::select("SELECT `title_table`.`name` as 'title', `features`.`name`, `value`
             FROM `product_features`
             INNER JOIN `features` ON `product_features`.`feature` = `features`.`id`
@@ -256,6 +258,8 @@ class StoreController extends Controller
     {
         $data = Product::select('name', 'short_description', 'aparat_video', 'price', 'unit',
             'offer', 'colors', 'gallery')->where('pro_id', $id)->get();
+
+        if ($product == []) { return false; }
 
         return json_encode($data[0]);
     }

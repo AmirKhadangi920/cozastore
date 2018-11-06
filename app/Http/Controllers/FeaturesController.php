@@ -44,6 +44,8 @@ class FeaturesController extends Controller
     {
         $features = Feature::select('id', 'name')->where('title', null)->get();
         
+        if ($features == []) { return abort(404); }
+
         foreach ($features as $feature) {
             $feature->subs = Feature::select('id', 'name')->where('title', $feature->id)->get();
         }

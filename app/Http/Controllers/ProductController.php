@@ -130,6 +130,8 @@ class ProductController extends Controller
             FROM `products`
             LEFT JOIN `categories` ON `products`.`category` = `categories`.`id` WHERE `pro_id` = ?", [$id]);
 
+        if ($product == []) { return abort(404); }
+
         $photos = Gallery::select('id', 'name', 'description', 'photo')
                 ->whereNotIn('photo', explode(',', $product[0]->gallery))->skip(0)->take(30)->get();
             

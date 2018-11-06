@@ -43,6 +43,8 @@ class InvoiceController extends Controller
                 FROM `orders` INNER JOIN `users` ON `orders`.`buyer` = `users`.`id`
                 WHERE `orders`.`id` = ?', [$id]);
 
+        if ($invoice == []) { return abort(404); }
+
         $order_products = DB::select('SELECT `color`, `count`, `order_products`.`created_at`, `name`,
                 `photo`, `price`, `offer`, `unit`   FROM `order_products`
                 INNER JOIN `products` ON `order_products`.`product` = `products`.`pro_id`

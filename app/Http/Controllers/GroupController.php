@@ -70,6 +70,8 @@ class GroupController extends Controller
         $selected = Group::select('id', 'title', 'description')->where('id', $id)->get();
         $groups = Group::select('id', 'title', 'description')->where('parent', $id)->get();
 
+        if ($selected == []) { return abort(404); }
+
         $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
         foreach ($options as $option) {
             switch ($option['name']) {
@@ -87,7 +89,7 @@ class GroupController extends Controller
             'page_name' => 'group',
             'page_title' => 'ویرایش گروه ' . $title,
             'site_name'=> $site_name,
-            'site_logo'=> $site_
+            'site_logo'=> $site_logo
         ]);
     }
 

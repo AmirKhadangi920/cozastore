@@ -47,17 +47,13 @@
 							<div  id="collapse_1" class="panel-wrapper collapse in">
 								<div  class="panel-body">
 									<div class="form-wrap">
-										<form>
-											<!-- form-group -->
-											<div class="form-group mb-20">
-												<p class="text-muted inline-block mb-10 ml-10 font-13">قیمت امروز دلار را ثبت کنید</p>
-												<div class="input-group mb-15"> <span class="input-group-addon">$</span>
-													<input type="number" placeholder="قیمت 1 دلار" class="form-control">
-												</div>
+										<div class="form-group mb-20">
+											<p class="text-muted inline-block mb-10 ml-10 font-13">قیمت امروز دلار را ثبت کنید</p>
+											<div class="input-group mb-15"> <span class="input-group-addon">$</span>
+												<input type="number" placeholder="قیمت 1 دلار" class="form-control">
 											</div>
-											<!-- /form-group -->
-											<button class="btn btn-danger btn-block mb-10">ثبت قیمت</button>
-										</form>
+										</div>
+										<button class="btn btn-danger btn-block mb-10">ثبت قیمت</button>
 									</div>
 								
 								</div>
