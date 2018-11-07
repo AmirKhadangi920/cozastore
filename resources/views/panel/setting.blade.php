@@ -304,7 +304,7 @@
 							</div>
 
 							<div class="form-wrap">
-								<form action="/panel/setting/social_link" enctype="multipart/form-data" method="POST">
+								<form action="/panel/setting/social_link" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-link font-20 txt-grey ml-10" aria-hidden="true"></i>لینک شبکه های اجتماعی</h6>
 									<hr class="light-grey-hr"/>
 
@@ -349,6 +349,58 @@
 
 									<div class="form-actions">
 										<button class="btn btn-succuess btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره لینک ها</span></button>
+										<div class="clearfix"></div>
+									</div>
+									@csrf
+								</form>
+							</div>
+
+							<div class="form-wrap">
+								<form action="/panel/setting/shipping_cost" method="POST">
+									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-truck font-20 txt-grey ml-10" aria-hidden="true"></i>هزینه های ارسال</h6>
+									<hr class="light-grey-hr"/>
+
+									
+									<div class="panel-body">										
+										<div class="form-wrap">
+											<div class="row mb-10">
+												<div class="col-md-6">
+													<label class="control-label mb-10" for="exampleInputEmail_5">{{$shipping_cost['model1']['name']}}</label>
+													<div class="input-group">
+														<input type="number" value="{{$shipping_cost['model1']['cost']}}" name="shipping_cost[model1]" class="form-control" id="exampleInputEmail_5" placeholder="هزینه ارسال این متد بر حسب تومان">
+														<div class="input-group-addon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<label class="control-label mb-10" for="exampleInputEmail_4">{{$shipping_cost['model2']['name']}}</label>
+													<div class="input-group">
+														<input type="number" value="{{$shipping_cost['model2']['cost']}}" name="shipping_cost[model2]" class="form-control" id="exampleInputEmail_4" placeholder="هزینه ارسال این متد بر حسب تومان">
+														<div class="input-group-addon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+													</div>
+												</div>
+											</div>
+
+											<div class="row mb-10">
+												<div class="col-md-6">
+													<label class="control-label mb-10" for="exampleInputEmail_5">{{$shipping_cost['model3']['name']}}</label>
+													<div class="input-group">
+														<input type="number" value="{{$shipping_cost['model3']['cost']}}" name="shipping_cost[model3]" class="form-control" id="exampleInputEmail_5" placeholder="هزینه ارسال این متد بر حسب تومان">
+														<div class="input-group-addon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<label class="control-label mb-10" for="exampleInputEmail_4">{{$shipping_cost['model4']['name']}}</label>
+													<div class="input-group">
+														<input type="number" value="{{$shipping_cost['model4']['cost']}}" name="shipping_cost[model4]" class="form-control" id="exampleInputEmail_4" placeholder="هزینه ارسال این متد بر حسب تومان">
+														<div class="input-group-addon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-actions">
+										<button class="btn btn-danger btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره هزینه های ارسال</span></button>
 										<div class="clearfix"></div>
 									</div>
 									@csrf

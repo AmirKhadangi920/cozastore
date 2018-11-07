@@ -28,6 +28,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/panel/setting/posters', 'PanelController@poster');
     Route::post('/panel/setting/info', 'PanelController@info');
     Route::post('/panel/setting/social_link', 'PanelController@social_link');
+    Route::post('/panel/setting/shipping_cost', 'PanelController@shipping_cost');
     Route::get('/panel/setting/dollar_cost/{dollar_cost}', 'PanelController@dollar_cost');
 
     // Gallery Route

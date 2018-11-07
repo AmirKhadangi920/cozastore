@@ -8,6 +8,7 @@ use App\Http\Requests\Slider;
 use App\Http\Requests\Poster;
 use App\Http\Requests\Info;
 use App\Http\Requests\SocialLink;
+use App\Http\Requests\ShippingCost;
 use Carbon\Carbon;
 use App\Classes\jdf;
 use App\Option;
@@ -51,13 +52,14 @@ class PanelController extends Controller
     {
         $options = Option::select('name', 'value')->whereIn('name', [
             'slider', 'posters', 'site_name', 'site_description', 'site_logo',
-            'shop_phone', 'shop_address', 'social_link'
+            'shop_phone', 'shop_address', 'social_link', 'shipping_cost'
         ])->get();
         
         foreach ($options as $option) {
             switch ($option['name']) {
                 case 'slider': $slider = json_decode($option['value'], true); break;
                 case 'posters': $posters = json_decode($option['value'], true); break;
+                case 'shipping_cost': $shipping_cost = json_decode($option['value'], true); break;
                 case 'site_name': $site_name = $option['value']; break;
                 case 'site_description': $site_description = $option['value']; break;
                 case 'site_logo': $site_logo = $option['value']; break;
@@ -73,6 +75,7 @@ class PanelController extends Controller
             'slider' => $slider,
             'posters' => $posters,
             'site_name' => $site_name,
+            'shipping_cost' => $shipping_cost,
             'site_description' => $site_description,
             'site_logo' => $site_logo,
             'shop_phone' => $shop_phone,
@@ -215,5 +218,23 @@ class PanelController extends Controller
         $option -> save();
         
         return redirect()->back()->with('message', 'قیمت دلار با موفقیت بروز رسانی شد');
+    }
+
+    public function shipping_cost (ShippingCost $req)
+    {
+        $option = Option::select('id', 'value')->where('name', 'shipping_cost')->get();
+        $option_id = $option[0] -> id;
+        $option_value = json_decode($option[0] -> value, true);
+
+        $option_value['model1']['cost'] = $req->shipping_cost['model1'];
+        $option_value['model2']['cost'] = $req->shipping_cost['model2'];
+        $option_value['model3']['cost'] = $req->shipping_cost['model3'];
+        $option_value['model4']['cost'] = $req->shipping_cost['model4'];
+
+        $option = Option::find($option_id);
+        $option -> value = json_encode($option_value);
+        $option -> save();
+
+        return redirect()->back()->with('message', 'هزینه های ارسال با موفقیت بروز رسانی شدند');
     }
 }
