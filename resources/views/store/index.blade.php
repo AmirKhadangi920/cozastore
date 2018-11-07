@@ -504,6 +504,6 @@
 		</script>
 
 		<script src="{{ asset('js/main.js') }}"></script>
-
+		<script>var dollar_cost = {{$dollar_cost}};</script>
 		<script src="{{ asset('dist/js/quickview.js') }}"></script>
 @endsection

@@ -11,6 +11,15 @@
 	@foreach ($styles as $style)
 	<link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
 	@endforeach
+
+	<style>
+	.label.label-orange {
+		background: #ff9528;
+	}
+	.label.label-dark {
+		background: #000;
+	}
+	</style>
 @endsection
 	
 @section('content')
@@ -66,7 +75,7 @@
 												<td>#{{$order->id}}</td>
 												<td>{{$order->first_name.' '.$order->last_name}}</td>
 												<td>{{$order->admin_description}}</td>
-												<td>{{$order->total}}</td>
+												<td><span class="num-comma">{{$order->total}}</span> تومان</td>
 												<td>
 													<?php
 													switch ($order->status) {
@@ -133,9 +142,19 @@
 		'dist/js/dropdown-bootstrap-extended.js',
 		// Init JavaScript
 		'dist/js/init.js',
+		// js numeral formatter
+		'js/numeral.min.js'
 	]; ?>
 
 	@foreach ($scripts as $script)
 		<script src="{{ asset($script) }}"></script>
 	@endforeach
+	
+	<script>
+		var nums = document.getElementsByClassName('num-comma');
+
+		for (num in nums) {
+			nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
+		}
+	</script>
 @endsection

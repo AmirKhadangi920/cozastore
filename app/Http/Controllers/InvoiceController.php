@@ -46,7 +46,7 @@ class InvoiceController extends Controller
         if ($invoice == []) { return abort(404); }
 
         $order_products = DB::select('SELECT `color`, `count`, `order_products`.`created_at`, `name`,
-                `photo`, `products`.`price`, `offer`, `unit`   FROM `order_products`
+                `photo`, `products`.`price`, `products`.`offer`, `unit`   FROM `order_products`
                 INNER JOIN `products` ON `order_products`.`product` = `products`.`pro_id`
                 WHERE `order_products`.`order` = ?', [$id]);
 

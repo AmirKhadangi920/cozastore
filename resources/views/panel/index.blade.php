@@ -252,7 +252,7 @@
 														<td>#{{$order->id}}</td>
 														<td>{{$order->first_name.' '.$order->last_name}}</td>
 														<td>{{$order->admin_description}}</td>
-														<td>{{$order->total}}</td>
+														<td><span class="num-comma">{{$order->total}}</span> تومان</td>
 														<td>
 															<?php
 															switch ($order->status) {
@@ -343,9 +343,19 @@
 		// Init JavaScript
 		'dist/js/init.js',
 		'dist/js/ecommerce-data.js',
+		// js numeral formatter
+		'js/numeral.min.js'
 	]; ?>
 
 	@foreach ($scripts as $script)
 		<script src="{{ asset($script) }}"></script>
 	@endforeach
+
+	<script>
+		var nums = document.getElementsByClassName('num-comma');
+
+		for (num in nums) {
+			nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
+		}
+	</script>
 @endsection

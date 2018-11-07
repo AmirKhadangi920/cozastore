@@ -13,7 +13,14 @@ function quickview (id) {
             data = JSON.parse(data);
             
             $('.js-modal1 .js-name-detail').text(data.name);
-            $('.js-modal1 .price').text(data.price + ' تومان');
+            if (data.unit) {
+                data.price = data.price * dollar_cost;
+            }
+            if (data.offer != 0) {
+                data.price = data.price - (data.price * data.offer) / 100;
+            }
+            
+            $('.js-modal1 .price').text(numeral(data.price).format('0,0') + ' تومان');
             $('.js-modal1 .short-description').text(data['short_description']);
 
 
