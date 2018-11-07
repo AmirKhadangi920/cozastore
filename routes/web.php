@@ -80,5 +80,6 @@ Route::get('/cart/add/{id}/{title}/{count}/{color?}', 'CartController@add');
 
 Route::get('/contact', function(){return view('store.contact')->with('page_name', 'contact'); });
 Route::get('/about', function(){ return view('store.about')->with('page_name', 'about'); });
+Route::get('/verify_payment', 'CartController@verify_payment');
 
 Auth::routes();

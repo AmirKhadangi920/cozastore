@@ -88,11 +88,15 @@
 													$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 												?>
 												<td>{{$time->hour.':'.$time->minute.' | '.$created_at}}</td>
-												<?php 
+												@if ($order->payment)
+												<?php
 													$time = new Carbon\Carbon($order->payment);
 													$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 												?>
 												<td>{{$time->hour.':'.$time->minute.' | '.$payment}}</td>
+												@else
+												<td><span class="label label-danger">هنوز پرداخت نشده</span></td>
+												@endif
 												<td>
 													<a href="/panel/invoice/{{$order->id}}">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>

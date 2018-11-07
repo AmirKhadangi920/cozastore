@@ -171,7 +171,7 @@
 											$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 										?>
 										<b class="txt-dark">ثبت :</b> {{$time->hour.':'.$time->minute.' | '.$created_at}}<br/>
-										<?php 
+										<?php
 											$time = new Carbon\Carbon($invoice->payment);
 											$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 										?>

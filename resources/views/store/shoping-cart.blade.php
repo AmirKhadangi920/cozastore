@@ -144,6 +144,7 @@
 											</td>
 											<?php $total += $price * $cart_product->count; ?>
 											<td class="column-5">{{($cart_product->color) ? $cart_product->color : 'بدون رنگ'}}</td>
+											<input type="hidden" name="products[{{$cart_product->pro_id}}][color]" value="{{$cart_product->color}}" />
 											<td class="column-6"><span class="price num-comma">{{$price * $cart_product->count}}</span> تومان</td>
 										</tr>
 										@endforeach
@@ -194,8 +195,13 @@
 									</span>
 								</div>
 
-								<div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
-									<p class="stext-111 cl6 p-t-2">
+								<div class="size-209  w-full-ssm">
+									<select name="shipping_cost">
+										@foreach($shipping_cost as $key => $item)
+										<option value="{{$key}}" cost="{{$item['cost']}}">{{$item['name'] . ' - '.$item['cost'].' تومان'}}</option>
+										@endforeach
+									</select>
+									{{-- <p class="stext-111 cl6 p-t-2">
 										هزینه حمل و نقد <b>8000</b> بوده و سفارشات بعد از <b>3</b> روز کاری بدست شما خواهند رسید
 									</p>
 									
@@ -203,7 +209,7 @@
 										<span class="stext-112 cl8">
 											هزینه حمل و نقل : <b>8,000</b>
 										</span>
-									</div>
+									</div> --}}
 								</div>
 							</div>
 
@@ -216,7 +222,7 @@
 
 								<div class="size-209 p-t-1">
 									<span class="mtext-110 cl2">
-										<span class="total num-comma">{{$total + 8000}}</span> تومان
+										<span class="final_total num-comma">{{$total + $shipping_cost['model1']['cost']}}</span> تومان
 									</span>
 								</div>
 							</div>
@@ -300,6 +306,41 @@
 			for (num in nums) {
 				nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
 			}
+
+			$('.btn-num-product-up').click(function ()
+			{
+				var price = $(this).parent().parent().prev().find('.num-comma').text();
+				var total = $(this).parent().parent().next().next().find('.num-comma');
+				price = price.replace(/,/g, '') * 1;
+				var output = numeral(total.text().replace(/,/g, '') * 1 + price).format('0,0');
+				total.text(output);
+				
+				total = $('.total');
+				output = numeral(total.text().replace(/,/g, '') * 1 + price).format('0,0');
+				total.text(output);
+				
+				total = $('.final_total');
+				output = numeral(total.text().replace(/,/g, '') * 1 + price).format('0,0');
+				total.text(output);
+			});
+
+			$('.btn-num-product-down').click(function ()
+			{
+				if ($(this).next().val() == 0) { return; }
+				var price = $(this).parent().parent().prev().find('.num-comma').text();
+				var total = $(this).parent().parent().next().next().find('.num-comma');
+				price = price.replace(/,/g, '') * 1;
+				var output = numeral(total.text().replace(/,/g, '') * 1 - price).format('0,0');
+				total.text(output);
+				
+				total = $('.total');
+				output = numeral(total.text().replace(/,/g, '') * 1 - price).format('0,0');
+				total.text(output);
+				
+				total = $('.final_total');
+				output = numeral(total.text().replace(/,/g, '') * 1 - price).format('0,0');
+				total.text(output);
+			});
 		</script>
 		
 		<script src="{{ asset('js/main.js') }}"></script>

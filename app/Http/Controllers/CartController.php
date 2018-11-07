@@ -19,7 +19,7 @@ class CartController extends Controller
     public function index (Request $request)
     {
         $options = Option::select('name', 'value')->whereIn('name', 
-            ['site_name', 'site_description', 'site_logo', 'social_link', 'dollar_cost'])->get();
+            ['site_name', 'site_description', 'site_logo', 'social_link', 'dollar_cost', 'shipping_cost'])->get();
         foreach ($options as $option) {
             switch ($option['name']) {
                 case 'slider': $slider = json_decode($option['value'], true); break;
@@ -29,6 +29,7 @@ class CartController extends Controller
                 case 'site_logo': $site_logo = $option['value']; break;
                 case 'dollar_cost': $dollar_cost = $option['value']; break;
                 case 'social_link': $social_link = json_decode($option['value'], true); break;
+                case 'shipping_cost': $shipping_cost = json_decode($option['value'], true); break;
             }
         }
 
@@ -40,6 +41,7 @@ class CartController extends Controller
             'page_title' => 'سبد خرید',
             'site_name' => $site_name,
             'site_description' => $site_description,
+            'shipping_cost' => $shipping_cost,
             'site_logo' => $site_logo,
             'social_link' => $social_link,
         ]);
@@ -162,46 +164,51 @@ class CartController extends Controller
         if (Auth::check())
         {
             $order = Order::select('id')->where('buyer', Auth::user()->id)->where('status', 0)->get();
-            if ($order == []) { return abort('404'); }
+
+            if ($order->all() == []) { return abort('404'); }
             $order_id = $order[0] -> id;
             $id = [];
             foreach ($req->products as $key => $value) { $id[] = $key; }
 
+            
             $cart_products = Product::select('pro_id', 'price', 'unit', 'offer')
                 ->whereIn('pro_id', $id)->get();
 
             $total = $offer = 0;
 
-            $dollar_cost = 14500; // this should get from server
-            $shipping_cost = 20000; // this should get from server
+            $options = Option::select('name', 'value')->whereIn('name', ['dollar_cost', 'shipping_cost'])->get();
+            foreach ($options as $option) {
+                switch ($option['name']) {
+                    case 'dollar_cost': $dollar_cost = $option['value']; break;
+                    case 'shipping_cost': $shipping_cost = json_decode($option['value'], true); break;
+                }
+            }
+
+            $dollar_cost = $dollar_cost; // this should get from server
+            $shipping_cost = $shipping_cost[$req->shipping_cost]['cost'];
             
             foreach ($cart_products as $item)
             {
-                $price = $item->price;
                 if ($item->unit)
-                    $price = $price * $dollar_cost;
-                    $total += $price;
+                {
+                    $item->price = $item->price * $dollar_cost;
+                    $total += $item->price * $req -> products[$item['pro_id']]['count'];
+                }
 
                 if ($item -> offer != 0)
-                    $price = $price - ($item->offer * $price) / 100;
-                    $offer += ($item->offer * $price) / 100;
-
+                {
+                    $item -> offer = ($item->offer * $item->price) / 100;
+                    $offer += $item->offer * $req -> products[$item['pro_id']]['count'];
+                }
+                
                 $cart_product = OrderProducts::select('id')->where('product', $item['pro_id'])->get();
                 $cart_product = OrderProducts::find($cart_product[0] -> id);
-                if(isset($req -> products[$item['pro_id']]['color'])) {
-                    $cart_product -> color = $req -> products[$item['pro_id']]['color'];
-                } else {
-                    $cart_product -> color = NULL;   
-                }
+                $cart_product -> color = $req -> products[$item['pro_id']]['color'];
                 $cart_product -> count = $req -> products[$item['pro_id']]['count'];
-                $cart_product -> price = $price;
+                $cart_product -> price = $item->price;
+                $cart_product -> offer = $item->offer;
                 $cart_product -> save();
-
-                
-                echo '<pre>';
-                print_r($req -> products[$item['pro_id']]);
             }
-            // print_r($cart_product);
 
             $order = Order::find($order_id);
             $order -> destination = $req->address;
@@ -209,21 +216,83 @@ class CartController extends Controller
             $order -> buyer_description = $req->description;
             $order -> offer = $offer;
             $order -> shipping_cost = $shipping_cost;
-            $order -> total = 5334024543;
-            // $order -> status = 1;
+            $order -> total = $total;
+            $order -> status = 1;
             $datetimes = json_decode($order -> datetimes, true);
             $datetimes['awaitingPayment'] = time();
             $order -> datetimes = json_encode($datetimes);
             $order -> save();
             
-            echo $total;
-            echo '<br/>';
-            echo $offer;
-            return;
-            
-            echo '<pre>';
-            print_r($req->all());
-            return;
-        } 
+            return 'every thing doing ok';
+        }
+        else
+        {
+            return redirect()->back();
+        }
+    }
+
+    public function paymentGateway ()
+    {
+        $site_name = Option::select('name', 'value')->whereIn('name', 'site_name')->get();
+        $site_name = $site_name[0] -> value;
+        
+        $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'; //Required
+        $Amount = 1000; //Amount will be based on Toman - Required
+        $Description = 'پرداخت فاکتور شما در فروشگاه ' . $site_name; // Required
+        // $Email = 'UserEmail@Mail.Com'; // Optional
+        // $Mobile = '09123456789'; // Optional
+        $CallbackURL = 'http://hicostore.ir/verify_payment'; // Required
+
+
+        $client = new SoapClient('https://www.zarinpal.com/pg/services/WebGate/wsdl', ['encoding' => 'UTF-8']);
+
+        $result = $client->PaymentRequest([
+            'MerchantID' => $MerchantID,
+            'Amount' => $Amount,
+            'Description' => $Description,
+            // 'Email' => $Email,
+            // 'Mobile' => $Mobile,
+            'CallbackURL' => $CallbackURL,
+        ]);
+
+        //Redirect to URL You can do it also by creating a form
+        if ($result->Status == 100)
+        {
+            Header('Location: https://www.zarinpal.com/pg/StartPay/'.$result->Authority);
+        }
+        else
+        {
+            echo 'ERR: '.$result->Status;
+        }
+    }
+
+    public function verify_payment ()
+    {
+        $MerchantID = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX';
+        $Amount = 1000; //Amount will be based on Toman
+        $Authority = $_GET['Authority'];
+
+        if ($_GET['Status'] == 'OK')
+        {
+            $client = new SoapClient('https://www.zarinpal.com/pg/services/WebGate/wsdl', ['encoding' => 'UTF-8']);
+            $result = $client->PaymentVerification([
+                'MerchantID' => $MerchantID,
+                'Authority' => $Authority,
+                'Amount' => $Amount,
+            ]);
+
+            if ($result->Status == 100)
+            {
+                echo 'Transaction success. RefID:'.$result->RefID;
+            }
+            else
+            {
+                echo 'Transaction failed. Status:'.$result->Status;
+            }
+        }
+        else
+        {
+            echo 'Transaction canceled by user';
+        }
     }
 }
