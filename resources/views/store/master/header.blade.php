@@ -98,7 +98,7 @@
     <div class="wrap-header-mobile">
         <!-- Logo moblie -->		
         <div class="logo-mobile">
-            <a href="index.php"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
+            <a href="index.php"><img src="{{ asset('logo/'.$site_logo) }}" alt="IMG-LOGO"></a>
         </div>
 
         <!-- Icon header -->
@@ -130,61 +130,56 @@
         <ul class="topbar-mobile">
             <li>
                 <div class="left-top-bar">
-                    حمل و نقل رایگان برای سفارش استاندارد بیش از 100 دلار					</div>
+                    به فروشگاه اینترنتی {{$site_name}} خوش آمدید	
+                </div>
             </li>
 
             <li>
                 <div class="right-top-bar flex-w h-full">
-                    <a href="#" class="flex-c-m p-lr-10 trans-04">
-                        پرسش و پاسخ
-                    </a>
+                        @guest
+                        <a class="flex-c-m p-lr-10 trans-04" href="/cart"><i class="fa fa-shopping-cart m-l-5"></i>سبد خرید</a>
+                        <a class="flex-c-m p-lr-10 trans-04" href="{{ route('login') }}"><i class="fa fa-user m-l-5"></i>{{ __('ورود') }}</a>
+                        @if (Route::has('register'))
+                            <a class="flex-c-m p-lr-10 trans-04" href="{{ route('register') }}"><i class="fa fa-edit m-l-5"></i>{{ __('ثبت نام') }}</a>
+                        @endif
+                    @else
+                        @if (\Auth::user()->type == 1)
+                        @isset($product->name)
+                        <a class="flex-c-m p-lr-10 trans-04" href="/panel/products/edit/{{$product->pro_id}}"><i class="fa fa-edit m-l-5"></i>ویرایش محصول</a>
+                        @endisset
+                        <a class="flex-c-m p-lr-10 trans-04" href="/panel"><i class="fa fa-bars m-l-5" aria-hidden="true"></i>پنل مدیریت</a>
+                        @endif
+                        <a class="flex-c-m p-lr-10 trans-04" href="/cart"><i class="fa fa-shopping-cart m-l-5"></i>سبد خرید</a>
 
-                    <a href="#" class="flex-c-m p-lr-10 trans-04">
-                        اکانت من
-                    </a>
+                        <a class="flex-c-m p-lr-10 trans-04" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                            <i class="fa fa-sign-out m-l-5"></i>{{ __('خروج') }}
+                        </a>
 
-                    <a href="#" class="flex-c-m p-lr-10 trans-04">
-                        EN
-                    </a>
-
-                    <a href="#" class="flex-c-m p-lr-10 trans-04">
-                        USD
-                    </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @endguest
                 </div>
             </li>
         </ul>
 
         <ul class="main-menu-m">
             <li>
-                <a href="index.php">صفحه اصلی</a>
-                <ul class="sub-menu-m">
-                    <li><a href="index.php">صفحه اصلی 1</a></li>
-                    <li><a href="home-02.php">صفحه اصلی 2</a></li>
-                    <li><a href="home-03.php">صفحه اصلی 3</a></li>
-                </ul>
-                <span class="arrow-main-menu-m">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </span>
+                <a href="/">صفحه اصلی</a>
             </li>
 
             <li>
-                <a href="product.php">فروشگاه</a>
+                <a href="/products">فروشگاه</a>
             </li>
 
             <li>
-                <a href="shoping-cart.php" class="label1 rs1" data-label1="جدید">امکانات</a>
+                <a href="/contact">ارتباط</a>
             </li>
-
+            
             <li>
-                <a href="blog.php">وبلاگ</a>
-            </li>
-
-            <li>
-                <a href="about.php">درباره</a>
-            </li>
-
-            <li>
-                <a href="contact.php">ارتباط</a>
+                <a href="/about">درباره</a>
             </li>
         </ul>
     </div>
