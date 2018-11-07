@@ -163,7 +163,7 @@
 									</div>
 
 									<div class="form-actions">
-										<button class="btn btn-info btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره پوسترها</span></button>
+										<button class="btn btn-info btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره اسلایدر</span></button>
 										<div class="clearfix"></div>
 									</div>
 									@csrf
@@ -236,7 +236,7 @@
 									<hr class="light-grey-hr"/>
 
 									<div class="form-actions">
-										<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره اسلایدر</span></button>
+										<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره پوسترها</span></button>
 										<div class="clearfix"></div>
 									</div>
 									@csrf

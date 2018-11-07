@@ -11,7 +11,7 @@
         </div>	
         <a id="toggle_nav_btn" class="toggle-left-nav-btn inline-block ml-20 pull-left" href="javascript:void(0);"><i class="zmdi zmdi-menu"></i></a>
         <a id="toggle_mobile_search" data-toggle="collapse" data-target="#search_form" class="mobile-only-view" href="javascript:void(0);"><i class="zmdi zmdi-search"></i></a>
-        <a id="toggle_mobile_nav" class="mobile-only-view" href="javascript:void(0);"><i class="zmdi zmdi-more"></i></a>
+        {{-- <a id="toggle_mobile_nav" class="mobile-only-view" href="javascript:void(0);"><i class="zmdi zmdi-more"></i></a> --}}
         <form id="search_form" role="search" class="top-nav-search collapse pull-right">
             <div class="input-group">
                 <input type="text" name="example-input1-group2" class="form-control" placeholder="جستجو ...">
@@ -25,7 +25,7 @@
         <ul class="nav navbar-right top-nav pull-right">
             
             
-            <li class="dropdown alert-drp">
+            {{-- <li class="dropdown alert-drp">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="zmdi zmdi-notifications top-nav-icon"></i><span class="top-nav-icon-badge"></span></a>
                 <ul  class="dropdown-menu alert-dropdown" data-dropdown-in="bounceIn" data-dropdown-out="bounceOut">
                     <li>
@@ -121,21 +121,18 @@
             </li>
             <li>
                 <a id="open_right_sidebar" href="#"><i class="zmdi zmdi-settings  top-nav-icon"></i></a>
-            </li>
+            </li> --}}
             <li class="dropdown auth-drp">
                 <a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><span class="user-auth-name inline-block">{{Auth::user()->first_name.' '.Auth::user()->last_name}} &nbsp;<span class="ti-angle-down"></span></span></a>
                 <ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                     <li>
-                        <a href="/panel/profile"><i class="zmdi zmdi-account"></i><span>مشخصات</span></a>
+                        <a href="/panel/products/add"><i class="zmdi zmdi-plus"></i><span>ثبت محصول</span></a>
                     </li>
                     <li>
-                        <a href="#"><i class="zmdi zmdi-card"></i><span>تراز من</span></a>
+                        <a href="/panel/setting"><i class="zmdi zmdi-settings"></i><span>تنظیمات</span></a>
                     </li>
                     <li>
-                        <a href="/panel/inbox"><i class="zmdi zmdi-email"></i><span>صندوق دریافتی</span></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="zmdi zmdi-settings"></i><span>تنظیمات</span></a>
+                            <a href="/"><i class="zmdi zmdi-eye"></i><span>مشاهده وبسایت</span></a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -161,10 +158,10 @@
 <div class="fixed-sidebar-left">
     <ul class="nav navbar-nav side-nav nicescroll-bar">
         <li>
-            <a @if($page_name == 'main') class="active" @endif href="/panel"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-bars ml-5" aria-hidden="true"></i>داشبورد</span></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'main') class="active" @endif href="/panel"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-bars ml-5" aria-hidden="true"></i>داشبورد</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'group' || $page_name == 'feature') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><i class="ti-shopping-cart  mr-20"></i><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-right"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'group' || $page_name == 'feature') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="ecom_dr" class="collapse collapse-level-1">
                 <li>
                     <a @if($page_name == 'group') class="active-page" @endif href="/panel/group"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گروه بندی محصولات</a>
@@ -175,7 +172,7 @@
             </ul>
         </li>
         <li>
-            <a @if($page_name == 'add_product' || $page_name == 'products') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#gp_dr"><div class="pull-left"><i class="ti-shopping-cart  mr-20"></i><span class="right-nav-text"><i class="fa fa-cart-arrow-down ml-5" aria-hidden="true"></i>محصولات</span></div><div class="pull-right"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'add_product' || $page_name == 'products') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#gp_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-cart-arrow-down ml-5" aria-hidden="true"></i>محصولات</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="gp_dr" class="collapse collapse-level-1">
                 <li>
                     <a @if($page_name == 'add_product') class="active-page" @endif href="/panel/products/add"><i class="fa fa-cart-plus ml-5" aria-hidden="true"></i>افزودن محصول</a>
@@ -186,20 +183,16 @@
             </ul>
         </li>
         <li>
-            <a @if($page_name == 'invoices') class="active" @endif href="/panel/invoices"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-files-o ml-5" aria-hidden="true"></i>سفارشات</span></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'invoices') class="active" @endif href="/panel/invoices"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-files-o ml-5" aria-hidden="true"></i>سفارشات</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'gallery') class="active" @endif href="/panel/gallery"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-picture-o ml-5" aria-hidden="true"></i>گالری</span></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'gallery') class="active" @endif href="/panel/gallery"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-picture-o ml-5" aria-hidden="true"></i>گالری</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'setting') class="active" @endif href="/panel/setting"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-sliders ml-5" aria-hidden="true"></i>تنظیمات</span></div><div class="clearfix"></div></a>
+            <a @if($page_name == 'setting') class="active" @endif href="/panel/setting"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-sliders ml-5" aria-hidden="true"></i>تنظیمات</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a href="/"><div class="pull-left"><i class="ti-book mr-20"></i><span class="right-nav-text"><i class="fa fa-eye ml-5" aria-hidden="true"></i>مشاهده وبسایت</span></div><div class="clearfix"></div></a>
-        </li>
-        <li class="navigation-header mt-20">
-            <span>featured</span> 
-            <hr/>
+            <a href="/"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-eye ml-5" aria-hidden="true"></i>مشاهده وبسایت</span></div><div class="clearfix"></div></a>
         </li>
     </ul>
 </div>

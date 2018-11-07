@@ -28,6 +28,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/panel/setting/posters', 'PanelController@poster');
     Route::post('/panel/setting/info', 'PanelController@info');
     Route::post('/panel/setting/social_link', 'PanelController@social_link');
+    Route::get('/panel/setting/dollar_cost/{dollar_cost}', 'PanelController@dollar_cost');
 
     // Gallery Route
     Route::get('/panel/gallery', 'GalleryController@index');
@@ -72,6 +73,7 @@ Route::get('/product/quickview/{id}', 'StoreController@quickview');
 
 // Cart Rotes
 Route::get('/cart', 'CartController@index');
+Route::post('/cart/pay', 'CartController@pay')->middleware('auth');
 Route::get('/cart/remove/{id}/{title}', 'CartController@remove');
 Route::get('/cart/add/{id}/{title}/{count}/{color?}', 'CartController@add');
 

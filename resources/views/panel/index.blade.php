@@ -27,6 +27,19 @@
 	<div class="container pt-30">
 		<!-- Row -->
 		<div class="row">
+			@foreach ($errors -> all() as $message)
+				<div class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					{{ $message }} 
+				</div>
+			@endforeach
+
+			@if(session()->has('message'))
+				<div class="alert alert-success alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					{{ session()->get('message') }}
+				</div>
+			@endif
 			
 			<div class="col-md-4 col-sm-6">
 				<div class="row">
@@ -50,10 +63,10 @@
 										<div class="form-group mb-20">
 											<p class="text-muted inline-block mb-10 ml-10 font-13">قیمت امروز دلار را ثبت کنید</p>
 											<div class="input-group mb-15"> <span class="input-group-addon">$</span>
-												<input type="number" placeholder="قیمت 1 دلار" class="form-control">
+												<input type="number" value="{{$dollar_cost}}" onkeyup="this.parentNode.parentNode.nextElementSibling.href = 'panel/setting/dollar_cost/'+this.value" placeholder="قیمت 1 دلار" class="form-control">
 											</div>
 										</div>
-										<button class="btn btn-danger btn-block mb-10">ثبت قیمت</button>
+										<a class="btn btn-danger btn-block mb-10">ثبت قیمت</a>
 									</div>
 								
 								</div>
@@ -102,7 +115,7 @@
 								<div class="pull-right">
 									<h6 class="panel-title txt-dark">بررسی های اخیر</h6>
 								</div>
-								<div class="pull-left">
+								{{-- <div class="pull-left">
 									<div class="form-group mb-0 sm-bootstrap-select">
 										<select class="selectpicker" data-style="form-control">
 											<option>جدید ترین ها</option>
@@ -110,72 +123,40 @@
 											<option>پایین ترین امتیاز</option>
 										</select>
 									</div>	
-								</div>
+								</div> --}}
 								<div class="clearfix"></div>
 							</div>
 							<div class="panel-wrapper collapse in">
 							<div class="panel-body row pa-0">
 									<div class="streamline">
+										@foreach($reviews as $review)
 										<div class="sl-item">
 											<div class="sl-content">
 												<div class="per-rating inline-block pull-right">
-													<span class="inline-block">برای ساعت هوشمند</span>
-													<a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star-outline"></a>
+													<span class="inline-block">برای {{$review->name}}</span>
+													@for ($i = 0; $i < 5; ++$i)
+														<a class="zmdi @if($review->rating > 0) zmdi-star <?php --$review->rating; ?> @else zmdi-star-outline @endif"></a>
+													@endfor
 												</div>
 												<a href="javascript:void(0);"  class="pull-left txt-grey"><i class="zmdi zmdi-mail-reply"></i></a>
 												<div class="clearfix"></div>
 												<div class="inline-block pull-right">
 													<span class="reviewer font-13">
 														<span>توسط</span>
-														<a href="javascript:void(0)" class="inline-block capitalize-font  mb-5">فاطمه فتحی</a>
-													</span>	
-													<span class="inline-block font-13  mb-5">7 روز پیش</span>
+														<a href="javascript:void(0)" class="inline-block capitalize-font  mb-5">{{$review->fullname}}</a>
+													</span>
+													<?php 
+														$time = new Carbon\Carbon($review->created_at);
+														$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+													?>
+													<span class="inline-block font-13  mb-5">{{$time->hour.':'.$time->minute.' | '.$created_at}}</span>
 												</div>	
 												<div class="clearfix"></div>
-												<p class="mt-5">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+												<p class="mt-5">{{$review->review}}</p>
 											</div>
 										</div>
 										<hr class="light-grey-hr"/>
-										<div class="sl-item">
-											<div class="sl-content">
-												<div class="per-rating inline-block pull-right">
-													<span class="inline-block">برای محافظ صفحه نمایش</span>
-													<a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star-outline"></a>
-												</div>
-												<a href="javascript:void(0);"  class="pull-left txt-grey"><i class="zmdi zmdi-mail-reply"></i></a>
-												<div class="clearfix"></div>
-												<div class="inline-block pull-right">
-													<span class="reviewer font-13">
-														<span>توسط</span>
-														<a href="javascript:void(0)" class="inline-block capitalize-font  mb-5">محسن رضایی</a>
-													</span>	
-													<span class="inline-block font-13  mb-5">7 ساعت پیش</span>
-												</div>	
-												<div class="clearfix"></div>
-												<p class="mt-5">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
-											</div>
-										</div>
-										<hr class="light-grey-hr"/>
-										<div class="sl-item">
-											<div class="sl-content">
-												<div class="per-rating inline-block pull-right">
-													<span class="inline-block">برای ساعت طرح اپل</span>
-													<a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star"></a><a href="javascript:void(0);" class="zmdi zmdi-star-outline"></a>
-												</div>
-												<a href="javascript:void(0);"  class="pull-left txt-grey"><i class="zmdi zmdi-mail-reply"></i></a>
-												<div class="clearfix"></div>
-												<div class="inline-block pull-right">
-													<span class="reviewer font-13">
-														<span>توسط</span>
-														<a href="javascript:void(0)" class="inline-block capitalize-font  mb-5">رضا احمدی</a>
-													</span>	
-													<span class="inline-block font-13  mb-5">12 روز پیش</span>
-												</div>	
-												<div class="clearfix"></div>
-												<p class="mt-5">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
-											</div>
-										</div>
-										<hr class="light-grey-hr"/>
+										@endforeach
 									</div>
 								</div>
 							</div>
@@ -245,102 +226,66 @@
 								<div class="pull-right">
 									<h6 class="panel-title txt-dark">لیست سفارشات</h6>
 								</div>
-								<div class="pull-left">
-									<a href="#" class="pull-left inline-block refresh mr-15">
-										<i class="zmdi zmdi-replay"></i>
-									</a>
-									<a href="#" class="pull-left inline-block full-screen mr-15">
-										<i class="zmdi zmdi-fullscreen"></i>
-									</a>
-									<div class="pull-left inline-block dropdown">
-										<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="zmdi zmdi-more-vert"></i></a>
-										<ul class="dropdown-menu bullet dropdown-menu-right"  role="menu">
-											<li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>option 1</a></li>
-											<li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i>option 2</a></li>
-											<li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-trash" aria-hidden="true"></i>option 3</a></li>
-										</ul>
-									</div>
-								</div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body row pa-0">
 									<div class="table-wrap">
 										<div class="table-responsive">
-											<table id="datable_1" class="table  display table-hover border-none">
+											<table id="datable_1" class="table  display table-hover mb-30">
 												<thead>
 													<tr>
-														<th>#شناسه</th>
-														<th>توضیح</th>
+														<th>شناسه فاکتور</th>
+														<th>خریدار</th>
+														<th>توضیحات</th>
 														<th>مبلغ</th>
 														<th>وضعیت</th>
 														<th>ثبت سفارش</th>
 														<th>پرداخت</th>
-														<th>مشاهده</th>
+														<th>اطلاعات بیشتر</th>
 													</tr>
 												</thead>
 
 												<tbody>
+													@foreach ($orders as $order)
 													<tr>
-														<td>#5012</td>
-														<td>خرید از فروشگاه</td>
-														<td>205,500 تومان</td>
+														<td>#{{$order->id}}</td>
+														<td>{{$order->first_name.' '.$order->last_name}}</td>
+														<td>{{$order->admin_description}}</td>
+														<td>{{$order->total}}</td>
 														<td>
-															<span class="label label-danger">پرداخت نشده</span>
+															<?php
+															switch ($order->status) {
+																case 0: $status = ['پرداخت نشده', 'info']; break;
+																case 1: $status = ['در انتظار پرداخت', 'warning']; break; 
+																case 2: $status = ['پرداخت شده', 'dark']; break;
+																case 3: $status = ['در حال بررسی', 'orange']; break;
+																case 4: $status = ['در حال بسته بندی', 'warning']; break;
+																case 5: $status = ['در حال ارسال', 'primary']; break;
+																case 6: $status = ['ارسال شده', 'success']; break;
+																case 7: $status = ['لغو شده', 'danger']; break;
+																default: $status = ['پرداخت نشده', 'info'];
+															}
+															?>
+															<span class="label label-{{$status[1]}}">{{$status[0]}}</span>
 														</td>
-														<td>2011/04/25</td>
-														<td>2012/12/02</td>
+														<?php 
+															$time = new Carbon\Carbon($order->created_at);
+															$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+														?>
+														<td>{{$created_at.' | '.$time->hour.':'.$time->minute}}</td>
+														<?php 
+															$time = new Carbon\Carbon($order->payment);
+															$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+														?>
+														<td>{{$payment.' | '.$time->hour.':'.$time->minute}}</td>
 														<td>
-															<a href="#">
+															<a href="/panel/invoice/{{$order->id}}">
 																<i class="fa fa-file-text-o" aria-hidden="true"></i>
 															</a>	
 														</td>
 													</tr>
-													<tr>
-														<td>#5013</td>
-														<td>یک توضیح</td>
-														<td>205,500 تومان</td>
-														<td>
-															<span class="label label-success">پرداخت شده</span>
-														</td>
-														<td>2011/07/25</td>
-														<td>2012/12/02</td>
-														<td>
-															<a href="#">
-																<i class="fa fa-file-text-o" aria-hidden="true"></i>
-															</a>	
-														</td>
-													</tr>
-													<tr>
-														<td>#5014</td>
-														<td>خرید کامل و تمام</td>
-														<td>205,500 تومان</td>
-														<td>
-															<span class="label label-warning">در انتظار پرداخت</span>
-														</td>
-														<td>2009/01/12</td>
-														<td>2012/12/02</td>
-														<td>
-															<a href="#">
-																<i class="fa fa-file-text-o" aria-hidden="true"></i>
-															</a>	
-														</td>
-													</tr>
-													<tr>
-														<td>#5015</td>
-														<td>توضیح متنی</td>
-														<td>205,500 تومان</td>
-														<td>
-															<span class="label label-success">پرداخت شده</span>
-														</td>
-														<td>2012/03/29</td>
-														<td>2012/12/02</td>
-														<td>
-															<a href="#">
-																<i class="fa fa-file-text-o" aria-hidden="true"></i>
-															</a>	
-														</td>
-													</tr>
+													@endforeach
 												</tbody>
 											</table>
 										</div>

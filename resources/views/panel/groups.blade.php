@@ -198,7 +198,7 @@
 			<?php $colors = ['danger', 'warning', 'info', 'primary', 'success']; $i = $x = 0; ?>
 
 			@foreach ($groups as $group)
-				<div class="col-md-3">
+				<div class="col-md-3 col-sm-6 col-xs-12">
 					<?php if ($x == 5) { $x = 0; } ?>
 					<div class="panel panel-{{ $colors[$x] }} card-view panel-refresh">
 						<div class="refresh-container">

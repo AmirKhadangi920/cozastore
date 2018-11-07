@@ -83,8 +83,16 @@
 													?>
 													<span class="label label-{{$status[1]}}">{{$status[0]}}</span>
 												</td>
-												<td>{{$order->created_at}}</td>
-												<td>{{$order->payment}}</td>
+												<?php 
+													$time = new Carbon\Carbon($order->created_at);
+													$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+												?>
+												<td>{{$time->hour.':'.$time->minute.' | '.$created_at}}</td>
+												<?php 
+													$time = new Carbon\Carbon($order->payment);
+													$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+												?>
+												<td>{{$time->hour.':'.$time->minute.' | '.$payment}}</td>
 												<td>
 													<a href="/panel/invoice/{{$order->id}}">
 														<i class="fa fa-file-text-o" aria-hidden="true"></i>

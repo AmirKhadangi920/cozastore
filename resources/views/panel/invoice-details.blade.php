@@ -166,12 +166,21 @@
 											<i class="fa fa-calendar" aria-hidden="true"></i>
 											تاریخ ثبت سفارش:
 										</span>
-										{{$invoice->created_at}}
+										<?php 
+											$time = new Carbon\Carbon($invoice->created_at);
+											$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+										?>
+										<b class="txt-dark">ثبت :</b> {{$time->hour.':'.$time->minute.' | '.$created_at}}<br/>
+										<?php 
+											$time = new Carbon\Carbon($invoice->payment);
+											$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+										?>
+										<b class="txt-dark">پرداخت :</b> {{$time->hour.':'.$time->minute.' | '.$payment}}
 									</address>
 								</div>
 							</div>
 
-							<div class="row">
+							<div class="row mt-20">
 								<div class="col-md-12">
 									<span class="txt-dark head-font inline-block capitalize-font mb-5 address-head">
 										<i class="fa fa-commenting-o" aria-hidden="true"></i>

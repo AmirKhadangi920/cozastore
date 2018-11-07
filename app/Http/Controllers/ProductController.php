@@ -84,9 +84,9 @@ class ProductController extends Controller
                 $temp = Group::select('parent')->where('id', $temp[0]->parent)->get();
                 if (isset($temp[0]) && $temp[0]->parent !== null) {
                     $parent_category = $temp[0]->parent;
+                    $product->parent_category = $parent_category; 
                 }
             }   
-            $product->parent_category = $parent_category; 
         }
         $product->category = $req -> parent;
         $product->name = $req -> name;
@@ -178,9 +178,9 @@ class ProductController extends Controller
                 $temp = Group::select('parent')->where('id', $temp[0]->parent)->get();
                 if (isset($temp[0]) && $temp[0]->parent !== null) {
                     $parent_category = $temp[0]->parent;
+                    $product->parent_category = $parent_category; 
                 }
             }   
-            $product->parent_category = $parent_category; 
         }
         $product->category = $req -> parent;
         $product->name = $req -> name;

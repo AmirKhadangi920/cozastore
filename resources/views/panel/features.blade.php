@@ -148,7 +148,7 @@
 			@foreach ($features as $feature)
 				<?php if ($i >= 5) { $i = 0; } ?>
 
-			<div class="col-md-3">
+			<div class="col-md-3 col-sm-6 col-xs-12">
 				<div class="panel panel-{{$colors[$i]}} card-view panel-refresh">
 					<div class="refresh-container">
 						<div class="la-anim-1"></div>

@@ -37,7 +37,7 @@ class CartController extends Controller
             }
             
             $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
-                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
+                'offer', 'colors', 'photo')->whereIn('pro_id', $id)->get(); 
         }
 
         return view('store.shoping-cart', [
@@ -146,5 +146,75 @@ class CartController extends Controller
             }
         }
         return redirect()->back();
+    }
+
+    public function pay (Request $req)
+    {
+        if (Auth::check())
+        {
+            $order = Order::select('id')->where('buyer', Auth::user()->id)->where('status', 0)->get();
+            if ($order == []) { return abort('404'); }
+            $order_id = $order[0] -> id;
+            $id = [];
+            foreach ($req->products as $key => $value) { $id[] = $key; }
+
+            $cart_products = Product::select('pro_id', 'price', 'unit', 'offer')
+                ->whereIn('pro_id', $id)->get();
+
+            $total = $offer = 0;
+
+            $dollar_cost = 14500; // this should get from server
+            $shipping_cost = 20000; // this should get from server
+            
+            foreach ($cart_products as $item)
+            {
+                $price = $item->price;
+                if ($item->unit)
+                    $price = $price * $dollar_cost;
+                    $total += $price;
+
+                if ($item -> offer != 0)
+                    $price = $price - ($item->offer * $price) / 100;
+                    $offer += ($item->offer * $price) / 100;
+
+                $cart_product = OrderProducts::select('id')->where('product', $item['pro_id'])->get();
+                $cart_product = OrderProducts::find($cart_product[0] -> id);
+                if(isset($req -> products[$item['pro_id']]['color'])) {
+                    $cart_product -> color = $req -> products[$item['pro_id']]['color'];
+                } else {
+                    $cart_product -> color = NULL;   
+                }
+                $cart_product -> count = $req -> products[$item['pro_id']]['count'];
+                $cart_product -> price = $price;
+                $cart_product -> save();
+
+                
+                echo '<pre>';
+                print_r($req -> products[$item['pro_id']]);
+            }
+            // print_r($cart_product);
+
+            $order = Order::find($order_id);
+            $order -> destination = $req->address;
+            $order -> postal_code = $req->postal_code;
+            $order -> buyer_description = $req->description;
+            $order -> offer = $offer;
+            $order -> shipping_cost = $shipping_cost;
+            $order -> total = 5334024543;
+            // $order -> status = 1;
+            $datetimes = json_decode($order -> datetimes, true);
+            $datetimes['awaitingPayment'] = time();
+            $order -> datetimes = json_encode($datetimes);
+            $order -> save();
+            
+            echo $total;
+            echo '<br/>';
+            echo $offer;
+            return;
+            
+            echo '<pre>';
+            print_r($req->all());
+            return;
+        } 
     }
 }

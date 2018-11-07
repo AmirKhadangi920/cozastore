@@ -182,13 +182,13 @@
 												<div class="radio-list">
 													<div class="radio-inline">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->unit == 0) checked @elseif(old('unit') == 0) checked  @endif name="unit" id="unit_rl" value="0">
-															<label for="unit_rl">ریال</label>
+															<input type="radio" @if(isset($edit) && $product->unit == 0) checked @elseif(old('unit') == 0) checked="checked"  @endif name="unit" id="unit_rl" value="0">
+															<label for="unit_rl">تومان</label>
 														</div>
 													</div>
 													<div class="radio-inline pl-0">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->unit == 1) checked @elseif(old('unit') == 1) checked  @endif name="unit" checked="checked" id="unit_dl" value="1">
+															<input type="radio" @if(isset($edit) && $product->unit == 1) checked @elseif(old('unit') == 1) checked="checked"  @endif name="unit" id="unit_dl" value="1">
 															<label for="unit_dl">دلار</label>
 														</div>
 													</div>
@@ -216,13 +216,13 @@
 												<div class="radio-list">
 													<div class="radio-inline">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->status == 0) checked @elseif(old('status') == 0) checked @endif name="status" id="radio2" value="0">
+															<input type="radio" @if(isset($edit) && $product->status == 0) checked="checked" @elseif(old('status') == 0) checked @endif name="status" id="radio2" value="0">
 															<label for="radio2">پیش نویس</label>
 														</div>
 													</div>
 													<div class="radio-inline pl-0">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->status == 0) checked @elseif(old('status') == 1) checked @endif name="status" checked="checked" id="radio1" value="1">
+															<input type="radio" @if(isset($edit) && $product->status == 1) checked="checked" @elseif(old('status') == 1) checked @endif name="status" id="radio1" value="1">
 															<label for="radio1">ثبت محصول</label>
 														</div>
 													</div>

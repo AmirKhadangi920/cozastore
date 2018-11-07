@@ -149,13 +149,13 @@
 									<div class="info">
 										<h5>{{$product->name}}</h5>
 										<h6>شناسه : {{$product->code}}</h6>
-										<?php if ($product->unit) { $product->unit = 'دلار'; } else { $product->unit = 'ریال'; } ?>
+										<?php if ($product->unit) { $product->unit = 'دلار'; } else { $product->unit = 'تومان'; } ?>
 										@if($product->offer)
-											<span class="head-font block txt-orange-light-1 font-16"><del>{{$product->price.' '.$product->unit}}</del></span>
+											<span class="head-font block txt-orange-light-1 font-16"><del><span class="num-comma">{{$product->price}}</span> {{$product->unit}}</del></span>
 											<?php $product->offer = $product->price - ($product->offer * $product->price) / 100; ?>
-											<span class="head-font block txt-dark-1 font-16"><ins>{{$product->offer.' '.$product->unit}}</ins></span>
+											<span class="head-font block txt-dark-1 font-16"><ins><span class="num-comma">{{$product->offer}}</span> {{$product->unit}}</ins></span>
 										@else
-											<span class="head-font block txt-orange-light-1 font-16">{{$product->price.' '.$product->unit}}</span>
+											<span class="head-font block txt-orange-light-1 font-16"><span class="num-comma">{{$product->price}}</span> {{$product->unit}}</span>
 										@endif
 									</div>
 								</article>
@@ -203,6 +203,15 @@
 	@foreach ($scripts as $script)
 		<script src="{{ asset($script) }}"></script>
 	@endforeach
+
+	<script src="{{ asset('js/numeral.min.js') }}"></script>
+	<script>
+		var nums = document.getElementsByClassName('num-comma');
+
+		for (num in nums) {
+			nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
+		}
+	</script>
 
 	<script>
 		$('.delete-product').on('click',function(){

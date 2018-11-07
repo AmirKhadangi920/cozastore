@@ -3,28 +3,47 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Option;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Slider;
 use App\Http\Requests\Poster;
 use App\Http\Requests\Info;
 use App\Http\Requests\SocialLink;
+use Carbon\Carbon;
+use App\Classes\jdf;
+use App\Option;
+use App\Order;
+use App\Review;
 
 class PanelController extends Controller
 {
     public function index ()
     {
-        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
+        $orders = DB::select("SELECT `orders`.`id`, `users`.`first_name`, `users`.`last_name`, `admin_description`,
+        ((`shipping_cost` + `total`) - `offer`) as 'total', `status`, `orders`.`created_at`, `payment`
+        FROM `orders` INNER JOIN `users` ON `orders`.`buyer` = `users`.`id`");
+
+        $reviews = DB::select('SELECT `products`.`name`, `fullname`, `rating`, `review`, 
+                `reviews`.`created_at` FROM `reviews` 
+                INNER JOIN `products` ON `reviews`.`product` = `products`.`pro_id`
+                ORDER BY `reviews`.`created_at` DESC LIMIT 10');
+
+        $options = Option::select('name', 'value')->whereIn('name', 
+            ['site_name', 'site_logo', 'dollar_cost'])->get();
         foreach ($options as $option) {
             switch ($option['name']) {
                 case 'site_name': $site_name = $option['value']; break;
                 case 'site_logo': $site_logo = $option['value']; break;
+                case 'dollar_cost': $dollar_cost = $option['value']; break;
             }
         }
 
         return view('panel.index', [
+            'orders' => $orders,
+            'reviews' => $reviews,
             'page_name' => 'داشبورد',
             'site_name'=> $site_name,
-            'site_logo'=> $site_logo
+            'site_logo'=> $site_logo,
+            'dollar_cost'=> $dollar_cost,
         ]);
     }
 
@@ -186,5 +205,15 @@ class PanelController extends Controller
         $option -> save();
 
         return redirect()->back()->with('message', 'لینک شبکه های اجتماعی با موفقیت بروز رسانی شدند');
+    }
+
+    public function dollar_cost ($dollar_cost)
+    {
+        $option = Option::select('id')->where('name', 'dollar_cost')->get();
+        $option = Option::find($option[0]->id);
+        $option -> value = $dollar_cost;
+        $option -> save();
+        
+        return redirect()->back()->with('message', 'قیمت دلار با موفقیت بروز رسانی شد');
     }
 }

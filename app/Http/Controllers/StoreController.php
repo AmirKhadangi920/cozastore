@@ -22,8 +22,10 @@ class StoreController extends Controller
                 WHERE `status` = 1 LIMIT 30;";
         $products = DB::select($sql);
 
-        $options = Option::select('name', 'value')->whereIn('name', 
-            ['slider', 'posters', 'site_name', 'site_description', 'site_logo', 'social_link'])->get();
+        $options = Option::select('name', 'value')->whereIn('name', [
+            'slider', 'posters', 'site_name', 'site_description',
+            'site_logo', 'social_link', 'dollar_cost'
+        ])->get();
         foreach ($options as $option) {
             switch ($option['name']) {
                 case 'slider': $slider = json_decode($option['value'], true); break;
@@ -31,6 +33,7 @@ class StoreController extends Controller
                 case 'site_name': $site_name = $option['value']; break;
                 case 'site_description': $site_description = $option['value']; break;
                 case 'site_logo': $site_logo = $option['value']; break;
+                case 'dollar_cost': $dollar_cost = $option['value']; break;
                 case 'social_link': $social_link = json_decode($option['value'], true); break;
             }
         }
@@ -50,7 +53,7 @@ class StoreController extends Controller
         
         return view('store.index  ', [
             'products' => $products,
-            'dollar_cost' => 14540,
+            'dollar_cost' => $dollar_cost,
             'cart_products' => $cart_products,
             'page_name' => 'main',
             'slider' => $slider,
@@ -126,12 +129,13 @@ class StoreController extends Controller
         $products = DB::select($sql);
 
         $options = Option::select('name', 'value')->whereIn('name', 
-            ['site_name', 'site_description', 'site_logo', 'social_link'])->get();
+            ['site_name', 'site_description', 'site_logo', 'social_link', 'dollar_cost'])->get();
         foreach ($options as $option) {
             switch ($option['name']) {
                 case 'site_name': $site_name = $option['value']; break;
                 case 'site_description': $site_description = $option['value']; break;
                 case 'site_logo': $site_logo = $option['value']; break;
+                case 'dollar_cost': $dollar_cost = $option['value']; break;
                 case 'social_link': $social_link = json_decode($option['value'], true); break;
             }
         }
@@ -151,7 +155,7 @@ class StoreController extends Controller
         
         return view('store.product  ', [
             'products' => $products,
-            'dollar_cost' => 14540,
+            'dollar_cost' => $dollar_cost,
             'product_count' => $product_count[0]->count,
             'page' => $page,
             'cart_products' => $cart_products,
@@ -199,13 +203,15 @@ class StoreController extends Controller
             'title' => $product[0] -> title,
         ]];
 
-        $options = Option::select('name', 'value')->whereIn('name', 
-            ['site_name', 'site_description', 'site_logo', 'social_link'])->get();
+        $options = Option::select('name', 'value')->whereIn('name', [
+            'site_name', 'site_description', 'site_logo', 'social_link', 'dollar_cost'
+        ])->get();
         foreach ($options as $option) {
             switch ($option['name']) {
                 case 'site_name': $site_name = $option['value']; break;
                 case 'site_description': $site_description = $option['value']; break;
                 case 'site_logo': $site_logo = $option['value']; break;
+                case 'dollar_cost': $dollar_cost = $option['value']; break;
                 case 'social_link': $social_link = json_decode($option['value'], true); break;
             }
         }
@@ -231,7 +237,7 @@ class StoreController extends Controller
             'reviews' => $reviews,
             'cart_products' => $cart_products,
             'page_name'=> 'products',
-            'dollar_cost' => 14540,
+            'dollar_cost' => $dollar_cost,
             'page_title' => $product[0]->name,
             'site_name' => $site_name,
             'site_description' => $site_description,
@@ -259,7 +265,7 @@ class StoreController extends Controller
         $data = Product::select('name', 'short_description', 'aparat_video', 'price', 'unit',
             'offer', 'colors', 'gallery')->where('pro_id', $id)->get();
 
-        if ($product == []) { return false; }
+        if ($data == []) { return false; }
 
         return json_encode($data[0]);
     }
