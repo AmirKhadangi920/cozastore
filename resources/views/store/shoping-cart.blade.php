@@ -135,40 +135,16 @@
 														<i class="fs-16 zmdi zmdi-minus"></i>
 													</div>
 													
-													<?php
-													$cart =  json_decode(Cookie::get('cart'), true);
-													if ($cart)
-													{
-														foreach ($cart as $key => $item)
-														{
-															if ($item['id'] == $cart_product->pro_id) 
-															{ 
-																$count = $item['count']; 
-																$color = $item['color'];
-															}
-														} 
-													}
-													?>
-													<input class="mtext-104 cl3 txt-center num-product" type="text" name="products[{{$cart_product->pro_id}}][count]" value="{{$count}}">
+													<input class="mtext-104 cl3 txt-center num-product" type="text" name="products[{{$cart_product->pro_id}}][count]" value="{{$cart_product->count}}">
 		
 													<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 														<i class="fs-16 zmdi zmdi-plus"></i>
 													</div>
 												</div>
 											</td>
-											<?php $total += $price * $count; ?>
-											@if($cart_product->colors)
-												<?php $colors = explode(',', $cart_product->colors); ?>
-												<td class="column-5">
-													<select name="products[{{$cart_product->pro_id}}][color]">
-														<option value="">بی رنگ</option>
-														@for ($i = 0; $i < count($colors); ++$i)
-														<option value="{{$colors[$i]}}" style="background: {{$colors[$i]}};"></option>
-														@endfor
-													</select>
-												</td>
-											@endif
-											<td class="column-6"><span class="price num-comma">{{$price * $count}}</span> تومان</td>
+											<?php $total += $price * $cart_product->count; ?>
+											<td class="column-5">{{($cart_product->color) ? $cart_product->color : 'بدون رنگ'}}</td>
+											<td class="column-6"><span class="price num-comma">{{$price * $cart_product->count}}</span> تومان</td>
 										</tr>
 										@endforeach
 									@endempty

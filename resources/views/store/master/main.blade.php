@@ -46,26 +46,17 @@
 								</a>
 
 								<?php
-								$cart =  json_decode(Cookie::get('cart'), true);
-								if ($cart)
-								{
-									foreach ($cart as $key => $item)
-									{
-										if ($item['id'] == $product->pro_id) { $count = $item['count']; }
-									}
-
-									$price = $product->price;
-									if ($product->unit)
-										$price = $price * $dollar_cost;
-		
-									if ($product -> offer != 0)
-										$price = $price - ($product->offer * $price) / 100;
-									
-									$total_cart += $price * $count;
-								}
+								$price = $product->price;
+								if ($product->unit)
+									$price = $price * $dollar_cost;
+	
+								if ($product -> offer != 0)
+									$price = $price - ($product->offer * $price) / 100;
+								
+								$total_cart += $price * $product->count;
 								?>
 								<span class="header-cart-item-info">
-									{{$count}} * <span class="num-comma">{{ceil($price / 1000)}}</span> هزار تومان
+									{{$product->count}} * <span class="num-comma">{{ceil($price / 1000)}}</span> هزار تومان
 								</span>
 							</div>
 						</li>

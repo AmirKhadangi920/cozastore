@@ -5,17 +5,62 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Cookie;
+use Auth;
 use App\Group;
 use App\Feature;
 use App\Product;
 use App\ProductFeatures;
 use App\Review;
 use App\Option;
+use App\Order;
+use App\OrderProducts;
+use App\Traits\Init;
 
 class StoreController extends Controller
 {
+    use Init;
+
     public function index ()
     {
+        if (\Auth::check() && Cookie::get('cart'))
+        {
+            $order = Order::select('id')->where('buyer',\Auth::user()->id)->where('status', 0)->get();
+            
+            if (!empty($order->all()))
+            {
+                $order_id = $order[0]->id;
+            }
+            else
+            {
+                $order = new Order();
+                $order -> id = substr(md5(time()), 0, 8);
+                $order -> buyer = Auth::user()->id;
+                $order -> destination = Auth::user()->state.' ، '.Auth::user()->city.' ، '.Auth::user()->address;
+                $order -> postal_code = Auth::user()->postal_code;
+                $order -> save();
+
+                $order_id = $order -> id;
+            }
+
+            $cart =  json_decode(Cookie::get('cart'), true);
+            if (!empty($cart))
+            {   
+                foreach ($cart as $item)
+                {           
+                    if (Product::find($item['id']))
+                    {
+                        $order_product = new OrderProducts();
+                        $order_product -> order = $order_id;
+                        $order_product -> product = $item['id'];
+                        $order_product -> color = $item['color'];
+                        $order_product -> count = $item['count'];
+                        $order_product -> save();
+                    }         
+                }
+                Cookie::queue('cart', NULL, -1);
+            }
+        }
+
         $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
                 `offer`, `photo` FROM `products`
                 LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id`
@@ -38,23 +83,10 @@ class StoreController extends Controller
             }
         }
 
-        $cart_products = [];
-        $cart =  json_decode(Cookie::get('cart'), true);
-        if ($cart)
-        {
-            foreach ($cart as $key => $item)
-            {
-                $id[] = $item['id'];
-            }
-            
-            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
-                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
-        }
-        
         return view('store.index  ', [
             'products' => $products,
             'dollar_cost' => $dollar_cost,
-            'cart_products' => $cart_products,
+            'cart_products' => $this -> Get_Cart_items(),
             'page_name' => 'main',
             'slider' => $slider,
             'posters' => $posters,
@@ -140,25 +172,12 @@ class StoreController extends Controller
             }
         }
 
-        $cart_products = [];
-        $cart =  json_decode(Cookie::get('cart'), true);
-        if ($cart)
-        {
-            foreach ($cart as $key => $item)
-            {
-                $id[] = $item['id'];
-            }
-            
-            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
-                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
-        }
-        
         return view('store.product  ', [
             'products' => $products,
             'dollar_cost' => $dollar_cost,
             'product_count' => $product_count[0]->count,
             'page' => $page,
-            'cart_products' => $cart_products,
+            'cart_products' => $this -> Get_Cart_items(),
             'page_name'=> 'products',
             'page_title'=> 'محصولات',
             'site_name' => $site_name,
@@ -216,26 +235,12 @@ class StoreController extends Controller
             }
         }
 
-        $cart_products = [];
-        $cart =  json_decode(Cookie::get('cart'), true);
-        if ($cart)
-        {
-            $id = [];
-            foreach ($cart as $key => $item)
-            {
-                $id[] = $item['id'];
-            }
-            
-            $cart_products = Product::select('pro_id', 'name', 'price', 'unit',
-                'offer', 'photo')->whereIn('pro_id', $id)->get(); 
-        }
-
         return view('store.product-detail', [
             'product' => $product[0],
             'product_features' => $product_feature,
             'breadcrumb' => $breadcrumb,
             'reviews' => $reviews,
-            'cart_products' => $cart_products,
+            'cart_products' => $this -> Get_Cart_items(),
             'page_name'=> 'products',
             'dollar_cost' => $dollar_cost,
             'page_title' => $product[0]->name,
