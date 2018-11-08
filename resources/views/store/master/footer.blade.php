@@ -8,59 +8,61 @@
                 </h4>
 
                 <ul>
+                    @foreach ($top_groups as $group)
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            خانم ها
+                        <a href="/products?category={{$group->id}}&category_name={{$group->title}}" class="stext-107 cl7 hov-cl1 trans-04">
+                            {{$group->title}}
                         </a>
                     </li>
-
-                    <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            آقایان
-                        </a>
-                    </li>
-
-                    <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            کفش ها
-                        </a>
-                    </li>
-
-                    <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            ساعت ها
-                        </a>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
 
             <div class="col-sm-6 col-lg-3 p-b-50">
                 <h4 class="stext-301 cl0 p-b-30">
-                    خدمات مشتریان
+                    لینک های فروشگاه
                 </h4>
 
                 <ul>
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            پیگیری سفارش
+                        <a href="/" class="stext-107 cl7 hov-cl1 trans-04">
+                            صفحه اصلی
+                        </a>
+                    </li>
+                    
+                    <li class="p-b-10">
+                        <a href="/orders" class="stext-107 cl7 hov-cl1 trans-04">
+                            سفارشات
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            مرجوع کردن 
+                        <a href="/cart" class="stext-107 cl7 hov-cl1 trans-04">
+                            سبد خرید
+                        </a>
+                    </li>
+                    
+                    <li class="p-b-10">
+                        <a href="/products" class="stext-107 cl7 hov-cl1 trans-04">
+                            محصولات 
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            ارسال محصولات
+                        <a href="/about" class="stext-107 cl7 hov-cl1 trans-04">
+                            درباره ما 
+                        </a>
+                    </li>
+                    
+                    <li class="p-b-10">
+                        <a href="/login" class="stext-107 cl7 hov-cl1 trans-04">
+                            ورود 
                         </a>
                     </li>
 
                     <li class="p-b-10">
-                        <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            پرسش و پاسخ
+                        <a href="/register" class="stext-107 cl7 hov-cl1 trans-04">
+                            ثبت نام 
                         </a>
                     </li>
                 </ul>
@@ -104,6 +106,8 @@
                 <h4 class="stext-301 cl0 p-b-30">
                     خبرنامه
                 </h4>
+
+                <p class="stext-107 m-b-5" style="color:gold;">متاسفانه خبرنامه در حال حاضر فعال نیست !</p>
 
                 <form>
                     <div class="wrap-input1 w-full p-b-4">

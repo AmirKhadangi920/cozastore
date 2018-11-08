@@ -27,6 +27,8 @@
                         @endisset
                         <a class="nav-link" href="/panel"><i class="fa fa-bars m-l-5" aria-hidden="true"></i>پنل مدیریت</a>
                         @endif
+                        <a class="flex-c-m p-lr-10 trans-04" href="/orders"><i class="fa fa-file-text-o m-l-5"></i>سفارشات</a>
+
                         <a class="nav-link" href="/cart"><i class="fa fa-shopping-cart m-l-5"></i>سبد خرید</a>
 
                         <a class="nav-link" href="{{ route('logout') }}"
@@ -163,8 +165,10 @@
                         @endisset
                         <a class="flex-c-m p-lr-10 trans-04" href="/panel"><i class="fa fa-bars m-l-5" aria-hidden="true"></i>پنل مدیریت</a>
                         @endif
-                        <a class="flex-c-m p-lr-10 trans-04" href="/cart"><i class="fa fa-shopping-cart m-l-5"></i>سبد خرید</a>
+                        <a class="flex-c-m p-lr-10 trans-04" href="/orderes"><i class="fa fa-file-text-o m-l-5"></i>سفارشات</a>
 
+                        <a class="flex-c-m p-lr-10 trans-04" href="/cart"><i class="fa fa-shopping-cart m-l-5"></i>سبد خرید</a>
+                        
                         <a class="flex-c-m p-lr-10 trans-04" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">

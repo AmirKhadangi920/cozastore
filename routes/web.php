@@ -78,6 +78,7 @@ Route::get('/cart', 'CartController@index');
 Route::post('/cart/pay', 'CartController@pay')->middleware('auth');
 Route::get('/cart/remove/{id}/{title}', 'CartController@remove');
 Route::get('/cart/add/{id}/{title}/{count}/{color?}', 'CartController@add');
+Route::get('/orders', 'InvoiceController@user_orders');
 
 Route::get('/contact', function(){return view('store.contact')->with('page_name', 'contact'); });
 Route::get('/about', function(){ return view('store.about')->with('page_name', 'about'); });

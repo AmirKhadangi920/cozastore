@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\DB;
 use App\Order;
 use App\OrderProduct;
 use App\Option;
+use App\Traits\Init;
 
 class InvoiceController extends Controller
 {
+    use Init;
+
     public function index ()
     {
         $orders = DB::select("SELECT `orders`.`id`, `users`.`first_name`, `users`.`last_name`, `admin_description`,
@@ -97,5 +100,44 @@ class InvoiceController extends Controller
         $invoice -> save();
         
         return redirect()->back()->with('message', 'وضعییت فاکتور '.$id.'# با موفقیت تغییر کرد .');
+    }
+
+    public function user_orders ()
+    {
+        $user_order = DB::select('SELECT `id` FROM `orders` WHERE `buyer` = ?', [\Auth::user()->id]);
+
+        $id = '';
+        foreach ($user_order as $order) 
+        {
+            $id .= "'".$order->id ."',";
+        }
+
+        $orders = DB::select('SELECT `buyer_description`, ((`shipping_cost` + `total`) - `offer`)
+            AS \'total\', `status`, `created_at`, `payment` 
+            FROM `Orders` WHERE `id` IN ('.rtrim($id, ',').')');
+        
+
+        $options = Option::select('name', 'value')->whereIn('name', 
+            ['site_name', 'site_logo', 'site_description', 'social_link'])->get();
+        foreach ($options as $option) {
+            switch ($option['name']) {
+                case 'site_name': $site_name = $option['value']; break;
+                case 'site_logo': $site_logo = $option['value']; break;
+                case 'site_description': $site_description = $option['value']; break;
+                case 'social_link': $social_link = json_decode($option['value'], true); break;
+            }
+        }
+
+        return view('store.orders', [
+            'page_title' => 'سفارشات',
+            'orders' => $orders,
+            'site_name'=> $site_name,
+            'site_logo'=> $site_logo,
+            'site_description'=> $site_description,
+            'social_link'=> $social_link,
+            'cart_products' => $this -> Get_Cart_items(),
+            'top_groups' => $this -> Get_sub_groups(),
+            'dollar_cost' => 14500,
+        ]);
     }
 }
