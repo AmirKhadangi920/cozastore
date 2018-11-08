@@ -14,7 +14,8 @@
 // Admin panel Routes
 Route::group(['middleware' => ['web', 'admin']], function () {
     // Dashboard Route
-    Route::get('/panel', 'PanelController@index');
+    Route::get('/panel/{total_type?}', 'PanelController@index')
+        ->where('total_type', 'daily|weekly|monthly|yearly');
     
     // Invoices Routes
     Route::get('/panel/invoices', 'InvoiceController@index');

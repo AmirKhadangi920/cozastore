@@ -13,21 +13,63 @@ use Carbon\Carbon;
 use App\Classes\jdf;
 use App\Option;
 use App\Order;
+use App\OrderProducts;
 use App\Review;
 
 class PanelController extends Controller
 {
-    public function index ()
+    public function index ($total_type = 'daily')
     {
-        $orders = DB::select("SELECT `orders`.`id`, `users`.`first_name`, `users`.`last_name`, `admin_description`,
-        ((`shipping_cost` + `total`) - `offer`) as 'total', `status`, `orders`.`created_at`, `payment`
-        FROM `orders` INNER JOIN `users` ON `orders`.`buyer` = `users`.`id`");
+        $orders = DB::select("SELECT `orders`.`id`, `users`.`first_name`, `users`.`last_name`,
+            ((`shipping_cost` + `total`) - `offer`) as 'total', `status`, `orders`.`created_at`, `payment`
+            FROM `orders` INNER JOIN `users` ON `orders`.`buyer` = `users`.`id`");
 
         $reviews = DB::select('SELECT `products`.`name`, `fullname`, `rating`, `review`, 
                 `reviews`.`created_at` FROM `reviews` 
                 INNER JOIN `products` ON `reviews`.`product` = `products`.`pro_id`
                 ORDER BY `reviews`.`created_at` DESC LIMIT 10');
 
+        $top_products = DB::select('SELECT `products`.`name`, COUNT(`order_products`.`product`) AS \'count\'
+            FROM `order_products`
+            INNER JOIN `products` ON `order_products`.`product` = `products`.`pro_id`
+            INNER JOIN `orders` ON `order_products`.`order` = `orders`.`id`
+            WHERE `orders`.`payment` IS NOT NULL GROUP BY products.name ORDER BY `count` DESC LIMIT 10');
+
+        $orders_count = Order::count();
+
+        switch ($total_type)
+        {
+            case 'daily':
+                $total_sales = DB::select('SELECT DAY(`payment_jalali`) AS \'period\', SUM(`total` - `offer`) \'sum\'
+                    FROM `orders`
+                    WHERE `payment_jalali` IS NOT NULL GROUP BY DAY(`payment_jalali`) LIMIT 30'); 
+                break;
+            case 'weekly':
+                $total_sales = DB::select('SELECT WEEK(`payment_jalali`) AS \'period\', SUM(`total` - `offer`) \'sum\'
+                    FROM `orders`
+                    WHERE `payment_jalali` IS NOT NULL GROUP BY WEEK(`payment_jalali`) LIMIT 20'); 
+                break;
+            case 'monthly':
+                $total_sales = DB::select('SELECT MONTH(`payment_jalali`) AS \'period\', SUM(`total` - `offer`) \'sum\'
+                    FROM `orders`
+                    WHERE `payment_jalali` IS NOT NULL GROUP BY MONTH(`payment_jalali`) LIMIT 12'); 
+                break;    
+            case 'yearly':
+                $total_sales = DB::select('SELECT YEAR(`payment_jalali`) AS \'period\', SUM(`total` - `offer`) \'sum\'
+                    FROM `orders`
+                    WHERE `payment_jalali` IS NOT NULL GROUP BY YEAR(`payment_jalali`) LIMIT 5'); 
+                break;       
+        }
+
+        $total_income = DB::select('SELECT SUM(`total` - `offer`) AS \'sum\'
+            FROM `orders` WHERE `payment_jalali` IS NOT NULL');
+        $total_income = $total_income[0] -> sum;
+
+        $product_count = DB::select('SELECT COUNT(`pro_id`) AS \'count\' FROM `products`');
+        $product_count = $product_count[0] -> count;
+
+    
+        
         $options = Option::select('name', 'value')->whereIn('name', 
             ['site_name', 'site_logo', 'dollar_cost'])->get();
         foreach ($options as $option) {
@@ -41,7 +83,13 @@ class PanelController extends Controller
         return view('panel.index', [
             'orders' => $orders,
             'reviews' => $reviews,
+            'top_products' => $top_products,
+            'orders_count' => $orders_count,
+            'product_count' => $product_count,
             'page_name' => 'داشبورد',
+            'total_income' => $total_income,
+            'total_sales' => $total_sales,
+            'total_type' => $total_type,
             'site_name'=> $site_name,
             'site_logo'=> $site_logo,
             'dollar_cost'=> $dollar_cost,

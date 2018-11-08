@@ -21,6 +21,14 @@
 		<link href="{{ asset($style) }}" rel="stylesheet" type="text/css" />
 	@endforeach
 
+	<style>
+	.label.label-orange {
+		background: #ff9528;
+	}
+	.label.label-dark {
+		background: #000;
+	}
+	</style>
 @endsection
 
 @section('content')
@@ -88,22 +96,14 @@
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
 									<div  class="panel-body">
-										<span class="font-12 head-font txt-dark">هندزفری beats</span>
+										<?php $colors = ['info', 'success', 'danger', 'warning']; $x = 0; ?>
+										@foreach ($top_products as $item)
+										<?php if ($x == 4) { $x = 0; } ?>
+										<span class="font-12 head-font txt-dark">{{$item->name}}</span>
 										<div class="progress mt-5">
-											<div class="progress-bar progress-bar-grad-info" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%" role="progressbar"> <span class="sr-only">85% Complete (success)</span> </div>
+										<div class="progress-bar progress-bar-grad-{{$colors[$x++]}}" aria-valuenow="{{$item->count}}" aria-valuemin="0" aria-valuemax="{{$orders_count}}" style="width: {{$item->count / $orders_count * 100}}%" role="progressbar"> <span class="sr-only">85% Complete (success)</span> </div>
 										</div>
-										<span class="font-12 head-font txt-dark">گلس A5 2017</span>
-										<div class="progress mt-5">
-											<div class="progress-bar progress-bar-grad-success" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 80%" role="progressbar"> <span class="sr-only">85% Complete (success)</span> </div>
-										</div>
-										<span class="font-12 head-font txt-dark">ساعت هوشمند aWatch</span>
-										<div class="progress mt-5">
-											<div class="progress-bar progress-bar-grad-danger" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 70%" role="progressbar"> <span class="sr-only">85% Complete (success)</span> </div>
-										</div>
-										<span class="font-12 head-font txt-dark">اپل iPhone X</span>
-										<div class="progress mt-5">
-											<div class="progress-bar progress-bar-grad-warning" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 45%" role="progressbar"> <span class="sr-only">85% Complete (success)</span> </div>
-										</div>
+										@endforeach
 									</div>									
 								</div>	
 							</div>
@@ -138,7 +138,7 @@
 														<a class="zmdi @if($review->rating > 0) zmdi-star <?php --$review->rating; ?> @else zmdi-star-outline @endif"></a>
 													@endfor
 												</div>
-												<a href="javascript:void(0);"  class="pull-left txt-grey"><i class="zmdi zmdi-mail-reply"></i></a>
+												<a href="javascript:void(0);"  class="pull-left txt-grey"></a>
 												<div class="clearfix"></div>
 												<div class="inline-block pull-right">
 													<span class="reviewer font-13">
@@ -174,11 +174,10 @@
 								</div>
 								<div class="pull-left sales-btn-group">
 									<div class="btn-group btn-group-rounded">
-										<button type="button" class="btn btn-default btn-xs btn-outline pl-10 pr-10">امسال</button>
-										<button type="button" class="btn btn-default btn-xs btn-outline pl-10 pr-10">این فصل</button>
-										<button type="button" class="btn btn-default btn-xs btn-outline pl-10 pr-10">این ماه</button>
-										<button type="button" class="btn btn-default btn-xs btn-outline pl-10 pr-10">این هفته</button>
-										<button type="button" class="btn btn-default btn-xs btn-outline pl-10 pr-10">امروز</button>
+										<a href="/panel/yearly" class="btn btn-default btn-xs btn-outline pl-10 pr-10">سالانه</a>
+										<a href="/panel/monthly" class="btn btn-default btn-xs btn-outline pl-10 pr-10">ماهانه</a>
+										<a href="/panel/weekly" class="btn btn-default btn-xs btn-outline pl-10 pr-10">هفتگی</a>
+										<a href="/panel/daily" class="btn btn-default btn-xs btn-outline pl-10 pr-10">روزانه</a>
 									</div>
 								</div>
 								<div class="clearfix"></div>
@@ -188,27 +187,27 @@
 									<div id="chart_1" class="" style="height:418px;"></div>
 									<ul class="flex-stat flex-stat-2 mt-40">
 										<li>
-											<span class="block">آمار بازدید</span>
-											<span class="block txt-dark weight-500 font-18"><span class="counter-anim">3,24,222</span></span>
-											<span class="block txt-success mt-5">
-												<i class="zmdi zmdi-caret-up pr-5 font-20"></i><span class="weight-500">+15%</span>
-											</span>
-											<div class="clearfix"></div>
-										</li>
-										<li>
-											<span class="block">سفارشات</span>
-											<span class="block txt-dark weight-500 font-18"><span class="counter-anim">1,23,432</span></span>
-											<span class="block txt-success mt-5">
+											<span class="block">تعداد سفارشات</span>
+											<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{$orders_count}}</span></span>
+											{{-- <span class="block txt-success mt-5">
 												<i class="zmdi zmdi-caret-up pr-5 font-20"></i><span class="weight-500">+4%</span>
-											</span>
+											</span> --}}
 											<div class="clearfix"></div>
 										</li>
 										<li>
-											<span class="block">درآمد</span>
-											<span class="block txt-dark weight-500 font-18"><span class="counter-anim">324,222</span> تومان</span>
-											<span class="block txt-danger mt-5">
+											<span class="block">تعداد محصولات</span>
+											<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{$product_count}}</span></span>
+											{{-- <span class="block txt-danger mt-5">
 												<i class="zmdi zmdi-caret-down pr-5 font-20"></i><span class="weight-500">-5%</span>
-											</span>
+											</span> --}}
+											<div class="clearfix"></div>
+										</li>
+										<li>
+											<span class="block">مجموع درآمد</span>
+											<span class="block txt-dark weight-500 font-18"><span class="counter-anim num-comma">{{$total_income}}</span> تومان</span>
+											{{-- <span class="block txt-danger mt-5">
+												<i class="zmdi zmdi-caret-down pr-5 font-20"></i><span class="weight-500">-5%</span>
+											</span> --}}
 											<div class="clearfix"></div>
 										</li>
 									</ul>
@@ -237,7 +236,6 @@
 													<tr>
 														<th>شناسه فاکتور</th>
 														<th>خریدار</th>
-														<th>توضیحات</th>
 														<th>مبلغ</th>
 														<th>وضعیت</th>
 														<th>ثبت سفارش</th>
@@ -251,7 +249,6 @@
 													<tr>
 														<td>#{{$order->id}}</td>
 														<td>{{$order->first_name.' '.$order->last_name}}</td>
-														<td>{{$order->admin_description}}</td>
 														<td><span class="num-comma">{{$order->total}}</span> تومان</td>
 														<td>
 															<?php
@@ -346,6 +343,14 @@
 		// js numeral formatter
 		'js/numeral.min.js'
 	]; ?>
+	
+	<script>
+	var data=[
+		@foreach ($total_sales as $item)
+		{ period: '{{$item->period}}', iphone: {{$item->sum}},},
+		@endforeach
+	];
+	</script>
 
 	@foreach ($scripts as $script)
 		<script src="{{ asset($script) }}"></script>

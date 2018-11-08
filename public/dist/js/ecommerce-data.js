@@ -27,98 +27,12 @@ $(document).ready(function(){
 		});
 	
 	if($('#chart_1').length > 0) {
-		// Line Chart
-		var data=[{
-			period: '2010',
-			iphone: 150,
-		}, {
-			period: '2011',
-			iphone: 130,
-		}, {
-			period: '2012',
-			iphone: 180,
-		}, {
-			period: '2013',
-			iphone: 170,
-		}, {
-			period: '2014',
-			iphone: 180,
-		}, {
-			period: '2015',
-			iphone: 105,
-		},
-		 {
-			period: '2016',
-			iphone: 250,
-		},
-		{
-			period: '2017',
-			iphone: 150,
-		}, {
-			period: '2018',
-			iphone: 180,
-		}, {
-			period: '2019',
-			iphone: 140,
-		}, {
-			period: '2020',
-			iphone: 170,
-		}, {
-			period: '2021',
-			iphone: 180,
-		}, {
-			period: '2022',
-			iphone: 105,
-		},
-		 {
-			period: '2023',
-			iphone: 250,
-		},
-		{
-			period: '2024',
-			iphone: 150,
-		}, {
-			period: '2025',
-			iphone: 130,
-		}, {
-			period: '2026',
-			iphone: 180,
-		}, {
-			period: '2027',
-			iphone: 170,
-		}, {
-			period: '2028',
-			iphone: 180,
-		}, {
-			period: '2029',
-			iphone: 105,
-		},
-		 {
-			period: '2030',
-			iphone: 250,
-		},
-		{
-			period: '2031',
-			iphone: 100,
-		}, {
-			period: '2032',
-			iphone: 130,
-		}, {
-			period: '2033',
-			iphone: 100,
-		}, {
-			period: '2034',
-			iphone: 170,
-		}, {
-			period: '2035',
-			iphone: 180,
-		}];
 		var lineChart = Morris.Area({
 			element: 'chart_1',
 			data: data,
 			xkey: 'period',
 			ykeys: ['iphone'],
-			labels: ['iPhone'],
+			labels: ['فروش '],
 			pointSize: 4,
 			lineWidth: 2,
 			pointStrokeColors:['#ffffff'],
@@ -139,19 +53,19 @@ $(document).ready(function(){
 /*****Ready function end*****/
 
 /*****Load function start*****/
-$(window).on("load",function(){
-	window.setTimeout(function(){
-		$.toast({
-			heading: 'Welcome to Splasher',
-			text: 'Use the predefined ones, or specify a custom position object.',
-			position: 'bottom-right',
-			loaderBg:'#e8af48',
-			icon: 'warning',
-			hideAfter: 3500, 
-			stack: 6
-		});
-	}, 3000);
-});
+// $(window).on("load",function(){
+// 	window.setTimeout(function(){
+// 		$.toast({
+// 			heading: 'به پنل فروشگاه خوش آمدید',
+// 			text: 'Use the predefined ones, or specify a custom position object.',
+// 			position: 'bottom-right',
+// 			loaderBg:'#e8af48',
+// 			icon: 'success',
+// 			hideAfter: 3500, 
+// 			stack: 6
+// 		});
+// 	}, 3000);
+// });
 /*****Load function* end*****/
 
 /*****E-Charts function start*****/
