@@ -44,12 +44,18 @@
 				<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
 		
-			@foreach ($breadcrumb as $item)
-			<a href="/products/category/{{$item[0]->id}}" class="stext-109 cl8 hov-cl1 trans-04">
-				{{$item[0]->title}}
+			@for ($i = count($breadcrumb) - 2; $i >= 0; --$i)
+			<a href="/products?category={{$breadcrumb[$i][0]->id}}&category_name={{$breadcrumb[$i][0]->title}}" class="stext-109 cl8 hov-cl1 trans-04">
+				{{$breadcrumb[$i][0]->title}}
 				<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
-			@endforeach
+			@endfor
+			
+			<?php $last = count($breadcrumb) - 1; ?>
+			<a href="/products?category={{$breadcrumb[$last][0]->id}}&category_name={{$breadcrumb[$last][0]->title}}" class="stext-109 cl8 hov-cl1 trans-04">
+				{{$breadcrumb[$last][0]->title}}
+				<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
 
 			<span class="stext-109 cl4">
 				{{$product->name}}

@@ -42,6 +42,9 @@
 		padding: 6px 8px 4px;
 		box-shadow: 0px 0px 20px -5px #000;
 	}
+	/* .bread-crumb a:last-of-type .fa-angle-left {
+		display: none;
+	} */
 	</style>
 @endsection
 
@@ -51,6 +54,31 @@
 		<div class="container">
 			<div class="flex-w flex-sb-m p-b-52" dir="rtl">
 				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
+					@isset($_GET['category_name'])
+					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+						همه محصولات گروه <b>{{$_GET['category_name']}}</b>
+					</button>
+					
+					<div class="bread-crumb flex-w p-l-25 p-r-30  p-lr-0-lg">
+						<a href="/products" class="stext-109 cl8 hov-cl1 trans-04">
+							همه گروه ها
+							<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
+						</a>
+					
+						@if ($breadcrumb[0])
+							@for ($i = count($breadcrumb) - 1; $i >= 0; --$i)
+							<a href="/products?category={{$breadcrumb[$i][0]->id}}&category_name={{$breadcrumb[$i][0]->title}}" class="stext-109 cl8 hov-cl1 trans-04">
+								{{$breadcrumb[$i][0]->title}}
+								<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
+							</a>
+							@endfor						
+						@endif
+
+						<span class="stext-109 cl4">
+							{{$_GET['category_name']}}
+						</span>
+					</div>
+					@else 
 					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
 						همه محصولات
 					</button>
@@ -64,6 +92,7 @@
 							</button>
 						@endif
 					@endforeach
+					@endisset
 				</div>
 
 				<div class="flex-w flex-c-m m-tb-10">
@@ -83,10 +112,10 @@
 				<!-- Search product -->
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
 					<div class="bor8 dis-flex p-l-15">
-						<input onkeyup="this.nextElementSibling.href = '/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/'+this.value" class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" value="{{$filter['query']}}" placeholder="جستجو ...">
+						<input onkeyup="this.nextElementSibling.href = '/products?page=1&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}/'+this.value" class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" value="{{$filter['query']}}" placeholder="جستجو ...">
 						
 						
-						<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+						<a href="/products?page=11&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
 						</a>
 					</div>	
@@ -102,27 +131,27 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="/products/1/expensivest/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='expensivest') filter-link-active @endif">
+									<a href="/products?page=1?order=expensivest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='expensivest') filter-link-active @endif">
 										گرانترین
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/cheapest/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='cheapest') filter-link-active @endif">
+									<a href="/products?page=1?order=cheapest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='cheapest') filter-link-active @endif">
 										ارزانترین
 									</a>
 								</li>
 
 								
 								<li class="p-b-6">
-									<a href="/products/1/newest/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='newest') filter-link-active @endif">
+									<a href="/products?page=1?order=newest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='newest') filter-link-active @endif">
 										جدید ترین
 									</a>
 								</li>
 
 								
 								<li class="p-b-6">
-									<a href="/products/1/oldest/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='oldest') filter-link-active @endif">
+									<a href="/products?page=1?order=oldest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='oldest') filter-link-active @endif">
 										قدیمی ترین
 									</a>
 								</li>
@@ -136,31 +165,31 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="/products/1/{{$filter['order']}}/all/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='all') filter-link-active @endif">
+									<a href="/products?page=1&order={{$filter['order']}}&price=all&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='all') filter-link-active @endif">
 										همه
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/{{$filter['order']}}/0to500/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='0to500') filter-link-active @endif">
+									<a href="/products?page=1&order={{$filter['order']}}&price=0to500&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='0to500') filter-link-active @endif">
 										0 - 500 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/{{$filter['order']}}/500to1000/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='500to1000') filter-link-active @endif">
+									<a href="/products?page=1&order={{$filter['order']}}&price=500to1000&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='500to1000') filter-link-active @endif">
 										500 - 1000 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/{{$filter['order']}}/1000to2000/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='1000to2000') filter-link-active @endif">
+									<a href="/products?page=1&order={{$filter['order']}}&price=1000to2000&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='1000to2000') filter-link-active @endif">
 										1000 - 2000 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/{{$filter['order']}}/2000toend/{{$filter['color']}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='2000toend') filter-link-active @endif">
+									<a href="/products?page=1&order={{$filter['order']}}&price=2000toend&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['price']=='2000toend') filter-link-active @endif">
 										2000 هزار تومان به بالا
 									</a>
 								</li>
@@ -189,7 +218,7 @@
 										<i class="zmdi zmdi-circle"></i>
 									</span>
 
-									<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/all/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['color']=='all') filter-link-active @endif">
+									<a href="/products?page=1&order={{$filter['order']}}&price={{$filter['price']}}&color=all&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['color']=='all') filter-link-active @endif">
 										همه
 									</a>
 								</li>
@@ -199,7 +228,7 @@
 										<i class="zmdi zmdi-circle"></i>
 									</span>
 
-									<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$color[0]}}/{{$filter['keyword']}}/{{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['color']==$color[0]) filter-link-active @endif">
+									<a href="/products?page=1&order={{$filter['order']}}&price={{$filter['price']}}&color={{$color[0]}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['color']==$color[0]) filter-link-active @endif">
 										{{$color[1]}}
 									</a>
 								</li>
@@ -219,11 +248,11 @@
 									'برچسب',
 									'گلس'
 								]; ?>
-								<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['query']}}" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5 @if($filter['keyword']=='all') filter-link-active @endif">
+								<a href="/products?page=1&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&query={{$filter['query']}}" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5 @if($filter['keyword']=='all') filter-link-active @endif">
 									همه
 								</a>
 								@foreach ($keywords as $keyword)
-								<a href="/products/1/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$keyword}}/{{$filter['query']}}" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5 @if($filter['keyword']==$keyword) filter-link-active @endif">
+								<a href="/products?page=1&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$keyword}}&query={{$filter['query']}}" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5 @if($filter['keyword']==$keyword) filter-link-active @endif">
 									{{$keyword}}
 								</a>
 								@endforeach
@@ -301,17 +330,17 @@
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 					<li class="page-item @if($page == 1) disabled @endif">
-						<a class="page-link" href="/products/{{$page - 1}}/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}" tabindex="-1">قبلی</a>
+						<a class="page-link" href="/products/{{$page - 1}}&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}" tabindex="-1">قبلی</a>
 					</li>
 					@for ($i = 1; $i <= ceil($product_count / 10); $i++)
 					<li class="page-item @if($page == $i) active @endif">
-						<a class="page-link" href="/products/{{$i}}/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}">
+						<a class="page-link" href="/products/{{$i}}&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}">
 							{{$i}}
 						</a>
 					</li>
 					@endfor
 					<li class="page-item @if($page == $i - 1) disabled @endif">
-						<a class="page-link" href="/products/{{$page + 1}}/{{$filter['order']}}/{{$filter['price']}}/{{$filter['color']}}/{{$filter['keyword']}}">بعدی</a>
+						<a class="page-link" href="/products/{{$page + 1}}&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}">بعدی</a>
 					</li>
 				</ul>
 			</nav>

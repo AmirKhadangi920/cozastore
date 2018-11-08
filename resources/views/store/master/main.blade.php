@@ -7,7 +7,18 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="{{ asset('images/icons/favicon.png') }}"/>
-    @yield('styles')
+	@yield('styles')
+	
+	<style>
+	.sub-menu {
+		position: absolute;
+		top: 0px;
+		left: -105%;
+		background: #fff;
+		box-shadow: 0px 0px 9px -3px #000;
+		width: 80%;
+	}
+	</style>
 </head>
 <body class="animsition">
 	

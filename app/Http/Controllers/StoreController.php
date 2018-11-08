@@ -85,6 +85,7 @@ class StoreController extends Controller
 
         return view('store.index  ', [
             'products' => $products,
+            'top_groups' => $this -> Get_sub_groups(),
             'dollar_cost' => $dollar_cost,
             'cart_products' => $this -> Get_Cart_items(),
             'page_name' => 'main',
@@ -97,8 +98,16 @@ class StoreController extends Controller
         ]);
     }
 
-    public function store ($page = 1, $order = 'newest', $price = 'all', $color = 'all', $keyword = 'all', $query = null)
+    public function store ()
     {
+        $page = (isset($_GET['page'])) ? $_GET['page'] : 1;
+        $order = (isset($_GET['order'])) ? $_GET['order'] : 'newest';
+        $price = (isset($_GET['price'])) ? $_GET['price'] : 'all';
+        $color = (isset($_GET['color'])) ? $_GET['color'] : 'all';
+        $keyword = (isset($_GET['keyword'])) ? $_GET['keyword'] : 'all';
+        $query = (isset($_GET['query'])) ? $_GET['query'] : null;
+        $category = (isset($_GET['category'])) ? $_GET['category'] : null;
+
         $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
                 `offer`, `photo` FROM `products`
                 LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id` ";
@@ -116,6 +125,26 @@ class StoreController extends Controller
         if ($query) {
             $sql .= "AND `name` LIKE '%$query%' "; 
             $count_sql .= "AND `name` LIKE '%$query%' "; 
+        }
+        
+        if ($category)
+        {
+            function get_parent ($id, &$groups_id)
+            {
+                $groups_id[] = $id;
+                $group = Group::select('id', 'title')->where('parent', $id)->get();
+                if ($group->all() != [])
+                {
+                    foreach ($group as $item)
+                    {
+                        get_parent($item->id, $groups_id);
+                    }
+                }
+            }
+            
+            $x = []; get_parent($category, $x); $x = implode(',', $x);
+            $sql .= "AND `category` IN ($x) "; 
+            $count_sql .= "AND `category` IN ($x) "; 
         }
         
         if ($keyword && $keyword != 'all') {
@@ -172,14 +201,24 @@ class StoreController extends Controller
             }
         }
 
+        $page_title = (isset($_GET['category_name'])) ? 'محصولات گروه '.$_GET['category_name'] : 'محصولات';
+
+        $breadcrumb = [];
+        if (isset($_GET['category']))
+        {
+            $breadcrumb = $this -> breadcrumb($_GET['category']);
+        }
+
         return view('store.product  ', [
             'products' => $products,
+            'top_groups' => $this -> Get_sub_groups(),
             'dollar_cost' => $dollar_cost,
             'product_count' => $product_count[0]->count,
             'page' => $page,
+            'breadcrumb' => $breadcrumb,
             'cart_products' => $this -> Get_Cart_items(),
             'page_name'=> 'products',
-            'page_title'=> 'محصولات',
+            'page_title'=> $page_title,
             'site_name' => $site_name,
             'site_description' => $site_description,
             'site_logo' => $site_logo,
@@ -214,7 +253,7 @@ class StoreController extends Controller
         $reviews = Review::select('fullname', 'email', 'avatar', 'rating', 'review')->where('product', $id)->get();
 
         $breadcrumb = $this -> breadcrumb($product[0]->category);
-        $index = count($breadcrumb);
+        $index = count($breadcrumb) - 1;
         if (empty($breadcrumb[0])) { $index = 0; }
         $breadcrumb[$index] = [(object) [
             'parent' => null,
@@ -237,6 +276,7 @@ class StoreController extends Controller
 
         return view('store.product-detail', [
             'product' => $product[0],
+            'top_groups' => $this -> Get_sub_groups(),
             'product_features' => $product_feature,
             'breadcrumb' => $breadcrumb,
             'reviews' => $reviews,

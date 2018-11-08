@@ -69,7 +69,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
 Route::get('/', 'StoreController@index');
 Route::get('/products', 'StoreController@store');
 Route::post('/products/review', 'StoreController@add_review');
-Route::get('/products/{page?}/{order?}/{price?}/{color?}/{keyword?}/{query?}', 'StoreController@store');
+Route::get('/products/category/{id}', 'StoreController@category');
 Route::get('/product/{id}', 'StoreController@product');
 Route::get('/product/quickview/{id}', 'StoreController@quickview');
 

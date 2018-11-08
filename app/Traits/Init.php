@@ -58,4 +58,33 @@ trait Init
             }
         }
     }
+
+    public function Get_sub_groups ()
+    {
+        function get_subs ($id, &$result)
+        {
+            if ($id)
+            {
+                $result = DB::select('SELECT `id`, `title` FROM `categories` WHERE `parent` = ?', [$id]);
+            }
+            else
+            {
+                $id = 0;
+                $result = DB::select('SELECT `id`, `title` FROM `categories` WHERE `parent` IS NULL');
+            }
+        
+            if ($result != [])
+            {
+                for ($i = 0; $i < count($result); ++$i)
+                {
+                    $result[$i]->subs = NULL;
+                    get_subs($result[$i]->id, $result[$i]->subs);
+                }
+            }
+        }
+        
+        $res = [];
+        get_subs(NULL, $res);
+        return $res;
+    }
 }

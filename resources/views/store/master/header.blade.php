@@ -60,11 +60,25 @@
 
                         <li @if($page_name == 'products') class="active-menu" @endif>
                             <a href="/products">فروشگاه</a>
+                            <?php function print_test ($array)
+                            {
+                                echo '<ul class="sub-menu">';
+                                foreach ($array as $sub)
+                                {
+                                    echo '<li>';
+                                    echo '<a href="/products?category='.$sub->id.'&category_name='.$sub->title.'">'.$sub->title.'</a>';
+                                    if ($sub->subs) {
+                                        print_test($sub->subs);
+                                    }
+                                    echo '</li>';
+                                }
+                                echo '</ul>';
+                            } 
+                            print_test($top_groups);
+                            ?>
                         </li>
 
-                        {{-- <li>
-                            <a href="/blog">وبلاگ</a>
-                        </li> --}}
+
 
                         <li @if($page_name == 'contact') class="active-menu" @endif>
                             <a href="/contact">ارتباط با ما</a>
