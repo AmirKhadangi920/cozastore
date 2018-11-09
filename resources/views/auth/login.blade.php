@@ -1,113 +1,115 @@
-@extends('store.master.main')
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+	<title>ورود به @isset($site_name) {{$site_name}} @else سایت @endisset</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/form_asset/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/form_asset/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/form_asset/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/form_asset/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/form_asset/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/form_asset/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/form_asset/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/css/font.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="/logo/{{$site_logo}}" alt="IMG">
+				</div>
 
-@section('styles')
-	<?php $styles = [
-		'vendor/bootstrap/css/bootstrap.min.css',
-		'fonts/font-awesome-4.7.0/css/font-awesome.min.css',
-		'fonts/iconic/css/material-design-iconic-font.min.css',
-		'fonts/linearicons-v1.0.0/icon-font.min.css',
-		'vendor/animate/animate.css',
-		'vendor/animsition/css/animsition.min.css',
-		'css/util.css',
-		'css/main.css',
-		'css/font.css'
-	]; ?>
-	@foreach ($styles as $style)
-		<link rel="stylesheet" type="text/css" href="{{ asset($style) }}">
-	@endforeach
+				<form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
+					@csrf
 
-	<style>
-	.row.justify-content-center {
-        padding: 5% 0%;
-    }
-    .form-check-label {
-        padding-right: 1.25rem;
-    }
-	</style>
-@endsection
+					<span class="login100-form-title">
+						ورود به @isset($site_name) {{$site_name}} @else سایت @endisset
+					</span>
 
-@section('article')
-<div class="container" dir="rtl">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('فرم ورود به فروشگاه') }}</div>
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input type="email" placeholder="آدرس ایمیل" class="input100 form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+						@if ($errors->has('email'))
+							<span class="invalid-feedback" role="alert">
+								<strong>{{ $errors->first('email') }}</strong>
+							</span>
+						@endif
+					</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input type="password" placeholder="رمز عبور" class="input100 form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('آدرس ایمیل :') }}</label>
+						@if ($errors->has('password'))
+							<span class="invalid-feedback" role="alert">
+								<strong>{{ $errors->first('password') }}</strong>
+							</span>
+						@endif
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button type="submit" class="login100-form-btn">
+							ورود به حساب
+						</button>
+					</div>
 
-                            <div class="col-md-8">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+					<div class="text-center p-t-12">
+						{{-- <span class="txt1">
+							
+						</span> --}}
+						<a class="txt2" href="{{ route('password.request') }}">
+							رمز عبور خود را فراموش کرده اید ؟
+						</a>
+					</div>
 
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+					<div class="text-center p-t-136">
+						<a class="txt2" href="{{ route('register') }}">
+							<i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
+							هنوز ثبت نام نکرده اید ؟
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('رمز عبور :') }}</label>
+	
+<!--===============================================================================================-->	
+	<script src="/form_asset/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	{{-- <script src="/form_asset/vendor/bootstrap/js/popper.js"></script> --}}
+	{{-- <script src="/form_asset/vendor/bootstrap/js/bootstrap.min.js"></script> --}}
+<!--===============================================================================================-->
+	{{-- <script src="/form_asset/vendor/select2/select2.min.js"></script> --}}
+<!--===============================================================================================-->
+	<script src="/form_asset/vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	{{-- <script src="/form_asset/js/main.js"></script> --}}
 
-                            <div class="col-md-8">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('مرا به خاطر بسپار') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-12 offset-md-4">
-                                <button type="submit" class="btn btn-primary pull-left">
-                                    {{ __('ورود') }}
-                                </button>
-                                
-                                <a class="btn btn-link pull-left" href="{{ route('password.request') }}">
-                                    {{ __('رمز عبور خود را فراموش کرده اید ؟') }}
-                                </a>
-                                
-                                <a class="btn btn-link" href="{{ route('register') }}">
-                                    {{ __('هنوز ثبت نام نکرده اید ؟') }}
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
-
-@section('scripts')
-	<!--===============================================================================================-->	
-		<script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
-	<!--===============================================================================================-->
-		<script src="{{ asset('vendor/animsition/js/animsition.min.js') }}"></script>
-	<!--===============================================================================================-->
-		<script src="{{ asset('vendor/bootstrap/js/popper.js') }}"></script>
-		<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-	<!--===============================================================================================-->
-		<script src="{{ asset('js/main.js') }}"></script>
-@endsection
+</body>
+</html>
