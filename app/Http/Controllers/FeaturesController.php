@@ -42,6 +42,11 @@ class FeaturesController extends Controller
 
     public function edit ($id, $title)
     {
+        if (!Feature::find($id))
+        {
+            return redirect()->back();
+        }
+
         $features = Feature::select('id', 'name')->where('title', null)->get();
         
         if ($features == []) { return abort(404); }

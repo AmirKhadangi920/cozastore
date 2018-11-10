@@ -6,6 +6,9 @@
 	<title>{{$site_name}} @isset($page_title) | {{$page_title}} @endisset</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	@isset($product->keywords)
+	<meta name="keywords" content="{{$product->keywords}}">
+	@endisset
 	<link rel="icon" type="image/png" href="{{ asset('images/icons/favicon.png') }}"/>
 	@yield('styles')
 	
@@ -85,10 +88,6 @@
 						<a href="/cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-l-8 m-b-10">
 							دیدن سبد خرید
 						</a>
-
-						<a href="shoping-cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							بررسی
-						</a>
 					</div>
 				</div>
 			</div>
@@ -133,13 +132,7 @@
 										رنگ
 									</div>
 
-									<div class="size-204 respon6-next">
-										<div class="rs1-select2 bor8 bg0">
-											<select class="js-select2" name="time">
-												
-											</select>
-											<div class="dropDownSelect2"></div>
-										</div>
+									<div class="size-204 respon6-next colors-input">
 									</div>
 								</div>
 

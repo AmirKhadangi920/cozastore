@@ -32,6 +32,34 @@
 	#information ul li:first-of-type h3 {
 		margin-top: 0px;
 	}
+	.badge {
+		border-radius: 50%;
+		width: 25px;
+		height: 25px;
+		padding: 0px;
+		transition: all 300ms;
+		float: right;
+		margin-left: 10px;
+	}
+	.badge i {
+		padding-top: 7px;
+		opacity: 0;
+	}
+	label:first-of-type .badge {
+		top: 6px;
+		position: relative;
+	}
+	input[type="radio"] {
+		display: none;
+	}
+	input[type="radio"]:checked + label > span {
+		width: 50px;
+		border-radius: 30px;
+		box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.5)
+	}
+	input[type="radio"]:checked + label > span i {
+		opacity: 1;
+	}
 	</style>
 @endsection
 
@@ -119,28 +147,17 @@
 									رنگ
 								</div>
 
+
 								<div class="size-204 respon6-next">
-									<div class="rs1-select2 bor8 bg0">
-										<select class="js-select2" name="time">
-											<option value="">یک رنگ را انتخاب کنید</option>
-											<?php $product->colors = explode(',', $product->colors) ?>
-											@foreach ($product->colors as $color)
-												<?php switch($color) {
-													case 'blue': $color = 'آبی'; break;
-													case 'green': $color = 'سبز'; break;
-													case 'yellow': $color = 'زرد'; break;
-													case 'brown': $color = 'قهوه ای'; break;
-													case 'violet': $color = 'بنفش'; break;
-													case 'orange': $color = 'نارنجی'; break;
-													case 'red': $color = 'قرمز'; break;
-													case 'black': $color = 'مشکی'; break;
-													case 'white': $color = 'سفید'; break;
-												} ?>
-												<option style="background:red;" value="{{$color}}">{{$color}}</option>
-											@endforeach
-										</select>
-										<div class="dropDownSelect2"></div>
-									</div>
+									<?php $product->colors = explode(',', $product->colors) ?>
+									@for ($i = 0; $i < count($product->colors); ++$i)
+										<input type="radio" value="{{$product->colors[$i]}}" @if($i == 0) checked @endif name="color" id="color{{$i}}" />
+										<label for="color{{$i}}">
+											<span class="badge " style="background: {{$product->colors[$i]}};">
+												<i class="fa fa-check" aria-hidden="true"></i>
+											</span>
+										</label>
+									@endfor
 								</div>
 							</div>
 							@endif
@@ -159,9 +176,10 @@
 										</div>
 									</div>
 
-									<button onclick="window.location = '/cart/add/{{$product->pro_id}}/{{$product->name}}/'+this.previousElementSibling.childNodes[3].value" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
 										اضافه به سبد خرید
 									</button>
+									
 								</div>
 							</div>	
 						</div>
@@ -839,6 +857,15 @@
 					ps.update();
 				})
 			});
+		</script>
+
+		<script>
+		$('.js-addcart-detail').click(function ()
+		{
+			var count = $(this).prev().find('input').val();
+			var color = $("input[type='radio']:checked").val();
+			window.location = '/cart/add/{{$product->pro_id}}/{{$product->name}}/' + count + '/' + color;
+		});
 		</script>
 	<!--===============================================================================================-->
 		<script src="{{ asset('js/main.js') }}"></script>

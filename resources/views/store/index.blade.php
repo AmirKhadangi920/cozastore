@@ -34,12 +34,41 @@
 	.product-card {
 		float: right !important;
 	}
-	.badge {
+	.badge.detail {
 		position: absolute;
 		top: 0px;
 		left: 0px;
 		padding: 6px 8px 4px;
 		box-shadow: 0px 0px 20px -5px #000;
+	}
+
+	.badge.color {
+		border-radius: 50%;
+		width: 25px;
+		height: 25px;
+		padding: 0px;
+		transition: all 300ms;
+		float: right;
+		margin-left: 10px;
+	}
+	.badge.color i {
+		padding-top: 7px;
+		opacity: 0;
+	}
+	label:first-of-type .badge.color {
+		top: 6px;
+		position: relative;
+	}
+	input[type="radio"] {
+		display: none;
+	}
+	input[type="radio"]:checked + label > span {
+		width: 50px;
+		border-radius: 30px;
+		box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.5)
+	}
+	input[type="radio"]:checked + label > span i {
+		opacity: 1;
 	}
 	</style>
 @endsection
@@ -169,10 +198,10 @@
 				<!-- Search product -->
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
 					<div class="bor8 dis-flex p-l-15">
-						<input onkeyup="this.nextElementSibling.href = '/products/1/newest/all/all/all/'+this.value" class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="جستجو ...">
+						<input onkeyup="this.nextElementSibling.href = '/products?query='+this.value" class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="جستجو ...">
 						
 						
-						<a href="/products/1/newest/all/all/all/" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+						<a href="/products?query=" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
 						</a>
 					</div>	
@@ -188,27 +217,27 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="/products/1/expensivest/all/all/all/" class="filter-link stext-106 trans-04">
+									<a href="/products?order=expensivest" class="filter-link stext-106 trans-04">
 										گرانترین
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/cheapest/all/all/all/" class="filter-link stext-106 trans-04">
+									<a href="/products?order=cheapest" class="filter-link stext-106 trans-04">
 										ارزانترین
 									</a>
 								</li>
 
 								
 								<li class="p-b-6">
-									<a href="/products/1/newest/all/all/all/" class="filter-link stext-106 trans-04 filter-link-active">
+									<a href="/products?order=newest" class="filter-link stext-106 trans-04 filter-link-active">
 										جدید ترین
 									</a>
 								</li>
 
 								
 								<li class="p-b-6">
-									<a href="/products/1/oldest/all/all/all/" class="filter-link stext-106 trans-04">
+									<a href="/products?order=oldest" class="filter-link stext-106 trans-04">
 										قدیمی ترین
 									</a>
 								</li>
@@ -222,31 +251,31 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="/products/1/newest/all/all/all/" class="filter-link stext-106 trans-04 filter-link-active">
+									<a href="/products?price=all" class="filter-link stext-106 trans-04 filter-link-active">
 										همه
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/newest/0to500/all/all/" class="filter-link stext-106 trans-04">
+									<a href="/products?price=0to500" class="filter-link stext-106 trans-04">
 										0 - 500 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/newest/500to1000/all/all/" class="filter-link stext-106 trans-04">
+									<a href="/products?price=500to1000" class="filter-link stext-106 trans-04">
 										500 - 1000 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/newest/1000to2000/all/all/" class="filter-link stext-106 trans-04">
+									<a href="/products?price=1000to2000" class="filter-link stext-106 trans-04">
 										1000 - 2000 هزار تومان
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products/1/newest/2000toend/all/all/" class="filter-link stext-106 trans-04">
+									<a href="/products?price=2000toend" class="filter-link stext-106 trans-04">
 										2000 هزار تومان به بالا
 									</a>
 								</li>
@@ -275,7 +304,7 @@
 										<i class="zmdi zmdi-circle"></i>
 									</span>
 
-									<a href="/products/1/newest/all/all/all/" class="filter-link stext-106 trans-04 filter-link-active">
+									<a href="/products?color=all" class="filter-link stext-106 trans-04 filter-link-active">
 										همه
 									</a>
 								</li>
@@ -285,7 +314,7 @@
 										<i class="zmdi zmdi-circle"></i>
 									</span>
 
-									<a href="/products/1/newest/all/{{$color[0]}}/all/" class="filter-link stext-106 trans-04">
+									<a href="/products?color={{$color[0]}}" class="filter-link stext-106 trans-04">
 										{{$color[1]}}
 									</a>
 								</li>
@@ -305,11 +334,11 @@
 									'برچسب',
 									'گلس'
 								]; ?>
-								<a href="/products/1/newest/all/all/" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5 filter-link-active">
+								<a href="/products?keyword=" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5 filter-link-active">
 									همه
 								</a>
 								@foreach ($keywords as $keyword)
-								<a href="/products/1/newest/all/all/{{$keyword}}/" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								<a href="/products?keyword={{$keyword}}/" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
 									{{$keyword}}
 								</a>
 								@endforeach
@@ -342,7 +371,7 @@
 									مشاهده سریع
 								</a>
 
-								<span class="badge badge-dark">{{$item->title}}</span>
+								<span class="badge detail badge-dark">{{$item->title}}</span>
 							</div>
 
 							<div class="block2-txt flex-w flex-t p-t-14">
@@ -368,12 +397,9 @@
 								</div>
 
 								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="{{ asset('images/icons/icon-heart-01.png') }}" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{ asset('images/icons/icon-heart-02.png') }}" alt="ICON">
+									<a href="/cart/add/{{$item->pro_id}}/{{$item->name}}/1">
+										<i class="fa fa-cart-plus" aria-hidden="true" style="font-size: 25px;"></i>
 									</a>
-
-									
 								</div>
 							</div>
 						</div>

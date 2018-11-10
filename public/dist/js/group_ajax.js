@@ -1,8 +1,8 @@
 // Change to select2 type
-$('select.select2').select2();
+$('select.select2.categories').select2();
 
 // Create a change evnt on first select input
-$('select.select2').change(function () {
+$('select.select2.categories').change(function () {
     
     var title = $(this).find('option[value="' + $(this).val() + '"]').html();
     get_sub_groups($(this).val(), title,  $(this).parent().parent());
@@ -14,7 +14,7 @@ function get_sub_groups (parentValue, parentTitle, parentObj) {
     
     var select = [];
     select[0] = '<div class="form-group"><div class="input-group">';
-    select[0] += '<select name="parent" class="form-control select2">';
+    select[0] += '<select name="parent" class="form-control select2 categories">';
     select[0] += '<option value="' + parentValue + '">خود گروه "' + parentTitle + '"</option>';
     select[1] = '</select><div class="input-group-addon"><i class="ti-layout-grid2-alt">';
     select[1] += '</i></div></div></div>';

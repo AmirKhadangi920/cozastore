@@ -43,6 +43,7 @@ class CartController extends Controller
             'site_description' => $site_description,
             'shipping_cost' => $shipping_cost,
             'site_logo' => $site_logo,
+            'top_groups' => $this -> Get_sub_groups(),
             'social_link' => $social_link,
         ]);
     }

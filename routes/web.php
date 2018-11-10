@@ -62,7 +62,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/panel/products/edit/{id}', 'ProductController@edit');
     Route::post('/panel/products/update', 'ProductController@update');
     Route::get('/panel/products/delete/{id}/{title}', 'ProductController@delete');
-    Route::get('/panel/products/search/{query}', 'ProductController@search');
+    Route::get('/panel/products/search/{query?}', 'ProductController@search');
 });
 
 // Store Products Routes

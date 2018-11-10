@@ -40,7 +40,12 @@ $(document).ready(function(){
         } while (photo.html() != undefined);
 
         photos = photos.substring(0, photos.length-1);
-        photo = photos.substring(0, photos.indexOf(','));
+        if (photos.indexOf(',') != -1) {
+            photo = photos.substring(0, photos.indexOf(','));
+        } else {
+            photo = photos;
+        }
+        
         $('#single_photo').val(photo);
         $('#gallery').val(photos);
 

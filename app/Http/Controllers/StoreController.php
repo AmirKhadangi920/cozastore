@@ -22,6 +22,19 @@ class StoreController extends Controller
 
     public function index ()
     {
+        if(\Auth::check())
+        {
+            $user_order = DB::select('SELECT `id` FROM `orders` WHERE `buyer` = ? AND `status` = 1', [\Auth::user()->id]);
+            
+            if ($user_order != [])
+            {
+                $user_order = Order::find($user_order[0] -> id);
+                $user_order -> status = 0;
+                $user_order -> save();
+            }
+        }
+        
+
         if (\Auth::check() && Cookie::get('cart'))
         {
             $order = Order::select('id')->where('buyer',\Auth::user()->id)->where('status', 0)->get();
@@ -64,7 +77,7 @@ class StoreController extends Controller
         $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
                 `offer`, `photo` FROM `products`
                 LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id`
-                WHERE `status` = 1 LIMIT 30;";
+                WHERE `status` = 1 ORDER BY `products`.`created_at` DESC LIMIT 30;";
         $products = DB::select($sql);
 
         $options = Option::select('name', 'value')->whereIn('name', [
@@ -139,14 +152,18 @@ class StoreController extends Controller
                     {
                         get_parent($item->id, $groups_id);
                     }
+                } else {
+                    $groups_id = [];
                 }
             }
             
             $x = []; get_parent($category, $x); $x = implode(',', $x);
-            $sql .= "AND `category` IN ($x) "; 
-            $count_sql .= "AND `category` IN ($x) "; 
+            if ($x)
+            {
+                $sql .= "AND `category` IN ($x) "; 
+                $count_sql .= "AND `category` IN ($x) ";
+            }
         }
-        
         if ($keyword && $keyword != 'all') {
             $sql .= "AND `keywords` LIKE '%$keyword%' ";
             $count_sql .= "AND `keywords` LIKE '%$keyword%' ";
@@ -169,6 +186,8 @@ class StoreController extends Controller
                 $sql .= "AND `price` > 2000000 ";
                 $count_sql .= "AND `price` > 2000000 ";
                 break;
+            default:
+                $price = 'all';
         }
 
         switch ($order) {
@@ -183,12 +202,14 @@ class StoreController extends Controller
             default: $sql .= "ORDER BY `products`.`created_at` DESC";
         }
 
+
+        
         $sql .= ' LIMIT 10 OFFSET ' . ($page - 1) * 10 . ';';
-
+        
         $product_count = DB::SELECT($count_sql);
-
+        
         $products = DB::select($sql);
-
+        
         $options = Option::select('name', 'value')->whereIn('name', 
             ['site_name', 'site_description', 'site_logo', 'social_link', 'dollar_cost'])->get();
         foreach ($options as $option) {
@@ -204,6 +225,7 @@ class StoreController extends Controller
         $page_title = (isset($_GET['category_name'])) ? 'محصولات گروه '.$_GET['category_name'] : 'محصولات';
 
         $breadcrumb = [];
+
         if (isset($_GET['category']))
         {
             $breadcrumb = $this -> breadcrumb($_GET['category']);

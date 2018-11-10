@@ -29,12 +29,6 @@
                             صفحه اصلی
                         </a>
                     </li>
-                    
-                    <li class="p-b-10">
-                        <a href="/orders" class="stext-107 cl7 hov-cl1 trans-04">
-                            سفارشات
-                        </a>
-                    </li>
 
                     <li class="p-b-10">
                         <a href="/cart" class="stext-107 cl7 hov-cl1 trans-04">
@@ -48,12 +42,6 @@
                         </a>
                     </li>
 
-                    <li class="p-b-10">
-                        <a href="/about" class="stext-107 cl7 hov-cl1 trans-04">
-                            درباره ما 
-                        </a>
-                    </li>
-                    
                     <li class="p-b-10">
                         <a href="/login" class="stext-107 cl7 hov-cl1 trans-04">
                             ورود 
@@ -127,7 +115,7 @@
         <div class="p-t-0">
             <p class="stext-107 cl6 txt-center">
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> تمام حقوق این قالب محفوظ است | ترجمه شده <i class="fa fa-heart-o" aria-hidden="true"></i> توسط <a href="https://colorlib.com" target="_blank">SmaT Teamwork</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> تمام حقوق این قالب محفوظ است | ترجمه شده <i class="fa fa-heart-o" aria-hidden="true"></i> توسط <a href="tel:09105009868">SmaT Teamwork</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
             </p>

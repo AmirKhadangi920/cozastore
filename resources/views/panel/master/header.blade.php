@@ -10,14 +10,12 @@
             </div>
         </div>	
         <a id="toggle_nav_btn" class="toggle-left-nav-btn inline-block ml-20 pull-left" href="javascript:void(0);"><i class="zmdi zmdi-menu"></i></a>
-        <a id="toggle_mobile_search" data-toggle="collapse" data-target="#search_form" class="mobile-only-view" href="javascript:void(0);"><i class="zmdi zmdi-search"></i></a>
+        {{-- <a id="toggle_mobile_search" data-toggle="collapse" data-target="#search_form" class="mobile-only-view" href="javascript:void(0);"><i class="zmdi zmdi-search"></i></a> --}}
         {{-- <a id="toggle_mobile_nav" class="mobile-only-view" href="javascript:void(0);"><i class="zmdi zmdi-more"></i></a> --}}
         <form id="search_form" role="search" class="top-nav-search collapse pull-right">
             <div class="input-group">
-                <input type="text" name="example-input1-group2" class="form-control" placeholder="جستجو ...">
-                <span class="input-group-btn">
-                <button type="button" class="btn  btn-default"  data-target="#search_form" data-toggle="collapse" aria-label="Close" aria-expanded="true"><i class="zmdi zmdi-search"></i></button>
-                </span>
+                {{-- <input type="text" onkeyup="this.nextElementSibling.childNodes[0].href = '/panel/products/search/'+this.value" name="example-input1-group2" class="form-control" placeholder="جستجو ...">
+                <span class="input-group-btn"><a href="/panel/products/search/" class="btn  btn-default"  data-target="#search_form" data-toggle="collapse" aria-label="Close" aria-expanded="true"><i class="zmdi zmdi-search"></i></a></span> --}}
             </div>
         </form>
     </div>
@@ -222,10 +220,8 @@
                                 </div>
                                 <form role="search" class="chat-search pl-15 pr-15 pb-15">
                                     <div class="input-group">
-                                        <input type="text" id="example-input1-group2" name="example-input1-group2" class="form-control" placeholder="جستجو ...">
-                                        <span class="input-group-btn">
-                                        <button type="button" class="btn  btn-default"><i class="zmdi zmdi-search"></i></button>
-                                        </span>
+                                        {{-- <input type="text" onkeyup="this.nextElementSibling.childNodes[0].href = '/panel/products/search/'+this.value" id="example-input1-group2" name="example-input1-group2" class="form-control" placeholder="جستجو ...">
+                                        <span class="input-group-btn"><a href="/panel/products/search/" type="button" class="btn  btn-default"><i class="zmdi zmdi-search"></i></a></span> --}}
                                     </div>
                                 </form>
                                 <div id="chat_list_scroll">

@@ -49,6 +49,11 @@ class GalleryController extends Controller
 
     public function edit ($id)
     {
+        if (!Gallery::find($id))
+        {
+            return redirect()->back();
+        }
+
         $selected = Gallery::select('id', 'name', 'description', 'photo')->where('id', $id)->get();
         $photos = Gallery::select('id', 'name', 'description', 'photo')->skip(0)->take(30)->get();
 

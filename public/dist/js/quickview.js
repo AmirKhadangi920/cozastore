@@ -27,14 +27,19 @@ function quickview (id) {
             if (data.colors)
             {
                 colors = data.colors.split(',');
-                var color_options = '<option value="">یک رنگ انتخاب کنید</option>';
+                var color_options = '';
                 for (var i = 0; i < colors.length; ++i) {
-                    color_options += '<option value="' + colors[i] + '">'+ colors[i] +'</option>';
+                    color_options += '<input type="radio" value="' + colors[i] + '"';
+                    color_options += 'name="color" id="color'+i+'" />';
+                    color_options += '<label for="color'+i+'"><span class="badge color" '; 
+                    color_options += 'style="background: ' + colors[i] + ';">';
+                    color_options += '<i class="fa fa-check" aria-hidden="true"></i></span></label>';
                 }
-                $('.js-select2').parent().parent().parent().show();
-                $('.js-select2').html(color_options);
+                $('.colors-input').parent().show();
+                $('.colors-input').html(color_options);
+                $('.colors-input input[type="radio"]:first-of-type').prop( "checked", true );
             } else {
-                $('.js-select2').parent().parent().parent().hide();
+                $('.colors-input').parent().hide();
             }
             
             var photos = data.gallery.split(",");            
@@ -65,12 +70,14 @@ function quickview (id) {
             $('.js-modal1 .product-gallery').html(gallery);
             $('.js-modal1 .js-addcart-detail').click(function () 
             {
-                var url = '/cart/add/'+id+'/'+data.name+'/'+$('.js-modal1 .num-product').val();
-                if ($('.js-select2').val()) {
-                    url += '/' + $('.js-select2').val();
-                }
-                window.location = url;
+                var count = $(this).prev().find('input').val();
+                var color = $("input[type='radio']:checked").val();
+                window.location = '/cart/add/'+id+'/+'+data.name+'/' + count + '/' + color;
             });
+
+            $('.js-addcart-detail').click(function ()
+		{
+		});
 
             $('.wrap-slick3').each(function(){
                 $(this).find('.slick3').slick({
@@ -91,7 +98,6 @@ function quickview (id) {
                     dotsClass:'slick3-dots',
                     customPaging: function(slick, index) {
                         var portrait = $(slick.$slides[index]).data('thumb');
-                        return '<img src=" ' + portrait + ' "/><div class="slick3-dot-overlay"></div>';
                     },  
                 });
             });

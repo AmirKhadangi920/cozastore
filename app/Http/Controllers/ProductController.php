@@ -110,7 +110,7 @@ class ProductController extends Controller
         // Add all product features to it's table
         foreach ($req ->features as $item) {
 
-            if ($item['name'] != 'false') {
+            if ($item['name'] != 'false' && $item['value']) {
                 $product_feature = new ProductFeatures;
                 $product_feature -> product = $pro_id;
                 $product_feature -> feature = $item['name'];
@@ -124,6 +124,11 @@ class ProductController extends Controller
 
     public function edit ($id)
     {
+        if (!Product::find($id))
+        {
+            return redirect()->back();
+        }
+
         $product = DB::select("SELECT `pro_id`, `category`, `categories`.`title`, `products`.`name`, `code`,
             `short_description`, `aparat_video`, `price`, `unit`, `offer`, `colors`, `status`,
             `full_description`, `keywords`, `photo`, `gallery`, `advantages`, `disadvantages` 
@@ -208,7 +213,7 @@ class ProductController extends Controller
         // Add all product features to it's table
         foreach ($req ->features as $item) {
 
-            if ($item['name'] != 'false') {
+            if ($item['name'] != 'false' && $item['value']) {
                 $product_feature = new ProductFeatures;
                 $product_feature -> product = $req -> id;
                 $product_feature -> feature = $item['name'];
@@ -226,11 +231,16 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'محصول '.$title.' با موفقیت حذف شد .');
     }
 
-    public function search ($query)
+    public function search ($query = '')
     {
-        $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
-            ->orderBy('created_at', 'DESC')->where('name', 'like', '%'.$query.'%')->get();
 
+        $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
+            ->orderBy('created_at', 'DESC');
+        if ($query != '') {
+            $products->where('name', 'like', '%'.$query.'%');
+        }
+        $products =$products->get();
+        
         $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
         foreach ($options as $option) {
             switch ($option['name']) {
@@ -239,8 +249,10 @@ class ProductController extends Controller
             }
         }
 
+
+        // return $products;
         return view('panel.products', [
-            'products', $products,
+            'products' => $products,
             'query' => $query,
             'page_name' => 'products',
             'page_title' => 'جستجوی محصولات برای "' . $query . '"',

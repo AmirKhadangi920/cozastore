@@ -35,16 +35,41 @@
 	.product-card {
 		float: right !important;
 	}
-	.badge {
+	.badge.detail {
 		position: absolute;
 		top: 0px;
 		left: 0px;
 		padding: 6px 8px 4px;
 		box-shadow: 0px 0px 20px -5px #000;
 	}
-	/* .bread-crumb a:last-of-type .fa-angle-left {
+	.badge.color {
+		border-radius: 50%;
+		width: 25px;
+		height: 25px;
+		padding: 0px;
+		transition: all 300ms;
+		float: right;
+		margin-left: 10px;
+	}
+	.badge.color i {
+		padding-top: 7px;
+		opacity: 0;
+	}
+	label:first-of-type .badge.color {
+		top: 6px;
+		position: relative;
+	}
+	input[type="radio"] {
 		display: none;
-	} */
+	}
+	input[type="radio"]:checked + label > span {
+		width: 50px;
+		border-radius: 30px;
+		box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.5)
+	}
+	input[type="radio"]:checked + label > span i {
+		opacity: 1;
+	}
 	</style>
 @endsection
 
@@ -112,10 +137,10 @@
 				<!-- Search product -->
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
 					<div class="bor8 dis-flex p-l-15">
-						<input onkeyup="this.nextElementSibling.href = '/products?page=1&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}/'+this.value" class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" value="{{$filter['query']}}" placeholder="جستجو ...">
+						<input onkeyup="this.nextElementSibling.href = '/products?page=1&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}/'+this.value" class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" value="@isset($_GET['query']) {{$_GET['query']}} @endisset" placeholder="جستجو ...">
 						
 						
-						<a href="/products?page=11&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+						<a href="/products?page=1&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
 						</a>
 					</div>	
@@ -131,27 +156,27 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="/products?page=1?order=expensivest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='expensivest') filter-link-active @endif">
+									<a href="/products?page=1&order=expensivest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='expensivest') filter-link-active @endif">
 										گرانترین
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products?page=1?order=cheapest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='cheapest') filter-link-active @endif">
+									<a href="/products?page=1&order=cheapest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='cheapest') filter-link-active @endif">
 										ارزانترین
 									</a>
 								</li>
 
 								
 								<li class="p-b-6">
-									<a href="/products?page=1?order=newest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='newest') filter-link-active @endif">
+									<a href="/products?page=1&order=newest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='newest') filter-link-active @endif">
 										جدید ترین
 									</a>
 								</li>
 
 								
 								<li class="p-b-6">
-									<a href="/products?page=1?order=oldest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='oldest') filter-link-active @endif">
+									<a href="/products?page=1&order=oldest&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}&query={{$filter['query']}}" class="filter-link stext-106 trans-04 @if($filter['order']=='oldest') filter-link-active @endif">
 										قدیمی ترین
 									</a>
 								</li>
@@ -285,7 +310,7 @@
 									مشاهده سریع
 								</a>
 
-								<span class="badge badge-dark">{{$product->title}}</span>
+								<span class="badge detail badge-dark">{{$product->title}}</span>
 							</div>
 
 							<div class="block2-txt flex-w flex-t p-t-14">
@@ -311,12 +336,9 @@
 								</div>
 
 								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-										<img class="icon-heart1 dis-block trans-04" src="{{ asset('images/icons/icon-heart-01.png') }}" alt="ICON">
-										<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{{ asset('images/icons/icon-heart-02.png') }}" alt="ICON">
+									<a href="/cart/add/{{$product->pro_id}}/{{$product->name}}/1">
+										<i class="fa fa-cart-plus" aria-hidden="true" style="font-size: 25px;"></i>
 									</a>
-
-									
 								</div>
 							</div>
 						</div>

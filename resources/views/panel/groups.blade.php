@@ -87,7 +87,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">گروه مادر</label>
 												<div class="input-group">
-													<select name="parent" class="form-control select2">
+													<select name="parent" class="form-control select2 categories">
 														@if (isset($title))
 														<option value="{{$id}}">زیر مجموعه گروه {{ $title }}</option>
 														@else

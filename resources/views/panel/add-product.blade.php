@@ -148,7 +148,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">گروه</label>
 												<div class="input-group">
-													<select name="parent" class="form-control select2">
+													<select name="parent" class="form-control select2 categories">
 														<option value="">دسته بندی نشده</option>
 														@if(isset($edit) && !empty($product->category))
 															<option value="{{$product->category}}" selected>گروه سابق : "{{$product->title}}"</option>
@@ -222,7 +222,7 @@
 													</div>
 													<div class="radio-inline pl-0">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->status == 1) checked="checked" @elseif(old('status') == 1) checked @endif name="status" id="radio1" value="1">
+															<input type="radio" @if(isset($edit) && $product->status == 1) checked="checked" @elseif(old('status') == 1) checked @endif  @if(!isset($edit)) checked="checked" @endisset name="status" id="radio1" value="1">
 															<label for="radio1">ثبت محصول</label>
 														</div>
 													</div>
@@ -311,8 +311,8 @@
 												</div>
 												@endif
 
-												<input type="hidden" @isset($edit) value="{{$product->photo}}" @endisset id="single_photo" name="photo" />
-												<input type="hidden" @isset($edit) value="{{$product->gallery}}" @endisset id="gallery" name="gallery" />
+												<input type="hidden" @isset($edit) value="{{$product->photo}}" @endisset id="single_photo" name="photo" onchange="alert(this.value)" />
+												<input type="hidden" @isset($edit) value="{{$product->gallery}}" @endisset id="gallery" name="gallery" onchange="alert(this.value)" />
 											</div>
 
 											<div class="col-md-12 text-center">

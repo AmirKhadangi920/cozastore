@@ -171,11 +171,15 @@
 											$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 										?>
 										<b class="txt-dark">ثبت :</b> {{$time->hour.':'.$time->minute.' | '.$created_at}}<br/>
+										@if ($invoice->payment)
 										<?php
 											$time = new Carbon\Carbon($invoice->payment);
 											$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 										?>
 										<b class="txt-dark">پرداخت :</b> {{$time->hour.':'.$time->minute.' | '.$payment}}
+										@else
+										<b class="txt-dark">پرداخت :</b> <span class="label label-danger">هنوز پرداخت نشده</span>
+										@endif
 									</address>
 								</div>
 							</div>
@@ -239,6 +243,17 @@
 												<td>{{$item->name}}</td>
 												<td>{{$price}}</td>
 												<td>{{$item->count}}</td>
+												<?php switch ($item->color) {
+													case 'blue': $item->color = 'آبی'; break;
+													case 'green': $item->color = 'سبز'; break;
+													case 'yellow': $item->color = 'زرد'; break;
+													case 'brown': $item->color = 'قهوه ای'; break;
+													case 'violet': $item->color = 'بنفش'; break;
+													case 'orange': $item->color = 'نارنجی'; break;
+													case 'red': $item->color = 'قرمز'; break;
+													case 'black': $item->color = 'مشکی'; break;
+													case 'white': $item->color = 'سفید'; break;
+												} ?>
 												<td>{{($item->color) ? $item->color : 'رنگی انتخاب نشده است'}}</td>
 												<td>{{$price * $item->count}}</td>
 											</tr>

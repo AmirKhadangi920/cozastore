@@ -38,6 +38,11 @@ class InvoiceController extends Controller
 
     public function get ($id)
     {
+        if (!Order::find($id))
+        {
+            return redirect()->back();
+        }
+        
         $invoice = DB::select('SELECT `orders`.`id`, `users`.`first_name`, `users`.`last_name`,
                 `state`, `city`, `address`, `email`, `phone`, `users`.`postal_code` AS \'user_postal_code\',
                 `admin_description`, `buyer_description`, `destination`,

@@ -67,6 +67,11 @@ class GroupController extends Controller
 
     public function edit ($id, $title)
     {
+        if (!Group::find($id))
+        {
+            return redirect()->back();
+        }
+
         $selected = Group::select('id', 'title', 'description')->where('id', $id)->get();
         $groups = Group::select('id', 'title', 'description')->where('parent', $id)->get();
 

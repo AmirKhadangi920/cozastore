@@ -196,7 +196,7 @@
 								</div>
 
 								<div class="size-209  w-full-ssm">
-									<select name="shipping_cost">
+									<select class="shipping_cost" name="shipping_cost">
 										@foreach($shipping_cost as $key => $item)
 										<option value="{{$key}}" cost="{{$item['cost']}}">{{$item['name'] . ' - '.$item['cost'].' تومان'}}</option>
 										@endforeach
@@ -248,9 +248,12 @@
 							<span class="helper" style="margin-top: 30px; margin-bottom: 10px; display: block;">توضیح شما برای این سفارش :</span>
 							<textarea name="description" placeholder="توضیحی ای که در این قسمت وارد میکنید ، برای خدمت رسانی بهتر به شما به مدیر فروشگاه ارسال خواهد شد ." class="order-descrip flex-c-m cl0 size-116 bor14 m-b-20 p-lr-15 trans-04 pointer"></textarea>
 
+							@if(!empty($cart_products[0]))
 							<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 								پرداخت صورت حساب 
 							</button>
+							@endif
+							
 							@csrf
 							@endguest
 						</div>
@@ -339,6 +342,23 @@
 				
 				total = $('.final_total');
 				output = numeral(total.text().replace(/,/g, '') * 1 - price).format('0,0');
+				total.text(output);
+			});
+
+			var cost = 0;
+
+			$('.shipping_cost').click(function () {
+				var method =$(this).val();
+				var cost_temp = $('option[value="'+method+'"]').attr('cost');
+				cost = cost_temp;
+			});
+
+			$('.shipping_cost').change(function () {
+				var method =$(this).val();
+				var cost_temp = $('option[value="'+method+'"]').attr('cost');
+
+				var total = $('.final_total');
+				var output = numeral(total.text().replace(/,/g, '') * 1 + (cost_temp - cost)).format('0,0');
 				total.text(output);
 			});
 		</script>
