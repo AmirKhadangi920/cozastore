@@ -160,7 +160,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">ویدیوی آپارات</label>
 												<div class="input-group">
-													<input type="text" name="aparat_video" @isset($edit) value="https://www.aparat.com/v/{{$product->aparat_video}}" @else value="{{old('aparat_video')}}" @endisset id="firstName" class="form-control" placeholder="لینک ویدیوی شما در آپارات ، مثلا : https://www.aparat.com/v/kN0SI">
+													<input type="text" name="aparat_video" @if(isset($edit) && !empty($product->aparat_video)) value="https://www.aparat.com/v/{{$product->aparat_video}}" @else value="{{old('aparat_video')}}" @endif id="firstName" class="form-control" placeholder="لینک ویدیوی شما در آپارات ، مثلا : https://www.aparat.com/v/kN0SI">
 													<div class="input-group-addon"><i class="ti-video-clapper"></i></div>
 												</div>
 											</div>
@@ -426,13 +426,13 @@
 									
 									<div class="row">
 										<div class="col-sm-6">
-											<div class="form-group disadvantages">
-												<input type="text" name="disadvantages" @isset($edit) value="{{$product->disadvantages}}" @else value="{{old('disadvantages')}}"  @endisset data-role="tagsinput" class="form-control" placeholder="عیب محصول">
+											<div class="form-group advantages">
+												<input type="text" name="advantages" @isset($edit) value="{{$product->advantages}}" @else value="{{old('advantages')}}" @endisset data-role="tagsinput" class="form-control" placeholder="مزیت محصول">
 											</div>
 										</div>
 										<div class="col-sm-6">
-											<div class="form-group advantages">
-												<input type="text" name="advantages" @isset($edit) value="{{$product->advantages}}" @else value="{{old('advantages')}}" @endisset data-role="tagsinput" class="form-control" placeholder="مزیت محصول">
+											<div class="form-group disadvantages">
+												<input type="text" name="disadvantages" @isset($edit) value="{{$product->disadvantages}}" @else value="{{old('disadvantages')}}"  @endisset data-role="tagsinput" class="form-control" placeholder="عیب محصول">
 											</div>
 										</div>
 									</div>

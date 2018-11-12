@@ -41,7 +41,28 @@
 		padding: 6px 8px 4px;
 		box-shadow: 0px 0px 20px -5px #000;
 	}
-
+	.badge.label {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		padding: 6px 10px;
+		font-size: 20px;
+		background: #9797979e;
+		box-shadow: 0px 0px 10px #000;
+	}
+	.gray {
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
+	}
+	.shadow {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		background: #00000085;
+	}
 	.badge.color {
 		border-radius: 50%;
 		width: 25px;
@@ -359,51 +380,71 @@
 					</div>
 				</div>
 				@else
-					@foreach ($products as $item)
-					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 product-card isotope-item {{'group'.$item->id}}">
+					@foreach ($products as $product)
+					<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 product-card isotope-item {{'group'.$product->id}}">
 						<!-- Block2 -->
 						<div class="block2">
-							<div class="block2-pic hov-img0">
+							<div class="block2-pic hov-img0 @if($product->label || $product->stock_inventory == 0) gray @endif">
 								
-								<img src="{{asset('/uploads/'.$item->photo)}}" alt="IMG-PRODUCT">
+								<img src="{{asset('/uploads/'.$product->photo)}}" alt="IMG-PRODUCT">
 
-								<a href="{{$item->pro_id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-									مشاهده سریع
-								</a>
+								@if(!$product->label && $product->stock_inventory != 0)
+									<a href="{{$product->pro_id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+										مشاهده سریع
+									</a>
+								@endif
 
-								<span class="badge detail badge-dark">{{$item->title}}</span>
+								@if($product->label)
+									<?php switch ($product->label) {
+										case 1: $product->label = 'توقف تولید'; break;
+										case 2: $product->label = 'به زودی'; break;
+										case 3: $product->label = 'نا موجود'; break;
+										case 4: $product->label = 'عدم فروش'; break;
+									} ?>
+									<div class="shadow"></div> 
+									<span class="badge label badge-dark">{{ $product->label }}</span>
+								@elseif ($product->stock_inventory == 0)
+									<div class="shadow"></div> 
+									<span class="badge label badge-dark">نا موجود</span>
+								@else
+									<span class="badge detail badge-dark">{{$product->title}}</span>
+								@endif
 							</div>
 
 							<div class="block2-txt flex-w flex-t p-t-14">
 								<div class="block2-txt-child1 flex-col-l">
-									<a href="/product/{{$item->pro_id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										<b>{{$item->name}}</b>
+									<a href="/product/{{$product->pro_id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+										<b>{{$product->name}}</b>
 									</a>
 
-									<?php if ($item->unit) {
-										$item->price = $item->price * $dollar_cost;
-									} ?>
-									@empty ($item->offer)
-									<span class="stext-105 cl3">
-										<span class="num-comma">{{$item->price}}</span> تومان
-									</span>
-									@else
-									<?php $item->offer = $item->price - ($item->offer * $item->price) / 100; ?>
-									<span class="stext-105 cl3">
-										<del><span class="num-comma">{{$item->price}}</span> تومان</del>
-										<span class="num-comma">{{$item->offer}}</span> تومان
-									</span>
-									@endempty
+									@if(!$product->label && $product->stock_inventory != 0)
+										<?php if ($product->unit) {
+											$product->price = $product->price * $dollar_cost;
+										} ?>
+										@empty ($product->offer)
+										<span class="stext-105 cl3">
+											<span class="num-comma">{{$product->price}}</span> تومان
+										</span>
+										@else
+										<?php $product->offer = $product->price - ($product->offer * $product->price) / 100; ?>
+										<span class="stext-105 cl3">
+											<del><span class="num-comma">{{$product->price}}</span> تومان</del>
+											<span class="num-comma">{{$product->offer}}</span> تومان
+										</span>
+										@endempty
+									@endif
 								</div>
 
+								@if(!$product->label && $product->stock_inventory != 0)
 								<div class="block2-txt-child2 flex-r p-t-3">
-									<a href="/cart/add/{{$item->pro_id}}/{{$item->name}}/1">
+									<a href="/cart/add/{{$product->pro_id}}/{{$product->name}}/1">
 										<i class="fa fa-cart-plus" aria-hidden="true" style="font-size: 25px;"></i>
 									</a>
 								</div>
+								@endif
 							</div>
 						</div>
-						<input type="hidden" id="pro_id" value="{{$item->pro_id}}}" />
+						<input type="hidden" id="pro_id" value="{{$product->pro_id}}}" />
 					</div>
 					@endforeach
 				@endempty

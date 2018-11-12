@@ -120,20 +120,22 @@
 							{{$product->name}}
 						</h4>
 
-						<?php if ($product->unit) {
-							$product->price = $product->price * $dollar_cost;
-						} ?>
-						@empty ($product->offer)
-						<span class="mtext-106 cl2">
-							<span class="num-comma">{{$product->price}}</span> تومان
-						</span>
-						@else
-						<?php $product->offer = $product->price - ($product->offer * $product->price) / 100; ?>
-						<span class="mtext-106 cl2">
-							<del><span class="num-comma">{{$product->price}}</span> تومان</del>
-							<span class="num-comma">{{$product->offer}}</span> تومان
-						</span>
-						@endempty
+						@if(!$product->label && $product->stock_inventory != 0)
+							<?php if ($product->unit) {
+								$product->price = $product->price * $dollar_cost;
+							} ?>
+							@empty ($product->offer)
+							<span class="mtext-106 cl2">
+								<span class="num-comma">{{$product->price}}</span> تومان
+							</span>
+							@else
+							<?php $product->offer = $product->price - ($product->offer * $product->price) / 100; ?>
+							<span class="mtext-106 cl2">
+								<del><span class="num-comma">{{$product->price}}</span> تومان</del>
+								<span class="num-comma">{{$product->offer}}</span> تومان
+							</span>
+							@endempty
+						@endif
 
 						<p class="stext-102 cl3 p-t-23">
 							{{$product->short_description}}
@@ -141,47 +143,60 @@
 						
 						<!--  -->
 						<div class="p-t-33">
-							@if(!empty($product->colors))
-							<div class="flex-w flex-r-m p-b-10">
-								<div class="size-203 flex-c-m respon6">
-									رنگ
-								</div>
-
-
-								<div class="size-204 respon6-next">
-									<?php $product->colors = explode(',', $product->colors) ?>
-									@for ($i = 0; $i < count($product->colors); ++$i)
-										<input type="radio" value="{{$product->colors[$i]}}" @if($i == 0) checked @endif name="color" id="color{{$i}}" />
-										<label for="color{{$i}}">
-											<span class="badge " style="background: {{$product->colors[$i]}};">
-												<i class="fa fa-check" aria-hidden="true"></i>
-											</span>
-										</label>
-									@endfor
-								</div>
-							</div>
-							@endif
-								
-							<div class="flex-w flex-r-m p-b-10">
-								<div class="size-204 flex-w flex-m respon6-next">
-									<div class="wrap-num-product flex-w m-l-20 m-tb-10">
-										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-											<i class="fs-16 zmdi zmdi-minus"></i>
-										</div>
-
-										<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
-
-										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-											<i class="fs-16 zmdi zmdi-plus"></i>
-										</div>
+							@if(!$product->label && $product->stock_inventory != 0)
+								@if(!empty($product->colors))
+								<div class="flex-w flex-r-m p-b-10">
+									<div class="size-203 flex-c-m respon6">
+										رنگ
 									</div>
 
-									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-										اضافه به سبد خرید
-									</button>
-									
+
+									<div class="size-204 respon6-next">
+										<?php $product->colors = explode(',', $product->colors) ?>
+										@for ($i = 0; $i < count($product->colors); ++$i)
+											<input type="radio" value="{{$product->colors[$i]}}" @if($i == 0) checked @endif name="color" id="color{{$i}}" />
+											<label for="color{{$i}}">
+												<span class="badge " style="background: {{$product->colors[$i]}};">
+													<i class="fa fa-check" aria-hidden="true"></i>
+												</span>
+											</label>
+										@endfor
+									</div>
 								</div>
-							</div>	
+								@endif
+
+								<div class="flex-w flex-r-m p-b-10">
+									<div class="size-204 flex-w flex-m respon6-next">
+										<div class="wrap-num-product flex-w m-l-20 m-tb-10">
+											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-minus"></i>
+											</div>
+	
+											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+	
+											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-plus"></i>
+											</div>
+										</div>
+	
+										<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+											اضافه به سبد خرید
+										</button>
+									</div>
+								</div>
+							@else
+								@if($product->label)
+									<?php switch ($product->label) {
+										case 1: $product->label = 'توقف تولید شده است'; break;
+										case 2: $product->label = 'به زودی عرضه خواهد شد'; break;
+										case 3: $product->label = 'محصول نا موجود است'; break;
+										case 4: $product->label = 'در حال حاضر این محصول به فروش نمیرسد'; break;
+									} ?>
+									<div class="alert alert-warning">{{ $product->label }}</div>
+								@elseif($product->stock_inventory == 0)
+									<div class="alert alert-warning">محصول موجود نیست</div>
+								@endif
+							@endif
 						</div>
 
 						<!--  -->

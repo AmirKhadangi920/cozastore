@@ -20,7 +20,7 @@ class ProductController extends Controller
 {
     public function index ()
     {
-        $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
+        $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo', 'label', 'stock_inventory')
             ->orderBy('created_at', 'DESC')->get();
 
         $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
@@ -125,10 +125,13 @@ class ProductController extends Controller
 
         if ($product == []) { return abort(404); }
 
-        $spec_table = [];
-        $spec_table = Specifications::find($product[0] -> spec_table);
-
-        if ($spec_table == []) { return abort(404); }
+        $spec_table = (object) ['specs' => []];
+        if ($product[0] -> spec_table)
+        {
+            $spec_table = Specifications::find($product[0] -> spec_table);
+    
+            if ($spec_table == []) { return abort(404); }
+        }
 
         $photos = Gallery::select('id', 'name', 'description', 'photo')
                 ->whereNotIn('photo', explode(',', $product[0]->gallery))->skip(0)->take(30)->get();

@@ -46,6 +46,30 @@
 	.product-pic {
 		height: 250px;
 	}
+	.label.flag {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		padding: 6px 10px;
+		font-size: 20px;
+		background: #9797979e;
+		box-shadow: 0px 0px 10px #000;
+		border-radius: 5px;
+		height: 32px;
+	}
+	.gray {
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
+	}
+	.shadow {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		background: #00000085;
+	}
 	</style>
 @endsection
 	
@@ -123,7 +147,7 @@
 			</div>
 			@else
 				@foreach ($products as $product)
-				<div class="col-lg-2 col-md-4 col-sm-4 col-xs-6 product-card">
+				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 product-card">
 					<div class="panel panel-default card-view pa-0">
 						<div class="panel-wrapper collapse in">
 							<div class="panel-body pa-0">
@@ -138,6 +162,22 @@
 											<div class="product-pic img-responsive"
 												style="background: url('{{ asset('uploads/'.$product->photo) }}') center center;
 													background-size: cover;">
+												
+												@if($product->label)
+													<?php switch ($product->label) {
+														case 1: $product->label = 'توقف تولید'; break;
+														case 2: $product->label = 'به زودی'; break;
+														case 3: $product->label = 'نا موجود'; break;
+														case 4: $product->label = 'عدم فروش'; break;
+													} ?>
+													<div class="shadow"></div> 
+													<span class="badge label badge-dark"></span>
+													<span class="label flag label-warning inline-block">{{ $product->label }}</span>
+												@elseif ($product->stock_inventory == 0)
+													<div class="shadow"></div> 
+													<span class="label flag label-warning inline-block">نا موجود</span>
+												@endif
+												
 												@if($product->status)
 													<span class="label label-success capitalize-font inline-block ml-10">انتشار یافته</span>
 												@else

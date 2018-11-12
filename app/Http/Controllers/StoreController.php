@@ -75,7 +75,8 @@ class StoreController extends Controller
         }
 
         $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
-                `offer`, `photo` FROM `products`
+                `offer`, `photo`, `stock_inventory`, `label` 
+                FROM `products`
                 LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id`
                 WHERE `status` = 1 ORDER BY `products`.`created_at` DESC LIMIT 30;";
         $products = DB::select($sql);
@@ -122,7 +123,8 @@ class StoreController extends Controller
         $category = (isset($_GET['category'])) ? $_GET['category'] : null;
 
         $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
-                `offer`, `photo` FROM `products`
+                `offer`, `photo`, `label`, `stock_inventory` 
+                FROM `products`
                 LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id` ";
      
         $count_sql = "SELECT count(`pro_id`) as 'count' FROM `products` ";
@@ -204,7 +206,7 @@ class StoreController extends Controller
 
 
         
-        $sql .= ' LIMIT 10 OFFSET ' . ($page - 1) * 10 . ';';
+        $sql .= ' LIMIT 10 OFFSET ' . ($page - 1) * 30 . ';';
         
         $product_count = DB::SELECT($count_sql);
         
@@ -260,7 +262,7 @@ class StoreController extends Controller
         $product = DB::select("SELECT `pro_id`, `code`, `products`.`category`, `categories`.`title`,
             `products`.`name`, `short_description`, `aparat_video`, `price`, `unit`, `offer`, 
             `colors`, `label`, `stock_inventory`, `specs`, `specifications`, `full_description`,
-            `keywords`, `gallery`, `advantages`, `disadvantages` 
+            `keywords`, `gallery`, `advantages`, `disadvantages`
             FROM `products`
             LEFT JOIN `categories` ON `products`.`category` = `categories`.`id`
             LEFT JOIN `specifications` ON `products`.`spec_table` = `specifications`.`id`
