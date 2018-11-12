@@ -79,3 +79,83 @@ $(document).ready(function(){
 
     });
 });
+
+$('select.select2.categories').change(function () {
+    get_specs($(this).val());
+});
+
+function get_specs (id) {
+    $.get('/panel/specs/get/' + id, function(data, status){
+        if(status == 'success') {
+            var spec_id = data.id;
+            data = JSON.parse(data.specs);
+            var temp = '';
+            for (item in data) {
+                temp += '<div class="row"><div class="col-md-2"><h5 class="mb-10 col-md-12 border-bottom">';
+                temp += '<i class="ti-angle-double-left" style="font-size: 15px; color:darkgray;"></i>';
+                temp += '<b>' + data[item]['header'] + '</b></h5></div><div class="col-md-10"><div class="col-md-12">';
+
+                for (spec in data[item]['items'])
+                {
+                    temp += '<div class="col-md-6">';
+                    if (data[item]['items'][spec]['select'] !== undefined)
+                    {
+                        temp += '<div class="form-group">';
+                        temp += '<label class="control-label mb-10">' + data[item]['items'][spec]['name'] + '</label>';
+                        temp += '<div class="radio-list">';
+                        var x = 0;
+                        for (select in data[item]['items'][spec]['select'])
+                        {
+                            temp += '<div class="radio-inline"><div class="radio radio-info">';
+                            var id = 'id-' + Math.floor((Math.random() * 10000) + 1);
+                            temp += '<input type="radio" id="' + id + '"';
+                            if (x++ == 0)
+                            {
+                                temp += ' checked="checked" ';
+                            }
+                            temp += 'name="specs[' + data[item]['value'] + '][' + data[item]['items'][spec]['value'] + ']"';
+                            temp += 'value="' + data[item]['items'][spec]['select'][select] + '" />';
+                            temp += '<label for="' + id + '">' + data[item]['items'][spec]['select'][select]; 
+                            if (data[item]['items'][spec]['label'] !== undefined)
+                            {
+                                temp += data[item]['items'][spec]['label'];
+                            }
+                            temp += ' </label></div></div>';	
+                        }
+                        
+                        temp += '</div></div>';
+                    }
+                    else
+                    {
+                        temp += '<div class="form-group"><label class="control-label mb-10">';
+                        temp += data[item]['items'][spec]['name'] + '</label>';
+                        if (data[item]['items'][spec]['label'] !== undefined)
+                        {
+                            temp += '<div class="input-group">';
+                        }
+                        temp += '<input type="text" class="form-control"';
+                        temp += 'name="specs['+data[item]['value']+']['+data[item]['items'][spec]['value']+']"';
+                        if (data[item]['items'][spec]['help'] !== undefined)
+                        {
+                            temp += 'placeholder="' + data[item]['items'][spec]['help'] + '"';
+
+                        }            
+                        temp += '>';
+                        if (data[item]['items'][spec]['label'] !== undefined)
+                        {
+                            temp += '<div class="input-group-addon">'+data[item]['items'][spec]['label']+'</div></div>';
+                        }
+                        temp += '</div>';
+                    }
+                    temp += '</div>';
+                }
+                
+                temp += '</div></div></div><div class="seprator-block"></div><hr class="light-grey-hr"/>';
+                temp += '<div class="seprator-block"></div>';
+            }            
+            temp += '<input type="hidden" name="spec_id" value="' + spec_id + '" />';
+
+            $('.specs-table').html(temp);
+        }
+    });
+}

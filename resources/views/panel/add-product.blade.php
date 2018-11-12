@@ -62,15 +62,15 @@
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">@isset($edit) ویرایش محصول @else ثبت محصول @endisset</h5>
+			</div>
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					<li class="active"><span>@isset($edit) ویرایش محصول @else ثبت محصول @endisset</span></li>
 					<li>فروشگاه</li>
 					<li>داشبورد</li>
 				</ol>
-			</div>
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">@isset($edit) ویرایش محصول @else ثبت محصول @endisset</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>
@@ -104,13 +104,6 @@
 									</div>
 										
 									<div class="row">
-										<div class="col-md-6">
-											<label class="control-label mb-10">شناسه محصول</label>
-											<div class="input-group">
-												<input type="text" name="code" @isset($edit) value="{{$product->code}}" @else value="{{old('code')}}" @endisset id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
-												<div class="input-group-addon"><i class="ti-id-badge"></i></div>
-											</div>
-										</div>
 										<!--/span-->
 										<div class="col-md-6">
 											<div class="form-group">
@@ -121,6 +114,15 @@
 												</div>
 											</div>
 										</div>
+										
+										<div class="col-md-6">
+											<label class="control-label mb-10">شناسه محصول</label>
+											<div class="input-group">
+												<input type="text" name="code" @isset($edit) value="{{$product->code}}" @else value="{{old('code')}}" @endisset id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
+												<div class="input-group-addon"><i class="ti-id-badge"></i></div>
+											</div>
+										</div>
+
 										<div class="col-md-12">
 											<div class="form-group">
 												<label class="control-label mb-10">توضیح کوتاه</label>
@@ -134,16 +136,6 @@
 									</div>
 									<!-- Row -->
 									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label mb-10">ویدیوی آپارات</label>
-												<div class="input-group">
-													<input type="text" name="aparat_video" @isset($edit) value="https://www.aparat.com/v/{{$product->aparat_video}}" @else value="{{old('aparat_video')}}" @endisset id="firstName" class="form-control" placeholder="اسکریپت ویدیوی خود در سایت آپارات را در این قسمت وارد کنید">
-													<div class="input-group-addon"><i class="ti-video-clapper"></i></div>
-												</div>
-											</div>
-										</div>
-										<!--/span-->
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="control-label mb-10">گروه</label>
@@ -163,19 +155,60 @@
 											</div>
 										</div>
 										<!--/span-->
-									</div>
-									<!--/row-->
-									<div class="row">
+
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label mb-10">تخفیف</label>
+												<label class="control-label mb-10">ویدیوی آپارات</label>
 												<div class="input-group">
-													<input type="number" name="offer" @isset($edit) value="{{$product->offer}}" @else value="{{old('offer')}}" @endisset class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
-													<div class="input-group-addon"><i class="ti-cut"></i></div>
+													<input type="text" name="aparat_video" @isset($edit) value="https://www.aparat.com/v/{{$product->aparat_video}}" @else value="{{old('aparat_video')}}" @endisset id="firstName" class="form-control" placeholder="لینک ویدیوی شما در آپارات ، مثلا : https://www.aparat.com/v/kN0SI">
+													<div class="input-group-addon"><i class="ti-video-clapper"></i></div>
 												</div>
 											</div>
 										</div>
+									</div>
+									<!--/row-->
+									<!-- Row -->
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label mb-10">لیبل محصول</label>
+												<div class="input-group">
+													<select name="label" class="form-control select2">
+														<option value="" selected="selected">بدون لیبل</option>
+														<option value="1" @if(isset($edit) && $product->label == 1) selected @endif>توقف تولید</option>
+														<option value="2" @if(isset($edit) && $product->label == 2) selected @endif>به زودی</option>
+														<option value="3" @if(isset($edit) && $product->label == 3) selected @endif>نا موجود</option>
+														<option value="4" @if(isset($edit) && $product->label == 4) selected @endif>عدم فروش</option>
+													</select>
+													<div class="input-group-addon"><i class="ti-layout-media-right"></i></div>
+												</div>
+												
+											</div>
+										</div>
 										<!--/span-->
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label mb-10">تعداد موجود در انبار</label>
+												<div class="input-group">
+													<input type="number" name="stock_inventory" min="0" @isset($edit) value="{{$product->stock_inventory}}" @else value="{{old('stock_inventory')}}" @endisset id="firstName" class="form-control" placeholder="موجودی این محصول در انبار شما">
+													<div class="input-group-addon"><i class="ti-layout-grid4-alt"></i></div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--/row-->
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="control-label mb-10">قیمت</label>
+												<div class="input-group">
+													<input type="number" @isset($edit) value="{{$product->price}}" @else value="{{old('price')}}"  @endisset name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
+													<div class="input-group-addon"><i class="ti-money"></i></div>
+												</div>
+											</div>
+										</div>
+
 										<div class="col-md-2">
 											<div class="form-group">
 												<label class="control-label mb-10">واحد پولی</label>
@@ -195,40 +228,21 @@
 												</div>
 											</div>
 										</div>
+										<!--/span-->
 
-										<div class="col-md-4">
+										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label mb-10">قیمت</label>
+												<label class="control-label mb-10">تخفیف</label>
 												<div class="input-group">
-													<input type="number" @isset($edit) value="{{$product->price}}" @else value="{{old('price')}}"  @endisset name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
-													<div class="input-group-addon"><i class="ti-money"></i></div>
+													<input type="number" name="offer" @isset($edit) value="{{$product->offer}}" @else value="{{old('offer')}}" @endisset class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
+													<div class="input-group-addon"><i class="ti-cut"></i></div>
 												</div>
 											</div>
 										</div>
-										
 										<!--/span-->
 									</div>
 
 									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label mb-10">وضعیت</label>
-												<div class="radio-list">
-													<div class="radio-inline">
-														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->status == 0) checked="checked" @elseif(old('status') == 0) checked @endif name="status" id="radio2" value="0">
-															<label for="radio2">پیش نویس</label>
-														</div>
-													</div>
-													<div class="radio-inline pl-0">
-														<div class="radio radio-info">
-															<input type="radio" @if(isset($edit) && $product->status == 1) checked="checked" @elseif(old('status') == 1) checked @endif  @if(!isset($edit)) checked="checked" @endisset name="status" id="radio1" value="1">
-															<label for="radio1">ثبت محصول</label>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
 										<div class="col-sm-6">
 											<label class="control-label mb-10">رنگ های محصول</label>
 											<div class="form-group mb-0">
@@ -263,6 +277,25 @@
 											</div>	
 										</div>
 										<!--/span-->
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label mb-10">وضعیت</label>
+												<div class="radio-list">
+													<div class="radio-inline">
+														<div class="radio radio-info">
+															<input type="radio" @if(isset($edit) && $product->status == 0) checked="checked" @elseif(old('status') == 0) checked @endif name="status" id="radio2" value="0">
+															<label for="radio2">پیش نویس</label>
+														</div>
+													</div>
+													<div class="radio-inline pl-0">
+														<div class="radio radio-info">
+															<input type="radio" @if(isset($edit) && $product->status == 1) checked="checked" @elseif(old('status') == 1) checked @endif  @if(!isset($edit)) checked="checked" @endisset name="status" id="radio1" value="1">
+															<label for="radio1">ثبت محصول</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 									<div class="seprator-block"></div>
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-comment-text ml-10"></i>توضیح محصول</h6>
@@ -407,65 +440,82 @@
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-calendar-note ml-10"></i>اطلاعات فنی</h6>
 									<hr class="light-grey-hr"/>
 									
-									<div class="row features-values">
-										@if(isset($edit) && !empty($product_features[0]))
-											<?php $i = 0; ?>
-											@foreach ($product_features as $item)
-											<div class="features-row">
-												<div class="col-sm-6">
-													<div class="form-group features">
-														<input type="text" value="{{$item['value']}}" name="features[{{$i}}][value]" class="form-control" placeholder="مقدار ویژگی را وارد کنید">
+									
+									<div class="specs-table">
+										@if(isset($edit) && !empty($spec_table))
+											<?php 
+												$spec_table = json_decode($spec_table, true);
+												$specs = json_decode($product->specifications, true);
+											?>
+											
+											@foreach ($spec_table as $item)
+												<div class="row">
+													<div class="col-md-2">
+														<h5 class="mb-10 col-md-12 border-bottom">
+															<i class="ti-angle-double-left" style="font-size: 15px; color:darkgray;"></i>
+															<b>{{ $item['header'] }}</b>
+														</h5>
 													</div>
-												</div>
-												<div class="col-sm-6">
-													<div class="form-group">
-														<select name="features[{{$i}}][name]" class="form-control select2">
-															<option value="false">یک ویژگی را انتخاب کنید</option>
-															@foreach ($features as $feature) {
-																@if (count($feature['subs']) != 0)
-																	<optgroup label="{{$feature['name']}}">
-																		@foreach ($feature['subs'] as $sub)
-																			<option value="{{$sub['id']}}" 
-																				<?php if($sub['id'] == $item['feature']) {
-																					echo 'selected'; ++$i;
-																				}?>>{{$feature['name'].' > '.$sub['name']}}</option>
-																		@endforeach
-																	</optgroup>
-																@endif
-															@endforeach
-														</select>
-													</div>
-												</div>
-											</div>
-											<?php ++$i; ?>
-											@endforeach
-										@endif
-										<div class="features-row">
-											<div class="col-sm-6">
-												<div class="form-group features">
-													<input type="text" name="features[{{$i}}][value]" class="form-control" placeholder="مقدار ویژگی را وارد کنید">
-												</div>
-											</div>
-											<div class="col-sm-6">
-												<div class="form-group">
-													<select name="features[{{$i}}][name]" class="form-control select2">
-														<option value="false">یک ویژگی را انتخاب کنید</option>
-														@foreach ($features as $feature) {
-															@if (count($feature['subs']) != 0)
-																<optgroup label="{{$feature['name']}}">
-																	@foreach ($feature['subs'] as $sub)
-																		<option value="{{$sub['id']}}">{{$feature['name'].' > '.$sub['name']}}</option>
+													
+													<div class="col-md-10">
+														<div class="col-md-12">
+														@foreach ($item['items'] as $spec)
+															<div class="col-md-6">
+															@isset ($spec['select'])
+																<div class="form-group">
+																	<label class="control-label mb-10">{{ $spec['name'] }}</label>
+																	<div class="radio-list">
+																	<?php $x = 0; ?>
+																	@foreach ($spec['select'] as $select)
+																		<div class="radio-inline">
+																			<div class="radio radio-info">
+																				<?php $id = 'id-' . rand(0, 1000); ?>
+																				<input type="radio" id="{{ $id }}" @if ($x++ == 0) checked="checked" @endif
+																					name="specs[{{ $item['value'] }}][{{ $spec['value'] }}]" value="{{ $select }}"
+																					@if($specs[ $item['value'] ][ $spec['value'] ] && $specs[ $item['value'] ][ $spec['value'] ] == $select) checked @endif />
+																				<label for="{{ $id }}">{{ $select }}
+																				@isset ($spec['label']) {{ $spec['label'] }} @endisset
+																				</label>
+																			</div>
+																		</div>
 																	@endforeach
-																</optgroup>
-															@endif
+																	</div>
+																</div>
+															@else
+																<div class="form-group">
+																	<label class="control-label mb-10">{{ $spec['name'] }}</label>
+																	@isset ($spec['label']) <div class="input-group"> @endisset
+																	<input type="text" class="form-control"
+																		name="specs[{{ $item['value'] }}][{{ $spec['value'] }}]"
+																		@isset($specs[ $item['value'] ][ $spec['value'] ]) value="{{ $specs[ $item['value'] ][ $spec['value'] ] }}" @endisset
+																		@isset ($spec['help']) placeholder="{{ $spec['help'] }}" @endisset />
+																	@isset ($spec['label'])
+																		<div class="input-group-addon">{{ $spec['label'] }}</div></div>
+																	@endisset
+																</div>
+															@endisset
+															</div>	
 														@endforeach
-													</select>
+														</div>
+													</div>
 												</div>
-											</div>
+												<div class="seprator-block"></div>
+												<hr class="light-grey-hr"/>
+												<div class="seprator-block"></div>
+											@endforeach
+											
+											<input type="hidden" name="spec_id" value="{{ $product -> spec_table }}" />
+										@else
+										<input type="hidden" name="specs" value="" />
+										<div class="alert alert-warning alert-dismissable">
+											<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+											هنوز گروهی انتخاب نکرده اید یا گروه مورد نظر شما دارای جدول اطلاعات فنی نیست 
 										</div>
+										@endif
 									</div>
+									
+
 									<div class="form-actions">
-										<button type="button" class="btn btn-primary pull-right create-new-feautre"> <i class="fa fa-plus"></i> <span>افزودن ویژگی جدید</span></button>
 										<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
 										<a href="/panel/products" class="btn btn-default pull-left">لغو</a>
 										<div class="clearfix"></div>
@@ -524,29 +574,6 @@
 		// Get Groups by Ajax
 		'dist/js/group_ajax.js'
 	]; ?>
-
-	
-	<script>
-		var s2 = [];
-		s2[0] = '<div class="features-row"><div class="col-sm-6"><div class="form-group features">';
-		s2[0] += '<input type="text" name="features[';
-		s2[1] = '][value]" data-role="tagsinput" class="form-control" placeholder="مقدار ویژگی را وارد کنید">';
-		s2[1] += '</div></div><div class="col-sm-6"><div class="form-group">';
-		s2[1] += '<select name="features[';
-		s2[2] = '][name]" class="form-control select2">';
-		s2[2] += '<option value="false">یک ویژگی را انتخاب کنید</option>';
-		
-		@foreach ($features as $feature)
-			@if (count($feature['subs']) != 0)
-				s2[2] += '<optgroup label="{{$feature['name']}}">';
-				@foreach ($feature['subs'] as $sub)
-					s2[2] += '<option value="{{$sub['id']}}">{{$feature['name'].' > '.$sub['name']}}</option>';
-				@endforeach
-			s2[2] += '</optgroup>'
-			@endif
-		@endforeach
-		s2[2] += '</select></div></div></div>';
-	</script>
 
 	@foreach ($scripts as $script)
 	<script src="{{ asset($script) }}"></script>

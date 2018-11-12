@@ -48,12 +48,8 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/panel/group/sub/{id}', 'GroupController@sub'); // Get sub group for ajax request
     Route::get('/panel/group/{id}/{title}', 'GroupController@get'); // get a sub goup in panel view
     
-    // Features Route
-    Route::get('/panel/feature', 'FeaturesController@index'); // Main features page
-    Route::post('/panel/feature/add', 'FeaturesController@add'); // Send data for create new feature
-    Route::get('/panel/feature/edit/{id}/{title}', 'FeaturesController@edit'); // Send Data for edit exiting Feature
-    Route::post('/panel/feature/edit', 'FeaturesController@update'); // Send Data for edit exiting Feature
-    Route::get('/panel/feature/delete/{id}/{title}', 'FeaturesController@delete'); // Send Data for edit exiting Feature
+    // Get Specification Route
+    Route::get('/panel/specs/get/{id}', 'SpecsController@get'); // Send Data for edit exiting Feature
     
     // Panel Products Route
     Route::get('/panel/products', 'ProductController@index');

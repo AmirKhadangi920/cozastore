@@ -14,6 +14,7 @@ use App\Product;
 use App\ProductFeatures;
 use App\Review;
 use App\Gallery;
+use App\Specifications;
 
 class ProductController extends Controller
 {
@@ -43,11 +44,6 @@ class ProductController extends Controller
     {
         $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
 
-        $features = Feature::select('id', 'name')->where('title', null)->get();
-        foreach ($features as $feature) {
-            $feature->subs = Feature::select('id', 'name')->where('title', $feature->id)->get();
-        }
-
         $photos = Gallery::select('id', 'name', 'description', 'photo')->skip(0)->take(30)->get();
 
         $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
@@ -60,12 +56,11 @@ class ProductController extends Controller
 
         return view('panel.add-product', [
             'groups' => $groups,
-            'features' => $features,
             'photos' => $photos,
             'page_name' => 'add_product',
             'page_title' => 'ثبت محصول',
             'site_name'=> $site_name,
-            'site_logo'=> $site_logo
+            'site_logo'=> $site_logo,
         ]);
     }
 
@@ -88,36 +83,28 @@ class ProductController extends Controller
                 }
             }   
         }
-        $product->category = $req -> parent;
-        $product->name = $req -> name;
-        $product->code = $req -> code;
-        $product->short_description = $req -> short_description;
-        $product->aparat_video = $req -> aparat_video;
-        $product->price = $req -> price;
-        $product->unit = $req -> unit;
-        $product->offer = ($req->offer == null)? 0 : $req->offer;
-        $product->colors = $req -> colors;
-        $product->status = $req -> status;
-        $product->full_description = $req -> full_description;
-        $product->keywords = $req -> keywords;
-        $product->photo = $req -> photo;
-        $product->gallery = $req -> gallery;
-        $product->advantages = $req -> advantages;
-        $product->disadvantages = $req -> disadvantages;
+        $product -> category = $req -> parent;
+        $product -> name = $req -> name;
+        $product -> code = $req -> code;
+        $product -> short_description = $req -> short_description;
+        $product -> aparat_video = $req -> aparat_video;
+        $product -> price = $req -> price;
+        $product -> unit = $req -> unit;
+        $product -> offer = ($req->offer == null)? 0 : $req->offer;
+        $product -> colors = $req -> colors;
+        $product -> status = $req -> status;
+        $product -> label = $req -> label;
+        $product -> full_description = $req -> full_description;
+        $product -> keywords = $req -> keywords;
+        $product -> photo = $req -> photo;
+        $product -> gallery = $req -> gallery;
+        $product -> stock_inventory = ($req->stock_inventory == null)? 0 : $req->stock_inventory;
+        $product -> spec_table = $req -> spec_id;
+        $product -> specifications = json_encode($req->specs);
+        $product -> advantages = $req -> advantages;
+        $product -> disadvantages = $req -> disadvantages;
 
         $product -> save();
-
-        // Add all product features to it's table
-        foreach ($req ->features as $item) {
-
-            if ($item['name'] != 'false' && $item['value']) {
-                $product_feature = new ProductFeatures;
-                $product_feature -> product = $pro_id;
-                $product_feature -> feature = $item['name'];
-                $product_feature -> value = $item['value'];
-                $product_feature -> save();
-            }
-        }
 
         return redirect()->back()->with('message', 'محصول '.$req->name.' با موفقیت ثبت شد .');
     }
@@ -130,24 +117,23 @@ class ProductController extends Controller
         }
 
         $product = DB::select("SELECT `pro_id`, `category`, `categories`.`title`, `products`.`name`, `code`,
-            `short_description`, `aparat_video`, `price`, `unit`, `offer`, `colors`, `status`,
-            `full_description`, `keywords`, `photo`, `gallery`, `advantages`, `disadvantages` 
+            `short_description`, `aparat_video`, `label`, `price`, `unit`, `offer`, `colors`, `status`,
+            `full_description`, `keywords`, `photo`, `gallery`, `stock_inventory`,
+            `spec_table`, `specifications`, `advantages`, `disadvantages` 
             FROM `products`
             LEFT JOIN `categories` ON `products`.`category` = `categories`.`id` WHERE `pro_id` = ?", [$id]);
 
         if ($product == []) { return abort(404); }
 
+        $spec_table = [];
+        $spec_table = Specifications::find($product[0] -> spec_table);
+
+        if ($spec_table == []) { return abort(404); }
+
         $photos = Gallery::select('id', 'name', 'description', 'photo')
                 ->whereNotIn('photo', explode(',', $product[0]->gallery))->skip(0)->take(30)->get();
             
-        $product_feature = ProductFeatures::select('feature', 'value')->where('product', $id)->get();
-        
         $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
-
-        $features = Feature::select('id', 'name')->where('title', null)->get();
-        foreach ($features as $feature) {
-            $feature->subs = Feature::select('id', 'name')->where('title', $feature->id)->get();
-        }
 
         $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
         foreach ($options as $option) {
@@ -159,11 +145,10 @@ class ProductController extends Controller
 
         return view('panel.add-product', [
             'groups' => $groups,
-            'features' => $features,
             'product' => $product[0],
             'photos' => $photos,
-            'product_features' => $product_feature,
             'edit' => true,
+            'spec_table' => $spec_table -> specs,
             'page_name' => 'products',
             'page_title' => 'ویرایش محصول ' . $product[0]->name,
             'site_name'=> $site_name,
@@ -197,30 +182,18 @@ class ProductController extends Controller
         $product->offer = ($req->offer == null)? 0 : $req->offer;
         $product->colors = $req -> colors;
         $product->status = $req -> status;
+        $product -> label = $req -> label;
         $product->full_description = $req -> full_description;
         $product->keywords = $req -> keywords;
         $product->photo = $req -> photo;
+        $product -> stock_inventory = ($req->stock_inventory == null)? 0 : $req->stock_inventory;
+        $product -> spec_table = $req -> spec_id;
+        $product -> specifications = json_encode($req->specs);
         $product->gallery = $req -> gallery;
         $product->advantages = $req -> advantages;
         $product->disadvantages = $req -> disadvantages;
 
         $product -> save();
-
-
-        // Removes all old featuers
-        DB::delete("DELETE FROM `product_features` WHERE `product` = ?", [$req->id]);
-
-        // Add all product features to it's table
-        foreach ($req ->features as $item) {
-
-            if ($item['name'] != 'false' && $item['value']) {
-                $product_feature = new ProductFeatures;
-                $product_feature -> product = $req -> id;
-                $product_feature -> feature = $item['name'];
-                $product_feature -> value = $item['value'];
-                $product_feature -> save();
-            }
-        }
 
         return redirect()->back()->with('message', 'محصول '.$req->name.' با موفقیت بروزرسانی شد .');
     }
