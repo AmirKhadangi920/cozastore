@@ -257,20 +257,16 @@ class StoreController extends Controller
     
     public function product ($id)
     {
-        $product = DB::select("SELECT `pro_id`, `code`, `category`, `categories`.`title`, `products`.`name`,
-            `short_description`, `aparat_video`, `price`, `unit`, `offer`, `colors`,
-            `full_description`, `keywords`, `gallery`, `advantages`, `disadvantages` 
+        $product = DB::select("SELECT `pro_id`, `code`, `products`.`category`, `categories`.`title`,
+            `products`.`name`, `short_description`, `aparat_video`, `price`, `unit`, `offer`, 
+            `colors`, `label`, `stock_inventory`, `specs`, `specifications`, `full_description`,
+            `keywords`, `gallery`, `advantages`, `disadvantages` 
             FROM `products`
             LEFT JOIN `categories` ON `products`.`category` = `categories`.`id`
+            LEFT JOIN `specifications` ON `products`.`spec_table` = `specifications`.`id`
             WHERE `pro_id` = ? AND `status`=1", [$id]);
 
         if ($product == []) { return abort(404); }
-
-        $product_feature = DB::select("SELECT `title_table`.`name` as 'title', `features`.`name`, `value`
-            FROM `product_features`
-            INNER JOIN `features` ON `product_features`.`feature` = `features`.`id`
-            INNER JOIN `features` AS `title_table` ON `features`.`title` = `title_table`.`id`
-            WHERE `product` = ? ORDER BY `title` ASC", [$id]);
 
         $reviews = Review::select('fullname', 'email', 'avatar', 'rating', 'review')->where('product', $id)->get();
 
@@ -299,7 +295,6 @@ class StoreController extends Controller
         return view('store.product-detail', [
             'product' => $product[0],
             'top_groups' => $this -> Get_sub_groups(),
-            'product_features' => $product_feature,
             'breadcrumb' => $breadcrumb,
             'reviews' => $reviews,
             'cart_products' => $this -> Get_Cart_items(),

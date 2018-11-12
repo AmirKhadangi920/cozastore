@@ -247,7 +247,7 @@
 						</li>
 						@endif
 
-						@if(!empty($product_features[0]))
+						@if(!empty($product -> specifications))
 						<li class="nav-item p-b-10">
 							<a class="nav-link" data-toggle="tab" href="#information" role="tab">مشخصات</a>
 						</li>
@@ -319,40 +319,37 @@
 							</div>
 						</div>
 
-						@if(!empty($product_features[0]))
-						<!-- - -->
+						@if(!empty($product -> specifications))
 						<div class="tab-pane fade" id="information" role="tabpanel">
 							<div class="row">
 								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
 									<ul class="p-lr-28 p-lr-15-sm">
-										<?php $feature_title = $product_features[0]->title; ?>
-										<li>
-											<h3>
-												<i class="fa fa-angle-left m-l-9 m-r-10 text-primary" aria-hidden="true"></i>
-												{{$feature_title}}
-											</h3>
-											<hr/>
-										</li>
-										@foreach ($product_features as $feature)
-											@if ($feature_title != $feature->title)
-											<?php $feature_title = $feature->title; ?>
-												<li>
-													<h3>
-														<i class="fa fa-angle-left m-l-9 m-r-10 text-primary" aria-hidden="true"></i>
-														{{$feature_title}}
-													</h3>
-													<hr/>
-												</li>
-											@endif
-											<li class="flex-w flex-t p-b-7 alert alert-secondary">
-												<span class="stext-102 cl3 size-205">
-													<b>{{$feature->name}}</b>
-												</span>
-
-												<span class="stext-102 cl6 size-206">
-													{{$feature->value}}
-												</span>
+										<?php 
+											$specs = json_decode($product -> specs, true);
+											$product -> specifications = json_decode($product -> specifications, true); 
+										?>
+										@foreach ($specs as $item)
+											<li>
+												<h3>
+													<i class="fa fa-angle-left m-l-9 m-r-10 text-primary" aria-hidden="true"></i>
+													{{ $item['header'] }}
+												</h3>
+												<hr/>
 											</li>
+											@foreach ($item['items'] as $spec)
+											<li>
+												<li class="flex-w flex-t p-b-7 alert alert-secondary">
+													<span class="stext-102 cl3 size-205">
+														<b>{{ $spec['name'] }}</b>
+													</span>
+													
+													<span class="stext-102 cl6 size-206">
+														{{ $product -> specifications[ $item['value'] ][ $spec['value'] ] }}
+														@isset($spec['label']) {{ $spec['label'] }} @endisset
+													</span>
+												</li>
+											</li>
+											@endforeach
 										@endforeach
 									</ul>
 								</div>
