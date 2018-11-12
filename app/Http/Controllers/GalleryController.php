@@ -99,7 +99,7 @@ class GalleryController extends Controller
     public function delete ($id, $title, $filename)
     {
         
-        unlink($_SERVER['DOCUMENT_ROOT'].'/uploads/'.$filename);
+        unlink(public_path('uploads/').$filename);
 
         Gallery::destroy($id);
         return redirect()->back()->with('message', 'تصویر '.$title.' با موفقیت حذف شد .');
