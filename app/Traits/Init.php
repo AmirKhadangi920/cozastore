@@ -18,7 +18,7 @@ trait Init
             if (!empty($order->all()))
             {
                 return DB::select('SELECT `pro_id`, `name`, `products`.`price`,
-                        `unit`, `products`.`offer`, `photo`, `color`, `count`
+                        `unit`, `products`.`offer`, `photo`, `color`, `count`, `stock_inventory`
                         FROM `order_products` 
                         INNER JOIN `products` ON `order_products`.`product` = `products`.`pro_id`
                         WHERE `order` = ?', [$order[0]->id]);

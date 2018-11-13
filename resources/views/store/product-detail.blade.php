@@ -172,7 +172,7 @@
 												<i class="fs-16 zmdi zmdi-minus"></i>
 											</div>
 	
-											<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+											<input class="mtext-104 cl3 txt-center num-product" type="number" max="10" name="num-product" value="1">
 	
 											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 												<i class="fs-16 zmdi zmdi-plus"></i>
@@ -343,29 +343,31 @@
 											$specs = json_decode($product -> specs, true);
 											$product -> specifications = json_decode($product -> specifications, true); 
 										?>
-										@foreach ($specs as $item)
-											<li>
-												<h3>
-													<i class="fa fa-angle-left m-l-9 m-r-10 text-primary" aria-hidden="true"></i>
-													{{ $item['header'] }}
-												</h3>
-												<hr/>
-											</li>
-											@foreach ($item['items'] as $spec)
-											<li>
-												<li class="flex-w flex-t p-b-7 alert alert-secondary">
-													<span class="stext-102 cl3 size-205">
-														<b>{{ $spec['name'] }}</b>
-													</span>
-													
-													<span class="stext-102 cl6 size-206">
-														{{ $product -> specifications[ $item['value'] ][ $spec['value'] ] }}
-														@isset($spec['label']) {{ $spec['label'] }} @endisset
-													</span>
+										@if ($specs)
+											@foreach ($specs as $item)
+												<li>
+													<h3>
+														<i class="fa fa-angle-left m-l-9 m-r-10 text-primary" aria-hidden="true"></i>
+														{{ $item['header'] }}
+													</h3>
+													<hr/>
 												</li>
-											</li>
+												@foreach ($item['items'] as $spec)
+												<li>
+													<li class="flex-w flex-t p-b-7 alert alert-secondary">
+														<span class="stext-102 cl3 size-205">
+															<b>{{ $spec['name'] }}</b>
+														</span>
+														
+														<span class="stext-102 cl6 size-206">
+															{{ $product -> specifications[ $item['value'] ][ $spec['value'] ] }}
+															@isset($spec['label']) {{ $spec['label'] }} @endisset
+														</span>
+													</li>
+												</li>
+												@endforeach
 											@endforeach
-										@endforeach
+										@endif
 									</ul>
 								</div>
 							</div>

@@ -135,7 +135,7 @@
 														<i class="fs-16 zmdi zmdi-minus"></i>
 													</div>
 													
-													<input class="mtext-104 cl3 txt-center num-product" type="text" name="products[{{$cart_product->pro_id}}][count]" value="{{$cart_product->count}}">
+													<input class="mtext-104 cl3 txt-center num-product" min="1" max="{{ $cart_product->stock_inventory }}" type="number" name="products[{{$cart_product->pro_id}}][count]" value="{{$cart_product->count}}">
 		
 													<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 														<i class="fs-16 zmdi zmdi-plus"></i>
@@ -144,8 +144,8 @@
 											</td>
 											<?php $total += $price * $cart_product->count; ?>
 											<td class="column-5">{{($cart_product->color) ? $cart_product->color : 'بدون رنگ'}}</td>
-											<input type="hidden" name="products[{{$cart_product->pro_id}}][color]" value="{{$cart_product->color}}" />
 											<td class="column-6"><span class="price num-comma">{{$price * $cart_product->count}}</span> تومان</td>
+											<input type="hidden" name="products[{{$cart_product->pro_id}}][color]" value="{{$cart_product->color}}" />
 										</tr>
 										@endforeach
 									@endempty
@@ -329,7 +329,10 @@
 
 			$('.btn-num-product-down').click(function ()
 			{
-				if ($(this).next().val() == 0) { return; }
+				if ($(this).next().val() <= 1) {
+					event.stopPropagation();
+					return;
+				}
 				var price = $(this).parent().parent().prev().find('.num-comma').text();
 				var total = $(this).parent().parent().next().next().find('.num-comma');
 				price = price.replace(/,/g, '') * 1;
