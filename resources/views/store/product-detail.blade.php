@@ -230,8 +230,7 @@
 
 							<div class="slick3 gallery-lb">
 								@if(!empty($product->gallery))
-									<?php $product->gallery = explode(',', $product->gallery); ?>
-									@foreach ($product->gallery as $photo)
+									@foreach (json_decode($product->gallery) as $photo)
 									<div class="item-slick3" data-thumb="{{ asset('uploads/'.$photo) }}">
 										<div class="wrap-pic-w pos-relative">
 											<img src="{{ asset('uploads/'.$photo) }}" alt="IMG-PRODUCT">

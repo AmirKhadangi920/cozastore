@@ -15,6 +15,9 @@ use App\ProductFeatures;
 use App\Review;
 use App\Gallery;
 use App\Specifications;
+use Image;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -66,6 +69,27 @@ class ProductController extends Controller
 
     public function create (CreateProduct $req)
     {
+        $images = [];
+
+        if ($req -> images != [])
+        {
+            $site_logo = Option::select('value')->where('name', 'site_logo')->get();
+            foreach (Input::file('images') as $photo)
+            {
+                $img = Image::make($photo)->resize(500, 500);
+    
+                $watermark = Image::make(public_path('logo/' . $site_logo[0]->value));
+                $ratio = $watermark->width() / $watermark->height();
+                $watermark->resize(50 * $ratio, 50);
+                $img->insert($watermark, 'bottom-right', 10, 10);
+                
+                $name = substr(md5(time() . rand()), 0, 8);
+                $imageName = $name . '.' . $photo->getClientOriginalExtension();
+                $images[] = $imageName;
+                $img->save(public_path('uploads/') . $imageName);
+            }
+        }
+
         $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
         // Get a random 8 chars name for this product
         $pro_id = substr(md5(time()), 0, 8);
@@ -96,8 +120,8 @@ class ProductController extends Controller
         $product -> label = $req -> label;
         $product -> full_description = $req -> full_description;
         $product -> keywords = $req -> keywords;
-        $product -> photo = $req -> photo;
-        $product -> gallery = $req -> gallery;
+        $product -> photo = ( isset($images[0]) ) ? $images[0] : null;
+        $product -> gallery = json_encode($images);
         $product -> stock_inventory = ($req->stock_inventory == null)? 0 : $req->stock_inventory;
         $product -> spec_table = $req -> spec_id;
         $product -> specifications = json_encode($req->specs);
@@ -118,7 +142,7 @@ class ProductController extends Controller
 
         $product = DB::select("SELECT `pro_id`, `category`, `categories`.`title`, `products`.`name`, `code`,
             `short_description`, `aparat_video`, `label`, `price`, `unit`, `offer`, `colors`, `status`,
-            `full_description`, `keywords`, `photo`, `gallery`, `stock_inventory`,
+            `full_description`, `keywords`, `gallery`, `stock_inventory`,
             `spec_table`, `specifications`, `advantages`, `disadvantages` 
             FROM `products`
             LEFT JOIN `categories` ON `products`.`category` = `categories`.`id` WHERE `pro_id` = ?", [$id]);
@@ -161,6 +185,35 @@ class ProductController extends Controller
 
     public function update (CreateProduct $req)
     {
+        $images = json_decode(Product::find($req->id)->gallery, true);
+        $deleted = json_decode($req -> deleted_images, true);
+        
+        foreach ($deleted as $img)
+        {
+            $temp = public_path('uploads/' . $img);
+            if(file_exists($temp)) unlink($temp);
+            if (($key = array_search($img, $images)) !== false) unset($images[$key]);
+        }
+    
+        if ($req -> images != [])
+        {
+            $site_logo = Option::select('value')->where('name', 'site_logo')->get();
+            foreach (Input::file('images') as $photo)
+            {
+                $img = Image::make($photo)->resize(500, 500);
+    
+                $watermark = Image::make(public_path('logo/' . $site_logo[0]->value));
+                $ratio = $watermark->width() / $watermark->height();
+                $watermark->resize(50 * $ratio, 50);
+                $img->insert($watermark, 'bottom-right', 10, 10);
+                
+                $name = substr(md5(time() . rand()), 0, 8);
+                $imageName = $name . '.' . $photo->getClientOriginalExtension();
+                $images[] = $imageName;
+                $img->save(public_path('uploads/') . $imageName);
+            }
+        }
+
         $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
 
         // Insert product details to database
@@ -188,11 +241,11 @@ class ProductController extends Controller
         $product -> label = $req -> label;
         $product->full_description = $req -> full_description;
         $product->keywords = $req -> keywords;
-        $product->photo = $req -> photo;
+        $product -> photo = ( isset($images[0]) ) ? $images[0] : null;
+        $product -> gallery = json_encode($images);
         $product -> stock_inventory = ($req->stock_inventory == null)? 0 : $req->stock_inventory;
         $product -> spec_table = $req -> spec_id;
         $product -> specifications = json_encode($req->specs);
-        $product->gallery = $req -> gallery;
         $product->advantages = $req -> advantages;
         $product->disadvantages = $req -> disadvantages;
 

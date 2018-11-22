@@ -4,8 +4,56 @@ $(document).ready(function(){
     $('select.select2').select2();
     
     // dropable picture upload
-	$('.dropify.file').dropify();
-    
+    var drEvent = $('.dropify').dropify({
+        messages: {
+            'default': 'فایل مورد نظر را به اینجا بکشید یا کلیک کنید',
+            'replace': 'برای جایگذاری فایل کلیک کنید یا فایل را در اینجا رها کنید',
+            'remove':  'پاک کردن',
+            'error':   'متاسفانه خطایی رخ داد !'
+        },
+        error: {
+            'fileSize': 'حجم فایل نباید بیش از 512 کیلوبایت باشد .',
+            'imageFormat': 'لطفا عکسی به صورت مربع<br/> (نسبت 1 به 1) انتخاب کنید'
+        }
+    });
+
+    drEvent.on('dropify.beforeClear', function(){
+        let filename = $(this).parent().find('input[type="file"]').attr('filename');
+        let images = JSON.parse($('input[name="deleted_images"]').val());
+        images[images.length] = filename;
+        $('input[name="deleted_images"]').val(JSON.stringify(images));
+
+        $(this).parent().parent().remove();
+    });
+
+
+    $('.add-new-image').click(function () {
+        var temp = '<div class="col-md-3 mt-40"><input type="file" name="images['+ (++ITER) +']"'; 
+        temp += 'data-allowed-formats="square" data-max-file-size="512K" class="dropify" /></div>';
+
+        $('.images-gallery').append(temp);
+        $('.images-gallery').find('.dropify:last-of-type').dropify({
+            messages: {
+                'default': 'فایل مورد نظر را به اینجا بکشید یا کلیک کنید',
+                'replace': 'برای جایگذاری فایل کلیک کنید یا فایل را در اینجا رها کنید',
+                'remove':  'پاک کردن',
+                'error':   'متاسفانه خطایی رخ داد !'
+            },
+            error: {
+                'fileSize': 'حجم فایل نباید بیش از 512 کیلوبایت باشد .',
+                'imageFormat': 'لطفا عکسی به صورت مربع<br/> (نسبت 1 به 1) انتخاب کنید'
+            }
+        });
+    });
+
+    $('.dropify.exists').change(function () {
+        let filename = $(this).parent().find('input[type="file"]').attr('filename');
+        let images = JSON.parse($('input[name="deleted_images"]').val());
+        images[images.length] = filename;
+        $('input[name="deleted_images"]').val(JSON.stringify(images));
+        $(this).removeClass('exists');
+    });
+
     // Change color of color section labels
     $('.color-value').on('change', function () { 
         var color = $('select.color-value').val();

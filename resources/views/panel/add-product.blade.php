@@ -203,7 +203,7 @@
 											<div class="form-group">
 												<label class="control-label mb-10">قیمت</label>
 												<div class="input-group">
-													<input type="number" @isset($edit) value="{{$product->price}}" @else value="{{old('price')}}"  @endisset name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
+													<input type="number" min="0" @isset($edit) value="{{$product->price}}" @else value="{{old('price')}}"  @endisset name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
 													<div class="input-group-addon"><i class="ti-money"></i></div>
 												</div>
 											</div>
@@ -320,104 +320,33 @@
 									<h6 class="txt-dark flex flex-middle capitalize-font"><i class="font-20 txt-grey zmdi zmdi-collection-image ml-10"></i>تصاویر محصول</h6>
 									<hr class="light-grey-hr"/>
 									<div class="row">
-										<div class="col-lg-12">
-											<div class="row" id="picture-files">
-												<div class="col-md-12">
-													<div style="display: none;" class="alert alert-warning alert-dismissable">
-														<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-														هیج تصویری برای محصول انتخاب نشده است ! 
+										<div class="col-lg-12 images-gallery">
+											<?php $i = 0; ?>
+											@if(isset($edit) && $product->gallery)
+												@foreach (json_decode($product->gallery) as $item)
+													<div class="col-md-3 mt-40">
+														<input type="file" 
+															data-default-file="/uploads/{{ $item }}"
+															filename="{{ $item }}"
+															name="images[{{ $i++ }}]"
+															data-allowed-formats="square"
+															data-max-file-size="512K"
+															class="dropify exists" />
 													</div>
-												</div>
-												@if(isset($edit) && !empty($product->gallery))
-												<div class="preview-gallery">
-													@foreach (explode(',', $product->gallery) as $photo)
-													<div class="col-md-2 col-xs-4 mb-30">
-														<div class="img-upload-wrap">
-															<input type="file" disabled data-show-remove="false" 
-																data-default-file="{{ asset('uploads/'.$photo)}}" class="dropify file" />
-														</div>
-													</div>
-													@endforeach
-												</div>	
-												@else
-												<div class="preview-gallery">
-												</div>
-												@endif
-
-												<input type="hidden" @isset($edit) value="{{$product->photo}}" @endisset id="single_photo" name="photo" onchange="alert(this.value)" />
-												<input type="hidden" @isset($edit) value="{{$product->gallery}}" @endisset id="gallery" name="gallery" onchange="alert(this.value)" />
+												@endforeach
+												<input type="hidden" name="deleted_images" value="[]" />
+											@endif
+											<div class="col-md-3 mt-40">
+												<input type="file" 
+													name="images[{{$i}}]" 
+													data-allowed-formats="square"
+													data-max-file-size="512K"
+													class="dropify" />
 											</div>
-
-											<div class="col-md-12 text-center">
-												<div  class="panel-body">
-													<!-- sample modal content -->
-													<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-														<div class="modal-dialog modal-lg">
-															<div class="modal-content">
-																<div class="modal-header">
-																	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-																	<h5 class="modal-title mr-20" id="myLargeModalLabel">عکس های مورد نظر خود را انتخاب کنید</h5>
-																</div>
-																<div class="modal-body">
-																	<div class="gallery-wrap">
-																		<div class="portfolio-wrap project-gallery">
-																			<ul id="portfolio_1" class="portf auto-construct  project-gallery" data-col="4">
-																				@empty ($photos[0])
-																					<div class="alert alert-danger alert-dismissable">
-																						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-																						هیچ تصویری تا کنون آپلود نشده است
-																					</div>
-																				@endempty
-																				
-																				@if(!empty($product->gallery))
-																					@foreach (explode(',', $product->gallery) as $photo)
-																						<li class="item tall" photo="{{$photo}}" data-src="{{ asset('uploads/'.$photo) }}" >
-																							<a href="" class="photo-gallery selected">
-																								<img class="img-responsive" src="{{ asset('uploads/'.$photo) }}"  alt="توضیحی برای تصویر ثبت نشده است" />
-																								<span class="hover-cap">
-																									تصویر محصول
-																								</span>
-																							</a>
-																						</li>
-																					@endforeach
-																				@endif
-
-																				@if(!empty($photos[0]))
-																					@foreach ($photos as $photo)
-																						<li class="item tall" photo="{{$photo->photo}}" data-src="{{ asset('uploads/'.$photo->photo) }}" data-sub-html="{{$photo->description}}" >
-																							<a href="" class="photo-gallery">
-																								<img class="img-responsive" src="{{ asset('uploads/'.$photo->photo) }}"  alt="توضیحی برای تصویر ثبت نشده است" />
-																								<span class="hover-cap">
-																									@if($photo->name) {{$photo->name}} @else {{$photo->photo}} @endif
-																								</span>
-																							</a>
-																						</li>
-																					@endforeach
-																				@endif
-
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-																<div class="modal-footer">
-																	<div class="pull-left">
-																		<button type="button" class="btn btn-danger text-left ml-20" data-dismiss="modal">بستن</button>
-																		<button type="button" class="add-pics btn btn-primary text-left" data-dismiss="modal">انتخاب تصاویر</button>
-																	</div>
-																</div>
-															</div>
-															<!-- /.modal-content -->
-														</div>
-														<!-- /.modal-dialog -->
-													</div>
-													<!-- /.modal -->
-													<!-- Button trigger modal -->
-													<div class="pull-center fileupload btn @if(isset($edit) && !empty($product->gallery)) btn-warning @else btn-default @endif btn-outline btn-sm btn-anim model-test" data-toggle="modal" data-target=".bs-example-modal-lg" id="add-new-picture">
-														<i class="fa @if(isset($edit) && !empty($product->gallery)) fa-edit @else fa-plus @endif"></i>
-														<span class="btn-text">@if(isset($edit) && !empty($product->gallery)) ویرایش تصاویر @else افزودن تصویر جدید @endif</span>
-													</div>
-												</div>
-											</div>
+											<script>var ITER = {{ $i++ }};</script>
+										</div>
+										<div class="col-md-12 mt-40">
+											<input type="button" class="btn btn-succuess pull-left add-new-image" value="افزودن تصویر جدید" />
 										</div>
 									</div>
 									<div class="seprator-block"></div>
