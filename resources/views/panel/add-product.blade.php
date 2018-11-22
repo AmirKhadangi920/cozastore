@@ -452,7 +452,7 @@
 												<div class="row">
 													<div class="col-md-2">
 														<h5 class="mb-10 col-md-12 border-bottom">
-															<i class="ti-angle-double-left" style="font-size: 15px; color:darkgray;"></i>
+															<i class="ti-angle-double-left" style="font-size: 15px; color:darkgray; margin-left: 5px;"></i>
 															<b>{{ $item['header'] }}</b>
 														</h5>
 													</div>

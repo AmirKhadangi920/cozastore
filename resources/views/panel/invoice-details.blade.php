@@ -67,14 +67,15 @@
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">جزئیات سفارش</h5>
+			</div>
+
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					<li class="active"><span>جزئیات سفارش</span></li>
 					<li>داشبورد</li>
 				</ol>
-			</div>
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">جزئیات سفارش</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>
@@ -185,6 +186,7 @@
 							</div>
 
 							<div class="row mt-20">
+								@if ($invoice->buyer_description)
 								<div class="col-md-12">
 									<span class="txt-dark head-font inline-block capitalize-font mb-5 address-head">
 										<i class="fa fa-commenting-o" aria-hidden="true"></i>
@@ -194,6 +196,7 @@
 										<blockquote><pre>{{$invoice->buyer_description}}</pre></blockquote>
 									</span>
 								</div>
+								@endif
 							</div>
 
 							<div class="row">

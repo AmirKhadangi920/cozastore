@@ -67,14 +67,15 @@
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">تنظیمات</h5>
+			</div>
+
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					<li class="active"><span>تنظیمات</span></li>
 					<li>داشبورد</li>
 				</ol>
-			</div>
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">تنظیمات</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>
@@ -132,18 +133,19 @@
 																</div>
 															</div>
 															<div class="row">
-																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید {{$i + 1}}</label>
-																	<div class="input-group">
-																		<input type="text" dir="ltr" value="{{$slider[$i]['link']}}" name="slides[{{$i}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
-																		<div class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i></div>
-																	</div>
-																</div>
 																<div class="col-md-4">
 																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید {{$i + 1}}</label>
 																	<div class="input-group">
 																		<input type="text" value="{{$slider[$i]['button']}}" name="slides[{{$i}}][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
 																		<div class="input-group-addon"><i class="fa fa-square-o" aria-hidden="true"></i></div>
+																	</div>
+																</div>
+
+																<div class="col-md-8">
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید {{$i + 1}}</label>
+																	<div class="input-group">
+																		<input type="text" dir="ltr" value="{{$slider[$i]['link']}}" name="slides[{{$i}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<div class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i></div>
 																	</div>
 																</div>
 															</div>
@@ -203,18 +205,19 @@
 																</div>
 															</div>
 															<div class="row">
-																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر {{$i + 1}}</label>
-																	<div class="input-group">
-																		<input type="text" dir="ltr" value="{{$posters[$i]['link']}}" name="posters[{{$i}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
-																		<div class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i></div>
-																	</div>
-																</div>
 																<div class="col-md-4">
 																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر {{$i + 1}}</label>
 																	<div class="input-group">
 																		<input type="text" value="{{$posters[$i]['button']}}" name="posters[{{$i}}][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
 																		<div class="input-group-addon"><i class="fa fa-square-o" aria-hidden="true"></i></div>
+																	</div>
+																</div>
+
+																<div class="col-md-8">
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر {{$i + 1}}</label>
+																	<div class="input-group">
+																		<input type="text" dir="ltr" value="{{$posters[$i]['link']}}" name="posters[{{$i}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
+																		<div class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i></div>
 																	</div>
 																</div>
 															</div>
@@ -232,8 +235,6 @@
 											</div>
 										</div>
 									</div>
-
-									<hr class="light-grey-hr"/>
 
 									<div class="form-actions">
 										<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره پوسترها</span></button>
@@ -254,18 +255,19 @@
 											<div class="col-md-9">
 												<div class="form-wrap">
 													<div class="row mb-10">
-														<div class="col-md-4">
-															<label class="control-label mb-10" for="exampleInputEmail_5">شماره تلفن</label>
-															<div class="input-group">
-																<input type="text" value="{{$shop_phone}}" name="phone" class="form-control" id="exampleInputEmail_5" placeholder="برای مثال : 09123456789">
-																<div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></div>
-															</div>
-														</div>
 														<div class="col-md-8">
 															<label class="control-label mb-10" for="exampleInputEmail_4">عنوان فروشگاه</label>
 															<div class="input-group">
 																<input type="text" value="{{$site_name}}" name="site_name" class="form-control" id="exampleInputEmail_4" placeholder="نام فروشگاه شما">
 																<div class="input-group-addon"><i class="fa fa-header" aria-hidden="true"></i></div>
+															</div>
+														</div>
+														
+														<div class="col-md-4">
+															<label class="control-label mb-10" for="exampleInputEmail_5">شماره تلفن</label>
+															<div class="input-group">
+																<input type="text" value="{{$shop_phone}}" name="phone" class="form-control" id="exampleInputEmail_5" placeholder="برای مثال : 09123456789">
+																<div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></div>
 															</div>
 														</div>
 													</div>

@@ -36,6 +36,12 @@
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">
+					@isset($edit) ویرایش گروه {{$title}} @else ثبت گروه جدید @endisset
+				</h5>
+			</div>
+			
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					<li class="active">
@@ -44,11 +50,6 @@
 					<li>فروشگاه</li>
 					<li>داشبورد</li>
 				</ol>
-			</div>
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h5 class="txt-dark">
-				@isset($edit) ویرایش گروه {{$title}} @else ثبت گروه جدید @endisset
-			</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>
@@ -82,6 +83,16 @@
 									</div>
 									
 									<div class="row">
+										<div class="@isset($edit) col-md-12 @else col-md-6 @endisset">
+											<div class="form-group">
+												<label class="control-label mb-10">نام گروه</label>
+												<div class="input-group">
+													<input type="text" name="title" id="firstName" @isset($selected) value="{{$selected[0] -> title}}" @else value="{{old('title')}}" @endisset class="form-control" placeholder="مثلا : تلفن همراه">
+													<div class="input-group-addon"><i class="ti-text"></i></div>
+												</div>
+											</div>
+										</div>
+
 										@if(!isset($edit))
 										<div class="col-md-6">
 											<div class="form-group">
@@ -104,15 +115,6 @@
 										</div>						
 										@endif
 										<!--/span-->
-										<div class="@isset($edit) col-md-12 @else col-md-6 @endisset">
-											<div class="form-group">
-												<label class="control-label mb-10">نام گروه</label>
-												<div class="input-group">
-													<input type="text" name="title" id="firstName" @isset($selected) value="{{$selected[0] -> title}}" @else value="{{old('title')}}" @endisset class="form-control" placeholder="مثلا : تلفن همراه">
-													<div class="input-group-addon"><i class="ti-text"></i></div>
-												</div>
-											</div>
-										</div>
 										
 										<div class="col-md-12">
 											<div class="form-group">
@@ -159,6 +161,10 @@
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">لیست گروه ها</h5>
+			</div>
+
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					@isset($breadcrumb)
@@ -172,10 +178,6 @@
 					@endisset
 					<li><a href="/panel/group/">دسته های اصلی</a></li>
 				</ol>
-			</div>
-			
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h5 class="txt-dark">لیست گروه ها</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>

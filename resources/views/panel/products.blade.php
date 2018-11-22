@@ -70,6 +70,9 @@
 		left: 0px;
 		background: #00000085;
 	}
+	.photo .options {
+		z-index: 100;
+	}
 	</style>
 @endsection
 	
@@ -79,15 +82,16 @@
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">محصولات</h5>
+			</div>
+			
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					<li><a href="index.html">داشبورد</a></li>
 					<li><a href="#"><span>فروشگاه</span></a></li>
 					<li class="active"><span>محصولات</span></li>
 				</ol>
-			</div>
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h5 class="txt-dark">محصولات</h5>
 			</div>
 			<!-- /Breadcrumb -->
 		</div>
@@ -142,7 +146,7 @@
 			@empty($products[0])
 			<div class="alert alert-warning alert-dismissable">
 				<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-				<p class="pull-right">هیچ محصولی تا کنون ثبت نشده است !</p>
+				<p class="pull-right">هیچ محصولی یافت نشد !</p>
 				<div class="clearfix"></div>
 			</div>
 			@else
@@ -209,11 +213,7 @@
 		<!-- /Product Row Four -->
 		
 		<div class="row">
-			<div class="col-md-5"></div>
 
-			<div class="col-md-2">
-				<input type="button" class="btn btn-primary col-md-12" value="بارگذاری بیشتر ..." />
-			</div>
 		</div>
 		
 	</div>
