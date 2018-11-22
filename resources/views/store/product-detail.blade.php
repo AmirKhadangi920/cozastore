@@ -106,7 +106,7 @@
 						@endforeach
 	
 						@if(session()->has('message'))
-							<div class="alert alert-success alert-dismissable">
+							<div class="alert @if(session()->has('message_type')) alert-{{session()->get('message_type')}}  @else alert-success @endif alert-dismissable">
 								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 								{{ session()->get('message') }}
 							</div>

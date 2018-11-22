@@ -51,6 +51,14 @@
 	<div class="container">
 		<div class="row m-t-50 m-b-50">
 			<div class="col-md-12" dir="rtl">
+
+				@if(session()->has('message'))
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						{{ session()->get('message') }}
+					</div>
+				@endif
+
 				<table class="table table-hover">
 					<thead>
 						<tr>

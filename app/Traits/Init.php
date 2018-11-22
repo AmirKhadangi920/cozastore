@@ -87,4 +87,27 @@ trait Init
         get_subs(NULL, $res);
         return $res;
     }
+
+    public function restore_cart ()
+    {
+        if(\Auth::check())
+        {
+            $user_order = DB::select('SELECT `id` FROM `orders` WHERE `buyer` = ? AND `status` = 1', [\Auth::user()->id]);
+            
+            if ($user_order != [])
+            {
+                $order_products = OrderProducts::select('product', 'count')->where('order', $user_order[0] -> id)->get();
+                foreach ($order_products as $item)
+                {
+                    $product = Product::find($item -> product);
+                    $product -> stock_inventory = $product -> stock_inventory + $item -> count;
+                    $product -> save();
+                }
+
+                $user_order = Order::find($user_order[0] -> id);
+                $user_order -> status = 0;
+                $user_order -> save();
+            }
+        }
+    }
 }

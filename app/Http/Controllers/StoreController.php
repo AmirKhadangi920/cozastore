@@ -22,17 +22,7 @@ class StoreController extends Controller
 
     public function index ()
     {
-        if(\Auth::check())
-        {
-            $user_order = DB::select('SELECT `id` FROM `orders` WHERE `buyer` = ? AND `status` = 1', [\Auth::user()->id]);
-            
-            if ($user_order != [])
-            {
-                $user_order = Order::find($user_order[0] -> id);
-                $user_order -> status = 0;
-                $user_order -> save();
-            }
-        }
+        $this -> restore_cart();
         
 
         if (\Auth::check() && Cookie::get('cart'))
@@ -204,8 +194,6 @@ class StoreController extends Controller
             default: $sql .= "ORDER BY `products`.`created_at` DESC";
         }
 
-
-        
         $sql .= ' LIMIT 10 OFFSET ' . ($page - 1) * 30 . ';';
         
         $product_count = DB::SELECT($count_sql);
