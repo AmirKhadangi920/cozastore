@@ -32,13 +32,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/panel/setting/shipping_cost', 'PanelController@shipping_cost');
     Route::get('/panel/setting/dollar_cost/{dollar_cost}', 'PanelController@dollar_cost');
 
-    // Gallery Route
-    Route::get('/panel/gallery', 'GalleryController@index');
-    Route::post('/panel/gallery/upload', 'GalleryController@upload');
-    Route::get('/panel/gallery/edit/{id}', 'GalleryController@edit');
-    Route::post('/panel/gallery/update', 'GalleryController@update');
-    Route::get('/panel/gallery/delete/{id}/{title}/{filename}', 'GalleryController@delete');
-    
     // Groups Route
     Route::get('/panel/group', 'GroupController@index'); // Main group page
     Route::post('/panel/group/add', 'GroupController@add'); // Send Data for create new group

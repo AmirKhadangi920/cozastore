@@ -176,9 +176,6 @@
             <a @if($page_name == 'invoices') class="active" @endif href="/panel/invoices"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-files-o ml-5" aria-hidden="true"></i>سفارشات</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'gallery') class="active" @endif href="/panel/gallery"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-picture-o ml-5" aria-hidden="true"></i>گالری</span></div><div class="clearfix"></div></a>
-        </li>
-        <li>
             <a @if($page_name == 'setting') class="active" @endif href="/panel/setting"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-sliders ml-5" aria-hidden="true"></i>تنظیمات</span></div><div class="clearfix"></div></a>
         </li>
         <li>

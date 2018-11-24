@@ -13,7 +13,6 @@ use App\Option;
 use App\Product;
 use App\ProductFeatures;
 use App\Review;
-use App\Gallery;
 use App\Specifications;
 use Image;
 use Illuminate\Support\Facades\Input;
@@ -46,9 +45,6 @@ class ProductController extends Controller
     public function add ()
     {
         $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
-
-        $photos = Gallery::select('id', 'name', 'description', 'photo')->skip(0)->take(30)->get();
-
         $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
         foreach ($options as $option) {
             switch ($option['name']) {
@@ -59,7 +55,6 @@ class ProductController extends Controller
 
         return view('panel.add-product', [
             'groups' => $groups,
-            'photos' => $photos,
             'page_name' => 'add_product',
             'page_title' => 'ثبت محصول',
             'site_name'=> $site_name,
@@ -90,7 +85,7 @@ class ProductController extends Controller
             }
         }
 
-        $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
+        if ($req->aparat_video) $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
         // Get a random 8 chars name for this product
         $pro_id = substr(md5(time()), 0, 8);
 
@@ -157,9 +152,6 @@ class ProductController extends Controller
             if ($spec_table == []) { return abort(404); }
         }
 
-        $photos = Gallery::select('id', 'name', 'description', 'photo')
-                ->whereNotIn('photo', explode(',', $product[0]->gallery))->skip(0)->take(30)->get();
-            
         $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
 
         $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
@@ -173,7 +165,6 @@ class ProductController extends Controller
         return view('panel.add-product', [
             'groups' => $groups,
             'product' => $product[0],
-            'photos' => $photos,
             'edit' => true,
             'spec_table' => $spec_table -> specs,
             'page_name' => 'products',
@@ -214,7 +205,7 @@ class ProductController extends Controller
             }
         }
 
-        $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
+        if ($req->aparat_video) $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
 
         // Insert product details to database
         $product = Product::find($req -> id);

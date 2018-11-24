@@ -386,31 +386,34 @@
 						<div class="block2">
 							<div class="block2-pic hov-img0 @if($item->label || $item->stock_inventory == 0) gray @endif">
 								
-								<img src="{{asset('/uploads/'.$item->photo)}}" alt="IMG-PRODUCT">
+								<a href="/product/{{$item->pro_id}}">
+									<img src="{{asset('/uploads/'.$item->photo)}}" alt="IMG-PRODUCT">
+									
+									@if(!$item->label && $item->stock_inventory != 0)
+										<a href="{{$item->pro_id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+											مشاهده سریع
+										</a>
+									@endif
+	
+									@if($item->label)
+										<?php switch ($item->label) {
+											case 1: $item->label = 'توقف تولید'; break;
+											case 2: $item->label = 'به زودی'; break;
+											case 3: $item->label = 'نا موجود'; break;
+											case 4: $item->label = 'عدم فروش'; break;
+										} ?>
+										<div class="shadow"></div> 
+										<span class="badge label badge-dark">{{ $item->label }}</span>
+									@elseif ($item->stock_inventory == 0)
+										<div class="shadow"></div> 
+										<span class="badge label badge-dark">نا موجود</span>
+									@else
+										<span class="badge detail badge-dark">{{$item->title}}</span>
+									@endif
+								</a>
 
-								@if(!$item->label && $item->stock_inventory != 0)
-									<a href="{{$item->pro_id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-										مشاهده سریع
-									</a>
-								@endif
-
-								@if($item->label)
-									<?php switch ($item->label) {
-										case 1: $item->label = 'توقف تولید'; break;
-										case 2: $item->label = 'به زودی'; break;
-										case 3: $item->label = 'نا موجود'; break;
-										case 4: $item->label = 'عدم فروش'; break;
-									} ?>
-									<div class="shadow"></div> 
-									<span class="badge label badge-dark">{{ $item->label }}</span>
-								@elseif ($item->stock_inventory == 0)
-									<div class="shadow"></div> 
-									<span class="badge label badge-dark">نا موجود</span>
-								@else
-									<span class="badge detail badge-dark">{{$item->title}}</span>
-								@endif
 							</div>
-
+	
 							<div class="block2-txt flex-w flex-t p-t-14">
 								<div class="block2-txt-child1 flex-col-l">
 									<a href="/product/{{$item->pro_id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
