@@ -88,12 +88,12 @@
 
 									
 									<div class="panel-body">
-										@foreach ($errors -> all() as $message)
+										{{-- @foreach ($errors -> all() as $message)
 											<div class="alert alert-danger alert-dismissable">
 												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 												{{ $message }} 
 											</div>
-										@endforeach
+										@endforeach --}}
 							
 										@if(session()->has('message'))
 											<div class="alert alert-success alert-dismissable">
@@ -106,30 +106,41 @@
 									<div class="row">
 										<!--/span-->
 										<div class="col-md-6">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('name') ) has-error @endif">
 												<label class="control-label mb-10">نام محصول</label>
 												<div class="input-group">
 													<input type="text" name="name" @isset($edit) value="{{$product->name}}" @else value="{{old('name')}}" @endisset id="firstName" class="form-control" placeholder="مثلا : 'گوشی موبایل سامسونگGalaxy S7'">
 													<div class="input-group-addon"><i class="ti-text"></i></div>
 												</div>
+												@if( $errors->has('name') )
+													<span class="help-block">{{ $errors->first('name') }}</span>
+												@endif
 											</div>
 										</div>
 										
 										<div class="col-md-6">
-											<label class="control-label mb-10">شناسه محصول</label>
-											<div class="input-group">
-												<input type="text" name="code" @isset($edit) value="{{$product->code}}" @else value="{{old('code')}}" @endisset id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
-												<div class="input-group-addon"><i class="ti-id-badge"></i></div>
+											<div class="form-group @if( $errors->has('code') ) has-error @endif">
+												<label class="control-label mb-10">شناسه محصول</label>
+												<div class="input-group">
+													<input type="text" name="code" @isset($edit) value="{{$product->code}}" @else value="{{old('code')}}" @endisset id="firstName" class="form-control" placeholder="شناسه محصول در فروشگاه شما ، مثلا : B43E7">
+													<div class="input-group-addon"><i class="ti-id-badge"></i></div>
+												</div>
+												@if( $errors->has('code') )
+													<span class="help-block">{{ $errors->first('code') }}</span>
+												@endif
 											</div>
 										</div>
 
 										<div class="col-md-12">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('short_description') ) has-error @endif">
 												<label class="control-label mb-10">توضیح کوتاه</label>
 												<div class="input-group">
 													<input type="text" name="short_description" @isset($edit) value="{{$product->short_description}}" @else value="{{old('short_description')}}" @endisset id="firstName" class="form-control" placeholder="یک توضیح یک خطی درباره محصول">
 													<div class="input-group-addon"><i class="ti-comment-alt"></i></div>
 												</div>
+												@if( $errors->has('short_description') )
+													<span class="help-block">{{ $errors->first('short_description') }}</span>
+												@endif
 											</div>
 										</div>
 										<!--/span-->
@@ -137,7 +148,7 @@
 									<!-- Row -->
 									<div class="row">
 										<div class="col-md-6">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('parent') ) has-error @endif">
 												<label class="control-label mb-10">گروه</label>
 												<div class="input-group">
 													<select name="parent" class="form-control select2 categories">
@@ -151,18 +162,24 @@
 													</select>
 													<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
 												</div>
+												@if( $errors->has('parent') )
+													<span class="help-block">{{ $errors->first('parent') }}</span>
+												@endif
 												
 											</div>
 										</div>
 										<!--/span-->
 
 										<div class="col-md-6">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('aparat_video') ) has-error @endif">
 												<label class="control-label mb-10">ویدیوی آپارات</label>
 												<div class="input-group">
 													<input type="text" name="aparat_video" @if(isset($edit) && !empty($product->aparat_video)) value="https://www.aparat.com/v/{{$product->aparat_video}}" @else value="{{old('aparat_video')}}" @endif id="firstName" class="form-control" placeholder="لینک ویدیوی شما در آپارات ، مثلا : https://www.aparat.com/v/kN0SI">
 													<div class="input-group-addon"><i class="ti-video-clapper"></i></div>
 												</div>
+												@if( $errors->has('aparat_video') )
+													<span class="help-block">{{ $errors->first('aparat_video') }}</span>
+												@endif
 											</div>
 										</div>
 									</div>
@@ -170,7 +187,7 @@
 									<!-- Row -->
 									<div class="row">
 										<div class="col-md-6">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('label') ) has-error @endif">
 												<label class="control-label mb-10">لیبل محصول</label>
 												<div class="input-group">
 													<select name="label" class="form-control select2">
@@ -182,35 +199,44 @@
 													</select>
 													<div class="input-group-addon"><i class="ti-layout-media-right"></i></div>
 												</div>
+												@if( $errors->has('label') )
+													<span class="help-block">{{ $errors->first('label') }}</span>
+												@endif
 												
 											</div>
 										</div>
 										<!--/span-->
 
 										<div class="col-md-6">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('stock_inventory') ) has-error @endif">
 												<label class="control-label mb-10">تعداد موجود در انبار</label>
 												<div class="input-group">
 													<input type="number" name="stock_inventory" min="0" @isset($edit) value="{{$product->stock_inventory}}" @else value="{{old('stock_inventory')}}" @endisset id="firstName" class="form-control" placeholder="موجودی این محصول در انبار شما">
 													<div class="input-group-addon"><i class="ti-layout-grid4-alt"></i></div>
 												</div>
+												@if( $errors->has('stock_inventory') )
+													<span class="help-block">{{ $errors->first('stock_inventory') }}</span>
+												@endif
 											</div>
 										</div>
 									</div>
 									<!--/row-->
 									<div class="row">
 										<div class="col-md-4">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('price') ) has-error @endif">
 												<label class="control-label mb-10">قیمت</label>
 												<div class="input-group">
 													<input type="number" min="0" @isset($edit) value="{{$product->price}}" @else value="{{old('price')}}"  @endisset name="price" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
 													<div class="input-group-addon"><i class="ti-money"></i></div>
 												</div>
+												@if( $errors->has('price') )
+													<span class="help-block">{{ $errors->first('price') }}</span>
+												@endif
 											</div>
 										</div>
 
 										<div class="col-md-2">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('unit') ) has-error @endif">
 												<label class="control-label mb-10">واحد پولی</label>
 												<div class="radio-list">
 													<div class="radio-inline">
@@ -226,17 +252,23 @@
 														</div>
 													</div>
 												</div>
+												@if( $errors->has('unit') )
+													<span class="help-block">{{ $errors->first('unit') }}</span>
+												@endif
 											</div>
 										</div>
 										<!--/span-->
 
 										<div class="col-md-6">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('offer') ) has-error @endif">
 												<label class="control-label mb-10">تخفیف</label>
 												<div class="input-group">
 													<input type="number" name="offer" @isset($edit) value="{{$product->offer}}" @else value="{{old('offer')}}" @endisset class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
 													<div class="input-group-addon"><i class="ti-cut"></i></div>
 												</div>
+												@if( $errors->has('offer') )
+													<span class="help-block">{{ $errors->first('offer') }}</span>
+												@endif
 											</div>
 										</div>
 										<!--/span-->
@@ -244,41 +276,46 @@
 
 									<div class="row">
 										<div class="col-sm-6">
-											<label class="control-label mb-10">رنگ های محصول</label>
-											<div class="form-group mb-0">
-												<select class="select2 select2-multiple color-value" @isset($edit) value="{{$product->colors}}" @else value="{{old('color')}}" @endisset multiple="multiple" data-placeholder="رنگ هارا انتخاب کنید">
-												<?php $colors = [
-													['blue', 'آبی'],
-													['green', 'سبز'],
-													['yellow', 'زرد'],
-													['brown', 'قهوه ای'],
-													['violet', 'بنفش'],
-													['orange', 'نارنجی'],
-													['red', 'قرمز'],
-													['black', 'مشکی'],
-													['white', 'سفید'],
-												]; 
-												
-												$i = 0;
-												
-												if (isset($edit)) {
-													$product->colors = explode(',', $product->colors);
-												}
-												?>
-												
-												@foreach ($colors as $color)
-													<option value="{{$color[0]}}" 
-														<?php if(isset($edit) && isset($product->colors[$i]) && $color[0] == $product->colors[$i]) {
-															echo 'selected'; ++$i;
-														}?>>{{$color[1]}}</option>
-												@endforeach																
-												</select>
-												<input type="hidden" name="colors" class="color-value" />
-											</div>	
+											<div class="form-group @if( $errors->has('colors') ) has-error @endif">
+												<label class="control-label mb-10">رنگ های محصول</label>
+												<div class="form-group mb-0">
+													<select class="select2 select2-multiple color-value" @isset($edit) value="{{$product->colors}}" @else value="{{old('color')}}" @endisset multiple="multiple" data-placeholder="رنگ هارا انتخاب کنید">
+													<?php $colors = [
+														['blue', 'آبی'],
+														['green', 'سبز'],
+														['yellow', 'زرد'],
+														['brown', 'قهوه ای'],
+														['violet', 'بنفش'],
+														['orange', 'نارنجی'],
+														['red', 'قرمز'],
+														['black', 'مشکی'],
+														['white', 'سفید'],
+													]; 
+													
+													$i = 0;
+													
+													if (isset($edit)) {
+														$product->colors = explode(',', $product->colors);
+													}
+													?>
+													
+													@foreach ($colors as $color)
+														<option value="{{$color[0]}}" 
+															<?php if(isset($edit) && isset($product->colors[$i]) && $color[0] == $product->colors[$i]) {
+																echo 'selected'; ++$i;
+															}?>>{{$color[1]}}</option>
+													@endforeach																
+													</select>
+													<input type="hidden" name="colors" class="color-value" />
+												</div>
+												@if( $errors->has('colors') )
+													<span class="help-block">{{ $errors->first('colors') }}</span>
+												@endif
+											</div>
 										</div>
 										<!--/span-->
 										<div class="col-md-6">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('status') ) has-error @endif">
 												<label class="control-label mb-10">وضعیت</label>
 												<div class="radio-list">
 													<div class="radio-inline">
@@ -295,6 +332,9 @@
 													</div>
 												</div>
 											</div>
+											@if( $errors->has('status') )
+												<span class="help-block">{{ $errors->first('status') }}</span>
+											@endif
 										</div>
 									</div>
 									<div class="seprator-block"></div>
@@ -302,17 +342,23 @@
 									<hr class="light-grey-hr"/>
 									<div class="row">
 										<div class="col-md-12">
-											<div class="form-group">
+											<div class="form-group @if( $errors->has('full_description') ) has-error @endif">
 												<textarea name="full_description" class="tinymce form-control">@isset($edit) {{$product->full_description}} @else {{old('full_description')}} @endisset</textarea>
+												@if( $errors->has('full_description') )
+													<span class="help-block">{{ $errors->first('full_description') }}</span>
+												@endif
 											</div>
 										</div>
 									</div>
 									<!--/row-->
 									<div class="row">
 										<div class="col-md-12">
-											<div class="form-group" class="remove-outline">
+											<div class="form-group @if( $errors->has('keywords') ) has-error @endif" class="remove-outline">
 												<label class="control-label mb-10">کلمات کلیدی</label>
 												<input type="text" @isset($edit) value="{{$product->keywords}}" @else value="{{old('keywords')}}" @endisset name="keywords" data-role="tagsinput" placeholder="افزودن کلمه کلیدی"/>
+												@if( $errors->has('keywords') )
+													<span class="help-block">{{ $errors->first('keywords') }}</span>
+												@endif
 											</div>
 										</div>
 									</div>
@@ -345,6 +391,9 @@
 											</div>
 											<script>var ITER = {{ $i++ }};</script>
 										</div>
+										@if( $errors->has('images.*') )
+											<span class="help-block has-error">{{ $errors->first('images.*') }}</span>
+										@endif
 										<div class="col-md-12 mt-40">
 											<input type="button" class="btn btn-succuess pull-left add-new-image" value="افزودن تصویر جدید" />
 										</div>
@@ -355,13 +404,19 @@
 									
 									<div class="row">
 										<div class="col-sm-6">
-											<div class="form-group advantages">
+											<div class="form-group advantages @if( $errors->has('advantages') ) has-error @endif">
 												<input type="text" name="advantages" @isset($edit) value="{{$product->advantages}}" @else value="{{old('advantages')}}" @endisset data-role="tagsinput" class="form-control" placeholder="مزیت محصول">
+												@if( $errors->has('advantages') )
+													<span class="help-block">{{ $errors->first('advantages') }}</span>
+												@endif
 											</div>
 										</div>
 										<div class="col-sm-6">
-											<div class="form-group disadvantages">
+											<div class="form-group disadvantages @if( $errors->has('disadvantages') ) has-error @endif">
 												<input type="text" name="disadvantages" @isset($edit) value="{{$product->disadvantages}}" @else value="{{old('disadvantages')}}"  @endisset data-role="tagsinput" class="form-control" placeholder="عیب محصول">
+												@if( $errors->has('disadvantages') )
+													<span class="help-block">{{ $errors->first('disadvantages') }}</span>
+												@endif
 											</div>
 										</div>
 									</div>
@@ -433,7 +488,7 @@
 												<div class="seprator-block"></div>
 											@endforeach
 											
-											<input type="hidden" name="spec_id" value="{{ $product -> spec_table }}" />
+											<input type="hidden" name="spec_table" value="{{ $product -> spec_table }}" />
 										@else
 										<input type="hidden" name="specs" value="" />
 										<div class="alert alert-warning alert-dismissable">
@@ -466,6 +521,7 @@
 @endsection
 		
 @section('scripts')
+
 	<?php $scripts = [
 		// jQuery
 		'vendors/bower_components/jquery/dist/jquery.min.js',

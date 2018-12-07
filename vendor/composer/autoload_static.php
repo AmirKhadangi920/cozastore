@@ -26,6 +26,10 @@ class ComposerStaticInitc5bebfa65c7de9805034b6960b9d99ce
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
+        'Y' => 
+        array (
+            'Ybazli\\Faker\\' => 13,
+        ),
         'X' => 
         array (
             'XdgBaseDir\\' => 11,
@@ -136,6 +140,10 @@ class ComposerStaticInitc5bebfa65c7de9805034b6960b9d99ce
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'Ybazli\\Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ybazli/faker/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -359,11 +367,14 @@ class ComposerStaticInitc5bebfa65c7de9805034b6960b9d99ce
     );
 
     public static $classMap = array (
+        'App\\Article' => __DIR__ . '/../..' . '/app/Article.php',
+        'App\\Brand' => __DIR__ . '/../..' . '/app/Brand.php',
+        'App\\Category' => __DIR__ . '/../..' . '/app/Category.php',
         'App\\Classes\\jdf' => __DIR__ . '/../..' . '/app/Classes/jdf.php',
+        'App\\Color' => __DIR__ . '/../..' . '/app/Color.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\DiscountCode' => __DIR__ . '/../..' . '/app/DiscountCode.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Gallery' => __DIR__ . '/../..' . '/app/Gallery.php',
-        'App\\Group' => __DIR__ . '/../..' . '/app/Group.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -371,12 +382,11 @@ class ComposerStaticInitc5bebfa65c7de9805034b6960b9d99ce
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\CartController' => __DIR__ . '/../..' . '/app/Http/Controllers/CartController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Http\\Controllers\\GalleryController' => __DIR__ . '/../..' . '/app/Http/Controllers/GalleryController.php',
-        'App\\Http\\Controllers\\GroupController' => __DIR__ . '/../..' . '/app/Http/Controllers/GroupController.php',
-        'App\\Http\\Controllers\\InvoiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/InvoiceController.php',
-        'App\\Http\\Controllers\\PanelController' => __DIR__ . '/../..' . '/app/Http/Controllers/PanelController.php',
-        'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',
-        'App\\Http\\Controllers\\SpecsController' => __DIR__ . '/../..' . '/app/Http/Controllers/SpecsController.php',
+        'App\\Http\\Controllers\\GroupController' => __DIR__ . '/../..' . '/app/Http/Controllers/panel/GroupController.php',
+        'App\\Http\\Controllers\\InvoiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/panel/InvoiceController.php',
+        'App\\Http\\Controllers\\PanelController' => __DIR__ . '/../..' . '/app/Http/Controllers/panel/PanelController.php',
+        'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/panel/ProductController.php',
+        'App\\Http\\Controllers\\SpecsController' => __DIR__ . '/../..' . '/app/Http/Controllers/panel/SpecsController.php',
         'App\\Http\\Controllers\\StoreController' => __DIR__ . '/../..' . '/app/Http/Controllers/StoreController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\AdminAuth' => __DIR__ . '/../..' . '/app/Http/Middleware/AdminAuth.php',
@@ -399,8 +409,9 @@ class ComposerStaticInitc5bebfa65c7de9805034b6960b9d99ce
         'App\\Http\\Requests\\UploadPhoto' => __DIR__ . '/../..' . '/app/Http/Requests/UploadPhoto.php',
         'App\\Option' => __DIR__ . '/../..' . '/app/Option.php',
         'App\\Order' => __DIR__ . '/../..' . '/app/Order.php',
-        'App\\OrderProducts' => __DIR__ . '/../..' . '/app/OrderProducts.php',
+        'App\\OrderItem' => __DIR__ . '/../..' . '/app/OrderItem.php',
         'App\\Product' => __DIR__ . '/../..' . '/app/Product.php',
+        'App\\ProductVariation' => __DIR__ . '/../..' . '/app/ProductVariation.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -3905,6 +3916,9 @@ class ComposerStaticInitc5bebfa65c7de9805034b6960b9d99ce
         'Whoops\\Util\\SystemFacade' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/SystemFacade.php',
         'Whoops\\Util\\TemplateHelper' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Util/TemplateHelper.php',
         'XdgBaseDir\\Xdg' => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
+        'Ybazli\\Faker\\Facades\\Faker' => __DIR__ . '/..' . '/ybazli/faker/src/Facades/Faker.php',
+        'Ybazli\\Faker\\Faker' => __DIR__ . '/..' . '/ybazli/faker/src/Faker.php',
+        'Ybazli\\Faker\\FakerServiceProvider' => __DIR__ . '/..' . '/ybazli/faker/src/FakerServiceProvider.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlockFactory' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
         'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',

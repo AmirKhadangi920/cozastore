@@ -89,9 +89,6 @@ class ProductController extends Controller
         // Get a random 8 chars name for this product
         $pro_id = substr(md5(time()), 0, 8);
 
-        // Insert product details to database
-        $product = new Product();
-        $product->pro_id = $pro_id;
         if ($req -> parent) {
             $temp = Group::select('parent')->where('id', $req->parent)->get();
             while (!empty($temp[0])) {
@@ -102,30 +99,23 @@ class ProductController extends Controller
                 }
             }   
         }
-        $product -> category = $req -> parent;
-        $product -> name = $req -> name;
-        $product -> code = $req -> code;
-        $product -> short_description = $req -> short_description;
-        $product -> aparat_video = $req -> aparat_video;
-        $product -> price = $req -> price;
-        $product -> unit = $req -> unit;
-        $product -> offer = ($req->offer == null)? 0 : $req->offer;
-        $product -> colors = $req -> colors;
-        $product -> status = $req -> status;
-        $product -> label = $req -> label;
-        $product -> full_description = $req -> full_description;
-        $product -> keywords = $req -> keywords;
-        $product -> photo = ( isset($images[0]) ) ? $images[0] : null;
-        $product -> gallery = json_encode($images);
-        $product -> stock_inventory = ($req->stock_inventory == null)? 0 : $req->stock_inventory;
-        $product -> spec_table = $req -> spec_id;
-        $product -> specifications = json_encode($req->specs);
-        $product -> advantages = $req -> advantages;
-        $product -> disadvantages = $req -> disadvantages;
+        
+        $data = array_merge( $req->all(), [
+            'pro_id' => $pro_id,
+            'category' => $req->parent,
+            'offer' => ($req->offer == null)? 0 : $req->offer,
+            'image' => ( isset($images[0]) ) ? $images[0] : null,
+            'gallery' => json_encode($images),
+            'stock_inventory' => ($req->stock_inventory == null)? 0 : $req->stock_inventory,
+            'specifications' => json_encode($req->specs),
+        ]);
+        unset($data['parent']);
+        // Insert product details to database
+        $product = Product::create( $data );
 
-        $product -> save();
-
-        return redirect()->back()->with('message', 'محصول '.$req->name.' با موفقیت ثبت شد .');
+        return redirect()->action(
+            'ProductController@edit', ['id' => $product->pro_id]
+        )->with('message', 'محصول '.$product->name.' با موفقیت ثبت شد .');
     }
 
     public function edit ($id)
