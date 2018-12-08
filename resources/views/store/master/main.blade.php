@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="ltr">
 <head>
-	<title>{{$site_name}} @isset($page_title) | {{$page_title}} @endisset</title>
+	<title>{{ $options['site_name'] }} @isset($page_title) | {{$page_title}} @endisset</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	@isset($product->keywords)

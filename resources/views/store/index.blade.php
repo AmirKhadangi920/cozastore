@@ -100,25 +100,25 @@
 	<section class="section-slide">
 		<div class="wrap-slick1">
 			<div class="slick1">
-				@foreach ($slider as $slide)
-				<div class="item-slick1" style="background-image: url(/slider/{{$slide['photo']}});">
+				@foreach ($options['slider'] as $slide)
+				<div class="item-slick1" style="background-image: url(/slider/{{ $slide->photo }});">
 					<div class="container h-full">
 						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5" dir="rtl">
 							<div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
 								<span class="ltext-101 cl2 respon2">
-									{{$slide['title']}}
+									{{ $slide->title }}
 								</span>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
 								<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
-									{{$slide['description']}}
+									{{ $slide->description }}
 								</h2>
 							</div>
 								
 							<div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
-								<a href="{{$slide['link']}}" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-									{{$slide['button']}}
+								<a href="{{ $slide->link }}" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+									{{ $slide->button }}
 								</a>
 							</div>
 						</div>
@@ -134,26 +134,26 @@
 	<div class="sec-banner bg0 p-t-80 p-b-50"  dir="rtl">
 		<div class="container">
 			<div class="row">
-				@foreach ($posters as $poster)
+				@foreach ($options['posters'] as $poster)
 				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
 					<!-- Block1 -->
 					<div class="block1 wrap-pic-w">
-						<img src="{{ asset('poster/'.$poster['photo'])}}" alt="IMG-BANNER">
+						<img src="{{ asset('poster/'.$poster->photo) }}" alt="IMG-BANNER">
 
-						<a href="{{$poster['link']}}" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+						<a href="{{ $poster->link }}" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 							<div class="block1-txt-child1 flex-col-l">
 								<span class="block1-name ltext-102 trans-04 p-b-8">
-									{{$poster['title']}}
+									{{ $poster->title }}
 								</span>
 
 								<span class="block1-info stext-102 trans-04">
-									{{$poster['description']}}
+									{{ $poster->description }}
 								</span>
 							</div>
 
 							<div class="block1-txt-child2 p-b-4 trans-05">
 								<div class="block1-link stext-101 cl0 trans-09">
-									{{$poster['button']}}
+									{{ $poster->button }}
 								</div>
 							</div>
 						</a>
@@ -386,8 +386,9 @@
 						<div class="block2">
 							<div class="block2-pic hov-img0 @if($item->label || $item->stock_inventory == 0) gray @endif">
 								
-								<a href="/product/{{$item->pro_id}}">
-									<img src="{{asset('/uploads/'.$item->photo)}}" alt="IMG-PRODUCT">
+								<a href="/product/{{$item->id}}">
+									{{-- <img src="{{asset('/uploads/'.$item->photo)}}" alt="IMG-PRODUCT"> --}}
+									<img src="{{$item->photo}}" alt="IMG-PRODUCT">
 									
 									@if(!$item->label && $item->stock_inventory != 0)
 										<a href="{{$item->pro_id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
@@ -422,7 +423,7 @@
 
 									@if(!$item->label && $item->stock_inventory != 0)
 										<?php if ($item->unit) {
-											$item->price = $item->price * $dollar_cost;
+											$item->price = $item->price * $options['dollar_cost'];
 										} ?>
 										@empty ($item->offer)
 										<span class="stext-105 cl3">
@@ -574,6 +575,6 @@
 		</script>
 
 		<script src="{{ asset('js/main.js') }}"></script>
-		<script>var dollar_cost = {{$dollar_cost}};</script>
+		<script>var dollar_cost = {{$options['dollar_cost']}};</script>
 		<script src="{{ asset('dist/js/quickview.js') }}"></script>
 @endsection

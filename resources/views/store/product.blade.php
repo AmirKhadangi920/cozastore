@@ -344,7 +344,8 @@
 						<div class="block2">
 							<div class="block2-pic hov-img0 @if($product->label || $product->stock_inventory == 0) gray @endif">
 								
-								<img src="{{asset('/uploads/'.$product->photo)}}" alt="IMG-PRODUCT">
+								{{-- <img src="{{asset('/uploads/'.$product->photo)}}" alt="IMG-PRODUCT"> --}}
+								<img src="{{$product->photo}}" alt="IMG-PRODUCT">
 
 								@if(!$product->label && $product->stock_inventory != 0)
 									<a href="{{$product->pro_id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
@@ -371,7 +372,7 @@
 
 							<div class="block2-txt flex-w flex-t p-t-14">
 								<div class="block2-txt-child1 flex-col-l">
-									<a href="/product/{{$product->pro_id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									<a href="/product/{{$product->id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 										<b>{{$product->name}}</b>
 									</a>
 
@@ -408,25 +409,7 @@
 				@endempty
 			</div>
 
-			@if (!empty($products[0]) && $product_count > 30)
-			<nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-center">
-					<li class="page-item @if($page == 1) disabled @endif">
-						<a class="page-link" href="/products/{{$page - 1}}&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}" tabindex="-1">قبلی</a>
-					</li>
-					@for ($i = 1; $i <= ceil($product_count / 10); $i++)
-					<li class="page-item @if($page == $i) active @endif">
-						<a class="page-link" href="/products/{{$i}}&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}">
-							{{$i}}
-						</a>
-					</li>
-					@endfor
-					<li class="page-item @if($page == $i - 1) disabled @endif">
-						<a class="page-link" href="/products/{{$page + 1}}&order={{$filter['order']}}&price={{$filter['price']}}&color={{$filter['color']}}&keyword={{$filter['keyword']}}">بعدی</a>
-					</li>
-				</ul>
-			</nav>
-			@endif
+			{{ $products->links() }}
 		</div>
 	</div>
 @endsection

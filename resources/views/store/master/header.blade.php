@@ -7,7 +7,7 @@
         <div class="top-bar">
             <div class="content-topbar flex-sb-m h-full container">
                 <div class="left-top-bar">
-                    به فروشگاه اینترنتی {{$site_name}} خوش آمدید
+                    به فروشگاه اینترنتی {{ $options['site_name'] }} خوش آمدید
                 </div>
 
                 <div class="right-top-bar flex-w h-full">
@@ -50,7 +50,7 @@
                 
                 <!-- Logo desktop -->		
                 <a href="/" class="logo">
-                    <img src="{{ asset('logo/'.$site_logo) }}" alt="IMG-LOGO">
+                    <img src="{{ asset('logo/'.$options['site_logo']) }}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
@@ -117,7 +117,7 @@
     <div class="wrap-header-mobile">
         <!-- Logo moblie -->		
         <div class="logo-mobile">
-            <a href="index.php"><img src="{{ asset('logo/'.$site_logo) }}" alt="IMG-LOGO"></a>
+            <a href="index.php"><img src="{{ asset('logo/'.$options['site_logo']) }}" alt="IMG-LOGO"></a>
         </div>
 
         <!-- Icon header -->
@@ -149,7 +149,7 @@
         <ul class="topbar-mobile">
             <li>
                 <div class="left-top-bar">
-                    به فروشگاه اینترنتی {{$site_name}} خوش آمدید	
+                    به فروشگاه اینترنتی {{ $options['site_name'] }} خوش آمدید	
                 </div>
             </li>
 

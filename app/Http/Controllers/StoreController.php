@@ -15,6 +15,8 @@ use App\Option;
 use App\Order;
 use App\OrderProducts;
 use App\Traits\Init;
+use App\Models\Spec\Spec;
+use App\Models\Spec\SpecHeader;
 
 class StoreController extends Controller
 {
@@ -23,88 +25,48 @@ class StoreController extends Controller
     public function index ()
     {
         $this -> restore_cart();
+        $this -> move_cart_items();
+
+        // $specs =  Spec::find(1)
+        //     ->specHeaders()
+        //     ->with('specRows')
+            // ->specRows()
+            // ->get();
+
+        $result = [];
+        $test = Product::productInfo('10887397')->toArray();
+        $test_spec = Product::productInfo('10887397')->spec_data->toArray();
+
+        foreach ($test_spec as $item) {
+            $temp = $item['spec_row']['spec_header_id'];
+            $item['title'] = $item['spec_row']['title'];
+            $item['label'] = $item['spec_row']['label'];
+            $item['values'] = json_decode($item['spec_row']['values']);
+            unset($item['spec_row']);
+            unset($item['product_id']);
+            unset($item['id']);
+            unset($item['spec_row_id']);
+            $result[SpecHeader::find($temp)->title][] = $item;
+        }
         
+        $test['spec_row'] = $result;
+        return $test;
+        return view('table', ['data' => $test]);
 
-        if (\Auth::check() && Cookie::get('cart'))
-        {
-            $order = Order::select('id')->where('buyer',\Auth::user()->id)->where('status', 0)->get();
-            
-            if (!empty($order->all()))
-            {
-                $order_id = $order[0]->id;
-            }
-            else
-            {
-                $order = new Order();
-                $order -> id = substr(md5(time()), 0, 8);
-                $order -> buyer = Auth::user()->id;
-                $order -> destination = Auth::user()->state.' ، '.Auth::user()->city.' ، '.Auth::user()->address;
-                $order -> postal_code = Auth::user()->postal_code;
-                $order -> save();
-
-                $order_id = $order -> id;
-            }
-
-            $cart =  json_decode(Cookie::get('cart'), true);
-            if (!empty($cart))
-            {   
-                foreach ($cart as $item)
-                {           
-                    if (Product::find($item['id']))
-                    {
-                        $order_product = new OrderProducts();
-                        $order_product -> order = $order_id;
-                        $order_product -> product = $item['id'];
-                        $order_product -> color = $item['color'];
-                        $order_product -> count = $item['count'];
-                        $order_product -> save();
-                    }         
-                }
-                Cookie::queue('cart', NULL, -1);
-            }
-        }
-
-        $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
-                `offer`, `photo`, `stock_inventory`, `label` 
-                FROM `products`
-                LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id`
-                WHERE `status` = 1 ORDER BY `products`.`created_at` DESC LIMIT 30;";
-        $products = DB::select($sql);
-
-        $options = Option::select('name', 'value')->whereIn('name', [
-            'slider', 'posters', 'site_name', 'site_description',
-            'site_logo', 'social_link', 'dollar_cost'
-        ])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'slider': $slider = json_decode($option['value'], true); break;
-                case 'posters': $posters = json_decode($option['value'], true); break;
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_description': $site_description = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-                case 'dollar_cost': $dollar_cost = $option['value']; break;
-                case 'social_link': $social_link = json_decode($option['value'], true); break;
-            }
-        }
-
-        return view('store.index  ', [
-            'products' => $products,
+        return view('store.index', [
+            'products' => Product::productCard(),
             'top_groups' => $this -> Get_sub_groups(),
-            'dollar_cost' => $dollar_cost,
             'cart_products' => $this -> Get_Cart_items(),
             'page_name' => 'main',
-            'slider' => $slider,
-            'posters' => $posters,
-            'site_name' => $site_name,
-            'site_description' => $site_description,
-            'site_logo' => $site_logo,
-            'social_link' => $social_link,
+            'options' => $this->options([
+                'slider', 'posters', 'site_name', 'site_description',
+                'site_logo', 'social_link', 'dollar_cost'
+            ])
         ]);
     }
 
     public function store ()
     {
-        $page = (isset($_GET['page'])) ? $_GET['page'] : 1;
         $order = (isset($_GET['order'])) ? $_GET['order'] : 'newest';
         $price = (isset($_GET['price'])) ? $_GET['price'] : 'all';
         $color = (isset($_GET['color'])) ? $_GET['color'] : 'all';
@@ -112,94 +74,77 @@ class StoreController extends Controller
         $query = (isset($_GET['query'])) ? $_GET['query'] : null;
         $category = (isset($_GET['category'])) ? $_GET['category'] : null;
 
-        $sql = "SELECT `pro_id`, `categories`.`id`, `categories`.`title`, `name`, `price`, `unit`,
-                `offer`, `photo`, `label`, `stock_inventory` 
-                FROM `products`
-                LEFT JOIN `categories` ON `products`.`parent_category` = `categories`.`id` ";
-     
-        $count_sql = "SELECT count(`pro_id`) as 'count' FROM `products` ";
-     
-        $sql .= " WHERE `status` = 1 ";
-        $count_sql .= " WHERE `status` = 1 ";
-        
+        $products = Product::select('id', 'name', 'photo', 'label', 'parent_category')
+                    ->with('parentCategory:id,title')->where('status', 1);
+
         if ($color && $color != 'all') { 
-            $sql .= "AND `colors` LIKE '%$color%' "; 
-            $count_sql .= "AND `colors` LIKE '%$color%' "; 
+            $products->where('colors', 'like', '%$color%');
         }
 
         if ($query) {
-            $sql .= "AND `name` LIKE '%$query%' "; 
-            $count_sql .= "AND `name` LIKE '%$query%' "; 
+            $products->where('name', 'like', "%$query%");
         }
         
-        if ($category)
-        {
-            function get_parent ($id, &$groups_id)
-            {
-                $groups_id[] = $id;
-                $group = Group::select('id', 'title')->where('parent', $id)->get();
-                if ($group->all() != [])
-                {
-                    foreach ($group as $item)
-                    {
-                        get_parent($item->id, $groups_id);
-                    }
-                } else {
-                    $groups_id = [];
-                }
-            }
+        // if ($category)
+        // {
+        //     function get_parent ($id, &$groups_id)
+        //     {
+        //         $groups_id[] = $id;
+        //         $group = Group::select('id', 'title')->where('parent', $id)->get();
+        //         if ($group->all() != [])
+        //         {
+        //             foreach ($group as $item)
+        //             {
+        //                 get_parent($item->id, $groups_id);
+        //             }
+        //         } else {
+        //             $groups_id = [];
+        //         }
+        //     }
             
-            $x = []; get_parent($category, $x); $x = implode(',', $x);
-            if ($x)
-            {
-                $sql .= "AND `category` IN ($x) "; 
-                $count_sql .= "AND `category` IN ($x) ";
-            }
-        }
-        if ($keyword && $keyword != 'all') {
-            $sql .= "AND `keywords` LIKE '%$keyword%' ";
-            $count_sql .= "AND `keywords` LIKE '%$keyword%' ";
-        }
-
-        switch ($price) {
-            case '0to500':
-                $sql .= "AND `price` < 500000 ";
-                $count_sql .= "AND `price` < 500000 ";
-                break;
-            case '500to1000': 
-                $sql .= "AND `price` BETWEEN 500000 AND 1000000 ";
-                $count_sql .= "AND `price` BETWEEN 500000 AND 1000000 ";
-                break;
-            case '1000to2000': 
-                $sql .= "AND `price` BETWEEN 1000000 AND 2000000 ";
-                $count_sql .= "AND `price` BETWEEN 1000000 AND 2000000 ";
-                break;
-            case '2000toend': 
-                $sql .= "AND `price` > 2000000 ";
-                $count_sql .= "AND `price` > 2000000 ";
-                break;
-            default:
-                $price = 'all';
-        }
-
-        switch ($order) {
-            case 'expensivest': $sql .= "ORDER BY `products`.`price` DESC"; break;
-
-            case 'cheapest': $sql .= "ORDER BY `products`.`price` ASC"; break;
-
-            case 'newest': $sql .= "ORDER BY `products`.`created_at` DESC"; break;
-
-            case 'oldest': $sql .= "ORDER BY `products`.`created_at` ASC"; break;
-
-            default: $sql .= "ORDER BY `products`.`created_at` DESC";
-        }
-
-        $sql .= ' LIMIT 10 OFFSET ' . ($page - 1) * 30 . ';';
+        //     $x = []; get_parent($category, $x); $x = implode(',', $x);
+        //     if ($x)
+        //     {
+        //         $sql .= "AND `category` IN ($x) "; 
+        //         $count_sql .= "AND `category` IN ($x) ";
+        //     }
+        // }
         
-        $product_count = DB::SELECT($count_sql);
-        
-        $products = DB::select($sql);
-        
+        // if ($keyword && $keyword != 'all') {
+        //     $sql .= "AND `keywords` LIKE '%$keyword%' ";
+        // }
+
+        // switch ($price) {
+        //     case '0to500':
+        //         $sql .= "AND `price` < 500000 ";
+        //         break;
+        //     case '500to1000': 
+        //         $sql .= "AND `price` BETWEEN 500000 AND 1000000 ";
+        //         break;
+        //     case '1000to2000': 
+        //         $sql .= "AND `price` BETWEEN 1000000 AND 2000000 ";
+        //         break;
+        //     case '2000toend': 
+        //         $sql .= "AND `price` > 2000000 ";
+        //         break;
+        //     default:
+        //         $price = 'all';
+        // }
+
+        // switch ($order) {
+        //     case 'expensivest': $sql .= "ORDER BY `products`.`price` DESC"; break;
+
+        //     case 'cheapest': $sql .= "ORDER BY `products`.`price` ASC"; break;
+
+        //     case 'newest': $sql .= "ORDER BY `products`.`created_at` DESC"; break;
+
+        //     case 'oldest': $sql .= "ORDER BY `products`.`created_at` ASC"; break;
+
+        //     default: $sql .= "ORDER BY `products`.`created_at` DESC";
+        // }
+
+        $products = $products->paginate(20);
+
         $options = Option::select('name', 'value')->whereIn('name', 
             ['site_name', 'site_description', 'site_logo', 'social_link', 'dollar_cost'])->get();
         foreach ($options as $option) {
@@ -225,8 +170,7 @@ class StoreController extends Controller
             'products' => $products,
             'top_groups' => $this -> Get_sub_groups(),
             'dollar_cost' => $dollar_cost,
-            'product_count' => $product_count[0]->count,
-            'page' => $page,
+            'product_count' => $products->count(),
             'breadcrumb' => $breadcrumb,
             'cart_products' => $this -> Get_Cart_items(),
             'page_name'=> 'products',

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpecsTable extends Migration
+class CreateWarrantiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSpecsTable extends Migration
      */
     public function up()
     {
-        Schema::create('specs', function (Blueprint $table) {
+        Schema::create('warranties', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->string('title', 50);
+            $table->string('expire', '20');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateSpecsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('speceficatinos');
+        Schema::dropIfExists('warranties');
     }
 }

@@ -61,29 +61,29 @@
                     با کسب و کار ما آشنا شوید
                 </h4>
 
-                <p class="stext-107 cl7 size-201">{{$site_description}}</p>
+                <p class="stext-107 cl7 size-201">{{ $options['site_description'] }}</p>
 
                 <div class="p-t-27">
-                    @if ($social_link['facebook'])
-                    <a href="{{$social_link['facebook']}}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                    @if ($options['social_link']->facebook)
+                    <a href="{{ $options['social_link']->facebook }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                         <i class="fa fa-facebook"></i>
                     </a>
                     @endif
                     
-                    @if ($social_link['instagram'])
-                    <a href="{{$social_link['instagram']}}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                    @if ($options['social_link']->instagram)
+                    <a href="{{ $options['social_link']->instagram }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                         <i class="fa fa-instagram"></i>
                     </a>
                     @endif
                     
-                    @if ($social_link['twitter'])
-                    <a href="{{$social_link['twitter']}}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                    @if ($options['social_link']->twitter)
+                    <a href="{{ $options['social_link']->twitter }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                         <i class="fa fa-twitter"></i>
                     </a>
                     @endif
                     
-                    @if ($social_link['telegram'])
-                    <a href="{{$social_link['telegram']}}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                    @if ($options['social_link']->telegram)
+                    <a href="{{ $options['social_link']->telegram }}" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
                         <i class="fa fa-telegram"></i>
                     </a>
                     @endif
