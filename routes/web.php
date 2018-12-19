@@ -59,6 +59,12 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     Route::get('/product/search/{query?}', 'ProductController@search');
 
     Route::resource('specification', 'Spec\SpecificationController')->except([ 'create', 'show' ]);
+    Route::group(['prefix' => 'specification/{specification}'], function () {
+        Route::resource('header', 'Spec\SpecHeaderController')->except([ 'create', 'show' ]);
+    });
+    Route::group(['prefix' => 'specification/header/{header}'], function () {
+        Route::resource('row', 'Spec\SpecRowController')->except([ 'create', 'show' ]);
+    });
     
     Route::resource('color', 'ColorController')->except([ 'create', 'show' ]);
     Route::resource('warranty', 'WarrantyController')->except([ 'create', 'show' ]);
