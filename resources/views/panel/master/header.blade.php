@@ -170,6 +170,15 @@
                 <li>
                     <a @if($page_name == 'group') class="active-page" @endif href="/panel/group"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گروه بندی محصولات</a>
                 </li>
+                <li>
+                    <a @if($page_name == 'warranty') class="active-page" @endif href="/panel/warranty"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گارانتی محصولات</a>
+                </li>
+                <li>
+                    <a @if($page_name == 'brand') class="active-page" @endif href="/panel/brand"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>برند محصولات</a>
+                </li>
+                <li>
+                    <a @if($page_name == 'color') class="active-page" @endif href="/panel/color"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>رنگ بندی محصولات</a>
+                </li>
             </ul>
         </li>
         <li>

@@ -64,6 +64,10 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
         Route::get('/delete/{id}/{title}', 'ProductController@delete');
         Route::get('/search/{query?}', 'ProductController@search');
     });
+
+    Route::resource('color', 'ColorController')->except([ 'create', 'show' ]);
+    Route::resource('warranty', 'WarrantyController')->except([ 'create', 'show' ]);
+    Route::resource('brand', 'BrandController')->except([ 'create', 'show' ]);
 });
 
 // Store Products Routes
