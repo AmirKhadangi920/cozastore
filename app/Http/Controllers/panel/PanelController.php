@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\panel;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use DB;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Slider;
 use App\Http\Requests\Poster;
 use App\Http\Requests\Info;
@@ -11,124 +12,57 @@ use App\Http\Requests\SocialLink;
 use App\Http\Requests\ShippingCost;
 use Carbon\Carbon;
 use App\Classes\jdf;
-use App\Option;
-use App\Order;
-use App\OrderProducts;
-use App\Review;
+use App\Models\OrderProducts;
+use App\Models\Order;
+use App\Models\Review;
+use App\Models\Product;
+use App\Models\ProductVariation;
 
+/**
+ *  CLASS PanelController
+ *  @
+ * 
+ * @author AmirKhadangi <AmirKhadangi920@gmail.com> 
+ */
 class PanelController extends Controller
 {
+    /**
+     * Main page of panel dashboard
+     *
+     * @param string $total_type
+     * @return View
+     */
     public function index ($total_type = 'daily')
     {
-        $orders = DB::select("SELECT `orders`.`id`, `users`.`first_name`, `users`.`last_name`,
-            ((`shipping_cost` + `total`) - `offer`) as 'total', `status`, `orders`.`created_at`, `payment`
-            FROM `orders` INNER JOIN `users` ON `orders`.`buyer` = `users`.`id`");
-
-        $reviews = DB::select('SELECT `products`.`name`, `fullname`, `rating`, `review`, 
-                `reviews`.`created_at` FROM `reviews` 
-                INNER JOIN `products` ON `reviews`.`product` = `products`.`pro_id`
-                ORDER BY `reviews`.`created_at` DESC LIMIT 10');
-
-        $top_products = DB::select('SELECT `products`.`name`, COUNT(`order_products`.`product`) AS \'count\'
-            FROM `order_products`
-            INNER JOIN `products` ON `order_products`.`product` = `products`.`pro_id`
-            INNER JOIN `orders` ON `order_products`.`order` = `orders`.`id`
-            WHERE `orders`.`payment` IS NOT NULL GROUP BY products.name ORDER BY `count` DESC LIMIT 10');
-
-        $orders_count = Order::count();
-
-        switch ($total_type)
-        {
-            case 'daily':
-                $total_sales = DB::select('SELECT DAY(`payment_jalali`) AS \'period\', SUM(`total` - `offer`) \'sum\'
-                    FROM `orders`
-                    WHERE `payment_jalali` IS NOT NULL GROUP BY DAY(`payment_jalali`) LIMIT 30'); 
-                break;
-            case 'weekly':
-                $total_sales = DB::select('SELECT WEEK(`payment_jalali`) AS \'period\', SUM(`total` - `offer`) \'sum\'
-                    FROM `orders`
-                    WHERE `payment_jalali` IS NOT NULL GROUP BY WEEK(`payment_jalali`) LIMIT 20'); 
-                break;
-            case 'monthly':
-                $total_sales = DB::select('SELECT MONTH(`payment_jalali`) AS \'period\', SUM(`total` - `offer`) \'sum\'
-                    FROM `orders`
-                    WHERE `payment_jalali` IS NOT NULL GROUP BY MONTH(`payment_jalali`) LIMIT 12'); 
-                break;    
-            case 'yearly':
-                $total_sales = DB::select('SELECT YEAR(`payment_jalali`) AS \'period\', SUM(`total` - `offer`) \'sum\'
-                    FROM `orders`
-                    WHERE `payment_jalali` IS NOT NULL GROUP BY YEAR(`payment_jalali`) LIMIT 5'); 
-                break;       
-        }
-
-        $total_income = DB::select('SELECT SUM(`total` - `offer`) AS \'sum\'
-            FROM `orders` WHERE `payment_jalali` IS NOT NULL');
-        $total_income = $total_income[0] -> sum;
-
-        $product_count = DB::select('SELECT COUNT(`pro_id`) AS \'count\' FROM `products`');
-        $product_count = $product_count[0] -> count;
-
-    
-        
-        $options = Option::select('name', 'value')->whereIn('name', 
-            ['site_name', 'site_logo', 'dollar_cost'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-                case 'dollar_cost': $dollar_cost = $option['value']; break;
-            }
-        }
-
         return view('panel.index', [
-            'orders' => $orders,
-            'reviews' => $reviews,
-            'top_products' => $top_products,
-            'orders_count' => $orders_count,
-            'product_count' => $product_count,
-            'page_name' => 'داشبورد',
-            'total_income' => $total_income,
-            'total_sales' => $total_sales,
-            'total_type' => $total_type,
-            'site_name'=> $site_name,
-            'site_logo'=> $site_logo,
-            'dollar_cost'=> $dollar_cost,
+            'orders'        => Order::list(),
+            'reviews'       => Review::list(),
+            'top_products'  => ProductVariation::getTops(),
+            'orders_count'  => Order::count(),
+            'product_count' => Product::count(),
+            'page_name'     => 'داشبورد',
+            // 'total_income'  => Order::total_income(),
+            'order_compare' => Order::compare(),
+            'total_sales'   => Order::total($total_type),
+            'total_type'    => $total_type,
+            'options'       => $this->options(['site_name', 'site_logo', 'dollar_cost'])
         ]);
     }
 
+    /**
+     * return Setting panel
+     *
+     * @return View
+     */
     public function setting ()
     {
-        $options = Option::select('name', 'value')->whereIn('name', [
-            'slider', 'posters', 'site_name', 'site_description', 'site_logo',
-            'shop_phone', 'shop_address', 'social_link', 'shipping_cost'
-        ])->get();
-        
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'slider': $slider = json_decode($option['value'], true); break;
-                case 'posters': $posters = json_decode($option['value'], true); break;
-                case 'shipping_cost': $shipping_cost = json_decode($option['value'], true); break;
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_description': $site_description = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-                case 'shop_phone': $shop_phone = $option['value']; break;
-                case 'shop_address': $shop_address = $option['value']; break;
-                case 'social_link': $social_link = json_decode($option['value'], true); break;
-            }
-        }
-
         return view('panel.setting', [
             'page_name' => 'setting',
             'page_title' => 'تنظیمات',
-            'slider' => $slider,
-            'posters' => $posters,
-            'site_name' => $site_name,
-            'shipping_cost' => $shipping_cost,
-            'site_description' => $site_description,
-            'site_logo' => $site_logo,
-            'shop_phone' => $shop_phone,
-            'shop_address' => $shop_address,
-            'social_link' => $social_link,
+            'options' => $this->options([
+                'slider', 'posters', 'site_name', 'site_description', 'site_logo',
+                'shop_phone', 'shop_address', 'social_link', 'shipping_cost'
+            ])
         ]);
     }
 

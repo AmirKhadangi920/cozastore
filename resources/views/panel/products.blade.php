@@ -73,6 +73,13 @@
 	.photo .options {
 		z-index: 100;
 	}
+	.pagination {
+		position: relative;
+		top: 15px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
 	</style>
 @endsection
 	
@@ -164,7 +171,8 @@
 										
 										<a href="javascript:void(0);">
 											<div class="product-pic img-responsive"
-												style="background: url('{{ asset('uploads/'.$product->photo) }}') center center;
+												{{-- style="background: url('{{ asset('uploads/'.$product->photo) }}') center center; --}}
+												style="background: url('{{ $product->photo }}') center center;
 													background-size: cover;">
 												
 												@if($product->label)
@@ -177,7 +185,7 @@
 													<div class="shadow"></div> 
 													<span class="badge label badge-dark"></span>
 													<span class="label flag label-warning inline-block">{{ $product->label }}</span>
-												@elseif ($product->stock_inventory == 0)
+												@elseif ($product->variations[0]->stock_inventory == 0)
 													<div class="shadow"></div> 
 													<span class="label flag label-warning inline-block">نا موجود</span>
 												@endif
@@ -193,13 +201,22 @@
 									<div class="info">
 										<h5>{{$product->name}}</h5>
 										<h6>شناسه : {{$product->code}}</h6>
-										<?php if ($product->unit) { $product->unit = 'دلار'; } else { $product->unit = 'تومان'; } ?>
-										@if($product->offer)
-											<span class="head-font block txt-orange-light-1 font-16"><del><span class="num-comma">{{$product->price}}</span> {{$product->unit}}</del></span>
-											<?php $product->offer = $product->price - ($product->offer * $product->price) / 100; ?>
-											<span class="head-font block txt-dark-1 font-16"><ins><span class="num-comma">{{$product->offer}}</span> {{$product->unit}}</ins></span>
+										@php 
+											$variation = $product->variations[0];
+											
+											if ($variation->unit) { 
+												$variation->unit = 'دلار';
+											} else { 
+												$variation->unit = 'تومان';
+											}
+										@endphp
+
+										@if($variation->offer)
+											<span class="head-font block txt-orange-light-1 font-16"><del><span class="num-comma">{{$variation->price}}</span> {{$variation->unit}}</del></span>
+											@php $variation->offer = $variation->price - ($variation->offer * $variation->price) / 100; @endphp
+											<span class="head-font block txt-dark-1 font-16"><ins><span class="num-comma">{{$variation->offer}}</span> {{$variation->unit}}</ins></span>
 										@else
-											<span class="head-font block txt-orange-light-1 font-16"><span class="num-comma">{{$product->price}}</span> {{$product->unit}}</span>
+											<span class="head-font block txt-orange-light-1 font-16"><span class="num-comma">{{$variation->price}}</span> {{$variation->unit}}</span>
 										@endif
 									</div>
 								</article>
@@ -209,6 +226,8 @@
 				</div>
 				@endforeach	
 			@endempty
+
+			{{ $products->links() }}
 		</div>	
 		<!-- /Product Row Four -->
 		

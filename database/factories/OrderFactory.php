@@ -2,7 +2,7 @@
 
 use Faker\Generator as FakerEng;
 
-$factory->define(App\Order::class, function (FakerEng $faker) {
+$factory->define(App\Models\Order::class, function (FakerEng $faker) {
     return [
         'id' => $faker->numberBetween(10000000, 99999999),
         'admin_description' => Faker::sentence(),
@@ -10,6 +10,9 @@ $factory->define(App\Order::class, function (FakerEng $faker) {
         'destination' => Faker::address(),
         'postal_code' => $faker->postcode,
         'total' => $faker->numberBetween(10000, 10000000),
-        'status' => $faker->numberBetween(0, 7)
+        'status' => $faker->numberBetween(0, 7),
+        'created_at' => $faker->dateTime(),
+        // 'payment_jalali' => $faker->dateTime($max = '1397-09-10')
+        'payment_jalali' => "{$faker->numberBetween(1380, 1397)}-{$faker->numberBetween(1, 12)}-{$faker->numberBetween(10, 30)} 03:30:00"
     ];
 });

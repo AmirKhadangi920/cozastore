@@ -71,7 +71,7 @@
 										<div class="form-group mb-20">
 											<p class="text-muted inline-block mb-10 ml-10 font-13">قیمت امروز دلار را ثبت کنید</p>
 											<div class="input-group mb-15"> <span class="input-group-addon">$</span>
-												<input type="number" value="{{$dollar_cost}}" onkeyup="this.parentNode.parentNode.nextElementSibling.href = 'panel/setting/dollar_cost/'+this.value" placeholder="قیمت 1 دلار" class="form-control">
+												<input type="number" value="{{$options['dollar_cost']}}" onkeyup="this.parentNode.parentNode.nextElementSibling.href = 'panel/setting/dollar_cost/'+this.value" placeholder="قیمت 1 دلار" class="form-control">
 											</div>
 										</div>
 										<a class="btn btn-danger btn-block mb-10">ثبت قیمت</a>
@@ -96,13 +96,21 @@
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
 									<div  class="panel-body">
-										<?php $colors = ['info', 'success', 'danger', 'warning']; $x = 0; ?>
-										@foreach ($top_products as $item)
-										<?php if ($x == 4) { $x = 0; } ?>
-										<span class="font-12 head-font txt-dark">{{$item->name}}</span>
-										<div class="progress mt-5">
-										<div class="progress-bar progress-bar-grad-{{$colors[$x++]}}" aria-valuenow="{{$item->count}}" aria-valuemin="0" aria-valuemax="{{$orders_count}}" style="width: {{$item->count / $orders_count * 100}}%" role="progressbar"> <span class="sr-only">85% Complete (success)</span> </div>
-										</div>
+										@php $colors = ['info', 'success', 'danger', 'warning']; $x = 0; @endphp
+
+										@foreach ( $top_products as $item )
+											@php if ($x == 4) { $x = 0; } @endphp
+											<span class="font-12 head-font txt-dark">{{ $item->product->name }}</span>
+											<div class="progress mt-5">
+												<div class="progress-bar progress-bar-grad-{{ $colors[$x++] }}" 
+													aria-valuenow="{{ $item->order_item_count }}" 
+													aria-valuemin="0" 
+													aria-valuemax="{{ $orders_count }}" 
+													style="width: {{ $item->order_item_count / $orders_count * 100 }}%" 
+													role="progressbar">
+													<span class="sr-only">85% Complete (success)</span>
+												</div>
+											</div>
 										@endforeach
 									</div>									
 								</div>	
@@ -133,7 +141,7 @@
 										<div class="sl-item">
 											<div class="sl-content">
 												<div class="per-rating inline-block pull-right">
-													<span class="inline-block">برای {{$review->name}}</span>
+													<span class="inline-block">برای {{$review->product->name}}</span>
 													@for ($i = 0; $i < 5; ++$i)
 														<a class="zmdi @if($review->rating > 0) zmdi-star <?php --$review->rating; ?> @else zmdi-star-outline @endif"></a>
 													@endfor
@@ -143,7 +151,7 @@
 												<div class="inline-block pull-right">
 													<span class="reviewer font-13">
 														<span>توسط</span>
-														<a href="javascript:void(0)" class="inline-block capitalize-font  mb-5">{{$review->fullname}}</a>
+														<a href="javascript:void(0)" class="inline-block capitalize-font  mb-5">{{$review->full_name}}</a>
 													</span>
 													<?php 
 														$time = new Carbon\Carbon($review->created_at);
@@ -189,25 +197,30 @@
 										<li>
 											<span class="block">تعداد سفارشات</span>
 											<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{$orders_count}}</span></span>
-											{{-- <span class="block txt-success mt-5">
-												<i class="zmdi zmdi-caret-up pr-5 font-20"></i><span class="weight-500">+4%</span>
-											</span> --}}
+											<span class="block @if($order_compare > 0) txt-success @else txt-danger @endif mt-5">
+												<i class="zmdi @if($order_compare > 0) zmdi-caret-up @else zmdi-caret-down @endif pr-5 font-20"></i>
+												<span class="weight-500">{{ $order_compare }}%</span>
+											</span>
 											<div class="clearfix"></div>
 										</li>
 										<li>
 											<span class="block">تعداد محصولات</span>
 											<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{$product_count}}</span></span>
-											{{-- <span class="block txt-danger mt-5">
-												<i class="zmdi zmdi-caret-down pr-5 font-20"></i><span class="weight-500">-5%</span>
-											</span> --}}
 											<div class="clearfix"></div>
+											<a href="/panel/products/add" class="badge badge-danger mt-5">ثبت محصول جدید</a>
 										</li>
 										<li>
-											<span class="block">مجموع درآمد</span>
-											<span class="block txt-dark weight-500 font-18"><span class="counter-anim num-comma">{{$total_income}}</span> تومان</span>
-											{{-- <span class="block txt-danger mt-5">
-												<i class="zmdi zmdi-caret-down pr-5 font-20"></i><span class="weight-500">-5%</span>
-											</span> --}}
+											@php
+												$key = count($total_sales) - 1;
+												$diff = $total_sales[$key]->sum - $total_sales[$key - 1]->sum;
+												$diff = $diff * 100 / $total_sales[$key]->sum;	
+											@endphp
+											<span class="block">درآمد آخرین دوره</span>
+											<span class="block txt-dark weight-500 font-18"><span class="counter-anim num-comma">{{ $total_sales[$key]->sum }}</span> تومان</span>
+												<span class="block @if($diff > 0) txt-success @else txt-danger @endif mt-5">
+												<i class="zmdi @if($diff > 0) zmdi-caret-up @else zmdi-caret-down @endif pr-5 font-20"></i>
+												<span class="weight-500">{{ round( $diff ) }} %</span>
+											</span>
 											<div class="clearfix"></div>
 										</li>
 									</ul>
@@ -300,6 +313,7 @@
 
 @section('scripts')
 	<?php $scripts = [
+		'/js/app.js',
 		// jQuery
 		'vendors/bower_components/jquery/dist/jquery.min.js',
 		// Bootstrap Core JavaScript

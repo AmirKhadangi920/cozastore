@@ -27,31 +27,25 @@ class StoreController extends Controller
         $this -> restore_cart();
         $this -> move_cart_items();
 
-        // $specs =  Spec::find(1)
-        //     ->specHeaders()
-        //     ->with('specRows')
-            // ->specRows()
-            // ->get();
+        // $result = [];
+        // $test = Product::productInfo('10887397')->toArray();
+        // $test_spec = Product::productInfo('10887397')->spec_data->toArray();
 
-        $result = [];
-        $test = Product::productInfo('10887397')->toArray();
-        $test_spec = Product::productInfo('10887397')->spec_data->toArray();
-
-        foreach ($test_spec as $item) {
-            $temp = $item['spec_row']['spec_header_id'];
-            $item['title'] = $item['spec_row']['title'];
-            $item['label'] = $item['spec_row']['label'];
-            $item['values'] = json_decode($item['spec_row']['values']);
-            unset($item['spec_row']);
-            unset($item['product_id']);
-            unset($item['id']);
-            unset($item['spec_row_id']);
-            $result[SpecHeader::find($temp)->title][] = $item;
-        }
+        // foreach ($test_spec as $item) {
+        //     $temp = $item['spec_row']['spec_header_id'];
+        //     $item['title'] = $item['spec_row']['title'];
+        //     $item['label'] = $item['spec_row']['label'];
+        //     $item['values'] = json_decode($item['spec_row']['values']);
+        //     unset($item['spec_row']);
+        //     unset($item['product_id']);
+        //     unset($item['id']);
+        //     unset($item['spec_row_id']);
+        //     $result[SpecHeader::find($temp)->title][] = $item;
+        // }
         
-        $test['spec_row'] = $result;
-        return $test;
-        return view('table', ['data' => $test]);
+        // $test['spec_row'] = $result;
+        // return $test;
+        // return view('table', ['data' => $test]);
 
         return view('store.index', [
             'products' => Product::productCard(),

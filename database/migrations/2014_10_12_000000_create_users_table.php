@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('city', 30);
             $table->string('address', 255);
             $table->string('postal_code', 10);
-            $table->tinyInteger('type');
+            $table->tinyInteger('type')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

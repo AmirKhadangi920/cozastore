@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-	<title>ورود به @isset($site_name) {{$site_name}} @else سایت @endisset</title>
+	<title>ورود به @isset($options['site_name']) {{$options['site_name']}} @else سایت @endisset</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -28,14 +28,14 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<img src="/logo/{{$site_logo}}" alt="IMG">
+					<img src="/logo/{{ $options['site_logo'] }}" alt="IMG">
 				</div>
 
 				<form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
 					@csrf
 
 					<span class="login100-form-title">
-						ورود به @isset($site_name) {{$site_name}} @else سایت @endisset
+						ورود به @isset($options['site_name']) {{$options['site_name']}} @else سایت @endisset
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">

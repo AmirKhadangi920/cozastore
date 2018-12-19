@@ -2,7 +2,7 @@
 
 use Faker\Generator as FakerEng;
 
-$factory->define(App\Product::class, function (FakerEng $faker) {
+$factory->define(App\Models\Product::class, function (FakerEng $faker) {
     $faker = \Faker\Factory::create('fa_IR');
     return [
         'id' => $faker->numberBetween(10000000, 99999999),

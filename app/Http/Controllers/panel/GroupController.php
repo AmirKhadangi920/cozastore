@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\panel;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateGroup;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Group;
 use App\Option;

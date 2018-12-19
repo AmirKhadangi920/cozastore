@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Option;
-use App\Product;
+use App\Models\Option;
+use App\Models\Product;
 use Cookie;
 
 class RegisterController extends Controller
@@ -121,18 +121,8 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        $options = Option::select('name', 'value')->whereIn('name',
-            ['site_name', 'site_logo'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-            }
-        }
-     
         return view('auth.register', [
-            'site_name'=> $site_name,
-            'site_logo'=> $site_logo,
+            'options'=> $this->options(['site_name', 'site_logo'])
         ]);
     }
 }

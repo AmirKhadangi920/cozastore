@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-	<title>ثبت نام در @isset($site_name) {{$site_name}} @else سایت @endisset</title>
+	<title>ثبت نام در @isset($options['site_name']) {{$options['site_name']}} @else سایت @endisset</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -28,14 +28,14 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<img src="/logo/{{$site_logo}}" alt="IMG">
+					<img src="/logo/{{ $options['site_logo'] }}" alt="IMG">
 				</div>
 
-				<form method="POST" action="{{ route('register') }} class="login100-form validate-form">
+				<form method="POST" action="{{ route('register') }}" class="login100-form validate-form">
 					@csrf
 
 					<span class="login100-form-title">
-						ثبت نام در @isset($site_name) {{$site_name}} @else سایت @endisset
+						ثبت نام در @isset($options['site_name']) {{$options['site_name']}} @else سایت @endisset
 					</span>
 
 					<div class="wrap-input100 validate-input">
@@ -104,7 +104,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input">
-						<input type="password" placeholder="تکرار رمز عبور" class="input100 form-control{{ $errors->has('password-confirm') ? ' is-invalid' : '' }}" name="password-confirm" required>
+						<input type="password" placeholder="تکرار رمز عبور" class="input100 form-control{{ $errors->has('password-confirm') ? ' is-invalid' : '' }}" name="password_confirmation" required>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>

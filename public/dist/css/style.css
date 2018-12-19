@@ -4412,7 +4412,7 @@ div.colorpicker {
   border-radius: 0;
   box-shadow: none;
   color: #727272;
-  height: 50px;
+  min-height: 50px;
   padding-right: 10px;
   padding-top: 10px; }
   .bootstrap-tagsinput input {

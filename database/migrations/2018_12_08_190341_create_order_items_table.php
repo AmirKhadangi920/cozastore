@@ -16,13 +16,18 @@ class CreateOrderItemsTable extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->increments('id');
             $table->string('order_id', 8);
-            $table->foreign('order_id')->references('id')->on('orders');
+                $table->foreign('order_id')
+                        ->references('id')
+                        ->on('orders')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
+                        
             $table->string('variation_id', 8)->nullable();
-            $table->foreign('variation_id')
-                    ->references('id')
-                    ->on('product_variations')
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade');
+                $table->foreign('variation_id')
+                        ->references('id')
+                        ->on('product_variations')
+                        ->onDelete('cascade')
+                        ->onUpdate('cascade');
 
             $table->integer('count')->unsigned();
             $table->integer('price')->unsigned()->default(0);

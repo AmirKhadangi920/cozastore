@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use App\Option;
-use App\Product;
+use App\Models\Option;
+use App\Models\Product;
 use Cookie;
 use App\Traits\Init;
 
@@ -44,18 +44,8 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        $options = Option::select('name', 'value')->whereIn('name',
-            ['site_name', 'site_logo'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-            }
-        }
-
         return view('auth.login', [
-            'site_name'=> $site_name,
-            'site_logo'=> $site_logo,
+            'options'=> $this->options(['site_name', 'site_logo'])
         ]);
     }
 }

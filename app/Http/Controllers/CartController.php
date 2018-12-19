@@ -16,37 +16,18 @@ class CartController extends Controller
 {
     use Init;
 
-    public function index (Request $request)
+    public function index ()
     {
         $this -> check_cart();
 
-        $options = Option::select('name', 'value')->whereIn('name', 
-            ['site_name', 'site_description', 'site_logo', 'social_link', 'dollar_cost', 'shipping_cost'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'slider': $slider = json_decode($option['value'], true); break;
-                case 'posters': $posters = json_decode($option['value'], true); break;
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_description': $site_description = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-                case 'dollar_cost': $dollar_cost = $option['value']; break;
-                case 'social_link': $social_link = json_decode($option['value'], true); break;
-                case 'shipping_cost': $shipping_cost = json_decode($option['value'], true); break;
-            }
-        }
-
-
-
         return view('store.shoping-cart', [
             'cart_products' => $this -> Get_Cart_items(),
-            'dollar_cost' => $dollar_cost,
-            'page_title' => 'سبد خرید',
-            'site_name' => $site_name,
-            'site_description' => $site_description,
-            'shipping_cost' => $shipping_cost,
-            'site_logo' => $site_logo,
             'top_groups' => $this -> Get_sub_groups(),
-            'social_link' => $social_link,
+            'page_title' => 'سبد خرید',
+            'options' => $this->options([
+                'site_name', 'site_description', 'site_logo',
+                'social_link', 'dollar_cost', 'shipping_cost'
+            ])
         ]);
     }
 

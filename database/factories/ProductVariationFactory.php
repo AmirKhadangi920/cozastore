@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\ProductVariation::class, function (Faker $faker) {
+$factory->define(App\Models\ProductVariation::class, function (Faker $faker) {
     return [
         'id' => $faker->numberBetween(10000000, 99999999),
         'price' => $faker->numberBetween(1000, 20000000),

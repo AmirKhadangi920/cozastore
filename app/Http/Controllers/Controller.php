@@ -6,7 +6,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Option;
+use App\Models\Option;
+use Cookie;
 
 class Controller extends BaseController
 {
@@ -19,7 +20,7 @@ class Controller extends BaseController
             ->get()
             ->keyBy('name')
             ->map(function ($item) {
-                if ( in_array($item['name'] , [ 'slider', 'posters', 'social_link' ]) )
+                if ( in_array($item['name'] , [ 'slider', 'posters', 'social_link', 'shipping_cost' ]) )
                 {
                     return json_decode( $item['value'] );
                 }

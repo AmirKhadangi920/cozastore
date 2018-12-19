@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\panel;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProduct;
 use App\Http\Requests\AddReview;
 use Illuminate\Support\Facades\DB;
 use Cookie;
-use App\Group;
-use App\Feature;
-use App\Option;
-use App\Product;
-use App\ProductFeatures;
-use App\Review;
-use App\Specifications;
+use App\Models\Feature;
+use App\Models\Option;
+use App\Models\Product;
+use App\Models\ProductFeatures;
+use App\Models\Review;
+use App\Models\Category;
 use Image;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -22,43 +22,21 @@ class ProductController extends Controller
 {
     public function index ()
     {
-        $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo', 'label', 'stock_inventory')
-            ->orderBy('created_at', 'DESC')->get();
-
-        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-            }
-        }
-
         return view('panel.products', [
-            'products' => $products,
+            'products' => Product::productCard(),
             'page_name' => 'products',
             'page_title' => 'محصولات',
-            'site_name'=> $site_name,
-            'site_logo'=> $site_logo
+            'options'=> $this->options(['site_name', 'site_logo'])
         ]);
     }
     
     public function add ()
     {
-        $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
-        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-            }
-        }
-
         return view('panel.add-product', [
-            'groups' => $groups,
+            'groups' => Category::first_levels(),
             'page_name' => 'add_product',
             'page_title' => 'ثبت محصول',
-            'site_name'=> $site_name,
-            'site_logo'=> $site_logo,
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
@@ -86,8 +64,6 @@ class ProductController extends Controller
         }
 
         if ($req->aparat_video) $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
-        // Get a random 8 chars name for this product
-        $pro_id = substr(md5(time()), 0, 8);
 
         if ($req -> parent) {
             $temp = Group::select('parent')->where('id', $req->parent)->get();
@@ -101,66 +77,31 @@ class ProductController extends Controller
         }
         
         $data = array_merge( $req->all(), [
-            'pro_id' => $pro_id,
+            'id' => substr(md5(time()), 0, 8),
             'category' => $req->parent,
             'offer' => ($req->offer == null)? 0 : $req->offer,
             'image' => ( isset($images[0]) ) ? $images[0] : null,
             'gallery' => json_encode($images),
             'stock_inventory' => ($req->stock_inventory == null)? 0 : $req->stock_inventory,
-            'specifications' => json_encode($req->specs),
         ]);
         unset($data['parent']);
         // Insert product details to database
         $product = Product::create( $data );
 
         return redirect()->action(
-            'ProductController@edit', ['id' => $product->pro_id]
+            'ProductController@edit', ['id' => $product->id]
         )->with('message', 'محصول '.$product->name.' با موفقیت ثبت شد .');
     }
 
     public function edit ($id)
     {
-        if (!Product::find($id))
-        {
-            return redirect()->back();
-        }
-
-        $product = DB::select("SELECT `pro_id`, `category`, `categories`.`title`, `products`.`name`, `code`,
-            `short_description`, `aparat_video`, `label`, `price`, `unit`, `offer`, `colors`, `status`,
-            `full_description`, `keywords`, `gallery`, `stock_inventory`,
-            `spec_table`, `specifications`, `advantages`, `disadvantages` 
-            FROM `products`
-            LEFT JOIN `categories` ON `products`.`category` = `categories`.`id` WHERE `pro_id` = ?", [$id]);
-
-        if ($product == []) { return abort(404); }
-
-        $spec_table = (object) ['specs' => []];
-        if ($product[0] -> spec_table)
-        {
-            $spec_table = Specifications::find($product[0] -> spec_table);
-    
-            if ($spec_table == []) { return abort(404); }
-        }
-
-        $groups = Group::select('id', 'title', 'description')->where('parent', null)->get();
-
-        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-            }
-        }
-
         return view('panel.add-product', [
-            'groups' => $groups,
-            'product' => $product[0],
-            'edit' => true,
-            'spec_table' => $spec_table -> specs,
-            'page_name' => 'products',
-            'page_title' => 'ویرایش محصول ' . $product[0]->name,
-            'site_name'=> $site_name,
-            'site_logo'=> $site_logo
+            'groups'        => Category::first_levels(),
+            'product'       => Product::productInfo($id),
+            'edit'          => true,
+            'page_name'     => 'products',
+            'page_title'    => 'ویرایش محصول ',
+            'options'       => $this->options(['site_name', 'site_logo']) 
         ]);
     }
 
@@ -235,9 +176,9 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'محصول '.$req->name.' با موفقیت بروزرسانی شد .');
     }
 
-    public function delete ($id, $title)
+    public function delete (Product $id, $title)
     {
-        Product::destroy($id);
+        $id->delete();
         return redirect()->back()->with('message', 'محصول '.$title.' با موفقیت حذف شد .');
     }
 

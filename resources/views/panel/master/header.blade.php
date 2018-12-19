@@ -5,7 +5,7 @@
         <div class="nav-header pull-right">
             <div class="logo-wrap">
                 <a href="/panel/index">
-                    <span class="brand-img brand-text"><img src="{{ asset('logo/'.$site_logo) }}" alt="brand"/></span>
+                    <span class="brand-img brand-text"><img src="{{ asset('logo/'.$options['site_logo']) }}" alt="brand"/></span>
                 </a>
             </div>
         </div>	

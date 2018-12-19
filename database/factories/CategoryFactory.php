@@ -2,7 +2,7 @@
 
 use Faker\Generator as FakerEng;
 
-$factory->define(App\Category::class, function (FakerEng $faker) {
+$factory->define(App\Models\Category::class, function (FakerEng $faker) {
     return [
         'title' => Faker::fullName(),
         'description' => Faker::sentence(),
