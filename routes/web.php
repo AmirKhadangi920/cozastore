@@ -58,6 +58,8 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     Route::resource('product', 'ProductController')->except([ 'show' ]);
     Route::get('/product/search/{query?}', 'ProductController@search');
 
+    Route::resource('specification', 'Spec\SpecificationController')->except([ 'create', 'show' ]);
+    
     Route::resource('color', 'ColorController')->except([ 'create', 'show' ]);
     Route::resource('warranty', 'WarrantyController')->except([ 'create', 'show' ]);
     Route::resource('brand', 'BrandController')->except([ 'create', 'show' ]);

@@ -179,6 +179,9 @@
                 <li>
                     <a @if($page_name == 'color') class="active-page" @endif href="/panel/color"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>رنگ بندی محصولات</a>
                 </li>
+                <li>
+                    <a @if($page_name == 'specification') class="active-page" @endif href="/panel/specification"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>جداول مشخصات فنی</a>
+                </li>
             </ul>
         </li>
         <li>
