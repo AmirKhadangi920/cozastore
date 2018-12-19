@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers\panel;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateProduct;
-use App\Http\Requests\AddReview;
-use Illuminate\Support\Facades\DB;
-use Cookie;
-use App\Models\Feature;
-use App\Models\Option;
-use App\Models\Product;
-use App\Models\ProductFeatures;
-use App\Models\Review;
+use App\models\Product;
 use App\Models\Category;
+use App\Http\Requests\ProductRequest;
+use App\Http\Controllers\Controller;
+use Cookie;
 use Image;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index ()
+    /**
+     * Display a listing of the products.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
         return view('panel.products', [
             'products' => Product::productCard(),
@@ -29,8 +25,13 @@ class ProductController extends Controller
             'options'=> $this->options(['site_name', 'site_logo'])
         ]);
     }
-    
-    public function add ()
+
+    /**
+     * Show the form for creating a new product.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
         return view('panel.add-product', [
             'groups' => Category::first_levels(),
@@ -40,7 +41,13 @@ class ProductController extends Controller
         ]);
     }
 
-    public function create (CreateProduct $req)
+    /**
+     * Store a newly created product in storage.
+     *
+     * @param  \App\Http\Requests\ProductRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(ProductRequest $request)
     {
         $images = [];
 
@@ -93,7 +100,25 @@ class ProductController extends Controller
         )->with('message', 'محصول '.$product->name.' با موفقیت ثبت شد .');
     }
 
-    public function edit ($id)
+    /**
+     * Display the specified product.
+     *
+     * @param  \App\models\Product  $product
+     * @return \Illuminate\Http\Response
+     * 
+     * public function show(Product $product)
+     * {
+     *    //
+     * }
+     */
+
+    /**
+     * Show the form for editing the specified product.
+     *
+     * @param  \App\models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Product $product)
     {
         return view('panel.add-product', [
             'groups'        => Category::first_levels(),
@@ -105,7 +130,14 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update (CreateProduct $req)
+    /**
+     * Update the specified product in storage.
+     *
+     * @param  \App\Http\Requests\ProductRequest  $request
+     * @param  \App\models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function update(ProductRequest $request, Product $product)
     {
         $images = json_decode(Product::find($req->id)->gallery, true);
         $deleted = json_decode($req -> deleted_images, true);
@@ -176,15 +208,26 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'محصول '.$req->name.' با موفقیت بروزرسانی شد .');
     }
 
-    public function delete (Product $id, $title)
+    /**
+     * Remove the specified product from storage.
+     *
+     * @param  \App\models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Product $product)
     {
         $id->delete();
-        return redirect()->back()->with('message', 'محصول '.$title.' با موفقیت حذف شد .');
+        return redirect()->back()->with('message', 'محصول '.$product->title.' با موفقیت حذف شد .');
     }
 
+    /**
+     * Show the filtered products from storage.
+     *
+     * @param  String  $query
+     * @return \Illuminate\Http\Response
+     */
     public function search ($query = '')
     {
-
         $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
             ->orderBy('created_at', 'DESC');
         if ($query != '') {
@@ -212,6 +255,12 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * Show the filtered products from storage.
+     *
+     * @param  String  $id
+     * @return Array of parents categories
+     */
     public function breadcrumb ($id)
     {
         function get_parents (&$output, $p, $i = 0) {
