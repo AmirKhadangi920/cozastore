@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
-use App\Brand;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +16,10 @@ class BrandController extends Controller
     public function index()
     {
         return view('panel.brand', [
-            'brands' => Brand::all()
+            'brands' => Brand::latest()->get(),
+            'page_name' => 'brand',
+            'page_title' => 'ثبت برند',
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
@@ -40,7 +43,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         Brand::create( $request->all() );
-        return redirect()->back()->with('message', "برند {$request->name} با موفقیت ثبت شد");
+        return redirect()->back()->with('message', "برند {$request->title} با موفقیت ثبت شد");
     }
 
     /**
@@ -64,8 +67,11 @@ class BrandController extends Controller
     public function edit(Brand $brand)
     {
         return view('panel.brand', [
-            'brands' => Brand::all(),
-            'brand' => $brand
+            'brands' => Brand::latest()->get(),
+            'brand' => $brand,
+            'page_name' => 'brand',
+            'page_title' => "ویرایش برند {$brand->title}",
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
@@ -79,7 +85,7 @@ class BrandController extends Controller
     public function update(Request $request, Brand $brand)
     {
         $brand->update( $request->all() );
-        return redirect()->back()->with('message', "برند {$brand->name} با موفقیت بروز رسانی شد");
+        return redirect()->back()->with('message', "برند {$brand->title} با موفقیت بروز رسانی شد");
     }
 
     /**
@@ -91,6 +97,6 @@ class BrandController extends Controller
     public function destroy(Brand $brand)
     {
         $brand->delete();
-        return redirect()->back()->with('message', "برند {$brand->name} با موفقیت حذف شد");
+        return redirect( route('brand.index') )->with('message', "برند {$brand->title} با موفقیت حذف شد");
     }
 }
