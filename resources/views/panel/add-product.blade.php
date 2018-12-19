@@ -228,9 +228,9 @@
 															<div class="input-group">
 																<select name="brand" class="form-control select2 categories">
 																	<option value="">بدون برند</option>
-																	<option value="">Samsung</option>
-																	<option value="">LG</option>
-																	<option value="">Sony</option>
+																	@foreach ($brands as $item)
+																	<option value="{{ $item->id }}">{{ $item->title }}</option>
+																	@endforeach
 																</select>
 																<div class="input-group-addon"><i class="ti-apple"></i></div>
 															</div>
@@ -536,11 +536,9 @@
 															<div class="input-group">
 																<select name="brand" class="form-control select2 categories">
 																	<option value="">بدون رنگ</option>
-																	<option value="">قرمز</option>
-																	<option value="">آبی</option>
-																	<option value="">زرد</option>
-																	<option value="">بنفش</option>
-																	<option value="">آبی</option>
+																	@foreach ($colors as $item)
+																	<option value="{{ $item->value }}">{{ $item->name }}</option>
+																	@endforeach
 																</select>
 																<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
 															</div>
@@ -557,10 +555,9 @@
 															<div class="input-group">
 																<select name="brand" class="form-control select2 categories">
 																	<option value="">بدون گارانتی</option>
-																	<option value="">آواژنگ</option>
-																	<option value="">یکساله قدیمی</option>
-																	<option value="">کارت طلایی</option>
-																	<option value="">مدل جدید</option>
+																	@foreach ($warranties as $item)
+																	<option value="{{ $item->id }}">{{ $item->title }} {{ $item->expire }}</option>
+																	@endforeach
 																</select>
 																<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
 															</div>

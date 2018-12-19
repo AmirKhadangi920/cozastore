@@ -4,6 +4,9 @@ namespace App\Http\Controllers\panel;
 
 use App\models\Product;
 use App\Models\Category;
+use App\Models\Color;
+use App\Models\Brand;
+use App\Models\Warranty;
 use App\Http\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
 use Cookie;
@@ -35,6 +38,9 @@ class ProductController extends Controller
     {
         return view('panel.add-product', [
             'groups' => Category::first_levels(),
+            'colors' => Color::latest()->get(),
+            'brands' => Brand::latest()->get(),
+            'warranties' => Warranty::latest()->get(),
             'page_name' => 'add_product',
             'page_title' => 'ثبت محصول',
             'options' => $this->options(['site_name', 'site_logo'])
