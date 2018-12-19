@@ -4,13 +4,10 @@
 	<?php $styles = [
 		// select2 CSS
 		'vendors/bower_components/select2/dist/css/select2.min.css',
-		
 		// Bootstrap Dropify CSS
-		'vendors/bower_components/dropify/dist/css/dropify.min.css',
-						
+		'vendors/bower_components/dropify/dist/css/dropify.min.css',			
 		//alerts CSS
 		'vendors/bower_components/sweetalert/dist/sweetalert.css',
-		
 		// Custom CSS
 		'dist/css/style.css',
 	]; ?>
@@ -112,7 +109,7 @@
 													<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
 												</div>
 											</div>
-										</div>						
+										</div>
 										@endif
 										<!--/span-->
 										

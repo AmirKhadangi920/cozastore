@@ -343,12 +343,8 @@
 																	</div>
 																	<div class="panel-wrapper collapse in">
 																		<div class="panel-body">
-																			<div class="">
-																				<form action="#" class="dropzone" id="my-awesome-dropzone">
-																					<div class="fallback">
-																						<input name="file" type="file" multiple />
-																					</div>
-																				</form>
+																			<div id="dropzone">
+																				<input name="file" type="file" multiple />
 																			</div>
 																		</div>
 																	</div>
@@ -657,5 +653,6 @@
 			});
 		@endisset
 
+		$("#dropzone").dropzone({ url: "/file/post" });
 	</script>
 @endsection
