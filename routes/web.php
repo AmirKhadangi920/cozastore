@@ -53,17 +53,10 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     // Get Specification Route
     Route::get('/specs/get/{id}', 'SpecsController@get'); // Send Data for edit exiting Feature
     
+    
     // Panel Products Route
-    Route::group(['prefix' => 'products'], function () {
-
-        Route::get('/', 'ProductController@index');
-        Route::get('/add', 'ProductController@add');
-        Route::post('/new', 'ProductController@create');
-        Route::get('/edit/{id}', 'ProductController@edit');
-        Route::post('/update', 'ProductController@update');
-        Route::get('/delete/{id}/{title}', 'ProductController@delete');
-        Route::get('/search/{query?}', 'ProductController@search');
-    });
+    Route::resource('product', 'ProductController')->except([ 'show' ]);
+    Route::get('/product/search/{query?}', 'ProductController@search');
 
     Route::resource('color', 'ColorController')->except([ 'create', 'show' ]);
     Route::resource('warranty', 'WarrantyController')->except([ 'create', 'show' ]);

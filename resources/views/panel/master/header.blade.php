@@ -124,7 +124,7 @@
                 <a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><span class="user-auth-name inline-block">{{Auth::user()->first_name.' '.Auth::user()->last_name}} &nbsp;<span class="ti-angle-down"></span></span></a>
                 <ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                     <li>
-                        <a href="/panel/products/add"><i class="zmdi zmdi-plus"></i><span>ثبت محصول</span></a>
+                        <a href="/panel/product/create"><i class="zmdi zmdi-plus"></i><span>ثبت محصول</span></a>
                     </li>
                     <li>
                         <a href="/panel/setting"><i class="zmdi zmdi-settings"></i><span>تنظیمات</span></a>
@@ -162,7 +162,7 @@
             <a @if($page_name == 'group' || $page_name == 'feature' || $page_name == 'add_product' || $page_name == 'products') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="ecom_dr" class="collapse collapse-level-1">
                 <li>
-                    <a @if($page_name == 'add_product') class="active-page" @endif href="/panel/products/add"><i class="fa fa-cart-plus ml-5" aria-hidden="true"></i>افزودن محصول</a>
+                    <a @if($page_name == 'add_product') class="active-page" @endif href="/panel/product/create"><i class="fa fa-cart-plus ml-5" aria-hidden="true"></i>افزودن محصول</a>
                 </li>
                 <li>
                     <a @if($page_name == 'products') class="active-page" @endif href="/panel/products"><i class="fa fa-shopping-cart ml-5" aria-hidden="true"></i>لیست محصولات</a>
