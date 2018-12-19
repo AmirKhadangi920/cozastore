@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
-use App\Warranty;
+use App\Models\Warranty;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +16,10 @@ class WarrantyController extends Controller
     public function index()
     {
         return view('panel.warranty', [
-            'warranties' => Warranty::all()
+            'warranties' => Warranty::latest()->get(),
+            'page_name' => 'warranty',
+            'page_title' => "گارانتی ها",
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
@@ -64,8 +67,11 @@ class WarrantyController extends Controller
     public function edit(Warranty $warranty)
     {
         return view('panel.warranty', [
-            'warranties' => Warranty::all(),
-            'warranty' => $warranty
+            'warranties' => Warranty::latest()->get(),
+            'warranty' => $warranty,
+            'page_name' => 'warranty',
+            'page_title' => "ویرایش گارانتی {$warranty->title}",
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
@@ -79,7 +85,7 @@ class WarrantyController extends Controller
     public function update(Request $request, Warranty $warranty)
     {
         $warranty->update( $request->all() );
-        return redirect()->back()->with('message', "گارانتی {$warranty->name} با موفقیت بروز رسانی شد");
+        return redirect()->back()->with('message', "گارانتی {$warranty->title} با موفقیت بروز رسانی شد");
     }
 
     /**
@@ -91,6 +97,6 @@ class WarrantyController extends Controller
     public function destroy(Warranty $warranty)
     {
         $warranty->delete();
-        return redirect()->back()->with('message', "گارانتی {$warranty->name} با موفقیت حذف شد");
+        return redirect()->back()->with('message', "گارانتی {$warranty->title} با موفقیت حذف شد");
     }
 }
