@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
-use App\Color;
+use App\Models\Color;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +16,10 @@ class ColorController extends Controller
     public function index()
     {
         return view('panel.color', [
-            'colors' => Color::all()
+            'colors' => Color::all(),
+            'page_name' => 'color',
+            'page_title' => 'ثبت رنگ',
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
@@ -65,7 +68,10 @@ class ColorController extends Controller
     {
         return view('panel.color', [
             'colors' => Color::all(),
-            'color' => $color
+            'color' => $color,
+            'page_name' => 'color',
+            'page_title' => "ویرایش رنگ {$color->name}",
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
