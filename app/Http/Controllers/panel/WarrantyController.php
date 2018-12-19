@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\panel;
 
 use App\Models\Warranty;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\WarrantyRequest;
 
 class WarrantyController extends Controller
 {
@@ -37,10 +37,10 @@ class WarrantyController extends Controller
     /**
      * Store a newly created Warranty in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\WarrantyRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(WarrantyRequest $request)
     {
         Warranty::create( $request->all() );
         return redirect()->back()->with('message', "گارانتی {$request->name} با موفقیت ثبت شد");
@@ -78,11 +78,11 @@ class WarrantyController extends Controller
     /**
      * Update the specified Warranty in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\WarrantyRequest  $request
      * @param  \App\Warranty  $warranty
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Warranty $warranty)
+    public function update(WarrantyRequest $request, Warranty $warranty)
     {
         $warranty->update( $request->all() );
         return redirect()->back()->with('message', "گارانتی {$warranty->title} با موفقیت بروز رسانی شد");

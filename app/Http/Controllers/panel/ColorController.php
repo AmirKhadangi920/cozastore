@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\panel;
 
 use App\Models\Color;
-use Illuminate\Http\Request;
+use App\Http\Requests\ColorRequest;
 use App\Http\Controllers\Controller;
 
 class ColorController extends Controller
@@ -37,10 +37,10 @@ class ColorController extends Controller
     /**
      * Store a newly created color in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ColorRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ColorRequest $request)
     {
         Color::create( $request->all() );
         return redirect()->back()->with('message', "رنگ {$request->name} با موفقیت ثبت شد");
@@ -78,11 +78,11 @@ class ColorController extends Controller
     /**
      * Update the specified color in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ColorRequest  $request
      * @param  \App\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Color $color)
+    public function update(ColorRequest $request, Color $color)
     {
         $color->update( $request->all() );
         return redirect()->back()->with('message', "رنگ {$color->name} با موفقیت بروز رسانی شد");

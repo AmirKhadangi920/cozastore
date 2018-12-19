@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\panel;
 
 use App\Models\Brand;
-use Illuminate\Http\Request;
+use App\Http\Requests\BrandRequest;
 use App\Http\Controllers\Controller;
 
 class BrandController extends Controller
@@ -37,10 +37,10 @@ class BrandController extends Controller
     /**
      * Store a newly created brand in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\BrandRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
         Brand::create( $request->all() );
         return redirect()->back()->with('message', "برند {$request->title} با موفقیت ثبت شد");
@@ -78,11 +78,11 @@ class BrandController extends Controller
     /**
      * Update the specified brand in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\BrandRequest  $request
      * @param  \App\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(BrandRequest $request, Brand $brand)
     {
         $brand->update( $request->all() );
         return redirect()->back()->with('message', "برند {$brand->title} با موفقیت بروز رسانی شد");
