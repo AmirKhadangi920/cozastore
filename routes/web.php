@@ -83,7 +83,7 @@ Route::get('/cart', 'CartController@index');
 Route::post('/cart/pay', 'CartController@pay')->middleware('auth');
 Route::get('/cart/remove/{id}/{title}', 'CartController@remove');
 Route::get('/cart/add/{id}/{title}/{count}/{color?}', 'CartController@add');
-Route::get('/orders', 'InvoiceController@user_orders');
+Route::get('/orders', 'panel\InvoiceController@user_orders');
 
 Route::get('/verify_payment', 'CartController@verify_payment');
 
