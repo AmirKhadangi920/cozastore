@@ -161,7 +161,7 @@
 												<td>{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}</td>
 												<td>
 													<form action="{{ route('specification.destroy', ['specification' => $item->id]) }}" method="POST">
-														<a href="{{ route('specification.edit', ['specification' => $item->id]) }}" class="btn btn-warning"><i class="icon ti-pencil"></i> ویرایش</a>
+														<a href="{{ route('header.index', ['specification' => $item->id]) }}" class="btn btn-warning"><i class="icon ti-pencil"></i> ویرایش</a>
 														<a href="{{ route('specification.edit', ['specification' => $item->id]) }}" class="btn btn-info"><i class="icon ti-layout-grid2-alt"></i> تغییر گروه</a>
 														<button type="submit" itemid="{{ $item->id }}" class="btn btn-danger delete-item"><i class="icon ti-close"></i> حذف</button>
 														
