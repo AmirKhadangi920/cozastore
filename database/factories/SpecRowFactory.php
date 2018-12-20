@@ -3,7 +3,6 @@
 use Faker\Generator as Faker;
 
 $factory->define(App\Models\Spec\SpecRow::class, function (Faker $faker) {
-    $types = [ 'string', 'integer', 'array', 'float' ];
     $multiple = $faker->numberBetween(0, 1);
 
     return [
@@ -13,7 +12,6 @@ $factory->define(App\Models\Spec\SpecRow::class, function (Faker $faker) {
         'multiple' => $multiple,
         'requierd' => $faker->numberBetween(0, 1),
         'min' => $faker->numberBetween(0, 8),
-        'max' => $faker->numberBetween(30, 150),
-        'type' => $types[$faker->numberBetween(0, 3)]
+        'max' => $faker->numberBetween(30, 150)
     ];
 });

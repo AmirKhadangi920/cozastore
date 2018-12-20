@@ -29,7 +29,6 @@ class CreateSpecRowsTable extends Migration
             $table->boolean('requierd')->default(0);
             $table->smallInteger('min')->default(0);
             $table->integer('max')->default(null);
-            $table->string('type', 10)->default('string');
             $table->timestamps();
         });
     }
