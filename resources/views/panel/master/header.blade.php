@@ -159,33 +159,57 @@
             <a @if($page_name == 'main') class="active" @endif href="/panel"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-bars ml-5" aria-hidden="true"></i>داشبورد</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if($page_name == 'group' || $page_name == 'feature' || $page_name == 'add_product' || $page_name == 'products') class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <a @if( in_array($page_name, ['group', 'warranty', 'brand', 'color', 'specification']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="ecom_dr" class="collapse collapse-level-1">
                 <li>
-                    <a @if($page_name == 'add_product') class="active-page" @endif href="/panel/product/create"><i class="fa fa-cart-plus ml-5" aria-hidden="true"></i>افزودن محصول</a>
+                    <a @if($page_name == 'group') class="active-page" @endif href="/panel/group"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گروه بندی</a>
                 </li>
                 <li>
-                    <a @if($page_name == 'products') class="active-page" @endif href="/panel/products"><i class="fa fa-shopping-cart ml-5" aria-hidden="true"></i>لیست محصولات</a>
+                    <a @if($page_name == 'warranty') class="active-page" @endif href="/panel/warranty"><i class="fa fa-university ml-5" aria-hidden="true"></i>گارانتی</a>
                 </li>
                 <li>
-                    <a @if($page_name == 'group') class="active-page" @endif href="/panel/group"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گروه بندی محصولات</a>
+                    <a @if($page_name == 'brand') class="active-page" @endif href="/panel/brand"><i class="fa fa-apple ml-5" aria-hidden="true"></i>برند</a>
                 </li>
                 <li>
-                    <a @if($page_name == 'warranty') class="active-page" @endif href="/panel/warranty"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گارانتی محصولات</a>
+                    <a @if($page_name == 'color') class="active-page" @endif href="/panel/color"><i class="fa fa-paint-brush ml-5" aria-hidden="true"></i>رنگ بندی</a>
                 </li>
                 <li>
-                    <a @if($page_name == 'brand') class="active-page" @endif href="/panel/brand"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>برند محصولات</a>
-                </li>
-                <li>
-                    <a @if($page_name == 'color') class="active-page" @endif href="/panel/color"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>رنگ بندی محصولات</a>
-                </li>
-                <li>
-                    <a @if($page_name == 'specification') class="active-page" @endif href="/panel/specification"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>جداول مشخصات فنی</a>
+                    <a @if($page_name == 'specification') class="active-page" @endif href="/panel/specification"><i class="fa fa-table ml-5" aria-hidden="true"></i>جداول مشخصات فنی</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a @if($page_name == 'invoices') class="active" @endif href="/panel/invoices"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-files-o ml-5" aria-hidden="true"></i>سفارشات</span></div><div class="clearfix"></div></a>
+            <a @if( in_array($page_name, ['add_product', 'products'] ) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#product_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-th ml-5" aria-hidden="true"></i>محصولات</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <ul id="product_dr" class="collapse collapse-level-1">
+                <li>
+                    <a @if($page_name == 'add_product') class="active-page" @endif href="/panel/product/create"><i class="fa fa-cart-plus ml-5" aria-hidden="true"></i>افزودن محصول</a>
+                </li>
+                <li>
+                    <a @if($page_name == 'products') class="active-page" @endif href="/panel/product"><i class="fa fa-shopping-cart ml-5" aria-hidden="true"></i>لیست محصولات</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a @if( in_array($page_name, ['invoices', 'discount_codes']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#invo_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-files-o ml-5" aria-hidden="true"></i>سفارشات</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <ul id="invo_dr" class="collapse collapse-level-1">
+                <li>
+                    <a @if($page_name == 'invoices') class="active-page" @endif href="/panel/invoices"><i class="fa fa-sticky-note-o ml-5" aria-hidden="true"></i>لیست سفارشات</a>
+                </li>
+                <li>
+                    <a @if($page_name == 'discount_codes') class="active-page" @endif href="/panel/discount_codes"><i class="fa fa-code ml-5" aria-hidden="true"></i>کدهای تخفیف</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a @if( in_array($page_name, ['blog', 'add_blog']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#blog_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-newspaper-o ml-5" aria-hidden="true"></i>وبلاگ</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <ul id="blog_dr" class="collapse collapse-level-1">
+                <li>
+                    <a @if($page_name == 'add_blog') class="active-page" @endif href="/panel/blog/create"><i class="fa fa-file-text-o ml-5" aria-hidden="true"></i>افزودن پست</a>
+                </li>
+                <li>
+                    <a @if($page_name == 'blog') class="active-page" @endif href="/panel/blog"><i class="fa fa-newspaper-o ml-5" aria-hidden="true"></i>مشاهده پست ها</a>
+                </li>
+            </ul>
         </li>
         <li>
             <a @if($page_name == 'setting') class="active" @endif href="/panel/setting"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-sliders ml-5" aria-hidden="true"></i>تنظیمات</span></div><div class="clearfix"></div></a>
