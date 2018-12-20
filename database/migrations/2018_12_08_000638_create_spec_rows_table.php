@@ -26,7 +26,7 @@ class CreateSpecRowsTable extends Migration
             $table->string('label', 50)->nullable();
             $table->mediumText('values')->nullable();
             $table->boolean('multiple')->default(0);
-            $table->boolean('requierd')->default(0);
+            $table->boolean('required')->default(0);
             $table->smallInteger('min')->default(0);
             $table->integer('max')->default(null);
             $table->timestamps();
