@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SpecHeader extends Model
 {
+    protected $fillable = [ 'title', 'description' ];
+
     public function specRows ()
     {
         return $this->hasMany(SpecRow::class);

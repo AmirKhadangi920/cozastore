@@ -17,7 +17,13 @@ class SpecHeaderController extends Controller
      */
     public function index(Spec $specification)
     {
-        return $specification->specHeaders()->get();
+        return view('panel.spec.header', [
+            'specification' => $specification,
+            'headers' => $specification->specHeaders()->get(),
+            'page_name' => 'specification',
+            'page_title' => "عناوین جدول {$specification->category()->get()[0]->title}",
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
     }
 
     /**
@@ -25,11 +31,12 @@ class SpecHeaderController extends Controller
      *
      * @param  \App\models\spec\Spec  $specification
      * @return \Illuminate\Http\Response
+     * 
+     * public function create(Spec $specification)
+     * {
+     *   //
+     * }
      */
-    public function create(Spec $specification)
-    {
-        //
-    }
 
     /**
      * Store a newly created specification table header in storage.
@@ -40,7 +47,9 @@ class SpecHeaderController extends Controller
      */
     public function store(Request $request, Spec $specification)
     {
-        //
+        $specification->specHeaders()->create( $request->all() );
+        return redirect()->back()->with('message', "عنوان {$request->title} برای جدول 
+                    {$specification->category()->get()[0]->title} با موفقیت ثبت شد");
     }
 
     /**
@@ -49,11 +58,12 @@ class SpecHeaderController extends Controller
      * @param  \App\models\spec\Spec  $specification
      * @param  \App\models\spec\SpecHeader  $header
      * @return \Illuminate\Http\Response
+     * 
+     * public function show(Spec $specification, SpecHeader $header)
+     * {
+     *    //
+     * }
      */
-    public function show(Spec $specification, SpecHeader $header)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified specification table header.
@@ -64,7 +74,14 @@ class SpecHeaderController extends Controller
      */
     public function edit(Spec $specification, SpecHeader $header)
     {
-        
+        return view('panel.spec.header', [
+            'specification' => $specification,
+            'headers' => $specification->specHeaders()->get(),
+            'header' => $header,
+            'page_name' => 'specification',
+            'page_title' => "ویرایش {$header->title}",
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
     }
 
     /**
@@ -77,7 +94,9 @@ class SpecHeaderController extends Controller
      */
     public function update(Request $request, Spec $specification, SpecHeader $header)
     {
-        //
+        $header->update( $request->all() );
+        return redirect()->back()->with('message', "عنوان {$header->title} در جدول 
+                    {$specification->category()->get()[0]->title} با موفقیت بروزرسانی شد");
     }
 
     /**
@@ -89,6 +108,8 @@ class SpecHeaderController extends Controller
      */
     public function destroy(Spec $specification, SpecHeader $header)
     {
-        //
+        $header->delete();
+        return redirect()->back()->with('message', "عنوان {$header->title} در جدول 
+                    {$specification->category()->get()[0]->title} با موفقیت حذف شد");
     }
 }
