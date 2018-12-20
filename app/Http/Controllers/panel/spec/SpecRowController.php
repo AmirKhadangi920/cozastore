@@ -17,7 +17,13 @@ class SpecRowController extends Controller
      */
     public function index(SpecHeader $header)
     {
-        //
+        return view('panel.spec.row', [
+            'header' => $header,
+            'rows' => $header->specRows()->get(),
+            'page_name' => 'specification',
+            'page_title' => "سطر های عنوان {$header->title}",
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
     }
 
     /**
@@ -25,11 +31,12 @@ class SpecRowController extends Controller
      *
      * @param  \App\models\spec\SpecHeader  $header
      * @return \Illuminate\Http\Response
+     * 
+     * public function create(SpecHeader $header)
+     * {
+     *    //
+     * }
      */
-    public function create(SpecHeader $header)
-    {
-        //
-    }
 
     /**
      * Store a newly created specification table row in storage.
@@ -40,7 +47,11 @@ class SpecRowController extends Controller
      */
     public function store(Request $request, SpecHeader $header)
     {
-        //
+        $header->specRows()->create(array_merge($request->all(), [
+            'values' => explode(',', $request->values),
+        ]));
+        return redirect()->back()->with('message', "سطر {$request->title} برای عنوان 
+                    {$header->title} با موفقیت ثبت شد");
     }
 
     /**
@@ -49,22 +60,30 @@ class SpecRowController extends Controller
      * @param  \App\models\spec\SpecHeader  $header
      * @param  \App\models\spec\SpecRow  $specRow
      * @return \Illuminate\Http\Response
+     * 
+     * public function show(SpecHeader $header, SpecRow $specRow)
+     * {
+     *   //
+     * }
      */
-    public function show(SpecHeader $header, SpecRow $specRow)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified specification table row.
      *
      * @param  \App\models\spec\SpecHeader  $header
-     * @param  \App\models\spec\SpecRow  $specRow
+     * @param  \App\models\spec\SpecRow  $row
      * @return \Illuminate\Http\Response
      */
-    public function edit(SpecHeader $header, SpecRow $specRow)
+    public function edit(SpecHeader $header, SpecRow $row)
     {
-        //
+        return view('panel.spec.row', [
+            'header' => $header,
+            'rows' => $header->specRows()->get(),
+            'row' => $row,
+            'page_name' => 'specification',
+            'page_title' => "سطر های عنوان {$header->title}",
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
     }
 
     /**
@@ -72,23 +91,29 @@ class SpecRowController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\models\spec\SpecHeader  $header
-     * @param  \App\models\spec\SpecRow  $specRow
+     * @param  \App\models\spec\SpecRow  $row
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SpecHeader $header, SpecRow $specRow)
+    public function update(Request $request, SpecHeader $header, SpecRow $row)
     {
-        //
+        $row->update(array_merge($request->all(), [
+            'values' => explode(',', $request->values),
+        ]));
+        return redirect()->back()->with('message', "سطر {$row->title} در عنوان 
+                    {$header->title} با موفقیت بروزرسانی شد");
     }
 
     /**
      * Remove the specified specification table row from storage.
      *
      * @param  \App\models\spec\SpecHeader  $header
-     * @param  \App\models\spec\SpecRow  $specRow
+     * @param  \App\models\spec\SpecRow  $row
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SpecHeader $header, SpecRow $specRow)
+    public function destroy(SpecHeader $header, SpecRow $row)
     {
-        //
+        $row->delete();
+        return redirect()->back()->with('message', "سطر {$row->title} در عنوان 
+                    {$header->title} با موفقیت حذف شد");
     }
 }
