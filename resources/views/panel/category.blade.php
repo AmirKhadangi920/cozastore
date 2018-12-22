@@ -18,11 +18,19 @@
 
 	<style>
 	.group-card {
-		height: 100px;
+		height: 150px;
 		overflow: hidden;
 	}
 	.col-md-3 {
 		float: right;
+	}
+	.delete-item {
+		background: none;
+		border: none;
+		color: #181818;
+	}
+	img {
+		width: 100%;
 	}
 	</style>
 @endsection
@@ -35,14 +43,14 @@
 			<!-- Breadcrumb -->
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 				<h5 class="txt-dark">
-					@isset($edit) ویرایش گروه {{$title}} @else ثبت گروه جدید @endisset
+					@isset($category) ویرایش گروه {{$category->title}} @else ثبت گروه جدید @endisset
 				</h5>
 			</div>
 			
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					<li class="active">
-						<span>@isset($edit) ویرایش گروه {{$title}} @else ثبت گروه جدید @endisset</span>
+						<span>@isset($category) ویرایش گروه {{$category->title}} @else ثبت گروه جدید @endisset</span>
 					</li>
 					<li>فروشگاه</li>
 					<li>داشبورد</li>
@@ -59,7 +67,7 @@
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
-								<form action="@isset($edit) /panel/group/edit @else /panel/group/add @endisset" method="POST">
+								<form action="@isset($category) {{ route('category.update', ['category' => $category->id]) }} @else {{ route('category.store') }} @endisset" method="POST" enctype="multipart/form-data">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>مشخصات گروه</h6>
 									<hr class="light-grey-hr"/>
 									
@@ -80,72 +88,76 @@
 									</div>
 									
 									<div class="row">
-										<div class="@isset($edit) col-md-12 @else col-md-6 @endisset">
-											<div class="form-group">
-												<label class="control-label mb-10">نام گروه</label>
-												<div class="input-group">
-													<input type="text" name="title" id="firstName" @isset($selected) value="{{$selected[0] -> title}}" @else value="{{old('title')}}" @endisset class="form-control" placeholder="مثلا : تلفن همراه">
-													<div class="input-group-addon"><i class="ti-text"></i></div>
+										<div class="col-md-9">
+											<div class="@isset($category) col-md-12 @else col-md-6 @endisset">
+												<div class="form-group">
+													<label class="control-label mb-10">نام گروه</label>
+													<div class="input-group">
+														<input type="text" name="title" id="firstName" @isset($category) value="{{$category->title}}" @else value="{{old('title')}}" @endisset class="form-control" placeholder="مثلا : تلفن همراه">
+														<div class="input-group-addon"><i class="ti-text"></i></div>
+													</div>
+												</div>
+											</div>
+	
+											@if(!isset($category))
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label mb-10">گروه مادر</label>
+													<div class="input-group">
+														<select name="parent" class="form-control select2 categories">
+															@if (isset($category))
+															<option value="{{$id}}">زیر مجموعه گروه {{ $category->title }}</option>
+															@else
+															<option value="">ثبت به عنوان گروه اصلی</option>
+															@endif
+	
+															@foreach ($categories as $item)
+															<option value="{{ $item->id}}">{{$item->title}}</option>
+															@endforeach
+														</select>
+														<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
+													</div>
+												</div>
+											</div>
+											@endif
+											<!--/span-->
+											
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="control-label mb-10">توضیح کوتاه</label>
+													<div class="input-group">
+														<input type="text" name="description" id="firstName" 
+															@isset($category) value="{{$category->description}}" @else value="{{old('description')}}" @endisset class="form-control" 
+																	@if(isset($category) && empty($category->description))
+																	placeholder="هیچ توضیحی برای گروه '{{$category->title}}' ثبت نشده است !"
+																	@else 
+																	placeholder="یک توضیح یک خطی درباره گروه"
+																	@endif 
+																>
+														
+														<div class="input-group-addon"><i class="ti-comment-alt"></i></div>
+													</div>
 												</div>
 											</div>
 										</div>
 
-										@if(!isset($edit))
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label mb-10">گروه مادر</label>
-												<div class="input-group">
-													<select name="parent" class="form-control select2 categories">
-														@if (isset($title))
-														<option value="{{$id}}">زیر مجموعه گروه {{ $title }}</option>
-														@else
-														<option value="">ثبت به عنوان گروه اصلی</option>
-														@endif
-
-														@foreach ($groups as $group)
-														<option value="{{ $group->id}}">{{$group->title}}</option>
-														@endforeach
-													</select>
-													<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
-												</div>
-											</div>
-										</div>
-										@endif
-										<!--/span-->
-										
-										<div class="col-md-12">
-											<div class="form-group">
-												<label class="control-label mb-10">توضیح کوتاه</label>
-												<div class="input-group">
-													<input type="text" name="description" id="firstName" 
-														@isset($selected) value="{{$selected[0] -> description}}" @else value="{{old('description')}}" @endisset class="form-control" 
-																@if(isset($edit) && empty($selected[0]->description))
-																placeholder="هیچ توضیحی برای گروه '{{$title}}' ثبت نشده است !"
-																@else 
-																placeholder="یک توضیح یک خطی درباره گروه"
-																@endif 
-															>
-													
-													<div class="input-group-addon"><i class="ti-comment-alt"></i></div>
-												</div>
-											</div>
+										<div class="col-md-3">
+											<input type="file" name="avatar" id="category_avatar" class="dropify" data-show-remove="false" @isset($category) data-default-file="{{ $category->avatar }}" @endisset />
 										</div>
 									</div>
 
 									<hr class="light-grey-hr"/>
 									
 									<div class="form-actions">
-										<button class="btn @isset($edit) btn-warning {{$title}} @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
-											<span>@isset($edit) ویرایش گروه @else ثبت گروه @endisset</span>
+										<button class="btn @isset($category) btn-warning @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
+											<span>@isset($category) ویرایش گروه @else ثبت گروه @endisset</span>
 										</button>
 										<div class="clearfix"></div>
 									</div>
 
-									@isset($selected) 
-										<input type="hidden" value="{{ $selected[0] -> id}}" name="id" /> 
-									@endisset
-
 									@csrf
+									
+									@isset($category) @method('put') @endisset
 								</form>
 							</div>
 						</div>
@@ -165,15 +177,15 @@
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					@isset($breadcrumb)
-						<li class="active">{{ $title }}</li>
+						<li class="active">{{ $category->title }}</li>
 						@if (!empty($breadcrumb[0]))
 							@foreach ($breadcrumb as $item)
-								<li><a href="/panel/group/{{ $item[0] -> id }}/{{ $item[0] -> title }}">
+								<li><a href="/panel/category/{{ $item[0] -> id }}">
 									{{ $item[0] -> title }}</a></li>
 							@endforeach
 						@endif
 					@endisset
-					<li><a href="/panel/group/">دسته های اصلی</a></li>
+					<li><a href="/panel/category/">دسته های اصلی</a></li>
 				</ol>
 			</div>
 			<!-- /Breadcrumb -->
@@ -181,11 +193,11 @@
 		<!-- /Title -->
 		<!-- Row -->
 		<div class="row">
-			@empty($groups->first())
+			@empty($categories->first())
 				<div class="alert alert-warning alert-dismissable">
 					<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-					@if (isset($title))
-						<p class="pull-right">هیچ زیر مجموعه ای برای گروه "{{ $title }}" ثبت نشده است !</p>
+					@if (isset($category))
+						<p class="pull-right">هیچ زیر مجموعه ای برای گروه "{{ $category->title }}" ثبت نشده است !</p>
 					@else
 						<p class="pull-right">هیچ گروهی تاکنون ثبت نشده است !</p>
 					@endif
@@ -196,7 +208,7 @@
 
 			<?php $colors = ['danger', 'warning', 'info', 'primary', 'success']; $i = $x = 0; ?>
 
-			@foreach ($groups as $group)
+			@foreach ($categories as $item)
 				<div class="col-md-3 col-sm-6 col-xs-12">
 					<?php if ($x == 5) { $x = 0; } ?>
 					<div class="panel panel-{{ $colors[$x] }} card-view panel-refresh">
@@ -205,8 +217,8 @@
 						</div>
 						<div class="panel-heading">
 							<div class="pull-right">
-								<a href="/panel/group/{{ $group->id }}/{{ $group->title }}">
-									<h6 class="panel-title txt-light">{{ $group->title }}</h6>
+								<a href="/panel/category/{{ $item->id }}">
+									<h6 class="panel-title txt-light">{{ $item->title }}</h6>
 								</a>
 							</div>
 							<div class="pull-left">
@@ -215,26 +227,37 @@
 									<i class="zmdi zmdi-chevron-up"></i>
 								</a>
 
-								<a href="/panel/group/edit/{{$group->id}}/{{$group->title}}" class="pull-left inline-block mr-15">
-									<i class="zmdi zmdi-edit"></i>
-								</a>
-
-								<span group="{{$group->id}}" class="delete-group pull-left inline-block mr-15">
-									<i class="zmdi zmdi-close"></i>
-								</span>
+								<form action="{{ route('category.destroy', ['category' => $item->id]) }}" method="POST" class="pull-left inline-block mr-15">
+									<a href="{{ route('category.edit', ['category' => $item->id]) }}">
+										<i class="zmdi zmdi-edit"></i>
+									</a>
+									<button type="submit" itemid="{{ $item->id }}" class="delete-item">
+										<i class="zmdi zmdi-close"></i></i>
+									</button>
+									
+									@method('delete')
+									@csrf
+								</form>
 							</div>
 							<div class="clearfix"></div>
 						</div>
 						<div  id="collapse_<?=$i?>" class="panel-wrapper collapse in group-card">
 							<div  class="panel-body">
-								@empty($group->description)
-									<div class="alert alert-warning alert-dismissable">
-										<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-										<p class="pull-right">توضیحی ثبت نشده است !</p>
-										<div class="clearfix"></div>
+								@if ($item->avatar)
+									<div class="col-md-6">
+										<img src="{{ $item->avatar }}" alt="Category Avatar">
 									</div>
-								@endempty
-								<p>{{ $group->description}}</p>
+								@endif
+								<div class="col-md-6">
+									@empty($item->description)
+										<div class="alert alert-warning alert-dismissable">
+											<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
+											<p class="pull-right">توضیحی ثبت نشده است !</p>
+											<div class="clearfix"></div>
+										</div>
+									@endempty
+									<p>{{ $item->description}}</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -283,9 +306,12 @@
 	@endforeach
 	
 	<script>
-		$('.delete-group').on('click',function(){
+		$('#category_avatar').dropify();
+
+		$('.delete-item').on('click',function(){
 			var title = $(this).parent().parent().find('h6').text();
 			var id = $(this).attr('group');
+			var form = $(this).parent();
 
 			swal({   
 				title: "مطمین هستید ؟",   
@@ -299,7 +325,7 @@
 				closeOnCancel: false 
 			}, function(isConfirm){   
 				if (isConfirm) {
-					window.location =  '/panel/group/delete/' + id + '/' + title; 
+					form.submit();
 				} else {     
 					swal("لغو شد", "هیچ گروهی حذف نشد :)", "error");   
 				} 
