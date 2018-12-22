@@ -13,6 +13,6 @@ $factory->define(App\Models\Order::class, function (FakerEng $faker) {
         'status' => $faker->numberBetween(0, 7),
         'created_at' => $faker->dateTime(),
         // 'payment_jalali' => $faker->dateTime($max = '1397-09-10')
-        'payment_jalali' => "{$faker->numberBetween(1380, 1397)}-{$faker->numberBetween(1, 12)}-{$faker->numberBetween(10, 30)} 03:30:00"
+        'payment_jalali' => "{$faker->numberBetween(1380, 1397)}-0{$faker->numberBetween(1, 9)}-{$faker->numberBetween(10, 30)} 03:30:00"
     ];
 });
