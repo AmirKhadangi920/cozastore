@@ -204,10 +204,10 @@
             <a @if( in_array($page_name, ['blog', 'add_blog']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#blog_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-newspaper-o ml-5" aria-hidden="true"></i>وبلاگ</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="blog_dr" class="collapse collapse-level-1">
                 <li>
-                    <a @if($page_name == 'add_blog') class="active-page" @endif href="/panel/blog/create"><i class="fa fa-file-text-o ml-5" aria-hidden="true"></i>افزودن پست</a>
+                    <a @if($page_name == 'add_blog') class="active-page" @endif href="/panel/article/create"><i class="fa fa-file-text-o ml-5" aria-hidden="true"></i>افزودن پست</a>
                 </li>
                 <li>
-                    <a @if($page_name == 'blog') class="active-page" @endif href="/panel/blog"><i class="fa fa-newspaper-o ml-5" aria-hidden="true"></i>مشاهده پست ها</a>
+                    <a @if($page_name == 'blog') class="active-page" @endif href="/panel/article"><i class="fa fa-newspaper-o ml-5" aria-hidden="true"></i>مشاهده پست ها</a>
                 </li>
             </ul>
         </li>

@@ -30,6 +30,10 @@ class DatabaseSeeder extends Seeder
         
         factory(\App\User::class, 5)->create()->each( function ($user) {
 
+            factory(\App\Models\Article::class, rand(0, 10))->create([
+                'user_id' => $user->id
+            ]);
+
             $colors = factory(\App\Models\Color::class, 20)->create();
             $orders = factory(\App\Models\Order::class, 20)->create(['buyer' => $user->id]);
             $warranties = factory(\App\Models\Warranty::class, 10)->create();

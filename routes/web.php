@@ -51,6 +51,10 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     Route::get('/specs/get/{id}', 'SpecsController@get');
     
     // Products panel Route
+    Route::resource('article', 'ArticleController')->except([ 'show' ]);
+    Route::get('/article/search/{query?}', 'ArticleController@search');
+    
+    // Products panel Route
     Route::resource('product', 'ProductController')->except([ 'show' ]);
     Route::get('/product/search/{query?}', 'ProductController@search');
     
