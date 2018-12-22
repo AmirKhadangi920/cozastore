@@ -36,4 +36,14 @@ class User extends Authenticatable
     {
         return ($this->type == 1) ? true : false;   
     }
+
+    /**
+     * Full_name Mutators
+     *
+     * @return String
+     */
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }
