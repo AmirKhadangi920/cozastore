@@ -8,6 +8,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Option;
 use Cookie;
+use Carbon\Carbon;
+use Intervention\Image\Facades\Image;
 
 class Controller extends BaseController
 {
@@ -68,5 +70,34 @@ class Controller extends BaseController
                 Cookie::queue('cart', NULL, -1);
             }
         }
+    }
+
+    /**
+     * Upload an image to public path
+     *
+     * @param File $image
+     * @return String file_name
+     */
+    public static function upload_image ($image, $crop = 300)
+    {
+        // Create file name & file path with /year/month/day/filename formats
+        $time = Carbon::now();   
+        $file_path = "uploads/{$time->year}/{$time->month}/{$time->day}";
+        $file_ext = $image->getClientOriginalExtension();
+        $file_name = rtrim($image->getClientOriginalName(), ".$file_ext");
+        $file_name = time() . '_' . substr($file_name, 0, 30);
+        
+        // Create directories if doesn't exists
+        if (!file_exists( public_path($file_path) )) {
+            mkdir(public_path($file_path), 0777, true);
+        }
+        
+        // Reszie and upload the image to storge
+        $image = Image::make( $image );
+        $image->resize($crop, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $image->save( public_path("$file_path/$file_name.$file_ext") );
+        return "/$file_path/$file_name.$file_ext";
     }
 }
