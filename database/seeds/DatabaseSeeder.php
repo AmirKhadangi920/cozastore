@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Ybazli\Faker\Facades\Faker;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\User::class, 5)->create()->each( function ($user) {
+        factory(\App\User::class, 5)->create()->each( function ($user) {
 
             $colors = factory(\App\Models\Color::class, 20)->create();
             $orders = factory(\App\Models\Order::class, 20)->create(['buyer' => $user->id]);
@@ -74,6 +76,20 @@ class DatabaseSeeder extends Seeder
                     });
                 });
             });
+
+            \App\User::create([
+                'id' => '3g6s316j',
+                'first_name' => 'امیر',
+                'last_name' => 'خدنگی',
+                'phone' => '09105009868',
+                'email' => 'AmirKhadangi920@Gmail.com',
+                'password' => Hash::make('123456'),
+                'state' => 'خراسان رضوی',
+                'city' => 'مشهد',
+                'address' => 'سناباد 44 ، ساختمان 52',
+                'postal_code' => '1234567890',
+                'type' => 1
+            ]);
         });
     }
 }

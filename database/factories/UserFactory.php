@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\Models\User::class, function (Faker $faker) {
+$factory->define(App\User::class, function (Faker $faker) {
     $faker = \Faker\Factory::create('fa_IR');
     return [
         'id' => $faker->ean8,
