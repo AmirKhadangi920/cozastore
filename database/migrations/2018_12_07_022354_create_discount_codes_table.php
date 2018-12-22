@@ -22,6 +22,7 @@ class CreateDiscountCodesTable extends Migration
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
             
+            $table->string('code', 20);
             $table->integer('value');
             $table->dateTime('using_time')->nullable();
             $table->timestamps();
