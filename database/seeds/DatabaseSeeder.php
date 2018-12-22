@@ -14,12 +14,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        \App\User::create([
+            'id' => '3g6s316j',
+            'first_name' => 'امیر',
+            'last_name' => 'خدنگی',
+            'phone' => '09105009868',
+            'email' => 'AmirKhadangi920@Gmail.com',
+            'password' => Hash::make('123456'),
+            'state' => 'خراسان رضوی',
+            'city' => 'مشهد',
+            'address' => 'سناباد 44 ، ساختمان 52',
+            'postal_code' => '1234567890',
+            'type' => 1
+        ]);
+        
         factory(\App\User::class, 5)->create()->each( function ($user) {
 
             $colors = factory(\App\Models\Color::class, 20)->create();
             $orders = factory(\App\Models\Order::class, 20)->create(['buyer' => $user->id]);
             $warranties = factory(\App\Models\Warranty::class, 10)->create();
             $brands = factory(\App\Models\Brand::class, 10)->create();
+            factory(\App\Models\DiscountCode::class, rand(1, 5))->create([
+                'user_id' => $user->id
+            ]);
 
             factory(\App\Models\Category::class, 5)->create()->each( function ($category) use ($user, $colors, $orders, $warranties, $brands) {
                 
@@ -76,20 +93,6 @@ class DatabaseSeeder extends Seeder
                     });
                 });
             });
-
-            \App\User::create([
-                'id' => '3g6s316j',
-                'first_name' => 'امیر',
-                'last_name' => 'خدنگی',
-                'phone' => '09105009868',
-                'email' => 'AmirKhadangi920@Gmail.com',
-                'password' => Hash::make('123456'),
-                'state' => 'خراسان رضوی',
-                'city' => 'مشهد',
-                'address' => 'سناباد 44 ، ساختمان 52',
-                'postal_code' => '1234567890',
-                'type' => 1
-            ]);
         });
     }
 }
