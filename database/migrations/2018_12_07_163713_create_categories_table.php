@@ -19,12 +19,13 @@ class CreateCategoriesTable extends Migration
                 $table->foreign('parent')
                     ->references('id')
                     ->on('categories')
-                    ->onDelete('cascade');
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
                     
             $table->string('title', 50);
             $table->string('description', 255);
             $table->tinyInteger('depth')->default(1);
-            $table->string('avatar', 50)->nullable();
+            $table->string('avatar', 100)->nullable();
             $table->timestamps();
         });
     }

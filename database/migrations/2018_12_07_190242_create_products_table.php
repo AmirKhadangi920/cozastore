@@ -17,13 +17,33 @@ class CreateProductsTable extends Migration
             $table->string('id', 8);
             $table->primary('id');
             $table->string('user_id', 8);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+
             $table->integer('parent_category')->unsigned()->nullable();
-            $table->foreign('parent_category')->references('id')->on('categories')->onDelete('cascade');
+                $table->foreign('parent_category')
+                    ->references('id')
+                    ->on('categories')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+
             $table->integer('category_id')->unsigned()->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+                $table->foreign('category_id')
+                    ->references('id')
+                    ->on('categories')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+
             $table->integer('brand_id')->unsigned()->nullable();
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
+                $table->foreign('brand_id')
+                    ->references('id')
+                    ->on('brands')
+                    ->onDelete('set null')
+                    ->onUpdate('set null');
+                    
             $table->string('name', 50);
             $table->string('code', 20)->nullable();
             $table->string('short_description', 255)->nullable();

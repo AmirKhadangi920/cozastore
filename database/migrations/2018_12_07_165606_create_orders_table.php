@@ -17,9 +17,19 @@ class CreateOrdersTable extends Migration
             $table->string('id', 8);
             $table->primary('id');
             $table->string('buyer', 8);
-            $table->foreign('buyer')->references('id')->on('users');
+                $table->foreign('buyer')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+
             $table->unsignedInteger('discount_code_id')->nullable();
-            $table->foreign('discount_code_id')->references('id')->on('discount_codes');
+                $table->foreign('discount_code_id')
+                    ->references('id')
+                    ->on('discount_codes')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            
             $table->string('admin_description', 255)->nullable();
             $table->string('buyer_description', 255)->nullable();
             $table->string('destination', 255);

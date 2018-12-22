@@ -24,18 +24,18 @@ class CreateProductVariationsTable extends Migration
                     ->onUpdate('cascade');
 
             $table->unsignedInteger('warranty_id')->nullable();
-            $table->foreign('warranty_id')
-                ->references('id')
-                ->on('warranties')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                $table->foreign('warranty_id')
+                    ->references('id')
+                    ->on('warranties')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
 
             $table->unsignedInteger('color_id')->nullable();
-            $table->foreign('color_id')
-                ->references('id')
-                ->on('colors')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                $table->foreign('color_id')
+                    ->references('id')
+                    ->on('colors')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
 
             $table->integer('price');
             $table->tinyInteger('unit')->default(1);

@@ -16,7 +16,12 @@ class CreateDiscountCodesTable extends Migration
         Schema::create('discount_codes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id', 8)->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            
             $table->integer('value');
             $table->dateTime('using_time')->nullable();
             $table->timestamps();

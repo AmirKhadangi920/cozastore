@@ -16,7 +16,12 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id', 8);
-            $table->foreign('user_id')->references('id')->on('users');
+                $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+                    
             $table->string('title', 50);
             $table->string('description', 255);
             $table->text('body');

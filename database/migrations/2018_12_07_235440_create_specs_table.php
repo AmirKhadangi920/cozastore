@@ -16,7 +16,12 @@ class CreateSpecsTable extends Migration
         Schema::create('specs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+                $table->foreign('category_id')
+                    ->references('id')
+                    ->on('categories')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+                    
             $table->timestamps();
         });
     }
