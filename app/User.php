@@ -36,6 +36,16 @@ class User extends Authenticatable
     {
         return ($this->type == 1) ? true : false;   
     }
+    
+    /**
+     * Relation to Article model
+     *
+     * @return Article Model
+     */
+    public function articles ()
+    {
+        return $this->hasMany(\App\Models\Article::class);
+    }
 
     /**
      * Full_name Mutators
