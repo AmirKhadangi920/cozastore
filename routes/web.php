@@ -39,16 +39,8 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     });
 
     // Groups Route
-    Route::group(['prefix' => 'group'], function () {
-
-        Route::get('/', 'GroupController@index'); // Main group page
-        Route::post('/add', 'GroupController@add'); // Send Data for create new group
-        Route::post('/edit', 'GroupController@update'); // Send Data for edit exiting group
-        Route::get('/delete/{id}/{title}', 'GroupController@delete'); // Send Data for delete exiting group
-        Route::get('/edit/{id}/{title}', 'GroupController@edit'); // Send Data for create new group
-        Route::get('/sub/{id}', 'GroupController@sub'); // Get sub group for ajax request
-        Route::get('/{id}/{title}', 'GroupController@get'); // get a sub goup in panel view
-    });
+    Route::resource('category', 'CategoryController');
+    Route::get('group/sub/{id}', 'CategoryController@sub'); // Get sub group for ajax request
     
     // Get Specification Route
     Route::get('/specs/get/{id}', 'SpecsController@get'); // Send Data for edit exiting Feature

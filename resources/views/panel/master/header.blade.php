@@ -159,10 +159,10 @@
             <a @if($page_name == 'main') class="active" @endif href="/panel"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-bars ml-5" aria-hidden="true"></i>داشبورد</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if( in_array($page_name, ['group', 'warranty', 'brand', 'color', 'specification']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <a @if( in_array($page_name, ['category', 'warranty', 'brand', 'color', 'specification']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="ecom_dr" class="collapse collapse-level-1">
                 <li>
-                    <a @if($page_name == 'group') class="active-page" @endif href="/panel/group"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گروه بندی</a>
+                    <a @if($page_name == 'category') class="active-page" @endif href="/panel/category"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گروه بندی</a>
                 </li>
                 <li>
                     <a @if($page_name == 'warranty') class="active-page" @endif href="/panel/warranty"><i class="fa fa-university ml-5" aria-hidden="true"></i>گارانتی</a>
