@@ -5,64 +5,83 @@ namespace App\Http\Controllers\panel;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class ArticleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Articles.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return Article::all();
+        return view('panel.articles', [
+            'articles' => Article::latest()->paginate(20),
+            'page_name' => 'blog',
+            'page_title' => 'مقالات',
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Article.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('panel.add-article', [
+            'page_name' => 'add_blog',
+            'page_title' => 'افزودن مقاله جدید',
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Article in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        return Article::create( $request->all() );
+        auth()->user()->articles()->create(array_merge($request -> all(), [
+            'image' => $this->upload_image( Input::file('image') )
+        ]));
+        return redirect()->back()->with('message', "مقاله {$request->title} با موفقیت ثبت شد");
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Article.
      *
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
+     * 
+     * public function show(Article $article)
+     * {
+     *    return $article;
+     * }
      */
-    public function show(Article $article)
-    {
-        return $article;
-    }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified Article.
      *
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
     public function edit(Article $article)
     {
-        return $article;
+        return view('panel.add-article', [
+            'article' => $article,
+            'page_name' => 'add_blog',
+            'page_title' => 'افزودن مقاله جدید',
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Article in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Article  $article
@@ -70,11 +89,24 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        $article->update( $request->all() );
+        if ($request->hasFile('image'))
+        {
+            $image = $this->upload_image( Input::file('image') );
+            
+            if ( file_exists( public_path($article->image) ) )
+                unlink( public_path($article->image) );
+        }
+        else
+        {
+            $image = $article->image;
+        }
+
+        $article->update(array_merge($request -> all(), [ 'image' => $image ]));
+        return redirect()->back()->with('message', "مقاله {$article->title} با موفقیت بروز رسانی شد");
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Article from storage.
      *
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
@@ -82,5 +114,6 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
+        return redirect()->back()->with('message', "مقاله {$article->title} با موفقیت حذف شد");
     }
 }
