@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 // Admin panel Routes
 Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace' => 'panel'], function () {
     // Dashboard Route
@@ -25,6 +27,9 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
         Route::get('/{id}/description/{description}', 'InvoiceController@description');
         Route::get('/{id}/status/{status}', 'InvoiceController@status');
     });
+
+    // Discount code Routes
+    Route::resource('discountCode', 'DiscountCodeController')->except([ 'create', 'show' ]);    
     
     // Setting Route
     Route::group(['prefix' => 'setting'], function () {
@@ -38,18 +43,20 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
         Route::get('/dollar_cost/{dollar_cost}', 'PanelController@dollar_cost');
     });
 
-    // Groups Route
+    // Category Route
     Route::resource('category', 'CategoryController');
-    Route::get('group/sub/{id}', 'CategoryController@sub'); // Get sub group for ajax request
+    Route::get('group/sub/{id}', 'CategoryController@sub');
     
     // Get Specification Route
-    Route::get('/specs/get/{id}', 'SpecsController@get'); // Send Data for edit exiting Feature
+    Route::get('/specs/get/{id}', 'SpecsController@get');
     
-    
-    // Panel Products Route
+    // Products panel Route
     Route::resource('product', 'ProductController')->except([ 'show' ]);
     Route::get('/product/search/{query?}', 'ProductController@search');
+    
+    // Discount
 
+    // Specification tables handler panel Route
     Route::resource('specification', 'Spec\SpecificationController')->except([ 'create', 'show' ]);
     Route::group(['prefix' => 'specification/{specification}'], function () {
         Route::resource('header', 'Spec\SpecHeaderController')->except([ 'create', 'show' ]);
@@ -58,8 +65,11 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
         Route::resource('row', 'Spec\SpecRowController')->except([ 'create', 'show' ]);
     });
     
+    // Color panel routes
     Route::resource('color', 'ColorController')->except([ 'create', 'show' ]);
+    // Warranty panel routes
     Route::resource('warranty', 'WarrantyController')->except([ 'create', 'show' ]);
+    // Brand panel routes
     Route::resource('brand', 'BrandController')->except([ 'create', 'show' ]);
 });
 
@@ -79,5 +89,3 @@ Route::get('/cart/add/{id}/{title}/{count}/{color?}', 'CartController@add');
 Route::get('/orders', 'panel\InvoiceController@user_orders');
 
 Route::get('/verify_payment', 'CartController@verify_payment');
-
-Auth::routes();

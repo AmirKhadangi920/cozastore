@@ -190,13 +190,13 @@
             </ul>
         </li>
         <li>
-            <a @if( in_array($page_name, ['invoices', 'discount_codes']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#invo_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-files-o ml-5" aria-hidden="true"></i>سفارشات</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <a @if( in_array($page_name, ['invoices', 'discountCode']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#invo_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-files-o ml-5" aria-hidden="true"></i>سفارشات</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="invo_dr" class="collapse collapse-level-1">
                 <li>
                     <a @if($page_name == 'invoices') class="active-page" @endif href="/panel/invoices"><i class="fa fa-sticky-note-o ml-5" aria-hidden="true"></i>لیست سفارشات</a>
                 </li>
                 <li>
-                    <a @if($page_name == 'discount_codes') class="active-page" @endif href="/panel/discount_codes"><i class="fa fa-code ml-5" aria-hidden="true"></i>کدهای تخفیف</a>
+                    <a @if($page_name == 'discountCode') class="active-page" @endif href="/panel/discountCode"><i class="fa fa-code ml-5" aria-hidden="true"></i>کدهای تخفیف</a>
                 </li>
             </ul>
         </li>
