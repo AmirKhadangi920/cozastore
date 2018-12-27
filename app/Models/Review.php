@@ -37,7 +37,7 @@ class Review extends Model
             ->with([
                 'product:id,name',
                 'user:id,first_name,last_name'
-            ])->paginate(20);
+            ])->paginate(10);
     }
 
     /**

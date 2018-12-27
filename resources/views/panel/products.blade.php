@@ -80,6 +80,10 @@
 		display: flex;
 		justify-content: center;
 	}
+	.delete-item {
+		border: none;
+		background: none;
+	}
 	</style>
 @endsection
 	
@@ -118,8 +122,8 @@
 						<div  class="panel-body">
 							<div class="form-group">
 								<div class="input-group">
-									<input type="text" name="product_name" onkeyup="this.nextElementSibling.href = '/panel/products/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : تلفن همراه">
-									<a href="/panel/products/search/" class="input-group-addon"><i class="ti-search"></i></a>
+									<input type="text" name="product_name" onkeyup="this.nextElementSibling.href = '/panel/product/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : تلفن همراه">
+									<a href="/panel/product/search/" class="input-group-addon"><i class="ti-search"></i></a>
 								</div>
 							</div>
 						</div>
@@ -157,7 +161,7 @@
 				<div class="clearfix"></div>
 			</div>
 			@else
-				@foreach ($products as $product)
+				@foreach ($products as $item)
 				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 product-card">
 					<div class="panel panel-default card-view pa-0">
 						<div class="panel-wrapper collapse in">
@@ -165,32 +169,37 @@
 								<article class="col-item">
 									<div class="photo">
 										<div class="options">
-											<a href="/panel/products/edit/{{$product->pro_id}}" class="font-18 txt-grey mr-10 pull-left"><i class="zmdi zmdi-edit"></i></a>
-											<span product="{{$product->pro_id}}" class="font-18 txt-grey pull-left delete-product"><i class="zmdi zmdi-close"></i></span>
+											<form action="{{ route('product.destroy', ['product' => $item->id]) }}" method="POST">
+												<a href="{{ route('product.edit', ['product' => $item->id]) }}" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-pencil"></i></a>
+												<button type="submit" itemid="{{ $item->id }}" class="font-18 txt-grey pull-left delete-item"><i class="icon ti-close"></i></button>
+												
+												@method('delete')
+												@csrf
+											</form>	
 										</div>
 										
 										<a href="javascript:void(0);">
 											<div class="product-pic img-responsive"
 												{{-- style="background: url('{{ asset('uploads/'.$product->photo) }}') center center; --}}
-												style="background: url('{{ $product->photo }}') center center;
+												style="background: url('{{ $item->photo }}') center center;
 													background-size: cover;">
 												
-												@if($product->label)
-													<?php switch ($product->label) {
-														case 1: $product->label = 'توقف تولید'; break;
-														case 2: $product->label = 'به زودی'; break;
-														case 3: $product->label = 'نا موجود'; break;
-														case 4: $product->label = 'عدم فروش'; break;
-													} ?>
+												@if($item->label)
+													@php switch ($item->label) {
+														case 1: $item->label = 'توقف تولید'; break;
+														case 2: $item->label = 'به زودی'; break;
+														case 3: $item->label = 'نا موجود'; break;
+														case 4: $item->label = 'عدم فروش'; break;
+													} @endphp
 													<div class="shadow"></div> 
 													<span class="badge label badge-dark"></span>
-													<span class="label flag label-warning inline-block">{{ $product->label }}</span>
-												@elseif ($product->variations[0]->stock_inventory == 0)
+													<span class="label flag label-warning inline-block">{{ $item->label }}</span>
+												@elseif (isset($item->variations[0]) && $item->variations[0]->stock_inventory == 0)
 													<div class="shadow"></div> 
 													<span class="label flag label-warning inline-block">نا موجود</span>
 												@endif
 												
-												@if($product->status)
+												@if($item->status)
 													<span class="label label-success capitalize-font inline-block ml-10">انتشار یافته</span>
 												@else
 													<span class="label label-warning capitalize-font inline-block ml-10">پیشنویس</span>
@@ -199,24 +208,27 @@
 										</a>
 									</div>
 									<div class="info">
-										<h5>{{$product->name}}</h5>
-										<h6>شناسه : {{$product->code}}</h6>
+										<h5>{{$item->name}}</h5>
+										<h6>شناسه : {{$item->code}}</h6>
 										@php 
-											$variation = $product->variations[0];
-											
-											if ($variation->unit) { 
-												$variation->unit = 'دلار';
+											if ( isset($item->variations[0]) )
+												$variation = $item->variations[0];
+											else
+												$variation = null;
+
+											if ($item->unit) { 
+												$item->unit = 'دلار';
 											} else { 
-												$variation->unit = 'تومان';
+												$item->unit = 'تومان';
 											}
 										@endphp
 
-										@if($variation->offer)
-											<span class="head-font block txt-orange-light-1 font-16"><del><span class="num-comma">{{$variation->price}}</span> {{$variation->unit}}</del></span>
-											@php $variation->offer = $variation->price - ($variation->offer * $variation->price) / 100; @endphp
-											<span class="head-font block txt-dark-1 font-16"><ins><span class="num-comma">{{$variation->offer}}</span> {{$variation->unit}}</ins></span>
+										@if($item->offer && $variation)
+											<span class="head-font block txt-orange-light-1 font-16"><del><span class="num-comma">{{$variation['price']}}</span> {{$variation['unit']}}</del></span>
+											@php $variation['offer'] = $variation['price'] - ($variation['offer'] * $variation['price']) / 100; @endphp
+											<span class="head-font block txt-dark-1 font-16"><ins><span class="num-comma">{{$variation['offer']}}</span> {{$variation['unit']}}</ins></span>
 										@else
-											<span class="head-font block txt-orange-light-1 font-16"><span class="num-comma">{{$variation->price}}</span> {{$variation->unit}}</span>
+											<span class="head-font block txt-orange-light-1 font-16"><span class="num-comma">{{$variation['price']}}</span> {{$variation['unit']}}</span>
 										@endif
 									</div>
 								</article>
@@ -230,10 +242,6 @@
 			{{ $products->links() }}
 		</div>	
 		<!-- /Product Row Four -->
-		
-		<div class="row">
-
-		</div>
 		
 	</div>
 @endsection
@@ -273,9 +281,10 @@
 	</script>
 
 	<script>
-		$('.delete-product').on('click',function(){
+		$('.delete-item').on('click',function(){
 			var title = $(this).parent().parent().next().find('h5').text();
 			var id = $(this).attr('product');
+			var form = $(this).parent();
 
 			swal({   
 				title: "مطمین هستید ؟",   
@@ -289,7 +298,7 @@
 				closeOnCancel: false 
 			}, function(isConfirm){   
 				if (isConfirm) {
-					window.location =  '/panel/products/delete/' + id + '/' + title; 
+					form.submit();
 				} else {     
 					swal("لغو شد", "هیچ محصولی حذف نشد :)", "error");   
 				} 

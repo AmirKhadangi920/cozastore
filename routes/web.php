@@ -20,12 +20,12 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
         ->where('total_type', 'daily|weekly|monthly|yearly');
     
     // Invoices Routes
-    Route::group(['prefix' => 'invoices'], function () {
+    Route::group(['prefix' => 'invoice'], function () {
 
         Route::get('/', 'InvoiceController@index');
-        Route::get('/{id}', 'InvoiceController@get');
-        Route::get('/{id}/description/{description}', 'InvoiceController@description');
-        Route::get('/{id}/status/{status}', 'InvoiceController@status');
+        Route::get('/{order}', 'InvoiceController@get');
+        Route::get('/{order}/description/{description}', 'InvoiceController@description');
+        Route::get('/{order}/status/{status}', 'InvoiceController@status');
     });
 
     // Discount code Routes
@@ -46,9 +46,6 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     // Category Route
     Route::resource('category', 'CategoryController');
     Route::get('group/sub/{id}', 'CategoryController@sub');
-    
-    // Get Specification Route
-    Route::get('/specs/get/{id}', 'SpecsController@get');
     
     // Products panel Route
     Route::resource('article', 'ArticleController')->except([ 'show' ]);

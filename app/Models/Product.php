@@ -17,7 +17,7 @@ class Product extends Model
         'keywords', 'advantages', 'disadvantages'
     ];
 
-    public static function productCard ()
+    public static function productCard ($query = null)
     {
         $feilds = ['id', 'name', 'photo', 'label', 'category_id', 'brand_id'];
         if ( auth()->check() )
@@ -34,10 +34,13 @@ class Product extends Model
                 'brand:id,title',
             ]);
         
-        if ( auth()->check() )
+        if ( !auth()->check() )
         {
             $result->where('status', 1);
         }
+
+        if ($query)
+            $result->where('name', 'like', '%'.$query.'%');
         
         return $result->latest()->paginate(20);
     }

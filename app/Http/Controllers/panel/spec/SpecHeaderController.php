@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\panel\spec;
 
 use App\Models\Spec\SpecHeader;
-use Illuminate\Http\Request;
+use App\Http\Requests\SpecHeaderRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Spec\Spec;
 
@@ -45,7 +45,7 @@ class SpecHeaderController extends Controller
      * @param  \App\models\spec\Spec  $specification
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Spec $specification)
+    public function store(SpecHeaderRequest $request, Spec $specification)
     {
         $specification->specHeaders()->create( $request->all() );
         return redirect()->back()->with('message', "عنوان {$request->title} برای جدول 
@@ -92,7 +92,7 @@ class SpecHeaderController extends Controller
      * @param  \App\models\spec\SpecHeader  $header
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Spec $specification, SpecHeader $header)
+    public function update(SpecHeaderRequest $request, Spec $specification, SpecHeader $header)
     {
         $header->update( $request->all() );
         return redirect()->back()->with('message', "عنوان {$header->title} در جدول 
@@ -109,7 +109,9 @@ class SpecHeaderController extends Controller
     public function destroy(Spec $specification, SpecHeader $header)
     {
         $header->delete();
-        return redirect()->back()->with('message', "عنوان {$header->title} در جدول 
+        
+        return redirect(route('header.index', [ 'specification' => $specification->id ]))
+            ->with('message', "عنوان {$header->title} در جدول 
                     {$specification->category()->get()[0]->title} با موفقیت حذف شد");
     }
 }

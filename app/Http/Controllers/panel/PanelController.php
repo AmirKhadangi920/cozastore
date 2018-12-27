@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\panel;
 
 use Illuminate\Http\Request;
-use DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Slider;
 use App\Http\Requests\Poster;
@@ -16,6 +15,7 @@ use App\Models\OrderProducts;
 use App\Models\Order;
 use App\Models\Review;
 use App\Models\Product;
+use App\Models\Option;
 use App\Models\ProductVariation;
 
 /**
@@ -61,16 +61,15 @@ class PanelController extends Controller
             'page_title' => 'تنظیمات',
             'options' => $this->options([
                 'slider', 'posters', 'site_name', 'site_description', 'site_logo',
-                'shop_phone', 'shop_address', 'social_link', 'shipping_cost'
+                'shop_phone', 'shop_address', 'social_link', 'shipping_cost', 'watermark'
             ])
         ]);
     }
 
     public function slider (Slider $req)
     {
-        $option = Option::select('id', 'value')->where('name', 'slider')->get();
-        $option_id = $option[0]->id;
-        $option_value = json_decode($option[0]->value, true);
+        $option = Option::where('name', 'slider')->first();
+        $option_value = json_decode($option->value, true);
         $slider = $req->slides;
         
         foreach ($req->slides as $key => $item) 
@@ -92,19 +91,14 @@ class PanelController extends Controller
         }
         
         $slider = json_encode($slider);
-        
-        $option = Option::find($option_id);
-        $option -> value = $slider;
-        $option -> save();
-
+        $option->update([ 'value' => $slider ]);
         return redirect()->back()->with('message', 'اسلایدر با موفقیت بروز رسانی شد');
     }
 
     public function poster (Poster $req)
     {
-        $option = Option::select('id', 'value')->where('name', 'posters')->get();
-        $option_id = $option[0]->id;
-        $option_value = json_decode($option[0]->value, true);
+        $option = Option::where('name', 'posters')->first();
+        $option_value = json_decode($option->value, true);
         $posters = $req->posters;
     
         foreach ($req->posters as $key => $item) 
@@ -126,18 +120,14 @@ class PanelController extends Controller
         }
         
         $posters = json_encode($posters);
-        
-        $option = Option::find($option_id);
-        $option -> value = $posters;
-        $option -> save();
-
+        $option->update([ 'value' => $posters ]);
         return redirect()->back()->with('message', 'پوستر ها با موفقیت بروز رسانی شدند');
     }
 
     public function info (Info $req)
     {
         $option = Option::select('id', 'name', 'value')->whereIn('name', [
-            'site_name', 'site_description', 'site_logo', 'shop_phone', 'shop_address'
+            'site_name', 'site_description', 'site_logo', 'watermark', 'shop_phone', 'shop_address'
         ])->get();
 
         $options = [];
@@ -158,6 +148,19 @@ class PanelController extends Controller
             
             $options['site_logo']['value'] = $photoName;
         }
+        
+        if (isset($info['watermark']))
+        {
+            $file_path = public_path().'/logo/'.$options['watermark']['value'];
+            if(file_exists($file_path)) {
+                unlink($file_path);
+            }
+
+            $photoName = substr(md5(time()), 0, 8) .'.'.$info['watermark']->getClientOriginalExtension();
+            $info['watermark']->move(public_path('logo'), $photoName);
+            
+            $options['watermark']['value'] = $photoName;
+        }
     
         $options['site_name']['value'] = $info['site_name'];
         $options['site_description']['value'] = $info['description'];
@@ -170,7 +173,6 @@ class PanelController extends Controller
             $option -> value = $item['value'];
             $option -> save();
         }
-
         return redirect()->back()->with('message', 'اطلاعات کلی با موفقیت بروز رسانی شدند');
     }
 
@@ -194,29 +196,21 @@ class PanelController extends Controller
 
     public function dollar_cost ($dollar_cost)
     {
-        $option = Option::select('id')->where('name', 'dollar_cost')->get();
-        $option = Option::find($option[0]->id);
-        $option -> value = $dollar_cost;
-        $option -> save();
-        
+        Option::where('name', 'dollar_cost')->first()->update( ['value' => $dollar_cost ]);        
         return redirect()->back()->with('message', 'قیمت دلار با موفقیت بروز رسانی شد');
     }
 
     public function shipping_cost (ShippingCost $req)
     {
-        $option = Option::select('id', 'value')->where('name', 'shipping_cost')->get();
-        $option_id = $option[0] -> id;
-        $option_value = json_decode($option[0] -> value, true);
+        $option = Option::where('name', 'shipping_cost')->first();
+        $option_value = json_decode($option->value, true);
+        for ($i = 1; $i < 5; ++$i)
+        {
+            $option_value["model$i"]['name'] = $req->shipping_cost["model$i"]['name'];
+            $option_value["model$i"]['cost'] = $req->shipping_cost["model$i"]['cost'];
+        }
 
-        $option_value['model1']['cost'] = $req->shipping_cost['model1'];
-        $option_value['model2']['cost'] = $req->shipping_cost['model2'];
-        $option_value['model3']['cost'] = $req->shipping_cost['model3'];
-        $option_value['model4']['cost'] = $req->shipping_cost['model4'];
-
-        $option = Option::find($option_id);
-        $option -> value = json_encode($option_value);
-        $option -> save();
-
+        $option->update( ['value' => json_encode($option_value)] );
         return redirect()->back()->with('message', 'هزینه های ارسال با موفقیت بروز رسانی شدند');
     }
 }

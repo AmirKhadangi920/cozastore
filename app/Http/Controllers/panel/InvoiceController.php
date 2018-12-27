@@ -5,9 +5,8 @@ namespace App\Http\Controllers\panel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Order;
-use App\OrderProduct;
-use App\Option;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Traits\Init;
 
 class InvoiceController extends Controller
@@ -16,81 +15,36 @@ class InvoiceController extends Controller
 
     public function index ()
     {
-        $orders = DB::select("SELECT `orders`.`id`, `users`.`first_name`, `users`.`last_name`, `admin_description`,
-                ((`shipping_cost` + `total`) - `offer`) as 'total', `status`, `orders`.`created_at`, `payment`
-                FROM `orders` INNER JOIN `users` ON `orders`.`buyer` = `users`.`id`");
-
-        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-            }
-        }
-
         return view('panel.invoice-archive', [
-            'orders' => $orders,
+            'orders' => Order::list(),
             'page_name' => 'invoices',
             'page_title' => 'سفارشات',
-            'site_name'=> $site_name,
-            'site_logo'=> $site_logo
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
-    public function get ($id)
+    public function get (Order $order)
     {
-        if (!Order::find($id))
-        {
-            return redirect()->back();
-        }
-        
-        $invoice = DB::select('SELECT `orders`.`id`, `users`.`first_name`, `users`.`last_name`,
-                `state`, `city`, `address`, `email`, `phone`, `users`.`postal_code` AS \'user_postal_code\',
-                `admin_description`, `buyer_description`, `destination`,
-                `orders`.`postal_code`, `shipping_cost`, `total`, `offer`, `status`,
-                `orders`.`created_at`, `payment`, `datetimes`, `orders`.`updated_at` 
-                FROM `orders` INNER JOIN `users` ON `orders`.`buyer` = `users`.`id`
-                WHERE `orders`.`id` = ?', [$id]);
-
-        if ($invoice == []) { return abort(404); }
-
-        $order_products = DB::select('SELECT `color`, `count`, `order_products`.`created_at`, `name`,
-                `photo`, `products`.`price`, `products`.`offer`, `unit`   FROM `order_products`
-                INNER JOIN `products` ON `order_products`.`product` = `products`.`pro_id`
-                WHERE `order_products`.`order` = ?', [$id]);
-
-        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-            }
-        }
+        // return Order::full_info($order);
 
         return view('panel.invoice-details', [
-            'invoice' => $invoice[0],
-            'order_products' => $order_products,
+            'invoice' => Order::full_info($order),
             'page_name' => 'invoices',
-            'dollar_cost' => 14500,
-            'page_title' => 'فاکتور #' . $invoice[0] -> id,
-            'site_name'=> $site_name,
-            'site_logo'=> $site_logo
+            'page_title' => 'فاکتور #' . $order->id,
+            'options' => $this->options(['site_name', 'site_logo', 'dollar_cost'])
         ]);
     }
 
-    public function description ($id, $description)
+    public function description (Order $order, $description)
     {
-        $invoice = Order::find($id);
-        $invoice -> admin_description = $description;
-        $invoice -> save();
-
-        return redirect()->back()->with('message', 'توضیح شما برای فاکتور '.$id.'# با موفقیت ثبت شد .');
+        $order->update(['admin_description' => $description]);
+        return redirect()->back()->with('message', 'توضیح شما برای فاکتور '.$order->id.'# با موفقیت ثبت شد .');
     }
 
-    public function status ($id, $status)
+    public function status (Order $order, $status)
     {
-        $invoice = Order::find($id);
-        $datetimes = json_decode($invoice -> datetimes, true);
+
+        $datetimes = json_decode($order->datetimes, true);
         switch ($status) {
             case 0: $datetimes['unpaid'] = time(); break;
             case 1: $datetimes['awaitingPayment'] = time(); break;
@@ -101,11 +55,11 @@ class InvoiceController extends Controller
             case 6: $datetimes['posted'] = time(); break;
             case 7: $datetimes['canceled'] = time(); break;
         }
-        $invoice -> datetimes = json_encode($datetimes);
-        $invoice -> status = $status;
-        $invoice -> save();
-        
-        return redirect()->back()->with('message', 'وضعییت فاکتور '.$id.'# با موفقیت تغییر کرد .');
+        $order->update([
+            'datetimes' => json_encode($datetimes),
+            'status' => $status
+        ]);
+        return redirect()->back()->with('message', 'وضعییت فاکتور '.$order->id.'# با موفقیت تغییر کرد .');
     }
 
     public function user_orders ()

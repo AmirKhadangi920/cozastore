@@ -10,6 +10,12 @@ class Order extends Model
 {
     public $incrementing = false;
 
+    protected $fillable = [
+        'discount_code_id', 'admin_description', 'buyer_description', 'destination',
+        'postal_code', 'offer', 'shipping_cost', 'total', 'status', 'payment',
+        'payment_jalali', 'auth_code', 'payment_code', 'datetimes'
+    ];
+
     /**
      * Relation to user Model
      *
@@ -18,6 +24,16 @@ class Order extends Model
     public function user ()
     {
         return $this->belongsTo(\App\User::class, 'buyer');
+    }
+
+    /**
+     * Relation to OrderItem Model
+     *
+     * @return OrderItem Model
+     */
+    public function items ()
+    {
+        return $this->hasMany(\App\Models\OrderItem::class);
     }
 
     /**
@@ -87,8 +103,28 @@ class Order extends Model
             ->whereIn( DB::raw("MONTH(payment_jalali)"), [$month, $month - 1])
             ->where( 'payment_jalali', '>', Jalalian::forge("now - 2 month") )
             ->whereNotNull('payment_jalali')->get();
-        
-        return round( ( $result[1]->count - $result[0]->count ) * 100 / $result[1]->count ); 
+
+        return ($result == []) 
+            ? round( ( $result[1]->count - $result[0]->count ) * 100 / $result[1]->count )
+            : 0; 
+    }
+
+    /**
+     * return full informatino of specific orders
+     *
+     * @return Object
+     */
+    public static function full_info ($order)
+    {
+        $order->user = $order->user()->get()[0];
+        $order->items = $order->items()->with([
+            'variation',
+            'variation.warranty:id,title,expire',
+            'variation.color:id,name,value',
+            'variation.product:id,name,code,photo'
+        ])->get();
+
+        return $order;
     }
 
     /**

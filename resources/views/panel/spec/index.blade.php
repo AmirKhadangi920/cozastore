@@ -94,8 +94,8 @@
 									<hr class="light-grey-hr"/>
 									
 									<div class="form-actions">
-										<button class="btn @isset($edit) btn-warning {{$title}} @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
-											<span>@isset($edit) ویرایش @else ثبت @endisset جدول مشخصات فنی</span>
+										<button class="btn @isset($spec) btn-warning @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
+											<span>@isset($spec) ویرایش @else ثبت @endisset جدول مشخصات فنی</span>
 										</button>
 										<div class="clearfix"></div>
 									</div>

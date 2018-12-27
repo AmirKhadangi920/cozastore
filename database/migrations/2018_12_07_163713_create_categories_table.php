@@ -23,7 +23,7 @@ class CreateCategoriesTable extends Migration
                     ->onUpdate('cascade');
                     
             $table->string('title', 50);
-            $table->string('description', 255);
+            $table->string('description', 255)->nullable();
             $table->tinyInteger('depth')->default(1);
             $table->string('avatar', 100)->nullable();
             $table->timestamps();

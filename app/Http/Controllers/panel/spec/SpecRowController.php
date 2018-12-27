@@ -113,7 +113,9 @@ class SpecRowController extends Controller
     public function destroy(SpecHeader $header, SpecRow $row)
     {
         $row->delete();
-        return redirect()->back()->with('message', "سطر {$row->title} در عنوان 
+
+        return redirect(route('row.index', [ 'header' => $header->id ]))
+            ->with('message', "سطر {$row->title} در عنوان 
                     {$header->title} با موفقیت حذف شد");
     }
 }

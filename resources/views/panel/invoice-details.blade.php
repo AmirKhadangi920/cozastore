@@ -133,9 +133,9 @@
 										<b>آدرس خریدار:</b>
 									</span>
 									<address class="mb-15">
-										<span class="mb-5">{{$invoice->state}} ، {{$invoice->city}}</span><br/>
-										{{$invoice->address}}<br>
-										<b>کد پستی : </b>{{$invoice->user_postal_code}}
+										<span class="mb-5">{{$invoice->user->state}} ، {{$invoice->user->city}}</span><br/>
+										{{$invoice->user->address}}<br>
+										<b>کد پستی : </b>{{$invoice->user->postal_code}}
 									</address>
 								</div>
 								<div class="col-xs-6">
@@ -157,8 +157,9 @@
 											<i class="fa fa-user" aria-hidden="true"></i>
 											خریدار :
 										</span>
-										{{$invoice->first_name.' '.$invoice->last_name}}<br>
-										<b>شماره تلفن : </b>{{$invoice->phone}}
+										{{$invoice->user->full_name}}<br/><br/>
+										<b>شماره تلفن : </b>{{$invoice->user->phone}}<br/>
+										<b>آدرس ایمیل : </b>{{$invoice->user->email}}
 									</address>
 								</div>
 								<div class="col-xs-6 text-right">
@@ -171,7 +172,7 @@
 											$time = new Carbon\Carbon($invoice->created_at);
 											$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 										?>
-										<b class="txt-dark">ثبت :</b> {{$time->hour.':'.$time->minute.' | '.$created_at}}<br/>
+										<b class="txt-dark">ثبت :</b> {{$time->hour.':'.$time->minute.' | '.$created_at}}<br/><br/>
 										@if ($invoice->payment)
 										<?php
 											$time = new Carbon\Carbon($invoice->payment);
@@ -228,11 +229,12 @@
 												<th><b>قیمت</b></th>
 												<th><b>تعداد</b></th>
 												<th><b>رنگ</b></th>
+												<th><b>گارانتی</b></th>
 												<th><b>جمع</b></th>
 											</tr>
 										</thead>
 										<tbody>
-											@foreach ($order_products as $item)
+											@foreach ($invoice->items as $item)
 											<?php
 											$price = $item->price;
 											if ($item->unit)
@@ -242,23 +244,16 @@
 												$price = $price - ($item->offer * $price) / 100;  
 											?>
 											<tr>
-												<td><img src="/uploads/{{$item->photo}}" /></td>
-												<td>{{$item->name}}</td>
-												<td>{{$price}}</td>
+												<td><img src="{{$item->variation->product->photo}}" /></td>
+												<td>
+													{{$item->variation->product->name}}<br/>
+													{{$item->variation->product->code}}
+												</td>
+												<td class="num-comma">{{$price}}</td>
 												<td>{{$item->count}}</td>
-												<?php switch ($item->color) {
-													case 'blue': $item->color = 'آبی'; break;
-													case 'green': $item->color = 'سبز'; break;
-													case 'yellow': $item->color = 'زرد'; break;
-													case 'brown': $item->color = 'قهوه ای'; break;
-													case 'violet': $item->color = 'بنفش'; break;
-													case 'orange': $item->color = 'نارنجی'; break;
-													case 'red': $item->color = 'قرمز'; break;
-													case 'black': $item->color = 'مشکی'; break;
-													case 'white': $item->color = 'سفید'; break;
-												} ?>
-												<td>{{($item->color) ? $item->color : 'رنگی انتخاب نشده است'}}</td>
-												<td>{{$price * $item->count}}</td>
+												<td>{!!($item->variation->color) ? '<span class="badge badge-primary" style="background: '.$item->variation->color->value.'">'.$item->variation->color->name.'</span>' : 'رنگی انتخاب نشده است'!!}</td>
+												<td>{{($item->variation->warranty)? $item->variation->warranty->name : 'بدون گارانتی'}}</td>
+												<td class="num-comma">{{$price * $item->count}}</td>
 											</tr>
 											@endforeach
 											<tr class="txt-dark">
@@ -266,32 +261,36 @@
 												<td></td>
 												<td></td>
 												<td></td>
+												<td></td>
 												<td>جمع فاکتور</td>
-												<td>{{$invoice->total}} تومان</td>
+												<td><span class="num-comma">{{$invoice->total}}</span> تومان</td>
 											</tr>
 											<tr class="txt-dark">
+												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>
 												<td>هزینه ارسال</td>
-												<td>{{$invoice->shipping_cost}} تومان</td>
+												<td><span class="num-comma">{{$invoice->shipping_cost}}</span> تومان</td>
 											</tr>
 											<tr class="txt-dark">
+												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>
 												<td>تخفیف سفارش</td>
-												<td>{{$invoice->offer}}  تومان</td>
+												<td><span class="num-comma">{{$invoice->offer}}</span> تومان</td>
 											</tr>
 											<tr class="txt-dark">
 												<td></td>
 												<td></td>
 												<td></td>
 												<td></td>
+												<td></td>
 												<td>جمع کلی</td>
-												<td>{{$invoice->total + $invoice->shipping_cost}}  تومان</td>
+												<td><span class="num-comma">{{$invoice->total + $invoice->shipping_cost}}</span> تومان</td>
 											</tr>
 										</tbody>
 									</table>
@@ -338,6 +337,8 @@
 		'vendors/bower_components/owl.carousel/dist/owl.carousel.min.js',
 		// Switchery JavaScript
 		'vendors/bower_components/switchery/dist/switchery.min.js',
+		// js numeral formatter
+		'js/numeral.min.js',
 		// Init JavaScript
 		'dist/js/init.js',
 	]; ?>
@@ -347,6 +348,12 @@
 	@endforeach
 
 	<script>
+		var nums = document.getElementsByClassName('num-comma');
+
+		for (num in nums) {
+			nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
+		}
+
 		$('.status-buttons .fancy-button').on('click',function(){
 			var id = '{{$invoice->id}}';
 			var type = $(this).text();

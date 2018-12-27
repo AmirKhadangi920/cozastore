@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\panel\spec;
 
 use App\Models\Spec\Spec;
-use Illuminate\Http\Request;
+use App\Http\Requests\SpeceficationRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 
@@ -42,9 +42,9 @@ class SpecificationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SpeceficationRequest $request)
     {
-        Spec::create( $request->all() );
+        Spec::create([ 'category_id' => $request->parent ]);
         return redirect()->back()->with('message', "جدول مشخصات فنی با موفقیت ثبت شد");
     }
 
@@ -86,7 +86,7 @@ class SpecificationController extends Controller
      * @param  \App\models\spec\Spec  $specification
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Spec $specification)
+    public function update(SpeceficationRequest $request, Spec $specification)
     {
         $specification->update(['category_id' => $request->parent]);
         return redirect()->back()->with('message', "جدول مشخصات فنی با موفقیت بروز رسانی شد");

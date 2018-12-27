@@ -114,37 +114,38 @@
 												<li role="presentation"><a aria-expanded="false" data-toggle="tab" role="tab" href="#slide3">اسلاید 3</a></li>
 											</ul>
 											<div class="tab-content" id="myTabContent_10">
-												@for ($i = 0; $i < count($slider); $i++)
-												<div id="slide{{$i + 1}}" class="tab-pane fade @if($i == 0) active @endif in row" role="tabpanel">
+												@php $i = 0 @endphp
+												@foreach ($options['slider'] as $item)
+												<div id="slide{{++$i}}" class="tab-pane fade @if($i == 1) active @endif in row" role="tabpanel">
 													<div class="col-md-8">
 														<div class="form-wrap">
 															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputuname_2">عنوان اسلاید {{$i + 1}}</label>
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان اسلاید {{$i}}</label>
 																<div class="input-group">
-																	<input type="text" value="{{$slider[$i]['title']}}" name="slides[{{$i}}][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
+																	<input type="text" value="{{$item->title}}" name="slides[{{$i - 1}}][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : Apple_iPhone_X_back">
 																	<div class="input-group-addon"><i class="fa fa-header" aria-hidden="true"></i></div>
 																</div>
 															</div>
 															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح اسلاید {{$i + 1}}</label>
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح اسلاید {{$i}}</label>
 																<div class="input-group">
-																	<input type="text" value="{{$slider[$i]['description']}}" name="slides[{{$i}}][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																	<input type="text" value="{{$item->description}}" name="slides[{{$i - 1}}][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
 																	<div class="input-group-addon"><i class="fa fa-align-right" aria-hidden="true"></i></div>
 																</div>
 															</div>
 															<div class="row">
 																<div class="col-md-4">
-																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید {{$i + 1}}</label>
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه اسلاید {{$i}}</label>
 																	<div class="input-group">
-																		<input type="text" value="{{$slider[$i]['button']}}" name="slides[{{$i}}][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<input type="text" value="{{$item->button}}" name="slides[{{$i - 1}}][button]" class="form-control" id="exampleInputEmail_4" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
 																		<div class="input-group-addon"><i class="fa fa-square-o" aria-hidden="true"></i></div>
 																	</div>
 																</div>
 
 																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید {{$i + 1}}</label>
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه اسلاید {{$i}}</label>
 																	<div class="input-group">
-																		<input type="text" dir="ltr" value="{{$slider[$i]['link']}}" name="slides[{{$i}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
+																		<input type="text" dir="ltr" value="{{$item->link}}" name="slides[{{$i - 1}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="یک توضیح کوتاه یک خطی درباره عکس">
 																		<div class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i></div>
 																	</div>
 																</div>
@@ -153,13 +154,13 @@
 													</div>
 													
 													<div class="col-md-4">
-														<label class="control-label mb-10">تصویر اسلاید {{$i + 1}}</label>
+														<label class="control-label mb-10">تصویر اسلاید {{$i}}</label>
 														<div class="mt-10 mb-10">
-															<input type="file" data-default-file="/slider/{{$slider[$i]['photo']}}" name="slides[{{$i}}][photo]" id="input-file-now" class="dropify" />
+															<input type="file" data-default-file="/slider/{{$item->photo}}" name="slides[{{$i - 1}}][photo]" id="input-file-now" class="dropify" />
 														</div>	
 													</div>
 												</div>
-												@endfor
+												@endforeach
 											</div>
 										</div>
 									</div>
@@ -186,37 +187,38 @@
 												<li role="presentation"><a aria-expanded="false" data-toggle="tab" role="tab" href="#poster3">پوستر 3</a></li>
 											</ul>
 											<div class="tab-content" id="myTabContent_10">
-												@for ($i = 0; $i < count($posters); $i++)
-												<div id="poster{{$i + 1}}" class="tab-pane fade @if($i == 0) active @endif in row" role="tabpanel">
+												@php $i = 0 @endphp
+												@foreach ($options['posters'] as $item)
+												<div id="poster{{++$i}}" class="tab-pane fade @if($i == 1) active @endif in row" role="tabpanel">
 													<div class="col-md-8">
 														<div class="form-wrap">
 															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputuname_2">عنوان پوستر {{$i + 1}}</label>
+																<label class="control-label mb-10" for="exampleInputuname_2">عنوان پوستر {{$i}}</label>
 																<div class="input-group">
-																	<input type="text" value="{{$posters[$i]['title']}}" name="posters[{{$i}}][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : تخفیف ویژه محصولات !">
+																	<input type="text" value="{{$item->title}}" name="posters[{{$i - 1}}][title]" class="form-control" id="exampleInputuname_2" placeholder="برای مثال : تخفیف ویژه محصولات !">
 																	<div class="input-group-addon"><i class="fa fa-header" aria-hidden="true"></i></div>
 																</div>
 															</div>
 															<div class="form-group">
-																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح پوستر {{$i + 1}}</label>
+																<label class="control-label mb-10" for="exampleInputEmail_2">متن توضیح پوستر {{$i}}</label>
 																<div class="input-group">
-																	<input type="text" value="{{$posters[$i]['description']}}" name="posters[{{$i}}][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه نیم خطی برای این پوستر">
+																	<input type="text" value="{{$item->description}}" name="posters[{{$i - 1}}][description]" class="form-control" id="exampleInputEmail_2" placeholder="یک توضیح کوتاه نیم خطی برای این پوستر">
 																	<div class="input-group-addon"><i class="fa fa-align-right" aria-hidden="true"></i></div>
 																</div>
 															</div>
 															<div class="row">
 																<div class="col-md-4">
-																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر {{$i + 1}}</label>
+																	<label class="control-label mb-10" for="exampleInputEmail_4">عنوان دکمه پوستر {{$i}}</label>
 																	<div class="input-group">
-																		<input type="text" value="{{$posters[$i]['button']}}" name="posters[{{$i}}][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
+																		<input type="text" value="{{$item->button}}" name="posters[{{$i - 1}}][button]" class="form-control" id="exampleInputEmail_4" placeholder="برای مثال : 'اطلاعات بیشتر'">
 																		<div class="input-group-addon"><i class="fa fa-square-o" aria-hidden="true"></i></div>
 																	</div>
 																</div>
 
 																<div class="col-md-8">
-																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر {{$i + 1}}</label>
+																	<label class="control-label mb-10" for="exampleInputEmail_5">لینک دکمه پوستر {{$i}}</label>
 																	<div class="input-group">
-																		<input type="text" dir="ltr" value="{{$posters[$i]['link']}}" name="posters[{{$i}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
+																		<input type="text" dir="ltr" value="{{$item->link}}" name="posters[{{$i - 1}}][link]" class="form-control" id="exampleInputEmail_5" placeholder="لینک دکمه ، برای مثال : https://example.com">
 																		<div class="input-group-addon"><i class="fa fa-link" aria-hidden="true"></i></div>
 																	</div>
 																</div>
@@ -225,13 +227,13 @@
 													</div>
 													
 													<div class="col-md-4">
-														<label class="control-label mb-10">تصویر پوستر {{$i + 1}}</label>
+														<label class="control-label mb-10">تصویر پوستر {{$i}}</label>
 														<div class="mt-10 mb-10">
-															<input type="file" data-default-file="/poster/{{$posters[$i]['photo']}}" name="posters[{{$i}}][photo]" id="input-file-now" class="dropify" />
+															<input type="file" data-default-file="/poster/{{$item->photo}}" name="posters[{{$i - 1}}][photo]" id="input-file-now" class="dropify" />
 														</div>	
 													</div>
 												</div>
-												@endfor
+												@endforeach
 											</div>
 										</div>
 									</div>
@@ -252,13 +254,13 @@
 									
 									<div class="panel-body">										
 										<div class="row">
-											<div class="col-md-9">
+											<div class="col-md-8">
 												<div class="form-wrap">
 													<div class="row mb-10">
 														<div class="col-md-8">
 															<label class="control-label mb-10" for="exampleInputEmail_4">عنوان فروشگاه</label>
 															<div class="input-group">
-																<input type="text" value="{{$site_name}}" name="site_name" class="form-control" id="exampleInputEmail_4" placeholder="نام فروشگاه شما">
+																<input type="text" value="{{$options['site_name']}}" name="site_name" class="form-control" id="exampleInputEmail_4" placeholder="نام فروشگاه شما">
 																<div class="input-group-addon"><i class="fa fa-header" aria-hidden="true"></i></div>
 															</div>
 														</div>
@@ -266,33 +268,40 @@
 														<div class="col-md-4">
 															<label class="control-label mb-10" for="exampleInputEmail_5">شماره تلفن</label>
 															<div class="input-group">
-																<input type="text" value="{{$shop_phone}}" name="phone" class="form-control" id="exampleInputEmail_5" placeholder="برای مثال : 09123456789">
+																<input type="text" value="{{$options['shop_phone']}}" name="phone" class="form-control" id="exampleInputEmail_5" placeholder="برای مثال : 09123456789">
 																<div class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></div>
 															</div>
 														</div>
 													</div>
 													<div class="form-group">
-														<label class="control-label mb-10" for="exampleInputuname_2">درباره فروشگاه</label>
+														<label class="control-label mb-10" for="description">درباره فروشگاه</label>
 														<div class="input-group">
-															<input type="text" value="{{$site_description}}" name="description" class="form-control" id="exampleInputuname_2" placeholder="یک توضیح یک خطی کوتاه درباره فروشگاه و کسب و کار شما">
+															<textarea class="form-control" id="description" name="description" style="resize:none;" placeholder="یک توضیح یک خطی کوتاه درباره فروشگاه و کسب و کار شما" rows="2">{{$options['site_description']}}</textarea>
 															<div class="input-group-addon"><i class="fa fa-align-right" aria-hidden="true"></i></div>
 														</div>
 													</div>
 													<div class="form-group">
 														<label class="control-label mb-10" for="exampleInputEmail_2">آدرس فروشگاه شما</label>
 														<div class="input-group">
-															<input type="text" value="{{$shop_address}}" name="address" class="form-control" id="exampleInputEmail_2" placeholder="آدرس فروشگاه شما که به مشتریان و کاربران نمایش داده میشود">
+															<input type="text" value="{{$options['shop_address']}}" name="address" class="form-control" id="exampleInputEmail_2" placeholder="آدرس فروشگاه شما که به مشتریان و کاربران نمایش داده میشود">
 															<div class="input-group-addon"><i class="fa fa-location-arrow" aria-hidden="true"></i></div>
 														</div>
 													</div>
 												</div>
 											</div>
 											
-											<div class="col-md-3">
+											<div class="col-md-2">
 												<label class="control-label mb-10">لوگوی فروشگاه</label>
 												<div class="mt-10 mb-10">
-													<input type="file" data-default-file="/logo/{{$site_logo}}" name="logo" id="input-file-now" class="dropify" />
-												</div>	
+													<input type="file" data-default-file="/logo/{{$options['site_logo']}}" name="logo" id="input-file-now" class="dropify" />
+												</div>
+											</div>
+											
+											<div class="col-md-2">
+												<label class="control-label mb-10">واترمارک تصاویر محصول</label>
+												<div class="mt-10 mb-10">
+													<input type="file" data-default-file="/logo/{{$options['watermark']}}" name="watermark" id="input-file-now" class="dropify" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -317,14 +326,14 @@
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_5">اینستاگرام</label>
 													<div class="input-group">
-														<input type="text" dir="ltr" value="{{$social_link['instagram']}}" name="instagram" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی اینستاگرام">
+														<input type="text" dir="ltr" value="{{$options['social_link']->instagram}}" name="instagram" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی اینستاگرام">
 														<div class="input-group-addon"><i class="fa fa-instagram" aria-hidden="true"></i></div>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_4">تلگرام</label>
 													<div class="input-group">
-														<input type="text" dir="ltr" value="{{$social_link['telegram']}}" name="telegram" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی تلگرام">
+														<input type="text" dir="ltr" value="{{$options['social_link']->telegram}}" name="telegram" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی تلگرام">
 														<div class="input-group-addon"><i class="fa fa-telegram" aria-hidden="true"></i></div>
 													</div>
 												</div>
@@ -334,14 +343,14 @@
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_5">توییتر</label>
 													<div class="input-group">
-														<input type="text" dir="ltr" value="{{$social_link['twitter']}}" name="twitter" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی توییتر">
+														<input type="text" dir="ltr" value="{{$options['social_link']->twitter}}" name="twitter" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی توییتر">
 														<div class="input-group-addon"><i class="fa fa-twitter" aria-hidden="true"></i></div>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_4">فیسبوک</label>
 													<div class="input-group">
-														<input type="text" dir="ltr" value="{{$social_link['facebook']}}" name="facebook" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی فیسبوک">
+														<input type="text" dir="ltr" value="{{$options['social_link']->facebook}}" name="facebook" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی فیسبوک">
 														<div class="input-group-addon"><i class="fa fa-facebook" aria-hidden="true"></i></div>
 													</div>
 												</div>
@@ -366,34 +375,64 @@
 									<div class="panel-body">										
 										<div class="form-wrap">
 											<div class="row mb-10">
-												<div class="col-md-6">
-													<label class="control-label mb-10" for="exampleInputEmail_5">{{$shipping_cost['model1']['name']}}</label>
+												<div class="col-md-3">
+													<label class="control-label mb-10" for="exampleInputEmail_5">عنوان متد شماره یک</label>
 													<div class="input-group">
-														<input type="number" value="{{$shipping_cost['model1']['cost']}}" name="shipping_cost[model1]" class="form-control" id="exampleInputEmail_5" placeholder="هزینه ارسال این متد بر حسب تومان">
+														<input type="text" value="{{$options['shipping_cost']->model1->name}}" name="shipping_cost[model1][name]" class="form-control" id="exampleInputEmail_5" placeholder="نام متد ارسال">
+														<div class="input-group-addon"><i class="ti-text" aria-hidden="true"></i></div>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<label class="control-label mb-10" for="exampleInputEmail_5">هزینه متد شماره یک</label>
+													<div class="input-group">
+														<input type="number" value="{{$options['shipping_cost']->model1->cost}}" name="shipping_cost[model1][cost]" class="form-control" id="exampleInputEmail_5" placeholder="هزینه ارسال این متد بر حسب تومان">
 														<div class="input-group-addon"><i class="fa fa-truck" aria-hidden="true"></i></div>
 													</div>
 												</div>
-												<div class="col-md-6">
-													<label class="control-label mb-10" for="exampleInputEmail_4">{{$shipping_cost['model2']['name']}}</label>
+
+												<div class="col-md-3">
+													<label class="control-label mb-10" for="exampleInputEmail_5">عنوان متد شماره دو</label>
 													<div class="input-group">
-														<input type="number" value="{{$shipping_cost['model2']['cost']}}" name="shipping_cost[model2]" class="form-control" id="exampleInputEmail_4" placeholder="هزینه ارسال این متد بر حسب تومان">
+														<input type="text" value="{{$options['shipping_cost']->model2->name}}" name="shipping_cost[model2][name]" class="form-control" id="exampleInputEmail_5" placeholder="نام متد ارسال">
+														<div class="input-group-addon"><i class="ti-text" aria-hidden="true"></i></div>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<label class="control-label mb-10" for="exampleInputEmail_5">هزینه متد شماره دو</label>
+													<div class="input-group">
+														<input type="number" value="{{$options['shipping_cost']->model2->cost}}" name="shipping_cost[model2][cost]" class="form-control" id="exampleInputEmail_5" placeholder="هزینه ارسال این متد بر حسب تومان">
 														<div class="input-group-addon"><i class="fa fa-truck" aria-hidden="true"></i></div>
 													</div>
 												</div>
 											</div>
 
 											<div class="row mb-10">
-												<div class="col-md-6">
-													<label class="control-label mb-10" for="exampleInputEmail_5">{{$shipping_cost['model3']['name']}}</label>
+												<div class="col-md-3">
+													<label class="control-label mb-10" for="exampleInputEmail_5">عنوان متد شماره سه</label>
 													<div class="input-group">
-														<input type="number" value="{{$shipping_cost['model3']['cost']}}" name="shipping_cost[model3]" class="form-control" id="exampleInputEmail_5" placeholder="هزینه ارسال این متد بر حسب تومان">
+														<input type="text" value="{{$options['shipping_cost']->model3->name}}" name="shipping_cost[model3][name]" class="form-control" id="exampleInputEmail_5" placeholder="نام متد ارسال">
+														<div class="input-group-addon"><i class="ti-text" aria-hidden="true"></i></div>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<label class="control-label mb-10" for="exampleInputEmail_5">هزینه متد شماره سه</label>
+													<div class="input-group">
+														<input type="number" value="{{$options['shipping_cost']->model3->cost}}" name="shipping_cost[model3][cost]" class="form-control" id="exampleInputEmail_5" placeholder="هزینه ارسال این متد بر حسب تومان">
 														<div class="input-group-addon"><i class="fa fa-truck" aria-hidden="true"></i></div>
 													</div>
 												</div>
-												<div class="col-md-6">
-													<label class="control-label mb-10" for="exampleInputEmail_4">{{$shipping_cost['model4']['name']}}</label>
+
+												<div class="col-md-3">
+													<label class="control-label mb-10" for="exampleInputEmail_5">عنوان متد شماره چهار</label>
 													<div class="input-group">
-														<input type="number" value="{{$shipping_cost['model4']['cost']}}" name="shipping_cost[model4]" class="form-control" id="exampleInputEmail_4" placeholder="هزینه ارسال این متد بر حسب تومان">
+														<input type="text" value="{{$options['shipping_cost']->model4->name}}" name="shipping_cost[model4][name]" class="form-control" id="exampleInputEmail_5" placeholder="نام متد ارسال">
+														<div class="input-group-addon"><i class="ti-text" aria-hidden="true"></i></div>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<label class="control-label mb-10" for="exampleInputEmail_5">هزینه متد شماره چهار</label>
+													<div class="input-group">
+														<input type="number" value="{{$options['shipping_cost']->model4->cost}}" name="shipping_cost[model4][cost]" class="form-control" id="exampleInputEmail_5" placeholder="هزینه ارسال این متد بر حسب تومان">
 														<div class="input-group-addon"><i class="fa fa-truck" aria-hidden="true"></i></div>
 													</div>
 												</div>

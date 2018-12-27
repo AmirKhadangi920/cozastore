@@ -97,6 +97,6 @@ class ColorController extends Controller
     public function destroy(Color $color)
     {
         $color->delete();
-        return redirect()->back()->with('message', "رنگ {$color->name} با موفقیت حذف شد");
+        return redirect( route('color.index') )->with('message', "رنگ {$color->name} با موفقیت حذف شد");
     }
 }

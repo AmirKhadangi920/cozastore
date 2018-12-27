@@ -19,6 +19,13 @@
 	.label.label-dark {
 		background: #000;
 	}
+	.pagination {
+		position: relative;
+		top: 15px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
 	</style>
 @endsection
 	
@@ -61,7 +68,6 @@
 											<tr>
 												<th>شناسه فاکتور</th>
 												<th>خریدار</th>
-												<th>توضیحات</th>
 												<th>مبلغ</th>
 												<th>وضعیت</th>
 												<th>ثبت سفارش</th>
@@ -69,13 +75,23 @@
 												<th>اطلاعات بیشتر</th>
 											</tr>
 										</thead>
+										<tfoot>
+											<tr>
+												<th>شناسه فاکتور</th>
+												<th>خریدار</th>
+												<th>مبلغ</th>
+												<th>وضعیت</th>
+												<th>ثبت سفارش</th>
+												<th>پرداخت</th>
+												<th>اطلاعات بیشتر</th>
+											</tr>
+										</tfoot>
 
 										<tbody>
 											@foreach ($orders as $order)
 											<tr>
 												<td>#{{$order->id}}</td>
-												<td>{{$order->first_name.' '.$order->last_name}}</td>
-												<td>{{$order->admin_description}}</td>
+												<td>{{$order->full_name}}</td>
 												<td><span class="num-comma">{{$order->total}}</span> تومان</td>
 												<td>
 													<?php
@@ -93,19 +109,16 @@
 													?>
 													<span class="label label-{{$status[1]}}">{{$status[0]}}</span>
 												</td>
-												<?php 
-													$time = new Carbon\Carbon($order->created_at);
-													$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
-												?>
-												<td>{{$time->hour.':'.$time->minute.' | '.$created_at}}</td>
+												<td title="{{ \Morilog\Jalali\Jalalian::forge($order->created_at)->format('%H:%S - %d %B %Y') }}">
+													{{ \Morilog\Jalali\Jalalian::forge($order->created_at)->ago() }}
+												</td>
+
 												@if ($order->payment)
-												<?php
-													$time = new Carbon\Carbon($order->payment);
-													$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
-												?>
-												<td>{{$time->hour.':'.$time->minute.' | '.$payment}}</td>
+													<td title="{{ \Morilog\Jalali\Jalalian::forge($order->payment)->format('%H:%S - %d %B %Y') }}">
+														{{ \Morilog\Jalali\Jalalian::forge($order->payment)->ago() }}
+													</td>
 												@else
-												<td><span class="label label-danger">هنوز پرداخت نشده</span></td>
+													<td><span class="label label-danger">هنوز پرداخت نشده</span></td>
 												@endif
 												<td>
 													<a href="/panel/invoice/{{$order->id}}">
@@ -117,6 +130,8 @@
 										</tbody>
 									</table>
 								</div>
+								
+								{{ $orders->links() }}
 							</div>	
 						</div>	
 					</div>

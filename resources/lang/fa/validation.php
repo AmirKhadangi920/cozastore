@@ -147,7 +147,8 @@ return array(
         'keywords' => 'کلمات کلیدی',
         'advantages' => 'مزایا',
         'disadvantages' => 'معایب',
-        '' => '',
-        '' => '',
+        'avatar' => 'آواتار',
+        'expire' => 'انقضاء',
+        'value' => 'مقدار',
     ),
 );

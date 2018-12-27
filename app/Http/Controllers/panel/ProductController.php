@@ -55,16 +55,18 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        return $request;
+        
         $images = [];
 
         if ($req -> images != [])
         {
-            $site_logo = Option::select('value')->where('name', 'site_logo')->get();
+            $watermark = Option::select('value')->where('name', 'watermark')->first();
             foreach (Input::file('images') as $photo)
             {
                 $img = Image::make($photo)->resize(500, 500);
     
-                $watermark = Image::make(public_path('logo/' . $site_logo[0]->value));
+                $watermark = Image::make(public_path('logo/' . $watermark->value));
                 $ratio = $watermark->width() / $watermark->height();
                 $watermark->resize(50 * $ratio, 50);
                 $img->insert($watermark, 'bottom-right', 10, 10);
@@ -157,12 +159,12 @@ class ProductController extends Controller
     
         if ($req -> images != [])
         {
-            $site_logo = Option::select('value')->where('name', 'site_logo')->get();
+            $watermark = Option::select('value')->where('name', 'watermark')->first();
             foreach (Input::file('images') as $photo)
             {
                 $img = Image::make($photo)->resize(500, 500);
     
-                $watermark = Image::make(public_path('logo/' . $site_logo[0]->value));
+                $watermark = Image::make(public_path('logo/' . $watermark->value));
                 $ratio = $watermark->width() / $watermark->height();
                 $watermark->resize(50 * $ratio, 50);
                 $img->insert($watermark, 'bottom-right', 10, 10);
@@ -222,8 +224,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $id->delete();
-        return redirect()->back()->with('message', 'محصول '.$product->title.' با موفقیت حذف شد .');
+        $product->delete();
+        return redirect( route('product.index') )->with('message', 'محصول '.$product->title.' با موفقیت حذف شد .');
     }
 
     /**
@@ -234,30 +236,12 @@ class ProductController extends Controller
      */
     public function search ($query = '')
     {
-        $products = Product::select('pro_id', 'name', 'code', 'price', 'unit',  'offer', 'status', 'photo')
-            ->orderBy('created_at', 'DESC');
-        if ($query != '') {
-            $products->where('name', 'like', '%'.$query.'%');
-        }
-        $products =$products->get();
-        
-        $options = Option::select('name', 'value')->whereIn('name', ['site_name', 'site_logo'])->get();
-        foreach ($options as $option) {
-            switch ($option['name']) {
-                case 'site_name': $site_name = $option['value']; break;
-                case 'site_logo': $site_logo = $option['value']; break;
-            }
-        }
-
-
-        // return $products;
         return view('panel.products', [
-            'products' => $products,
-            'query' => $query,
+            'products' => Product::productCard($query),
             'page_name' => 'products',
+            'query' => $query,
             'page_title' => 'جستجوی محصولات برای "' . $query . '"',
-            'site_name'=> $site_name,
-            'site_logo'=> $site_logo
+            'options'=> $this->options(['site_name', 'site_logo'])
         ]);
     }
 

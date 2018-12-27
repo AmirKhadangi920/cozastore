@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\panel;
 
 use App\Models\Article;
-use Illuminate\Http\Request;
+use App\Http\Requests\ArticleRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 
@@ -44,7 +44,7 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
         auth()->user()->articles()->create(array_merge($request -> all(), [
             'image' => $this->upload_image( Input::file('image') )
@@ -87,7 +87,7 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(ArticleRequest $request, Article $article)
     {
         if ($request->hasFile('image'))
         {

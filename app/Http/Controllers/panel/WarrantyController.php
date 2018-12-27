@@ -97,6 +97,6 @@ class WarrantyController extends Controller
     public function destroy(Warranty $warranty)
     {
         $warranty->delete();
-        return redirect()->back()->with('message', "گارانتی {$warranty->title} با موفقیت حذف شد");
+        return redirect( route('warranty.index') )->with('message', "گارانتی {$warranty->title} با موفقیت حذف شد");
     }
 }

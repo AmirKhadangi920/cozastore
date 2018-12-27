@@ -207,16 +207,21 @@
 											<span class="block">تعداد محصولات</span>
 											<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{$product_count}}</span></span>
 											<div class="clearfix"></div>
-											<a href="/panel/products/add" class="badge badge-danger mt-5">ثبت محصول جدید</a>
+											<a href="/panel/product/create" class="badge badge-danger mt-5">ثبت محصول جدید</a>
 										</li>
 										<li>
 											@php
 												$key = count($total_sales) - 1;
-												$diff = $total_sales[$key]->sum - $total_sales[$key - 1]->sum;
-												$diff = $diff * 100 / $total_sales[$key]->sum;	
+												if (false) {
+													$diff = $total_sales[$key]->sum - $total_sales[$key - 1]->sum;
+													$diff = $diff * 100 / $total_sales[$key]->sum;	
+												}
+												else {
+													$diff = 0;
+												}
 											@endphp
 											<span class="block">درآمد آخرین دوره</span>
-											<span class="block txt-dark weight-500 font-18"><span class="counter-anim num-comma">{{ $total_sales[$key]->sum }}</span> تومان</span>
+											<span class="block txt-dark weight-500 font-18"><span class="counter-anim num-comma">@isset($total_sales[$key]) {{ $total_sales[$key]->sum }} @else 0 @endisset</span> تومان</span>
 												<span class="block @if($diff > 0) txt-success @else txt-danger @endif mt-5">
 												<i class="zmdi @if($diff > 0) zmdi-caret-up @else zmdi-caret-down @endif pr-5 font-20"></i>
 												<span class="weight-500">{{ round( $diff ) }} %</span>

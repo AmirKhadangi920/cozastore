@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\panel;
 
 use App\models\DiscountCode;
-use Illuminate\Http\Request;
+use App\Http\Requests\DiscountCodeRequest;
 use App\Http\Controllers\Controller;
 
 class DiscountCodeController extends Controller
@@ -40,7 +40,7 @@ class DiscountCodeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DiscountCodeRequest $request)
     {
         DiscountCode::create( $request->all() );
         return redirect()->back()->with('message', "کد تخفیف با موفقیت ثبت شد");
@@ -82,7 +82,7 @@ class DiscountCodeController extends Controller
      * @param  \App\models\DiscountCode  $discountCode
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DiscountCode $discountCode)
+    public function update(DiscountCodeRequest $request, DiscountCode $discountCode)
     {
         $discountCode->update( $request->all() );
         return redirect()->back()->with('message', "کد تخفیف با موفقیت بروز رسانی شد");

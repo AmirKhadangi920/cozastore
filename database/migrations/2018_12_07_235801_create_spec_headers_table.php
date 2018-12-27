@@ -23,7 +23,7 @@ class CreateSpecHeadersTable extends Migration
                     ->onUpdate('cascade');
                     
             $table->string('title', 50);
-            $table->string('description', 255);
+            $table->string('description', 255)->nullable();
             $table->timestamps();
         });
     }
