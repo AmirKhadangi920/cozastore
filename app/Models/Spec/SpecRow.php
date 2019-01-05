@@ -18,4 +18,9 @@ class SpecRow extends Model
     {
         return $this->belongsTo(SpecHeader::class, 'spec_header_id');
     }
+
+    public function specData ()
+    {
+        return $this->hasOne(SpecData::class, 'spec_row_id');
+    }
 }

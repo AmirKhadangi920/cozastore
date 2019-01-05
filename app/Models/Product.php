@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Spec\SpecData;
+use App\Models\Spec\Spec;
 
 class Product extends Model
 {
@@ -12,9 +13,13 @@ class Product extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'pro_id', 'category', 'name', 'code', 'short_description', 'aparat_video',
-        'price', 'unit', 'offer', 'colors', 'status', 'full_description',
-        'keywords', 'advantages', 'disadvantages'
+        'id', 'brand_id', 'category_id', 'name', 'code', 'short_description', 'aparat_video',
+        'price', 'unit', 'offer', 'colors', 'status', 'photo', 'gallery', 'full_description',
+        'keywords', 'advantages', 'disadvantages', 'spec_id'
+    ];
+
+    protected $casts = [
+        'gallery' => 'array'
     ];
 
     public static function productCard ($query = null)
@@ -45,28 +50,23 @@ class Product extends Model
         return $result->latest()->paginate(20);
     }
 
-    public static function productInfo ($id)
+    public static function productInfo ($product)
     {
-        $result = Static::select(
-            'id', 'name', 'photo', 'label', 'category_id', 'brand_id',
-            'short_description', 'aparat_video', 'full_description', 'keywords',
-            'status', 'advantages', 'disadvantages'
-        )->with([
-            'spec_data:id,spec_row_id,data,product_id',
-            'spec_data.specRow:id,spec_header_id,title,label,values',
-            
-            'variations:product_id,price,color_id,warranty_id',
+        return $product->load([
+            // Specification table full relations
+            'spec:id',
+            'spec.specHeaders:id,spec_id,title,description',
+            'spec.specHeaders.specRows:id,spec_header_id,title,label,values,help,multiple',
+            'spec.specHeaders.specRows.specData' => function ($query) use ($product) {
+                $query->where('product_id', $product->id);
+            },
+            // Product variations full relations
+            'variations',
             'variations.color:id,name,value',
             'variations.warranty:id,title,expire',
             'category:id,title',
             'brand:id,title',
         ]);
-        if ( auth()->check() )
-        {
-            $result->where('status', 1);
-        }
-
-        return $result->findOrFail($id);
     }
 
     public function category ()
@@ -87,6 +87,11 @@ class Product extends Model
     public function brand ()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function spec ()
+    {
+        return $this->belongsTo(Spec::class);
     }
 
     public function spec_data ()

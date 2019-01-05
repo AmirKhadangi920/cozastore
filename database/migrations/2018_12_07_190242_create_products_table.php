@@ -23,13 +23,6 @@ class CreateProductsTable extends Migration
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
 
-            $table->integer('parent_category')->unsigned()->nullable();
-                $table->foreign('parent_category')
-                    ->references('id')
-                    ->on('categories')
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade');
-
             $table->integer('category_id')->unsigned()->nullable();
                 $table->foreign('category_id')
                     ->references('id')
@@ -43,10 +36,18 @@ class CreateProductsTable extends Migration
                     ->on('brands')
                     ->onDelete('set null')
                     ->onUpdate('set null');
+
+            $table->integer('spec_id')->unsigned()->nullable();
+                $table->foreign('spec_id')
+                    ->references('id')
+                    ->on('specs')
+                    ->onDelete('set null')
+                    ->onUpdate('set null');
                     
             $table->string('name', 50);
             $table->string('code', 20)->nullable();
             $table->string('short_description', 255)->nullable();
+            $table->mediumText('note')->nullable();
             $table->string('aparat_video', 8)->nullable();
             $table->tinyInteger('status')->default(1);
             $table->text('full_description')->nullable();

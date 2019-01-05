@@ -48,6 +48,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Relation to Product model
+     *
+     * @return Product Model
+     */
+    public function products ()
+    {
+        return $this->hasMany(\App\Models\Product::class);
+    }
+
+    /**
      * Full_name Mutators
      *
      * @return String

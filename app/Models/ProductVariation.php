@@ -8,6 +8,11 @@ class ProductVariation extends Model
 {
     public $incrementing = false;
 
+    protected $fillable = [
+        'id', 'price', 'unit', 'offer', 'offer_deadline',
+        'stock_inventory', 'color_id', 'warranty_id'
+    ];
+
     /**
      * Relation to Product model
      *

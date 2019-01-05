@@ -130,6 +130,7 @@ class PanelController extends Controller
             'site_name', 'site_description', 'site_logo', 'watermark', 'shop_phone', 'shop_address'
         ])->get();
 
+        
         $options = [];
         foreach ($option as $item) {
             $options[$item['name']] = ['id' => $item['id'], 'value' => $item['value']];

@@ -94,67 +94,36 @@
 											<div class="form-group">
 												<label class="control-label mb-10" for="values">مقادیر</label>
 												<div class="input-group">
-													<input type="text" name="values" id="values" data-role="tagsinput" @isset($row) value="{{ implode(',', $row->values) }}" @else value="{{old('values')}}" @endisset class="form-control" placeholder="افزودن مقدار جدید" />
+													<input type="text" name="values" id="values" data-role="tagsinput" @if(isset($row) && $row->values) value="{{ implode(',', $row->values) }}" @else value="{{old('values')}}" @endif class="form-control" placeholder="افزودن مقدار جدید" />
 													<div class="input-group-addon"><i class="ti-info-alt"></i></div>
 												</div>
 											</div>
 										</div>
 
-										
-										<div class="col-md-3">
+										<div class="col-md-9">
 											<div class="form-group">
-												<label class="control-label mb-10" for="min">حداقل</label>
+												<label class="control-label mb-10" for="values">راهنما</label>
 												<div class="input-group">
-													<input type="number" name="min" id="min" @isset($row) value="{{$row->min}}" @else value="{{old('min')}}" @endisset class="form-control" placeholder="حداقل مقدار ورودی برای این فیلد" />
-													<div class="input-group-addon"><i class="ti-info-alt"></i></div>
+													<input type="text" name="help" id="help" @if(isset($row) && $row->help) value="{{ $row->help }}" @else value="{{old('help')}}" @endif class="form-control" placeholder="یک راهنمای کوتاه که هنگام پر کردن جدول در صفحه ثبت محصول به شما نمایش داده میشود " />
+													<div class="input-group-addon"><i class="ti-help"></i></div>
 												</div>
 											</div>
 										</div>
 
 										<div class="col-md-3">
 											<div class="form-group">
-												<label class="control-label mb-10" for="max">حداکثر</label>
-												<div class="input-group">
-													<input type="number" name="max" id="max" @isset($row) value="{{$row->max}}" @else value="{{old('max')}}" @endisset class="form-control" placeholder="حداکثر مقدار ورودی برای این فیلد" />
-													<div class="input-group-addon"><i class="ti-info-alt"></i></div>
-												</div>
-											</div>
-										</div>
-
-										<div class="col-md-3">
-											<div class="form-group">
-												<label class="control-label mb-10">چند انتخاب</label>
+												<label class="control-label mb-10">قابلیت چند انتخاب</label>
 												<div class="radio-list">
 													<div class="radio-inline">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($row) && $row->multiple == 0) checked="checked" @elseif(old('multiple') == 0) checked @endif name="multiple" id="multiple_0" value="0">
+															<input type="radio" @if(isset($row) && $row->multiple == 0) checked="checked" @elseif(old('multiple') == 0) checked @endif @if(!isset($row)) checked="checked" @endisset name="multiple" id="multiple_0" value="0">
 															<label for="multiple_0">نداشته باشد</label>
 														</div>
 													</div>
 													<div class="radio-inline pl-0">
 														<div class="radio radio-info">
-															<input type="radio" @if(isset($row) && $row->multiple == 1) checked="checked" @elseif(old('multiple') == 1) checked @endif  @if(!isset($row)) checked="checked" @endisset name="multiple" id="multiple_1" value="1">
+															<input type="radio" @if(isset($row) && $row->multiple == 1) checked="checked" @elseif(old('multiple') == 1) checked @endif name="multiple" id="multiple_1" value="1">
 															<label for="multiple_1">داشته باشد</label>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										
-										<div class="col-md-3">
-											<div class="form-group">
-												<label class="control-label mb-10">اجباری</label>
-												<div class="radio-list">
-													<div class="radio-inline">
-														<div class="radio radio-info">
-															<input type="radio" @if(isset($row) && $row->required == 0) checked="checked" @elseif(old('required') == 0) checked @endif name="required" id="required_0" value="0">
-															<label for="required_0">نباشد</label>
-														</div>
-													</div>
-													<div class="radio-inline pl-0">
-														<div class="radio radio-info">
-															<input type="radio" @if(isset($row) && $row->required == 1) checked="checked" @elseif(old('required') == 1) checked @endif  @if(!isset($row)) checked="checked" @endisset name="required" id="required_1" value="1">
-															<label for="required_1">باشد</label>
 														</div>
 													</div>
 												</div>
@@ -187,10 +156,15 @@
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">لیست جداول مشخصات فنی</h5>
+				<h5 class="txt-dark">لیست سطر های عنوان <span class="badge badge-primary">{{ $header->title }}</span></h5>
 			</div>
-
-			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"></div>
+			
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+				<a href="{{ route('header.index', ['specification' => $header->spec->id]) }}" class="badge badge-warning pull-left">
+					بازگشت به منوی عناوین
+					<i class="ti-arrow-left"></i>
+				</a>
+			</div>
 			<!-- /Breadcrumb -->
 		</div>
 		<!-- /Title -->
@@ -209,10 +183,8 @@
 												<th>عنوان</th>
 												<th>لیبل</th>
 												<th>مقادیر</th>
+												<th>راهنما</th>
 												<th>چند انتخاب</th>
-												<th>اجباری</th>
-												<th>حداقل</th>
-												<th>حداکثر</th>
 												<th>تاریخ ثبت</th>
 												<th>تاریخ آخرین ویرایش</th>
 												<th>عملیات</th>
@@ -224,10 +196,8 @@
 												<th>عنوان</th>
 												<th>لیبل</th>
 												<th>مقادیر</th>
+												<th>راهنما</th>
 												<th>چند انتخاب</th>
-												<th>اجباری</th>
-												<th>حداقل</th>
-												<th>حداکثر</th>
 												<th>تاریخ ثبت</th>
 												<th>تاریخ آخرین ویرایش</th>
 												<th>عملیات</th>
@@ -246,10 +216,8 @@
 														<li>{{ $item->values[$i] }}</li>
 													@endfor
 												</td>
-												<td>@if($item->multiple) <i class="icon ti-check text-success"></i> @else <i class="icon ti-close text-danger"></i>  @endif</td>
-												<td>@if($item->required) <i class="icon ti-check text-success"></i> @else <i class="icon ti-close text-danger"></i>  @endif</td>
-												<td>{{ $item->min }}</td>
-												<td>{{ $item->max }}</td>
+												<td>{{ $item->help }}</td>
+												<td>@if($item->multiple) <i class="ti-close text-danger"></i> @else <i class="ti-check text-success"></i> @endif</td>
 												<td>{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->format('%H:%S - %d %B %Y') }}</td>
 												<td>{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}</td>
 												<td>

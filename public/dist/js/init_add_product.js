@@ -18,8 +18,8 @@ $(document).ready(function(){
     });
 
     drEvent.on('dropify.beforeClear', function(){
-        let filename = $(this).parent().find('input[type="file"]').attr('filename');
-        let images = JSON.parse($('input[name="deleted_images"]').val());
+        var filename = $(this).parent().find('input[type="file"]').attr('filename');
+        var images = JSON.parse($('input[name="deleted_images"]').val());
         images[images.length] = filename;
         $('input[name="deleted_images"]').val(JSON.stringify(images));
 
@@ -28,7 +28,7 @@ $(document).ready(function(){
 
 
     $('.add-new-image').click(function () {
-        var temp = '<div class="col-md-3 mt-40"><input type="file" name="images['+ (++ITER) +']"'; 
+        var temp = '<div class="col-md-3 mt-20"><input type="file" name="images[]"'; 
         temp += 'data-allowed-formats="square" data-max-file-size="512K" class="dropify" /></div>';
 
         $('.images-gallery').append(temp);
@@ -64,16 +64,6 @@ $(document).ready(function(){
             li.css({background: color[i]});
             li = li.next();
         }
-    });
-
-    var i = 1;
-    // add new features section
-	$('.create-new-feautre').click(function () {
-        var featuresRow = s2[0] + i + s2[1] + (i++) + s2[2];
-        $('.features-values').append(featuresRow);
-        $('.features-values').children('.features-row').last().find('.select2').select2();
-        $('.features-values').children('.features-row').last().css({display: 'none'});
-        $('.features-values').children('.features-row').last().slideDown();
     });
     
     $('.add-pics').click(function () { 
@@ -128,82 +118,16 @@ $(document).ready(function(){
     });
 });
 
-$('select.select2.categories').change(function () {
-    get_specs($(this).val());
+/* Datetimepicker Init*/
+$('#datetimepicker1').datetimepicker({
+    useCurrent: false,
+    icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        },
+}).on('dp.show', function() {
+if($(this).data("DateTimePicker").date() === null)
+    $(this).data("DateTimePicker").date(moment());
 });
-
-function get_specs (id) {
-    $.get('/panel/specs/get/' + id, function(data, status){
-        if(status == 'success') {
-            var spec_id = data.id;
-            data = JSON.parse(data.specs);
-            var temp = '';
-            for (item in data) {
-                temp += '<div class="row"><div class="col-md-2"><h5 class="mb-10 col-md-12 border-bottom">';
-                temp += '<i class="ti-angle-double-left" style="font-size: 15px; color:darkgray;"></i>';
-                temp += '<b>' + data[item]['header'] + '</b></h5></div><div class="col-md-10"><div class="col-md-12">';
-
-                for (spec in data[item]['items'])
-                {
-                    temp += '<div class="col-md-6">';
-                    if (data[item]['items'][spec]['select'] !== undefined)
-                    {
-                        temp += '<div class="form-group">';
-                        temp += '<label class="control-label mb-10">' + data[item]['items'][spec]['name'] + '</label>';
-                        temp += '<div class="radio-list">';
-                        var x = 0;
-                        for (select in data[item]['items'][spec]['select'])
-                        {
-                            temp += '<div class="radio-inline"><div class="radio radio-info">';
-                            var id = 'id-' + Math.floor((Math.random() * 10000) + 1);
-                            temp += '<input type="radio" id="' + id + '"';
-                            if (x++ == 0)
-                            {
-                                temp += ' checked="checked" ';
-                            }
-                            temp += 'name="specs[' + data[item]['value'] + '][' + data[item]['items'][spec]['value'] + ']"';
-                            temp += 'value="' + data[item]['items'][spec]['select'][select] + '" />';
-                            temp += '<label for="' + id + '">' + data[item]['items'][spec]['select'][select]; 
-                            if (data[item]['items'][spec]['label'] !== undefined)
-                            {
-                                temp += data[item]['items'][spec]['label'];
-                            }
-                            temp += ' </label></div></div>';	
-                        }
-                        
-                        temp += '</div></div>';
-                    }
-                    else
-                    {
-                        temp += '<div class="form-group"><label class="control-label mb-10">';
-                        temp += data[item]['items'][spec]['name'] + '</label>';
-                        if (data[item]['items'][spec]['label'] !== undefined)
-                        {
-                            temp += '<div class="input-group">';
-                        }
-                        temp += '<input type="text" class="form-control"';
-                        temp += 'name="specs['+data[item]['value']+']['+data[item]['items'][spec]['value']+']"';
-                        if (data[item]['items'][spec]['help'] !== undefined)
-                        {
-                            temp += 'placeholder="' + data[item]['items'][spec]['help'] + '"';
-
-                        }            
-                        temp += '>';
-                        if (data[item]['items'][spec]['label'] !== undefined)
-                        {
-                            temp += '<div class="input-group-addon">'+data[item]['items'][spec]['label']+'</div></div>';
-                        }
-                        temp += '</div>';
-                    }
-                    temp += '</div>';
-                }
-                
-                temp += '</div></div></div><div class="seprator-block"></div><hr class="light-grey-hr"/>';
-                temp += '<div class="seprator-block"></div>';
-            }            
-            temp += '<input type="hidden" name="spec_id" value="' + spec_id + '" />';
-
-            $('.specs-table').html(temp);
-        }
-    });
-}

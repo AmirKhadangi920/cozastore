@@ -14,7 +14,7 @@ $factory->define(App\Models\Product::class, function (FakerEng $faker) {
         'full_description' => Faker::paragraph(),
         'keywords' => implode( ',', $faker->words( rand(1, 10) ) ),
         'photo' => $faker->imageUrl(480, 320),
-        'gallery' => $faker->imageUrl(480, 320),
+        'gallery' => [$faker->imageUrl(480, 320)],
         'label' => $faker->numberBetween(0, 4),
         'advantages' => implode( ',', $faker->words( rand(1, 10) ) ),
         'disadvantages' => implode( ',', $faker->words( rand(1, 10) ) ),

@@ -48,7 +48,7 @@ class SpecRowController extends Controller
     public function store(Request $request, SpecHeader $header)
     {
         $header->specRows()->create(array_merge($request->all(), [
-            'values' => explode(',', $request->values),
+            'values' => ($request->values) ? explode(',', $request->values) : null,
         ]));
         return redirect()->back()->with('message', "سطر {$request->title} برای عنوان 
                     {$header->title} با موفقیت ثبت شد");
@@ -97,7 +97,7 @@ class SpecRowController extends Controller
     public function update(Request $request, SpecHeader $header, SpecRow $row)
     {
         $row->update(array_merge($request->all(), [
-            'values' => explode(',', $request->values),
+            'values' => ($request->values) ? explode(',', $request->values) : null,
         ]));
         return redirect()->back()->with('message', "سطر {$row->title} در عنوان 
                     {$header->title} با موفقیت بروزرسانی شد");

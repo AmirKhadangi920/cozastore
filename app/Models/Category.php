@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Spec\Spec;
 
 class Category extends Model
 {
@@ -19,8 +20,18 @@ class Category extends Model
             ->where('parent', null)->latest()->get();
     }
     
+    public function parent ()
+    {
+        return $this->belongsTo(Category::class, 'parent');
+    }
+
     public function childs ()
     {
         return $this->hasMany(Category::class, 'parent');
+    }
+
+    public function specs ()
+    {
+        return $this->hasMany(Spec::class);
     }
 }

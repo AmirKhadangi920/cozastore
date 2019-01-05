@@ -48,7 +48,8 @@ class DatabaseSeeder extends Seeder
 
                 $specs = factory(\App\Models\Spec\Spec::class)->create([
                     'category_id' => $category->id
-                ])->each( function ($spec) use(&$spec_rows) {
+                ]);
+                $specs->each( function ($spec) use (&$spec_rows) {
 
                     factory(\App\Models\Spec\SpecHeader::class, rand(2, 5))->create([
                         'spec_id' => $spec->id
@@ -63,14 +64,14 @@ class DatabaseSeeder extends Seeder
                 $products = factory(\App\Models\Product::class, rand(1, 10))->create([
                     'user_id' => $user->id,
                     'brand_id' => $brands[rand(0, 9)]->id,
-                    'parent_category' => $category->id,
-                    'category_id' => $category->id
+                    'category_id' => $category->id,
+                    'spec_id' => $specs->id
                 ])->each(function ($product) use ($user, $colors, $orders, $warranties, $spec_rows) {
 
                     factory(\App\Models\ProductVariation::class, rand(1, 3))->create([
                         'warranty_id' => $warranties[rand(0, 9)]->id, 
                         'product_id' => $product->id,
-                        'color_id' => $colors[rand(0, 19)]->id
+                        'color_id' => $colors[rand(0, 19)]->id,
                     ])->each( function ($variation) use ($orders) {
 
                         factory(\App\Models\OrderItem::class, rand(0, 3))->create([

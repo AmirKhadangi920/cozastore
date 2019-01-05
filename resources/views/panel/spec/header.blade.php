@@ -115,11 +115,16 @@
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">لیست جداول مشخصات فنی</h5>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<h5 class="txt-dark">لیست عناوین جدول مشخصات فنی گروه <span class="badge badge-primary">{{ $specification->category->title }}</span></h5>
 			</div>
 
-			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"></div>
+			<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+				<a href="{{ route('specification.index') }}" class="badge badge-warning pull-left">
+					بازگشت به منوی جداول
+					<i class="ti-arrow-left"></i>
+				</a>
+			</div>
 			<!-- /Breadcrumb -->
 		</div>
 		<!-- /Title -->

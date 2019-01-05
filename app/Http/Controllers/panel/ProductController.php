@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers\panel;
 
+use App\Http\Requests\ProductRequest;
+use App\Http\Controllers\Controller;
 use App\models\Product;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Brand;
 use App\Models\Warranty;
-use App\Http\Requests\ProductRequest;
-use App\Http\Controllers\Controller;
+use App\Models\ProductVariation;
+use App\Models\Spec\SpecData;
+use App\Models\Spec\SpecRow;
+use Morilog\Jalali\Jalalian;
 use Cookie;
 use Image;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -55,56 +61,28 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        return $request;
+        $images = $this->upload($request->images);
         
-        $images = [];
-
-        if ($req -> images != [])
-        {
-            $watermark = Option::select('value')->where('name', 'watermark')->first();
-            foreach (Input::file('images') as $photo)
-            {
-                $img = Image::make($photo)->resize(500, 500);
-    
-                $watermark = Image::make(public_path('logo/' . $watermark->value));
-                $ratio = $watermark->width() / $watermark->height();
-                $watermark->resize(50 * $ratio, 50);
-                $img->insert($watermark, 'bottom-right', 10, 10);
-                
-                $name = substr(md5(time() . rand()), 0, 8);
-                $imageName = $name . '.' . $photo->getClientOriginalExtension();
-                $images[] = $imageName;
-                $img->save(public_path('uploads/') . $imageName);
-            }
-        }
-
-        if ($req->aparat_video) $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
-
-        if ($req -> parent) {
-            $temp = Group::select('parent')->where('id', $req->parent)->get();
-            while (!empty($temp[0])) {
-                $temp = Group::select('parent')->where('id', $temp[0]->parent)->get();
-                if (isset($temp[0]) && $temp[0]->parent !== null) {
-                    $parent_category = $temp[0]->parent;
-                    $product->parent_category = $parent_category; 
-                }
-            }   
-        }
-        
-        $data = array_merge( $req->all(), [
+        $product = auth()->user()->products()->create( array_merge($request->except('parent', 'brand', 'variations'), [
             'id' => substr(md5(time()), 0, 8),
-            'category' => $req->parent,
-            'offer' => ($req->offer == null)? 0 : $req->offer,
             'image' => ( isset($images[0]) ) ? $images[0] : null,
             'gallery' => json_encode($images),
-            'stock_inventory' => ($req->stock_inventory == null)? 0 : $req->stock_inventory,
-        ]);
-        unset($data['parent']);
-        // Insert product details to database
-        $product = Product::create( $data );
+            'brand_id' => $request->brand,
+            'category_id' => $request->parent,
+            'aparat_video' => ($request->aparat_video) ? substr($request->aparat_video, strripos($request->aparat_video, '/') + 1) : null
+        ]));
+
+        $variation = $request->variations[0];
+        $product->variations()->create(array_merge($variation, [
+            'id' => substr(md5(time()), 0, 8),
+            'color_id' => $variation['color'],
+            'warranty_id' => $variation['warranty'],
+            'offer' => ( $variation['offer'] ) ? $variation['offer'] : 0 ,
+            'stock_inventory' => ( $variation['stock_inventory'] ) ? $variation['stock_inventory'] : 0,
+        ]));
 
         return redirect()->action(
-            'ProductController@edit', ['id' => $product->id]
+            'panel\ProductController@edit', ['id' => $product->id]
         )->with('message', 'محصول '.$product->name.' با موفقیت ثبت شد .');
     }
 
@@ -128,13 +106,33 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        // return Product::productInfo($product);
+
+        if ( is_null($product->spec_id) )
+        {
+            if ($product->category_id) 
+            {
+                $spec = Category::findOrFail($product->category_id)->specs()->first();
+                if ($spec == [])
+                    $spec = Category::findOrFail($product->category_id)->parent()->first()->specs()->first();
+
+                if ( $spec != [] )
+                    $product->update([ 'spec_id' => $spec->id ]);
+            }
+        }
+        
+        // return SpecRow::find(2331);
+        // return Product::productInfo($product);
+
         return view('panel.add-product', [
-            'groups'        => Category::first_levels(),
-            'product'       => Product::productInfo($id),
-            'edit'          => true,
-            'page_name'     => 'products',
-            'page_title'    => 'ویرایش محصول ',
-            'options'       => $this->options(['site_name', 'site_logo']) 
+            'product'     => Product::productInfo($product),
+            'groups'      => Category::first_levels(),
+            'colors'      => Color::latest()->get(),
+            'brands'      => Brand::latest()->get(),
+            'warranties'  => Warranty::latest()->get(),
+            'page_name'   => 'products',
+            'page_title'  => 'ویرایش محصول ',
+            'options'     => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
@@ -147,24 +145,25 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        $images = json_decode(Product::find($req->id)->gallery, true);
-        $deleted = json_decode($req -> deleted_images, true);
-        
-        foreach ($deleted as $img)
+        $images = $product->gallery;
+        if ($request->deleted_images)
         {
-            $temp = public_path('uploads/' . $img);
-            if(file_exists($temp)) unlink($temp);
-            if (($key = array_search($img, $images)) !== false) unset($images[$key]);
+            $deleted = json_decode($request->deleted_images, true);
+            foreach ($deleted as $img)
+            {
+                $temp = public_path('uploads/' . $img);
+                if(file_exists($temp)) unlink($temp);
+                if (($key = array_search($img, $images)) !== false) unset($images[$key]);
+            }
         }
-    
-        if ($req -> images != [])
+        if ($request->images != [])
         {
-            $watermark = Option::select('value')->where('name', 'watermark')->first();
+            $watermark = $this->options(['watermark'])['watermark'];
+            
             foreach (Input::file('images') as $photo)
             {
                 $img = Image::make($photo)->resize(500, 500);
-    
-                $watermark = Image::make(public_path('logo/' . $watermark->value));
+                $watermark = Image::make(public_path('logo/' . $watermark));
                 $ratio = $watermark->width() / $watermark->height();
                 $watermark->resize(50 * $ratio, 50);
                 $img->insert($watermark, 'bottom-right', 10, 10);
@@ -175,45 +174,59 @@ class ProductController extends Controller
                 $img->save(public_path('uploads/') . $imageName);
             }
         }
+        
+        $product->update( array_merge($request->except('parent', 'brand', 'variations', 'specs'), [
+            'image' => ( isset($images[0]) ) ? $images[0] : null,
+            'gallery' => $images,
+            'brand_id' => $request->brand,
+            'category_id' => $request->parent,
+            'aparat_video' => ($request->aparat_video) ? substr($request->aparat_video, strripos($request->aparat_video, '/') + 1) : null
+        ]));
 
-        if ($req->aparat_video) $req->aparat_video = substr($req->aparat_video, strripos($req->aparat_video, '/') + 1);
-
-        // Insert product details to database
-        $product = Product::find($req -> id);
-        if ($req -> parent) {
-            $temp = Group::select('parent')->where('id', $req->parent)->get();
-            while (!empty($temp[0])) {
-                $temp = Group::select('parent')->where('id', $temp[0]->parent)->get();
-                if (isset($temp[0]) && $temp[0]->parent !== null) {
-                    $parent_category = $temp[0]->parent;
-                    $product->parent_category = $parent_category; 
+        if ( $request->specs )
+        {
+            foreach ( $request->specs as $key => $item )
+            {
+                if ( isset( $item['id'] ) )
+                {
+                    SpecData::findOrFail($item['id'])->update(array_merge($item, [
+                        'data' => (gettype($item['data']) == 'array') ? implode(',', $item['data']) : $item['data']
+                    ]));
                 }
-            }   
+                elseif ( isset($item['data']) && $item['data'] )
+                {
+                    SpecRow::find($key)->specData()->create(array_merge($item, [
+                        'product_id' => $product->id,
+                        'data' => (gettype($item['data']) == 'array') ? implode(',', $item['data']) : $item['data'] 
+                    ]));
+                }
+            }
         }
-        $product->category = $req -> parent;
-        $product->name = $req -> name;
-        $product->code = $req -> code;
-        $product->short_description = $req -> short_description;
-        $product->aparat_video = $req -> aparat_video;
-        $product->price = $req -> price;
-        $product->unit = $req -> unit;
-        $product->offer = ($req->offer == null)? 0 : $req->offer;
-        $product->colors = $req -> colors;
-        $product->status = $req -> status;
-        $product -> label = $req -> label;
-        $product->full_description = $req -> full_description;
-        $product->keywords = $req -> keywords;
-        $product -> photo = ( isset($images[0]) ) ? $images[0] : null;
-        $product -> gallery = json_encode($images);
-        $product -> stock_inventory = ($req->stock_inventory == null)? 0 : $req->stock_inventory;
-        $product -> spec_table = $req -> spec_id;
-        $product -> specifications = json_encode($req->specs);
-        $product->advantages = $req -> advantages;
-        $product->disadvantages = $req -> disadvantages;
 
-        $product -> save();
+        foreach ( $request->variations as $item )
+        {
+            if ( isset( $item['id'] ) )
+            {
+                ProductVariation::findOrFail($item['id'])->update(array_merge($item, [
+                    'color_id' => $item['color'],
+                    'warranty_id' => $item['warranty'],
+                    'offer' => ( $item['offer'] ) ? $item['offer'] : 0 ,
+                    'stock_inventory' => ( $item['stock_inventory'] ) ? $item['stock_inventory'] : 0,
+                ]));
+            }
+            elseif ( $item['price'] )
+            {
+                $product->variations()->create(array_merge($item, [
+                    'id' => substr(md5(time()), 0, 8),
+                    'color_id' => $item['color'],
+                    'warranty_id' => $item['warranty'],
+                    'offer' => ( $item['offer'] ) ? $item['offer'] : 0 ,
+                    'stock_inventory' => ( $item['stock_inventory'] ) ? $item['stock_inventory'] : 0,
+                ]));
+            }
+        }
 
-        return redirect()->back()->with('message', 'محصول '.$req->name.' با موفقیت بروزرسانی شد .');
+        return redirect()->back()->with('message', 'محصول '.$product->name.' با موفقیت بروزرسانی شد .');
     }
 
     /**
@@ -267,5 +280,39 @@ class ProductController extends Controller
         $results = [];
         get_parents($results, $id);
         return $results;
+    }
+
+    /**
+     * Upload the image and insert watermark on it
+     *
+     * @param File $images
+     * @return Array
+     */
+    public function upload ($input)
+    {
+        if ($input != [])
+        {
+            $images = [];
+            $watermark = Option::select('value')->where('name', 'watermark')->first();
+            foreach (Input::file('images') as $photo)
+            {
+                $img = Image::make($photo)->resize(500, 500);
+    
+                $watermark = Image::make(public_path('logo/' . $watermark->value));
+                $ratio = $watermark->width() / $watermark->height();
+                $watermark->resize(50 * $ratio, 50);
+                $img->insert($watermark, 'bottom-right', 10, 10);
+                
+                $name = substr(md5(time() . rand()), 0, 8);
+                $imageName = $name . '.' . $photo->getClientOriginalExtension();
+                $images[] = $imageName;
+                $img->save(public_path('uploads/') . $imageName);
+            }
+            return $images;
+        }
+        else
+        {
+            return [];
+        }
     }
 }

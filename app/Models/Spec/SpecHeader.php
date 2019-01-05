@@ -8,6 +8,11 @@ class SpecHeader extends Model
 {
     protected $fillable = [ 'title', 'description' ];
 
+    public function spec ()
+    {
+        return $this->belongsTo(Spec::class);
+    }
+
     public function specRows ()
     {
         return $this->hasMany(SpecRow::class);
