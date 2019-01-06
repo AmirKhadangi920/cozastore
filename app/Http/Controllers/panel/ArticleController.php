@@ -46,10 +46,12 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        auth()->user()->articles()->create(array_merge($request -> all(), [
+        $article = auth()->user()->articles()->create(array_merge($request -> all(), [
             'image' => $this->upload_image( Input::file('image') )
         ]));
-        return redirect()->back()->with('message', "مقاله {$request->title} با موفقیت ثبت شد");
+        return redirect()->action(
+            'panel\ArticleController@edit', ['article' => $article->id]
+        )->with('message', "مقاله {$request->title} با موفقیت ثبت شد");
     }
 
     /**
@@ -115,5 +117,21 @@ class ArticleController extends Controller
     {
         $article->delete();
         return redirect()->back()->with('message', "مقاله {$article->title} با موفقیت حذف شد");
+    }
+    
+    /**
+     * Show the filtered articles from storage.
+     *
+     * @param  String  $query
+     * @return \Illuminate\Http\Response
+     */
+    public function search ($query = '')
+    {
+        return view('panel.articles', [
+            'articles' => Article::latest()->where('title', 'like', "%$query%")->paginate(20),
+            'page_name' => 'blog',
+            'page_title' => 'مقالات',
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
     }
 }

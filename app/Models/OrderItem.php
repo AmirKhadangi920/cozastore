@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
-    protected $table = 'order_items';
+    protected $fillable = [ 'variation_id' , 'count', 'price', 'offer' ];
 
     /**
      * Relation to ProductVariation Model
@@ -15,6 +15,6 @@ class OrderItem extends Model
      */
     public function variation ()
     {
-        return $this->belongsTo(\App\Models\ProductVariation::class);
+        return $this->belongsTo(ProductVariation::class);
     }
 }

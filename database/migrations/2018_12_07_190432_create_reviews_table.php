@@ -29,7 +29,11 @@ class CreateReviewsTable extends Migration
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
                     
-            $table->tinyInteger('rating');
+            $table->tinyInteger('value')->default(0);
+            $table->tinyInteger('quality')->default(0);
+            $table->tinyInteger('design')->default(0);
+            $table->tinyInteger('total')->default(0);
+
             $table->mediumText('review');
             $table->mediumText('answer')->nullable();
             $table->boolean('seen')->default(0);

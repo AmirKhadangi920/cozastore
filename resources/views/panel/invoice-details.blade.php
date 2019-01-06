@@ -179,6 +179,8 @@
 											$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 										?>
 										<b class="txt-dark">پرداخت :</b> {{$time->hour.':'.$time->minute.' | '.$payment}}
+										<b class="txt-dark">کد احراز پرداخت :</b> {{$invoice->auth_code}}
+										<b class="txt-dark">شناسه پرداخت :</b> {{$invoice->payment_code}}
 										@else
 										<b class="txt-dark">پرداخت :</b> <span class="label label-danger">هنوز پرداخت نشده</span>
 										@endif
@@ -208,9 +210,9 @@
 									</span>
 									<span class="mb-15">
 										<div class="input-group mb-15">
-											<input type="text" id="example-input2-group2" @if ($invoice->admin_description) value="{{$invoice->admin_description}}" @endif name="example-input2-group2" class="form-control" placeholder="توضیح خود درباره این سفارش را وارد کنید">
+											<textarea class="form-control" id="short_description" name="short_description" style="resize:none;" placeholder="توضیح خود درباره این سفارش را وارد کنید" rows="2">@if($invoice->admin_description){{$invoice->admin_description}}@endif</textarea>
 											<span class="input-group-btn">
-												<button type="button" onclick="window.location = '/panel/invoice/{{$invoice->id}}/description/' + this.parentNode.previousElementSibling.value" class="btn btn-orange btn-anim"><i class="icon-rocket"></i><span class="btn-text">ثبت</span></button>
+												<button type="button" style="height:54px" onclick="window.location = '/panel/invoice/{{$invoice->id}}/description/' + this.parentNode.previousElementSibling.value" class="btn btn-orange btn-anim"><i class="icon-rocket"></i><span class="btn-text">ثبت</span></button>
 											</span> 
 										</div>
 									</span>

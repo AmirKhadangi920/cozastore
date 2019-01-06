@@ -4,7 +4,7 @@ namespace App\Http\Controllers\panel;
 
 use App\Http\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
-use App\models\Product;
+use App\Models\Product;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Brand;
@@ -66,7 +66,7 @@ class ProductController extends Controller
         $product = auth()->user()->products()->create( array_merge($request->except('parent', 'brand', 'variations'), [
             'id' => substr(md5(time()), 0, 8),
             'image' => ( isset($images[0]) ) ? $images[0] : null,
-            'gallery' => json_encode($images),
+            'gallery' => $images,
             'brand_id' => $request->brand,
             'category_id' => $request->parent,
             'aparat_video' => ($request->aparat_video) ? substr($request->aparat_video, strripos($request->aparat_video, '/') + 1) : null
@@ -151,29 +151,13 @@ class ProductController extends Controller
             $deleted = json_decode($request->deleted_images, true);
             foreach ($deleted as $img)
             {
-                $temp = public_path('uploads/' . $img);
+                $temp = public_path( $img );
                 if(file_exists($temp)) unlink($temp);
                 if (($key = array_search($img, $images)) !== false) unset($images[$key]);
             }
         }
-        if ($request->images != [])
-        {
-            $watermark = $this->options(['watermark'])['watermark'];
-            
-            foreach (Input::file('images') as $photo)
-            {
-                $img = Image::make($photo)->resize(500, 500);
-                $watermark = Image::make(public_path('logo/' . $watermark));
-                $ratio = $watermark->width() / $watermark->height();
-                $watermark->resize(50 * $ratio, 50);
-                $img->insert($watermark, 'bottom-right', 10, 10);
-                
-                $name = substr(md5(time() . rand()), 0, 8);
-                $imageName = $name . '.' . $photo->getClientOriginalExtension();
-                $images[] = $imageName;
-                $img->save(public_path('uploads/') . $imageName);
-            }
-        }
+        
+        $images = array_merge( $this->upload($request->images), $images );
         
         $product->update( array_merge($request->except('parent', 'brand', 'variations', 'specs'), [
             'image' => ( isset($images[0]) ) ? $images[0] : null,
@@ -259,30 +243,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the filtered products from storage.
-     *
-     * @param  String  $id
-     * @return Array of parents categories
-     */
-    public function breadcrumb ($id)
-    {
-        function get_parents (&$output, $p, $i = 0) {
-            $sql = "SELECT `cat1`.`parent`, `cat1`.`id`, `cat1`.`title` FROM `categories` as `cat1`
-                INNER JOIN `categories` as `cat2` ON `cat1`.`id` = `cat2`.`parent` WHERE `cat2`.`id` = ?";
-            
-            $output[$i] = DB::select($sql, [$p]);
-
-            if (!empty($output[$i][0]->parent)) {
-                get_parents($output, $output[$i][0]->id, ++$i);
-            }
-        }
-
-        $results = [];
-        get_parents($results, $id);
-        return $results;
-    }
-
-    /**
      * Upload the image and insert watermark on it
      *
      * @param File $images
@@ -293,20 +253,10 @@ class ProductController extends Controller
         if ($input != [])
         {
             $images = [];
-            $watermark = Option::select('value')->where('name', 'watermark')->first();
+            $watermark = $this->options(['watermark'])['watermark'];
             foreach (Input::file('images') as $photo)
             {
-                $img = Image::make($photo)->resize(500, 500);
-    
-                $watermark = Image::make(public_path('logo/' . $watermark->value));
-                $ratio = $watermark->width() / $watermark->height();
-                $watermark->resize(50 * $ratio, 50);
-                $img->insert($watermark, 'bottom-right', 10, 10);
-                
-                $name = substr(md5(time() . rand()), 0, 8);
-                $imageName = $name . '.' . $photo->getClientOriginalExtension();
-                $images[] = $imageName;
-                $img->save(public_path('uploads/') . $imageName);
+                $images[] = $this->upload_image($photo, 500, public_path('logo/' . $watermark) );
             }
             return $images;
         }

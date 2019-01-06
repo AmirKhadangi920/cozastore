@@ -25,12 +25,10 @@ class SpecRowRequest extends FormRequest
     {
         return [
             'title'     => [ 'required', 'max:50' ],
-            'label'     => [ 'nullable', 'label:50' ],
+            'label'     => [ 'nullable', 'max:50' ],
             'values'    => [ 'nullable' ],
-            'min'       => [ 'nullable', 'min:0', 'max:100' ],
-            'max'       => [ 'nullable', 'gt:min', 'digits:10' ],
-            'multiple'  => [ 'required', 'boolean' ],
-            'required'  => [ 'required', 'boolean' ]
+            'help'    => [ 'nullable', 'string' ],
+            'multiple'  => [ 'required', 'boolean' ]
         ];
     }
 }

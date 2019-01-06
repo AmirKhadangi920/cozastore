@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Option;
 use App\Models\Product;
 use Cookie;
-use App\Traits\Init;
 
 class LoginController extends Controller
 {
@@ -23,7 +22,6 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-    use Init;
 
     /**
      * Where to redirect users after login.

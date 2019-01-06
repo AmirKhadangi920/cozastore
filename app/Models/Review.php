@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
+    protected $fillable = [
+        'product_id', 'value', 'quality', 'design', 'total', 'review'
+    ];
+    
     /**
      * relation to product model
      *
@@ -33,11 +37,11 @@ class Review extends Model
      */
     public static function list ()
     {
-        return Static::select('user_id', 'product_id', 'rating', 'review', 'created_at')
+        return Static::select('user_id', 'product_id', 'total', 'review', 'created_at')
             ->with([
                 'product:id,name',
                 'user:id,first_name,last_name'
-            ])->paginate(10);
+            ])->latest()->paginate(10);
     }
 
     /**

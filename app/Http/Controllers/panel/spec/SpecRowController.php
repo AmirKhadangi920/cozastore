@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\panel\spec;
 
 use App\Models\Spec\SpecRow;
-use Illuminate\Http\Request;
+use App\Http\Requests\SpecRowRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Spec\SpecHeader;
 
@@ -41,11 +41,11 @@ class SpecRowController extends Controller
     /**
      * Store a newly created specification table row in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\SpecRowRequest  $request
      * @param  \App\models\spec\SpecHeader  $header
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, SpecHeader $header)
+    public function store(SpecRowRequest $request, SpecHeader $header)
     {
         $header->specRows()->create(array_merge($request->all(), [
             'values' => ($request->values) ? explode(',', $request->values) : null,
@@ -94,7 +94,7 @@ class SpecRowController extends Controller
      * @param  \App\models\spec\SpecRow  $row
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SpecHeader $header, SpecRow $row)
+    public function update(SpecRowRequest $request, SpecHeader $header, SpecRow $row)
     {
         $row->update(array_merge($request->all(), [
             'values' => ($request->values) ? explode(',', $request->values) : null,

@@ -58,6 +58,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Relation to Review model
+     *
+     * @return Review Model
+     */
+    public function reviews ()
+    {
+        return $this->hasMany(\App\Models\Review::class);
+    }
+
+    /**
      * Full_name Mutators
      *
      * @return String

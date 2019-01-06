@@ -11,7 +11,7 @@ class Order extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'discount_code_id', 'admin_description', 'buyer_description', 'destination',
+        'id', 'buyer', 'discount_code_id', 'admin_description', 'buyer_description', 'destination',
         'postal_code', 'offer', 'shipping_cost', 'total', 'status', 'payment',
         'payment_jalali', 'auth_code', 'payment_code', 'datetimes'
     ];
@@ -34,6 +34,11 @@ class Order extends Model
     public function items ()
     {
         return $this->hasMany(\App\Models\OrderItem::class);
+    }
+
+    public function discount_code ()
+    {
+        return $this->belongsTo(DiscountCode::class);
     }
 
     /**

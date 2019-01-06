@@ -52,6 +52,7 @@ return array(
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Common/Inflector'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
+    'Darryldecode\\' => array($vendorDir . '/darryldecode/cart/src/Darryldecode'),
     'Cviebrock\\EloquentSluggable\\' => array($vendorDir . '/cviebrock/eloquent-sluggable/src'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
     'Cocur\\Slugify\\' => array($vendorDir . '/cocur/slugify/src'),

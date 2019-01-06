@@ -7,12 +7,10 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Traits\Init;
+use Illuminate\Support\Facades\Validator;
 
 class InvoiceController extends Controller
 {
-    use Init;
-
     public function index ()
     {
         return view('panel.invoice-archive', [
@@ -25,8 +23,6 @@ class InvoiceController extends Controller
 
     public function get (Order $order)
     {
-        // return Order::full_info($order);
-
         return view('panel.invoice-details', [
             'invoice' => Order::full_info($order),
             'page_name' => 'invoices',
@@ -37,12 +33,19 @@ class InvoiceController extends Controller
 
     public function description (Order $order, $description)
     {
+        Validator::make([ 'description' => $description ], [
+            'description' => 'required|max:255|string',
+        ])->validate();
+
         $order->update(['admin_description' => $description]);
         return redirect()->back()->with('message', 'توضیح شما برای فاکتور '.$order->id.'# با موفقیت ثبت شد .');
     }
 
     public function status (Order $order, $status)
     {
+        Validator::make([ 'status' => $status ], [
+            'status' => 'required|min:0|max:7|integer',
+        ])->validate();
 
         $datetimes = json_decode($order->datetimes, true);
         switch ($status) {

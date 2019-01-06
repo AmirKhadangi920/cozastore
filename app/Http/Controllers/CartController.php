@@ -3,154 +3,114 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Product;
-use App\Order;
-use App\OrderProducts;
-use App\Option;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderProducts;
+use App\Models\Option;
+use App\Models\ProductVariation;
+use App\Traits\Init;
 use Cookie;
 use Auth;
-use App\Traits\Init;
 use Carbon\Carbon;
+use Validator;
+use App\Models\Brand;
+use App\Models\OrderItem;
 class CartController extends Controller
 {
-    use Init;
-
     public function index ()
     {
-        $this -> check_cart();
+        return $this -> check_cart();
 
-        return view('store.shoping-cart', [
-            'cart_products' => $this -> Get_Cart_items(),
-            'top_groups' => $this -> Get_sub_groups(),
-            'page_title' => 'سبد خرید',
-            'options' => $this->options([
-                'site_name', 'site_description', 'site_logo',
-                'social_link', 'dollar_cost', 'shipping_cost'
+        return view('store.cart  ', [
+            'products'      => Product::productCard(),
+            'offers'        => [ 'mostـurgent' => ProductVariation::productOffers('mostـurgent') ],
+            'groups'        => $this -> Get_sub_groups(),
+            'cart_products' => $this -> Get_Cart_items([ 'more' => true ]),
+            'brands'        => Brand::all(),
+            'top_products'  => ProductVariation::getTops(18, true),
+            'page_title'    => 'سبد خرید',
+            'options'       => $this->options([
+                'slider', 'posters', 'site_name', 'site_description', 'shipping_cost',
+                'site_logo', 'social_link', 'dollar_cost', 'shop_address', 'shop_phone'
             ])
         ]);
     }
 
-    public function add ($id, $title, $count, $color = null)
+    public function add (ProductVariation $variation)
     {
-        $product = Product::select('price', 'unit', 'offer', 'label', 'stock_inventory')->where('pro_id', $id)->get();
-        if ($product->all() == []) { return redirect()->back(); }
+        // Validate input data and product status , stock_inventory
+        $values = Validator::make([
+                'quantity'  => $_GET['quantity'],
+                'label'     => $variation->product->label,
+                'inventory' => $variation->stock_inventory
+            ], [
+                'quantity'  => 'required|min:1|integer',
+                'label'     => 'not_in:1,2,3,4',
+                'inventory' => "integer|min:{$_GET['quantity']}"
+            ], [
+                'label.not_in'  => 'متاسفانه امکان ثبت این محصول در حال حاضر ممکن نیست .',
+                'inventory.max' => 'متاسفانه در حاضر موجودی انبار این محصول حداکثر '.$variation->stock_inventory.' عدد است '
+        ])->validate();
 
-        if ($product[0]->label !== null)
+        // Get dollar_cost from options table
+        if ( $variation->unit )
         {
-            return redirect()->back()->with('message', 'متاسفانه امکان ثبت این محصول در حال حاضر ممکن نیست .')
-                ->with('message_type', 'warning');
-        }
-        else if ($product[0]->stock_inventory < $count)
-        {
-            return redirect()->back()->with('message', 'متاسفانه در حاضر موجودی انبار این محصول حداکثر '.$product[0]->stock_inventory.' عدد است ')
-                ->with('message_type', 'warning');
-        }
-
-        if (Auth::check())
-        {
-            $order = Order::select('id')->where('buyer', Auth::user()->id)->where('status', 0)->get();
-            if (!empty($order->all()))
-            {
-                $order_product = new OrderProducts();
-                $order_product -> order = $order[0]->id;
-                $order_product -> product = $id;
-                $order_product -> color = $color;
-                $order_product -> count = $count;
-                $order_product -> save(); 
-            }
-            else
-            {
-                $order = new Order();
-                $order -> id = substr(md5(time()), 0, 8);
-                $order -> buyer = Auth::user()->id;
-                $order -> destination = Auth::user()->state.' ، '.Auth::user()->city.' ، '.Auth::user()->address;
-                $order -> postal_code = Auth::user()->postal_code;
-                $order -> save();
-
-                $order_product = OrderProducts::select('id')->where('order', $order -> id)
-                    ->where('product', $id)->get();
-                
-                if (!empty($order_product->all())) {
-                    $order_product = OrderProducts::find($order_product[0]->id);
-                    $order_product -> color = $color;
-                    $order_product -> count = $count;
-                    $order_product -> save();
-                } else {
-                    $order_product = new OrderProducts();
-                    $order_product -> order = $order -> id;
-                    $order_product -> product = $id;
-                    $order_product -> color = $color;
-                    $order_product -> count = $count;
-                    $order_product -> save(); 
-                }
-            }
-
-            return redirect()->back()->with('message', $title.' با موفقیت به سبد خرید شما اضافه شد .');
+            $dollar_cost = $this->options(['dollar_cost'])['dollar_cost'];
+            $variation->price *= $dollar_cost;
+            $variation->offer *= $dollar_cost;
         }
 
+        // Check if the user has logged in , create order for his/him and assign variation to that
+        if ( Auth::check() )
+        {
+            $order = Order::firstOrCreate([
+                'buyer'       => Auth::user()->id,
+                'status'      => 0,
+            ], [
+                'id'          => substr(md5( time().'_'.rand() ), 0, 8),
+                'destination' => Auth::user()->state.' ، '.Auth::user()->city.' ، '.Auth::user()->address,
+                'postal_code' => Auth::user()->postal_code
+            ]);
+
+            $order->items()->updateOrCreate([
+                'variation_id' => $variation->id,
+            ], [
+                'count'        => $values['quantity'],
+                'price'        => $variation->price,
+                'offer'        => ( $variation->offer && $variation->offer < $variation->price )
+                                        ? $variation->price - $variation->offer : 0
+            ]);
+            
+            return redirect()->back()->with('message', $variation->product->name.' با موفقیت به سبد خرید شما اضافه شد .');
+        }
+
+        // If the use doesn't logged in , save it's order item in cookies
         $cart =  json_decode(Cookie::get('cart'), true);
-        if ($cart)
-        {
-            foreach ($cart as $key => $item)
-            {
-                if ($item['id'] == $id)
-                {
-                    $cart[$key] = [
-                        'id' => $id,
-                        'count' => $count,
-                        'color' => $color
-                    ];
-                    Cookie::queue('cart', json_encode($cart), 60 * 24 * 30);
-                    
-                    return redirect()->back()->with('message', $title.' با موفقیت در سبد خرید شما اصلاح شد .');            
-                }
-            }
-        }
-
-        $cart[time()] = [
-            'id' => $id,
-            'count' => $count,
-            'color' => $color
-        ];        
+        $cart[ $variation->id ] = $values['quantity'];
         Cookie::queue('cart', json_encode($cart), 60 * 24 * 30);
-     
-        return redirect()->back()->with('message', $title.' با موفقیت به سبد خرید شما اضافه شد .');
+
+        return redirect()->back()->with('message', $variation->product->name.' با موفقیت به سبد خرید شما اضافه شد .');
     }
 
-    public function remove ($id, $title)
+    public function remove (ProductVariation $variation)
     {
-        if (Auth::check())
+        // Check if user has logged in , remove a variation from order_items table in DB
+        if ( Auth::check() )
         {
-            $order = Order::select('id')->where('buyer', Auth::user()->id)->where('status', 0)->get();
-            if (!empty($order->all())) {
-                $order_product = OrderProducts::select('id')->where('order', $order[0]->id)
-                ->where('product', $id)->get();
-                
-                if (!empty($order_product->all())) {
-                    OrderProducts::destroy($order_product[0]->id);
-                    return redirect()->back()->with('message', $title.' با موفقیت از سبد خرید شما حذف شد .');
-                } else {
-                    return redirect()->back();
-                }
-            } else {
-                return redirect()->back();
-            }
-        }
+            $order = Order::select('id')->where('buyer', Auth::user()->id)->where('status', 0)->first();
+            $variation->order_item()->where('order_id', $order->id)->delete();
 
-        $cart =  json_decode(Cookie::get('cart'), true);
-        if ($cart) 
-        {
-            foreach ($cart as $key => $item) {
-                if ($item['id'] == $id)
-                {
-                    unset($cart[$key]);
-                    Cookie::queue('cart', json_encode($cart), 60 * 24 * 30);
-                    
-                    return redirect()->back()->with('message', $title.' با موفقیت از سبد خرید شما حذف شد .');
-                }
-            }
+            return redirect()->back()->with('message', $variation->product->name.' با موفقیت از سبد خرید شما حذف شد .');
         }
+        // Check if user doesn't logged in , remove a variation from the Cookies
+        elseif ( $cart =  json_decode(Cookie::get('cart'), true) ) 
+        {
+            unset( $cart[ $variation->id ] );
+            Cookie::queue('cart', json_encode($cart), 60 * 24 * 30);
+            
+            return redirect()->back()->with('message', $variation->product->name.' با موفقیت از سبد خرید شما حذف شد .');
+        }
+        
         return redirect()->back();
     }
 
@@ -161,86 +121,48 @@ class CartController extends Controller
         return $result;
     }
 
-    public function check_cart ($decrease = false, $req = NULL)
+    public function check_cart (Request $request = NULL)
     {
         if (Auth::check())
         {
-            $order = Order::select('id')->where('buyer', Auth::user()->id)->where('status', 0)->get();
+            $options = $this->options([ 'dollar_cost', 'shipping_cost' ]);
 
-            if ($order->all() == []) { return ['status' => false]; }
-
-            $order_id = $order[0] -> id;
-            $id = [];
-
-            if ($decrease)
-            {
-                foreach ($req -> products as $key => $item) {
-                    $id[] = $key;
-                }
-            }
-            else
-            {
-                $temp = OrderProducts::select('product')->where('order', $order_id)->get();
-                foreach ($temp as $value) { $id[] = $value -> product; }
-            }
-
-            $cart_products = Product::select('pro_id', 'price', 'unit', 'offer', 'label', 'stock_inventory')
-                    ->whereIn('pro_id', $id)->get();
-
-            $total = $offer = 0;
-
-            $options = Option::select('name', 'value')->whereIn('name', ['dollar_cost', 'shipping_cost'])->get();
-            foreach ($options as $option) {
-                switch ($option['name']) {
-                    case 'dollar_cost': $dollar_cost = $option['value']; break;
-                    case 'shipping_cost': $shipping_cost = json_decode($option['value'], true); break;
-                }
-            }
-
-            if ($decrease)
-            {
-                $shipping_cost = $shipping_cost[$req->shipping_cost]['cost'];
-            }
+            $order = Order::select('id')
+                ->with([
+                    'items',
+                    'items.variation:id,product_id,price,unit,offer,offer_deadline,stock_inventory',
+                    'items.variation.product:id,label',
+                ])
+                ->where('buyer', Auth::user()->id)
+                ->where('status', 0)
+                ->first();
             
-            foreach ($cart_products as $item)
+            if ( $order )
             {
-                if ($item->unit)
-                {
-                    $item->price = $item->price * $dollar_cost;
-                    
-                    $temp = 1; if ($decrease) { $temp = $req -> products[$item['pro_id']]['count']; }
-                    $total += $item->price * $temp;
-                }
-
-                if ($item -> offer != 0)
-                {
-                    $item -> offer = ($item->offer * $item->price) / 100;
-                    $temp = 1; if ($decrease) { $temp = $req -> products[$item['pro_id']]['count']; }
-                    $offer += $item->offer * $temp;
-                }
+                return $order->items;
                 
-                $cart_product = OrderProducts::select('id')->where('product', $item['pro_id'])->get();
-                
-                if ($item -> label !== null)
+                $order->items->each( function ( $item ) 
                 {
-                    OrderProducts::destroy($cart_product[0] -> id);
-                }
-                else
-                {
-                    if ($decrease)
+                    if ( $item->variation->offer && $item->variation->deadline->gt(now()) )
                     {
-                        if ($item -> stock_inventory < $req -> products[$item['pro_id']]['count'])
-                        {
-                            $count = $item -> stock_inventory < $req;
-                        }
-                        else
-                        {
-                            $count = $req -> products[$item['pro_id']]['count'];
-                        }
+                        $item->price = $item->variation->offer;
+                        $item->offer = $item->variation->price - $item->variation->offer;
+                    }
+
+                    if ( $item->unit )
+                    {
+                        $item->price *= $options['dollar_cost'];
+                        $item->offer *= $options['dollar_cost'];
+                    }
+            
+                    if ( $item->variation->product->label !== null )
+                    {
+                        $item->remove();
                     }
                     else
                     {
-                        $count = OrderProducts::select('count')->where('id', $cart_product[0] -> id)->get();
+                        // High Score
+                        $count = OrderProducts::select('count')->where('id', $cart_product[0]->id )->get();
                         if ($item -> stock_inventory < $count[0] -> count)
                         {
                             $count = $item -> stock_inventory;
@@ -249,27 +171,30 @@ class CartController extends Controller
                         {
                             $count = $count[0] -> count;
                         }
+
+                        $cart_product = OrderProducts::find($cart_product[0] -> id);
+                        if ($decrease)
+                        {
+                            $cart_product -> color = $req -> products[$item['pro_id']]['color'];
+                        }
+                        $cart_product -> count = $count;
+                        $cart_product -> price = $item->price;
+                        $cart_product -> offer = $item->offer;
+                        $cart_product -> save();
+
+                        if ($decrease)
+                        {
+                            $product = Product::find($item['pro_id']);
+                            $product -> stock_inventory = $product -> stock_inventory - $count;
+                            $product -> save();
+                        }
                     }
 
-                    $cart_product = OrderProducts::find($cart_product[0] -> id);
-                    if ($decrease)
-                    {
-                        $cart_product -> color = $req -> products[$item['pro_id']]['color'];
-                    }
-                    $cart_product -> count = $count;
-                    $cart_product -> price = $item->price;
-                    $cart_product -> offer = $item->offer;
-                    $cart_product -> save();
-
-                    if ($decrease)
-                    {
-                        $product = Product::find($item['pro_id']);
-                        $product -> stock_inventory = $product -> stock_inventory - $count;
-                        $product -> save();
-                    }
-                }
-
+                });
             }
+            else 
+                return [ 'status' => false ];
+            
 
             $order = Order::find($order_id);
             $order -> offer = $offer;
@@ -290,7 +215,7 @@ class CartController extends Controller
             return [
                 'status' => true,
                 'amount' => ($order -> total + $order -> shipping_cost) - $order -> offer,
-                'order_id' => $order -> id
+                'order_id' => $order->id
             ];
         } 
         else
