@@ -30,8 +30,8 @@ class CreateOrderItemsTable extends Migration
                         ->onUpdate('cascade');
 
             $table->integer('count')->unsigned();
-            $table->integer('price')->unsigned()->default(0);
-            $table->integer('offer')->unsigned()->default(0);
+            $table->bigInteger('price')->unsigned()->default(0);
+            $table->bigInteger('offer')->unsigned()->default(0);
             $table->timestamps();
         });
     }

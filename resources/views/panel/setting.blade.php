@@ -280,11 +280,25 @@
 															<div class="input-group-addon"><i class="fa fa-align-right" aria-hidden="true"></i></div>
 														</div>
 													</div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="exampleInputEmail_2">آدرس فروشگاه شما</label>
-														<div class="input-group">
-															<input type="text" value="{{$options['shop_address']}}" name="address" class="form-control" id="exampleInputEmail_2" placeholder="آدرس فروشگاه شما که به مشتریان و کاربران نمایش داده میشود">
-															<div class="input-group-addon"><i class="fa fa-location-arrow" aria-hidden="true"></i></div>
+													<div class="row">
+														<div class="col-md-8">
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputEmail_2">آدرس فروشگاه شما</label>
+																<div class="input-group">
+																	<input type="text" value="{{$options['shop_address']}}" name="address" class="form-control" id="exampleInputEmail_2" placeholder="آدرس فروشگاه شما که به مشتریان و کاربران نمایش داده میشود">
+																	<div class="input-group-addon"><i class="fa fa-location-arrow" aria-hidden="true"></i></div>
+																</div>
+															</div>
+														</div>
+
+														<div class="col-md-4">
+															<div class="form-group">
+																<label class="control-label mb-10" for="exampleInputEmail_2">حداقل مبلغ</label>
+																<div class="input-group">
+																	<input type="number" value="{{$options['min_total']}}" name="min_total" class="form-control" id="exampleInputEmail_2" placeholder="برای امکان استفاده از کد تخفیف">
+																	<div class="input-group-addon"><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
+																</div>
+															</div>
 														</div>
 													</div>
 												</div>

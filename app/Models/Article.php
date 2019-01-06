@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     protected $fillable = [ 'title', 'description', 'body', 'image' ];
+
+    public function user ()
+    {
+        return $this->belongsTo(\App\User::class);
+    }
 }

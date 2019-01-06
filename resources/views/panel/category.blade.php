@@ -68,7 +68,7 @@
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
 								<form action="@isset($category) {{ route('category.update', ['category' => $category->id]) }} @else {{ route('category.store') }} @endisset" method="POST" enctype="multipart/form-data">
-									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>مشخصات گروه</h6>
+									<h6 class="txt-dark flex flex-middle capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>مشخصات گروه</h6>
 									<hr class="light-grey-hr"/>
 									
 									<div class="panel-body">
@@ -177,11 +177,13 @@
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					@isset($breadcrumb)
-						<li class="active">{{ $category->title }}</li>
 						@if (!empty($breadcrumb[0]))
 							@foreach ($breadcrumb as $item)
-								<li><a href="/panel/category/{{ $item[0] -> id }}">
-									{{ $item[0] -> title }}</a></li>
+								<li>
+									<a href="/panel/category/{{ $item->id }}">
+										{{ $item->title }}
+									</a>
+								</li>
 							@endforeach
 						@endif
 					@endisset

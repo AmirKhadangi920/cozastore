@@ -24,12 +24,13 @@ class Info extends FormRequest
     public function rules()
     {
         return [
-            'site_name' => 'required|max:30|string',
-            'phone' => ['required', 'regex:/(\+98|0)?9\d{9}/'],
-            'description' => 'required|max:255|string',
-            'address' => 'required|max:100|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:512',
-            'watermark' => 'nullable|image|mimes:jpeg,png,jpg|max:512',
+            'site_name'     => 'required|max:30|string',
+            'phone'         => ['required', 'regex:/(\+98|0)?9\d{9}/'],
+            'description'   => 'required|max:255|string',
+            'min_total'     => 'required|min:0|integer',
+            'address'       => 'required|max:100|string',
+            'logo'          => 'nullable|image|mimes:jpeg,png,jpg|max:512',
+            'watermark'     => 'nullable|image|mimes:jpeg,png,jpg|max:512',
         ];
     }
 }

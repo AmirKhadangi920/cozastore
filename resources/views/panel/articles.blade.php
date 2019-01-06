@@ -114,7 +114,7 @@
 				<div class="panel panel-default card-view">
 					<div class="panel-heading">
 						<div class="pull-right">
-							<h6 class="panel-title txt-dark">جستجو در محصولات</h6>
+							<h6 class="panel-title txt-dark">جستجو در مقالات</h6>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -122,8 +122,8 @@
 						<div  class="panel-body">
 							<div class="form-group">
 								<div class="input-group">
-									<input type="text" name="product_name" onkeyup="this.nextElementSibling.href = '/panel/products/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : تلفن همراه">
-									<a href="/panel/products/search/" class="input-group-addon"><i class="ti-search"></i></a>
+									<input type="text" name="article_title" onkeyup="this.nextElementSibling.href = '/panel/article/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : تلفن همراه">
+									<a href="/panel/article/search/" class="input-group-addon"><i class="ti-search"></i></a>
 								</div>
 							</div>
 						</div>

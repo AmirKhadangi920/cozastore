@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\panel;
 
-use App\models\Category;
+use App\Models\Category;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -125,30 +125,6 @@ class CategoryController extends Controller
     {
         $category->delete();
         return redirect( route('category.index') )->with('message', 'گروه '.$category->title.' با موفقیت حذف شد .');
-    }
-
-    /**
-     * Get a breadcrump for specified group
-     *
-     * @param Integer $id
-     * @return Array
-     */
-    public function breadcrumb ($id)
-    {
-        function get_parents (&$output, $p, $i = 0) {
-            $sql = "SELECT `cat1`.`parent`, `cat1`.`id`, `cat1`.`title` FROM `categories` as `cat1`
-                INNER JOIN `categories` as `cat2` ON `cat1`.`id` = `cat2`.`parent` WHERE `cat2`.`id` = ?";
-            
-            $output[$i] = DB::select($sql, [$p]);
-
-            if (!empty($output[$i][0]->parent)) {
-                get_parents($output, $output[$i][0]->id, ++$i);
-            }
-        }
-
-        $results = [];
-        get_parents($results, $id);
-        return $results;
     }
 
     /**

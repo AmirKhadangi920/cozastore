@@ -17,6 +17,7 @@ use App\Models\Review;
 use App\Models\Product;
 use App\Models\Option;
 use App\Models\ProductVariation;
+use Illuminate\Support\Facades\Validator;
 
 /**
  *  CLASS PanelController
@@ -60,7 +61,7 @@ class PanelController extends Controller
             'page_name' => 'setting',
             'page_title' => 'تنظیمات',
             'options' => $this->options([
-                'slider', 'posters', 'site_name', 'site_description', 'site_logo',
+                'slider', 'posters', 'site_name', 'site_description', 'site_logo', 'min_total',
                 'shop_phone', 'shop_address', 'social_link', 'shipping_cost', 'watermark'
             ])
         ]);
@@ -127,7 +128,7 @@ class PanelController extends Controller
     public function info (Info $req)
     {
         $option = Option::select('id', 'name', 'value')->whereIn('name', [
-            'site_name', 'site_description', 'site_logo', 'watermark', 'shop_phone', 'shop_address'
+            'site_name', 'site_description', 'site_logo', 'watermark', 'shop_phone', 'shop_address', 'min_total'
         ])->get();
 
         
@@ -167,6 +168,7 @@ class PanelController extends Controller
         $options['site_description']['value'] = $info['description'];
         $options['shop_phone']['value'] = $info['phone'];
         $options['shop_address']['value'] = $info['address'];
+        $options['min_total']['value'] = $info['min_total'];
         
         foreach ($options as $item)
         {
@@ -197,6 +199,10 @@ class PanelController extends Controller
 
     public function dollar_cost ($dollar_cost)
     {
+        Validator::make([ 'dollar_cost' => $dollar_cost ], [
+            'dollar_cost' => 'required|min:1|digits:10|integer',
+        ])->validate();
+
         Option::where('name', 'dollar_cost')->first()->update( ['value' => $dollar_cost ]);        
         return redirect()->back()->with('message', 'قیمت دلار با موفقیت بروز رسانی شد');
     }

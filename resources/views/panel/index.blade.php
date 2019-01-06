@@ -143,7 +143,7 @@
 												<div class="per-rating inline-block pull-right">
 													<span class="inline-block">برای {{$review->product->name}}</span>
 													@for ($i = 0; $i < 5; ++$i)
-														<a class="zmdi @if($review->rating > 0) zmdi-star <?php --$review->rating; ?> @else zmdi-star-outline @endif"></a>
+														<a class="zmdi @if($review->total > 0) zmdi-star <?php --$review->total; ?> @else zmdi-star-outline @endif"></a>
 													@endfor
 												</div>
 												<a href="javascript:void(0);"  class="pull-left txt-grey"></a>

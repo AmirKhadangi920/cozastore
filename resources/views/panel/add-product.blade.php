@@ -348,7 +348,7 @@
 																		@isset($product)
 																			@foreach ($product->gallery as $item)
 																				<div class="col-md-3 mt-20">
-																					<input type="file" data-default-file="/uploads/{{ $item }}" filename="{{ $item }}" name="images[]" class="dropify exists" />
+																					<input type="file" data-default-file="{{ $item }}" filename="{{ $item }}" name="images[]" class="dropify exists" />
 																				</div>
 																			@endforeach
 																			<input type="hidden" name="deleted_images" value="[]" />
@@ -424,9 +424,9 @@
 																											@isset( $spec_rows['spec_data']['data'] )
 																												@if(strpos($spec_rows['spec_data']['data'], ','))
 																													@php $temp = explode(',', $spec_rows['spec_data']['data']) @endphp
-																													@if ( in_array($i, $temp) ) selected="selected" @endif
+																													@if ( in_array($key, $temp) ) selected="selected" @endif
 																												@elseif($spec_rows['spec_data']['data'] == $key) selected="selected" @endif
-																											@endisset>
+																											@endisset >
 																											{{ $item }}
 																										</option>
 																									@endforeach
@@ -521,11 +521,11 @@
 															</div>
 															<!--/span-->
 					
-															<div class="col-md-2">
+															<div class="col-md-3">
 																<div class="form-group @if( $errors->has('offer') ) has-error @endif">
-																	<label class="control-label mb-10">تخفیف</label>
+																	<label class="control-label mb-10">قیمت با تخفیف</label>
 																	<div class="input-group">
-																		<input type="number" name="variations[{{$i}}][offer]" value="{{$item->offer}}" class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
+																		<input type="number" name="variations[{{$i}}][offer]" value="{{$item->offer}}" class="form-control" id="exampleInputuname_1" placeholder="قیمت کالا با احتساب تخفیف ، برای مثال : 120,000" min="0" />
 																		<div class="input-group-addon"><i class="ti-cut"></i></div>
 																	</div>
 																	@if( $errors->has('offer') )
@@ -533,7 +533,7 @@
 																	@endif
 																</div>
 															</div>
-															<div class="col-md-4">
+															<div class="col-md-3">
 																<div class="form-group @if( $errors->has('offer_deadline') ) has-error @endif">
 																	<label class="control-label mb-10">مهلت تخفیف</label>
 																	<div class='input-group date' id='datetimepicker1'>
@@ -614,7 +614,7 @@
 														<div class="form-group @if( $errors->has('price') ) has-error @endif">
 															<label class="control-label mb-10">قیمت</label>
 															<div class="input-group">
-																<input type="number" min="0" @isset($product) value="{{$product->price}}" @else value="{{old('price')}}"  @endisset name="variations[{{$i}}][price]" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
+																<input type="number" min="0" @isset($product) value="{{$product->price}}" @else value="{{old("variations.$i.price")}}"  @endisset name="variations[{{$i}}][price]" class="form-control" id="exampleInputuname" placeholder="مثلا : 1550000">
 																<div class="input-group-addon"><i class="ti-money"></i></div>
 															</div>
 															@if( $errors->has('price') )
@@ -629,13 +629,13 @@
 															<div class="radio-list">
 																<div class="radio-inline">
 																	<div class="radio radio-info">
-																		<input type="radio" @if(isset($product) && $product->unit == 0) checked @elseif(old('unit') == 0) checked="checked"  @endif name="variations[{{$i}}][unit]" id="unit_rl" value="0">
+																		<input type="radio" @if(isset($product) && $product->unit == 0) checked @elseif(old("variations.$i.unit") == 0) checked="checked"  @endif name="variations[{{$i}}][unit]" id="unit_rl" value="0">
 																		<label for="unit_rl">تومان</label>
 																	</div>
 																</div>
 																<div class="radio-inline pl-0">
 																	<div class="radio radio-info">
-																		<input type="radio" @if(isset($product) && $product->unit == 1) checked @elseif(old('unit') == 1) checked="checked"  @endif name="variations[{{$i}}][unit]" id="unit_dl" value="1">
+																		<input type="radio" @if(isset($product) && $product->unit == 1) checked @elseif(old("variations.$i.unit") == 1) checked="checked"  @endif name="variations[{{$i}}][unit]" id="unit_dl" value="1">
 																		<label for="unit_dl">دلار</label>
 																	</div>
 																</div>
@@ -647,11 +647,11 @@
 													</div>
 													<!--/span-->
 			
-													<div class="col-md-2">
+													<div class="col-md-3">
 														<div class="form-group @if( $errors->has('offer') ) has-error @endif">
-															<label class="control-label mb-10">تخفیف</label>
+															<label class="control-label mb-10">قیمت با تخفیف</label>
 															<div class="input-group">
-																<input type="number" name="variations[{{$i}}][offer]" @isset($product) value="{{$product->offer}}" @else value="{{old('offer')}}" @endisset class="form-control" id="exampleInputuname_1" placeholder="مثلا 36%" min="0" max="99">
+																<input type="number" name="variations[{{$i}}][offer]" @isset($product) value="{{$product->offer}}" @else value="{{old("variations.$i.offer")}}" @endisset class="form-control" id="exampleInputuname_1" placeholder="قیمت کالا با احتساب تخفیف ، برای مثال : 120,000" min="0" />
 																<div class="input-group-addon"><i class="ti-cut"></i></div>
 															</div>
 															@if( $errors->has('offer') )
@@ -659,11 +659,11 @@
 															@endif
 														</div>
 													</div>
-													<div class="col-md-4">
+													<div class="col-md-3">
 														<div class="form-group @if( $errors->has('offer_deadline') ) has-error @endif">
 															<label class="control-label mb-10">مهلت تخفیف</label>
 															<div class='input-group date' id='datetimepicker1'>
-																<input type='text' dir="ltr" placeholder="برای مثال :  ۱۳:۴۰ ۱۳۹۷/۰۵/۲۴" class="form-control" name="variations[{{$i}}][offer_deadline]" @isset($product) value="{{$product->offer_deadline}}" @else value="{{old('offer_deadline')}}" @endisset />
+																<input type='text' dir="ltr" placeholder="برای مثال :  ۱۳:۴۰ ۱۳۹۷/۰۵/۲۴" class="form-control" name="variations[{{$i}}][offer_deadline]" @isset($product) value="{{$product->offer_deadline}}" @else value="{{old("variations.$i.offer_deadline")}}" @endisset />
 																<span class="input-group-addon"><i class="ti-timer"></i></span>
 															</div>
 															@if( $errors->has('offer_deadline') )
@@ -677,7 +677,7 @@
 														<div class="form-group @if( $errors->has('stock_inventory') ) has-error @endif">
 															<label class="control-label mb-10">تعداد موجود در انبار</label>
 															<div class="input-group">
-																<input type="number" name="variations[{{$i}}][stock_inventory]" min="0" @isset($product) value="{{$product->stock_inventory}}" @else value="{{old('stock_inventory')}}" @endisset id="firstName" class="form-control" placeholder="موجودی این محصول در انبار شما">
+																<input type="number" name="variations[{{$i}}][stock_inventory]" min="0" @isset($product) value="{{$product->stock_inventory}}" @else value="{{old("variations.$i.stock_inventory")}}" @endisset id="firstName" class="form-control" placeholder="موجودی این محصول در انبار شما">
 																<div class="input-group-addon"><i class="ti-layout-grid4-alt"></i></div>
 															</div>
 															@if( $errors->has('stock_inventory') )
@@ -806,7 +806,4 @@
 	@foreach ($scripts as $script)
 		<script src="{{ asset($script) }}"></script>	
 	@endforeach
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-
-	// {! JsValidator::formRequest('App\Http\Requests\ProductRequest', '#product_form') !!}
 @endsection

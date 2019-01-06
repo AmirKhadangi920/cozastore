@@ -20,9 +20,14 @@ class Category extends Model
             ->where('parent', null)->latest()->get();
     }
     
-    public function parent ()
+    public function parent_group ()
     {
         return $this->belongsTo(Category::class, 'parent');
+    }
+
+    public function products () 
+    {
+        return $this->hasMany(Product::class);
     }
 
     public function childs ()

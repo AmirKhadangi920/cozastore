@@ -27,7 +27,7 @@ class CreateUser extends FormRequest
             'id' => 'required|size:8',
             'first_name' => 'required|min:3|max:20|regex:/^[پچجحخهعغآفقثصضشسیبلاتنمکگوئدذرزطظژ\s]+$/u',
             'last_name' => 'required|min:3|max:30|regex:/^[پچجحخهعغآفقثصضشسیبلاتنمکگوئدذرزطظژ\s]+$/u',
-            'phone' => 'required|regex:/(\+98|0)?9\d{9}/',
+            'phone' => [ 'required', 'regex:/^(\+98|0)?9\d{9}$/' ],
             'email' => 'required|email|max:100',
             'state' => 'required|max:30|regex:/^[پچجحخهعغآفقثصضشسیبلاتنمکگوئدذرزطظژ\s]+$/u',
             'city' => 'required|max:30|regex:/^[پچجحخهعغآفقثصضشسیبلاتنمکگوئدذرزطظژ\s]+$/u',

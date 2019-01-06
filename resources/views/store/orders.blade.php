@@ -1,213 +1,119 @@
-@extends('store.master.main')
+@extends('store.layout.master')
 
-@section('styles')
-	<?php $styles = [
-		'vendor/bootstrap/css/bootstrap.min.css',
-		'fonts/font-awesome-4.7.0/css/font-awesome.min.css',
-		'fonts/iconic/css/material-design-iconic-font.min.css',
-		'fonts/linearicons-v1.0.0/icon-font.min.css',
-		'vendor/animate/animate.css',
-		'vendor/css-hamburgers/hamburgers.min.css',
-		'vendor/animsition/css/animsition.min.css',
-		'vendor/select2/select2.min.css',
-		'vendor/perfect-scrollbar/perfect-scrollbar.css',
-		'css/util.css',
-		'css/main.css',
-		'css/font.css',
-	]; ?>
+@section('body-class', 'page home page-template-default')
 
-	@foreach ($styles as $style)
-		<link rel="stylesheet" type="text/css" href="{{ asset($style) }}">
-	@endforeach
+@section('style')
+    <style>
+        .color_label {
+            background: #ea1b25;
+            border-radius: 10px;
+            padding: 2px 10px;
+            color: #fff;
+            text-shadow: 0px 0px 5px #000;
+        }
 
-	<style>
-	table {
-		text-align: center;
-	}
-	th {
-		text-align: center !important;
-	}
-	.badge {
-		padding: 5px 8px;
-	}
-	</style>
-@endsection
-	
-@section('article')
-	<!-- breadcrumb -->
-	<div class="container" dir="rtl">
-		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
-				صفحه اصلی
-				<i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
-			</a>
-
-			<span class="stext-109 cl4">
-				سفارشات
-			</span>
-		</div>
-	</div>
-
-	<div class="container">
-		<div class="row m-t-50 m-b-50">
-			<div class="col-md-12" dir="rtl">
-
-				@if(session()->has('message'))
-					<div class="alert alert-success alert-dismissable">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-						{{ session()->get('message') }}
-					</div>
-				@endif
-
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th><b>توضیحات شما</b></th>
-							<th><b>تاریخ ثبت</b></th>
-							<th><b>تاریخ پرداخت</b></th>
-							<th><b>جمع فاکتور</b></th>
-							<th><b>وضعیت</b></th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php $i = 0; ?>
-						@foreach ($orders as $order)
-						<tr>
-							<td>{{++$i}}</td>
-							<td>{{$order->buyer_description}}</td>
-							<?php 
-								$time = new Carbon\Carbon($order->created_at);
-								$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
-							?>
-							<td>{{$time->hour.':'.$time->minute.' | '.$created_at}}</td>
-							@if ($order->payment)
-							<?php
-								$time = new Carbon\Carbon($order->payment);
-								$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
-							?>
-							<td>{{$time->hour.':'.$time->minute.' | '.$payment}}</td>
-							@else
-							<td><span class="label label-danger">هنوز پرداخت نشده</span></td>
-							@endif
-							<td><span class="num-comma">{{$order->total}}</span> تومان</td>
-							<td>
-								<?php
-								switch ($order->status) {
-									case 0: $status = ['پرداخت نشده', 'info']; break;
-									case 1: $status = ['در انتظار پرداخت', 'warning']; break; 
-									case 2: $status = ['پرداخت شده', 'dark']; break;
-									case 3: $status = ['در حال بررسی', 'warning']; break;
-									case 4: $status = ['در حال بسته بندی', 'warning']; break;
-									case 5: $status = ['در حال ارسال', 'primary']; break;
-									case 6: $status = ['ارسال شده', 'success']; break;
-									case 7: $status = ['لغو شده', 'danger']; break;
-									default: $status = ['پرداخت نشده', 'info'];
-								}
-								?>
-								<span class="badge badge-{{$status[1]}}">{{$status[0]}}</span>
-							</td>
-						</tr>
-						@endforeach
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-
-	
+        select {
+            background: #fff;
+            border-radius: 5px;
+            outline: none;
+            padding: 5px 10px;
+        }
+    </style>
 @endsection
 
-@section('scripts')
-	<!--===============================================================================================-->	
-		<script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
-	<!--===============================================================================================-->
-		<script src="{{ asset('vendor/animsition/js/animsition.min.js') }}"></script>
-	<!--===============================================================================================-->
-		<script src="{{ asset('vendor/bootstrap/js/popper.js') }}"></script>
-		<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-	<!--===============================================================================================-->
-		<script src="{{ asset('vendor/select2/select2.min.js') }}"></script>
-		<script>
-			$(".js-select2").each(function(){
-				$(this).select2({
-					minimumResultsForSearch: 20,
-					dropdownParent: $(this).next('.dropDownSelect2')
-				});
-			})
-		</script>
-	<!--===============================================================================================-->
-		<script src="{{ asset('vendor/MagnificPopup/jquery.magnific-popup.min.js') }}"></script>
-	<!--===============================================================================================-->
-		<script src="{{ asset('vendor/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-		<script>
-			$('.js-pscroll').each(function(){
-				$(this).css('position','relative');
-				$(this).css('overflow','hidden');
-				var ps = new PerfectScrollbar(this, {
-					wheelSpeed: 1,
-					scrollingThreshold: 1000,
-					wheelPropagation: false,
-				});
+@section('content')
+    <div id="content" class="site-content" tabindex="-1">
+        <div class="container">
 
-				$(window).on('resize', function(){
-					ps.update();
-				})
-			});
-		</script>
-	<!--===============================================================================================-->
-		<script src="{{ asset('js/numeral.min.js') }}"></script>
-		<script>
-			var nums = document.getElementsByClassName('num-comma');
+            <nav class="woocommerce-breadcrumb"><a href="/">صفحه اصلی</a><span class="delimiter"><i class="fa fa-angle-right"></i></span>سفارشات</nav>
 
-			for (num in nums) {
-				nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
-			}
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main">
+                    <article class="page type-page status-publish hentry">
+                        <header class="entry-header"><h1 itemprop="name" class="entry-title">سفارشات شما</h1></header><!-- .entry-header -->
 
-			$('.btn-num-product-up').click(function ()
-			{
-				var price = $(this).parent().parent().prev().find('.num-comma').text();
-				var total = $(this).parent().parent().next().next().find('.num-comma');
-				price = price.replace(/,/g, '') * 1;
-				var output = numeral(total.text().replace(/,/g, '') * 1 + price).format('0,0');
-				total.text(output);
-				
-				total = $('.total');
-				output = numeral(total.text().replace(/,/g, '') * 1 + price).format('0,0');
-				total.text(output);
-				
-				total = $('.final_total');
-				output = numeral(total.text().replace(/,/g, '') * 1 + price).format('0,0');
-				total.text(output);
-			});
+                        <form action="/checkout" method="POST">
 
-			$('.btn-num-product-down').click(function ()
-			{
-				if ($(this).next().val() == 0) { return; }
-				var price = $(this).parent().parent().prev().find('.num-comma').text();
-				var total = $(this).parent().parent().next().next().find('.num-comma');
-				price = price.replace(/,/g, '') * 1;
-				var output = numeral(total.text().replace(/,/g, '') * 1 - price).format('0,0');
-				total.text(output);
-				
-				total = $('.total');
-				output = numeral(total.text().replace(/,/g, '') * 1 - price).format('0,0');
-				total.text(output);
-				
-				total = $('.final_total');
-				output = numeral(total.text().replace(/,/g, '') * 1 - price).format('0,0');
-				total.text(output);
-			});
-		</script>
-		
-		<script src="{{ asset('js/numeral.min.js') }}"></script>
-		<script>
-			var nums = document.getElementsByClassName('num-comma');
+                            <table class="shop_table shop_table_responsive cart">
+                                <thead>
+                                    <tr>
+                                        <th class="product-thumbnail">شماره فاکتور</th>
+                                        <th class="product-color">آدرس مقصد</th>
+                                        <th class="product-warranty">کد پستی</th>
+                                        <th class="product-quantity">روش ارسال</th>
+                                        <th class="product-subtotal">هزینه ارسال</th>
+                                        <th class="product-subtotal">وضعیت</th>
+                                        <th class="product-price">تخفیف</th>
+                                        <th class="product-subtotal">جمع فاکتور</th>
+                                        <th class="product-subtotal">تاریخ پرداخت</th>
+                                        <th class="product-subtotal">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($orders as $item)
+                                        <tr class="cart_item">
+                                            <td class="product-thumbnail">#{{ $item->id }}</td>
 
-			for (num in nums) {
-				nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
-			}
-		</script>
+                                            <td data-title="Product" class="product-name">{{ $item->destination }}</td>
 
-		<script src="{{ asset('js/main.js') }}"></script>
+                                            <td data-title="Price" class="product-color">{{ $item->postal_code }}</td>
+                                            
+                                            <td data-title="Price" class="product-price">
+                                                @php $temp = (array) $options['shipping_cost'] @endphp
+                                                {{ $temp[ $item->shipping_type ]->name }}
+                                            </td>
+
+                                            <td data-title="Quantity" class="product-quantity"><span class="num-comma">{{ $item->shipping_cost }}</span> تومان</td>
+
+                                            <td data-title="Total" class="product-subtotal">
+                                                @php
+                                                    switch ($item->status) {
+                                                        case 0: $status = ['پرداخت نشده', 'info']; break;
+                                                        case 1: $status = ['در انتظار پرداخت', 'warning']; break; 
+                                                        case 2: $status = ['پرداخت شده', 'dark']; break;
+                                                        case 3: $status = ['در حال بررسی', 'warning']; break;
+                                                        case 4: $status = ['در حال بسته بندی', 'warning']; break;
+                                                        case 5: $status = ['در حال ارسال', 'primary']; break;
+                                                        case 6: $status = ['ارسال شده', 'success']; break;
+                                                        case 7: $status = ['لغو شده', 'danger']; break;
+                                                        default: $status = ['پرداخت نشده', 'info'];
+                                                    }
+                                                @endphp
+                                                <span class="label label-{{ $status[1] }}">{{ $status[0] }}</span>
+                                            </td>
+
+                                            <td data-title="Price" class="product-warranty"><span class="num-comma">{{ $item->offer }}</span> تومان</td>
+
+                                            <td data-title="Total" class="product-subtotal"><span class="num-comma">{{ $item->total }}</span> تومان</td>
+                                            
+                                            <td data-title="Total" class="product-subtotal">
+                                                @if ($item->payment)
+                                                    {{ \Morilog\Jalali\Jalalian::forge($item->payment)->format('%H:%S - %d %B %Y') }}
+                                                @else
+                                                    <span class="label label-danger">هنوز پرداخت نشده</span>
+                                                @endif
+                                            </td>
+
+                                            <td data-title="Total" class="product-subtotal"><a href="/orders/{{ $item->id }}" title="اطلاعات بیشتر"><i class="fa fa-info"></i></a></td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="alert alert-danger">
+                                                    متاسفانه هیچ سفارشی هنوز برای شما ثبت نشده است :(
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                            
+                            @csrf
+                        </form>
+                        
+                    </article>
+                </main><!-- #main -->
+            </div><!-- #primary -->
+        </div><!-- .container -->
+    </div><!-- #content -->
 @endsection

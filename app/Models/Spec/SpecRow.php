@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SpecRow extends Model
 {
     protected $fillable = [
-        'title', 'label', 'values', 'min', 'max', 'multiple', 'required'
+        'title', 'label', 'values', 'help', 'multiple'
     ];
 
     protected $casts = [
@@ -22,5 +22,10 @@ class SpecRow extends Model
     public function specData ()
     {
         return $this->hasOne(SpecData::class, 'spec_row_id');
+    }
+
+    public function specDatas ()
+    {
+        return $this->hasMany(SpecData::class, 'spec_row_id');
     }
 }

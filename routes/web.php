@@ -76,17 +76,30 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
 
 // Store Products Routes
 Route::get('/', 'StoreController@index');
-Route::get('/products', 'StoreController@store');
-Route::post('/products/review', 'StoreController@add_review');
-Route::get('/products/category/{id}', 'StoreController@category');
-Route::get('/product/{id}', 'StoreController@product');
-Route::get('/product/quickview/{id}', 'StoreController@quickview');
+Route::get('/product', 'StoreController@store');
+Route::get('/product/search/{query?}', 'StoreController@store');
+Route::post('/product/{product}/review', 'StoreController@add_review')->middleware('auth');
+Route::get('/category/{category}', 'StoreController@category');
+Route::get('/product/{product}', 'StoreController@product');
 
 // Cart Rotes
 Route::get('/cart', 'CartController@index');
 Route::post('/cart/pay', 'CartController@pay')->middleware('auth');
-Route::get('/cart/remove/{id}/{title}', 'CartController@remove');
-Route::get('/cart/add/{id}/{title}/{count}/{color?}', 'CartController@add');
-Route::get('/orders', 'panel\InvoiceController@user_orders');
+Route::get('/cart/discount_code/{discount_code}', 'CartController@discount_code')->middleware('auth');
+Route::delete('/cart/remove/{variation}', 'CartController@remove');
+Route::get('/cart/add/{variation}', 'CartController@add');
 
+Route::get('/orders', 'panel\InvoiceController@user_orders')->middleware('auth');
+Route::get('/orders/{order}', 'panel\InvoiceController@order_detail')->middleware('auth');
 Route::get('/verify_payment', 'CartController@verify_payment');
+Route::get('/checkout', 'CartController@checkout')->middleware('auth');
+Route::post('/checkout', 'CartController@checkout')->middleware('auth');
+
+// Compare Routes
+Route::get('/compare', 'CompareController@index');
+Route::get('/compare/add/{product}', 'CompareController@add');
+Route::get('/compare/remove/{product}', 'CompareController@remove');
+
+// Blog Routes
+Route::get('/blog', 'BlogController@index');
+Route::get('/blog/{article}', 'BlogController@show');

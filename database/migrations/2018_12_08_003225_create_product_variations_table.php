@@ -39,8 +39,8 @@ class CreateProductVariationsTable extends Migration
 
             $table->integer('price');
             $table->tinyInteger('unit')->default(1);
-            $table->tinyInteger('offer')->default(0);
-            $table->dateTime('offer_deadline')->nullable();
+            $table->integer('offer')->nullable();
+            $table->timestamp('offer_deadline')->nullable();
             $table->smallInteger('stock_inventory')->default(0);
             $table->timestamps();
         });

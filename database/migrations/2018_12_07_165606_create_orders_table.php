@@ -34,7 +34,8 @@ class CreateOrdersTable extends Migration
             $table->string('buyer_description', 255)->nullable();
             $table->string('destination', 255);
             $table->string('postal_code', 10);
-            $table->integer('offer')->default(0);
+            $table->bigInteger('offer')->default(0);
+            $table->string('shipping_type', 100)->nullable();
             $table->integer('shipping_cost')->default(0);
             $table->bigInteger('total')->default(0);
             $table->tinyInteger('status')->default(0);
