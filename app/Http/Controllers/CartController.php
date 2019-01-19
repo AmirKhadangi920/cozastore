@@ -301,7 +301,6 @@ class CartController extends Controller
                     }
                 }
 
-
                 $temp_order = [
                     'total' => $order_total,
                     'offer' => $offer_total,
