@@ -48,7 +48,7 @@
         <hr class="single-product-title-divider" />
 
         <div class="action-buttons">
-            <a href="/compare/add/{{ $product->id }}" class="add-to-compare-link" data-product_id="2452"> افزودن محصول برای مقایسه </a>
+            <a href="/compare/add/{{ $product->id }}"> افزودن محصول برای مقایسه </a>
         </div><!-- .action-buttons -->
 
         <div itemprop="description">
@@ -68,7 +68,7 @@
         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
             <p class="price">
-                <span class="electro-price">
+                <span class="electro-price" id="electro-price">
                     @php
                         if ($product->variations[0]->unit)
                         {
@@ -99,11 +99,35 @@
                     <tr>
                         <td class="label"><label>رنگ و گارانتی</label></td>
                         <td class="value">
-                            <select onchange="this.parentNode.parentNode.parentNode.parentNode.parentNode.action = '/cart/add/' + this.value">
+                            <select id="variations" onchange="this.parentNode.parentNode.parentNode.parentNode.parentNode.action = '/cart/add/' + this.value">
                                 @foreach ($product->variations as $item)
-                                    <option value="{{ $item->id }}">رنگ {{ $item->color->name }} - گارانتی {{ $item->warranty->title }} {{ $item->warranty->expire }}</option>
+                                    @php
+                                        if ($item->unit)
+                                        {
+                                            $item->offer *= $options['dollar_cost'];
+                                            $item->price *= $options['dollar_cost'];
+                                        }
+                                    @endphp
+                                    <option value="{{ $item->id }}" price="{{ $item->price }}" offer="@if($item->offer && $item->deadline->gt(now()) ){{ $item->offer }}@endif">رنگ {{ $item->color->name }} - گارانتی {{ $item->warranty->title }} {{ $item->warranty->expire }}</option>
                                 @endforeach
                             </select>
+
+                            <script>
+                                document.getElementById('variations').addEventListener('change', function ( select ) {
+                                    var option = select.target.querySelector('option[value="'+select.target.value+'"]');
+                                    var price = numeral( option.getAttribute('price') ).format('0,0');
+                                    var offer = numeral( option.getAttribute('offer') ).format('0,0');
+                                    
+                                    if( offer != 0 )
+                                    {
+                                        document.getElementById('electro-price').innerHTML = '<ins><span class="amount"><span class="num-comma">' + offer + '</span> تومان</span></ins>';
+                                        document.getElementById('electro-price').innerHTML +='<del><span class="amount"><span class="num-comma">' + price + '</span> تومان</span></del>';
+
+                                    } else {
+                                        document.getElementById('electro-price').innerHTML = '<span class="amount"><span class="num-comma">' + price + '</span> تومان</span></span>';
+                                    }
+                                });
+                            </script>
                         </td>
                     </tr>
                 </tbody>

@@ -45,7 +45,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         Category::create(array_merge($request -> all(), [
-            'avatar' => $this->upload_image( Input::file('avatar') )
+            'avatar' => $request->hasFile('avatar') ? $this->upload_image( Input::file('avatar') ) : null,
         ]));
         return redirect()->back()->with('message', 'گروه '.$request->title.' با موفقیت ثبت شد .');
     }

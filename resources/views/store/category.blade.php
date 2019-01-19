@@ -8,12 +8,13 @@
         <div class="container">
             <nav class="woocommerce-breadcrumb">
                 <a href="home.html">خانه</a>
-                @foreach ($breadcrumb as $item)
+                @foreach (array_reverse( $breadcrumb ) as $item)
+                    @continue( $loop->last )
                     <span class="delimiter"><i class="fa fa-angle-right"></i></span>
                     <a href="/category/{{ $item->id }}">{{ $item->title }}</a>
                 @endforeach
-                {{-- <span class="delimiter"><i class="fa fa-angle-right"></i></span>
-                {{ $category->title }} --}}
+                <span class="delimiter"><i class="fa fa-angle-right"></i></span>
+                {{ $category->title }}
             </nav><!-- /.woocommerce-breadcrumb -->
 
             <div id="primary" class="content-area">
@@ -26,7 +27,7 @@
                         <div class="woocommerce columns-4">
                             <ul class="product-loop-categories">
 
-                                @forelse ($category->childs() as $item)
+                                @forelse ($category->childs as $item)
                                     <li class="product-category product">
                                         <a href="/category/{{ $item->id }}">
                                             <img src="{{ $item->avatar }}" class="img-responsive" alt="{{ $item->description }}">

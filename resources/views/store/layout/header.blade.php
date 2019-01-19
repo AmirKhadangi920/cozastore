@@ -203,7 +203,7 @@
                                             </a>
                                             @php
                                                 $price = $variation->price;
-                                                if ( $variation->offer )
+                                                if ( $variation->offer && $variation->deadline->gt(now()) )
                                                     $price = $variation->offer;
                                                     
                                                 if ( $variation->unit )

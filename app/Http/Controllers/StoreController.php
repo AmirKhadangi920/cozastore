@@ -80,7 +80,7 @@ class StoreController extends Controller
     public function category (Category $category)
     {
         return view('store.category  ', [
-            'category'      => $category,
+            'category'      => $category->load('childs'),
             'category_pros' => Product::productCard(null, [ 'category' => $category->id ]),
             'products'      => Product::productCard(),
             'breadcrumb'    => $this->breadcrumb($category),

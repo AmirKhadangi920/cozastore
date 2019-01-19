@@ -27,7 +27,7 @@ class PayRequest extends FormRequest
             'state'             => [ 'required', 'string', 'max:30' ],
             'city'              => [ 'required', 'string', 'max:20' ],
             'address'           => [ 'required', 'string', 'max:200' ],
-            'buyer_description' => [ 'required', 'string', 'max:255' ],
+            'buyer_description' => [ 'nullable', 'string', 'max:255' ],
             'shipping_type'     => [ 'required', 'in:model1,model2,model3,model4' ],
             'postal_code'       => [ 'required', 'integer', 'digits:10' ],
         ];

@@ -200,7 +200,7 @@ class PanelController extends Controller
     public function dollar_cost ($dollar_cost)
     {
         Validator::make([ 'dollar_cost' => $dollar_cost ], [
-            'dollar_cost' => 'required|min:1|digits:10|integer',
+            'dollar_cost' => 'required|min:1|digits_between:1,10|integer',
         ])->validate();
 
         Option::where('name', 'dollar_cost')->first()->update( ['value' => $dollar_cost ]);        

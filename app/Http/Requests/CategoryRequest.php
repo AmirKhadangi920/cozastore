@@ -23,17 +23,11 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
+        return [
             'title'         => [ 'required', 'max:50' ], 
             'parent'        => [ 'nullable', 'integer' ],
             'description'   => [ 'nullable', 'max:255' ],
-            'avatar'        => [ 'required', 'max:512', 'image', 'mimes:jpeg,jpg,png' ]
+            'avatar'        => [ 'nullable', 'max:512', 'image', 'mimes:jpeg,jpg,png' ]
         ];
-        if (request()->isMethod('put')) 
-        {
-            $rules['avatar'][0] = 'nullable';
-        }
-
-        return $rules;
     }
 }
